@@ -1,0 +1,368 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: info.ksef@mf.gov.pl
+    name: Info
+    url: https://ksef.mf.gov.pl
+  description: Krajowy System e-Faktur
+  title: KSeF
+  version: 2.0.0
+externalDocs:
+  description: Dokumentacja
+  url: https://www.gov.pl/web/kas/krajowy-system-e-faktur
+servers:
+- description: Środowisko produkcyjne
+  url: https://ksef.mf.gov.pl/api
+  variables: {}
+- description: Środowisko demonstracyjne
+  url: https://ksef-demo.mf.gov.pl/api
+  variables: {}
+- description: Środowisko testowe
+  url: https://ksef-test.mf.gov.pl/api
+  variables: {}
+tags:
+- description: Krajowy System e-Faktur
+  externalDocs:
+    description: Krajowy System e-Faktur
+    url: https://ksef.mf.gov.pl
+  name: KSeF
+paths:
+  /common/Invoice/KSeF:
+    post:
+      description: Pobranie faktury z repozytorium KSeF na podstawie kryteriów opartych
+        o numer KSeF
+      operationId: common.invoice.ksef
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceRequestKSeF'
+        required: true
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                type: object
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      summary: Pobranie faktury z repozytorium KSeF - kryteria oparte o numer KSeF
+      tags:
+      - Interfejsy wspólne - pobranie faktury
+  /common/Status/{ReferenceNumber}:
+    get:
+      description: Sprawdzenie statusu przetwarzania wsadowego
+      operationId: common.status
+      parameters:
+      - in: path
+        name: ReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+            application/vnd.v3+json:
+              schema:
+                $ref: '#/components/schemas/V3_StatusResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+      summary: Interfejs wspólny pobrania statusu przetwarzania wsadowego
+      tags:
+      - Interfejsy wspólne - status
+  /common/Upo/{ReferenceNumber}/{UpoReferenceNumber}:
+    get:
+      description: Pobieranie UPO
+      operationId: common.upo
+      parameters:
+      - in: path
+        name: ReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+      - in: path
+        name: UpoReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+      responses:
+        "200":
+          content:
+            application/vnd.v3+octet-stream:
+              schema:
+                type: object
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      summary: Interfejs wspólny pobrania UPO
+      tags:
+      - Interfejsy wspólne - UPO
+components:
+  schemas:
+    AnonymousSubjectIdentifierToCompanyType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/AnonymousSubjectIdentifierToType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            pattern: "[1-9]((\\d[1-9])|([1-9]\\d))\\d{7}"
+      required:
+      - identifier
+    AnonymousSubjectIdentifierToNoneType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/AnonymousSubjectIdentifierToType'
+    AnonymousSubjectIdentifierToOtherTaxType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/AnonymousSubjectIdentifierToType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            maxLength: 50
+            minLength: 1
+      required:
+      - identifier
+    AnonymousSubjectIdentifierToType:
+      type: object
+      discriminator:
+        mapping:
+          none: '#/components/schemas/AnonymousSubjectIdentifierToNoneType'
+          onip: '#/components/schemas/AnonymousSubjectIdentifierToCompanyType'
+          other: '#/components/schemas/AnonymousSubjectIdentifierToOtherTaxType'
+        propertyName: type
+      properties:
+        type:
+          type: string
+      required:
+      - type
+    AnonymousSubjectToType:
+      type: object
+      properties:
+        issuedToIdentifier:
+          $ref: '#/components/schemas/AnonymousSubjectIdentifierToType'
+        issuedToName:
+          $ref: '#/components/schemas/SubjectNameType'
+      required:
+      - issuedToIdentifier
+      - issuedToName
+    ExceptionDetailType:
+      type: object
+      properties:
+        exceptionCode:
+          type: integer
+          format: int32
+          minimum: 0
+        exceptionDescription:
+          type: string
+          maxLength: 256
+          minLength: 1
+      required:
+      - exceptionCode
+      - exceptionDescription
+    ExceptionResponse:
+      type: object
+      properties:
+        exception:
+          $ref: '#/components/schemas/ExceptionType'
+      required:
+      - exception
+    ExceptionType:
+      type: object
+      properties:
+        exceptionDetailList:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExceptionDetailType'
+          maxItems: 100
+          minItems: 1
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        serviceCode:
+          type: string
+          maxLength: 64
+          minLength: 1
+        serviceCtx:
+          type: string
+          maxLength: 64
+          minLength: 1
+        serviceName:
+          type: string
+          maxLength: 64
+          minLength: 1
+        timestamp:
+          type: string
+          format: date-time
+      required:
+      - exceptionDetailList
+      - serviceCode
+      - serviceCtx
+      - serviceName
+      - timestamp
+    InvoiceQueryDetailsType:
+      type: object
+      properties:
+        dueValue:
+          type: string
+          pattern: "(\\-)?\\d{1,10}(\\.\\d{2})?"
+        invoiceOryginalNumber:
+          type: string
+          maxLength: 256
+          minLength: 1
+        subjectTo:
+          $ref: '#/components/schemas/AnonymousSubjectToType'
+      required:
+      - dueValue
+      - invoiceOryginalNumber
+      - subjectTo
+    InvoiceRequestKSeF:
+      type: object
+      properties:
+        invoiceDetails:
+          $ref: '#/components/schemas/InvoiceQueryDetailsType'
+        ksefReferenceNumber:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+      required:
+      - invoiceDetails
+      - ksefReferenceNumber
+    StatusResponse:
+      type: object
+      properties:
+        processingCode:
+          type: integer
+          format: int32
+          maximum: 999
+          minimum: 100
+        processingDescription:
+          type: string
+          maxLength: 256
+          minLength: 1
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+          format: date-time
+        upo:
+          type: string
+          format: binary
+      required:
+      - processingCode
+      - processingDescription
+      - referenceNumber
+      - timestamp
+    SubjectFullNameType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SubjectNameType'
+      - type: object
+        properties:
+          fullName:
+            type: string
+            maxLength: 256
+            minLength: 1
+      required:
+      - fullName
+    SubjectNameType:
+      type: object
+      discriminator:
+        mapping:
+          fn: '#/components/schemas/SubjectFullNameType'
+          none: '#/components/schemas/SubjectNoneType'
+          pn: '#/components/schemas/SubjectPersonNameType'
+        propertyName: type
+      properties:
+        tradeName:
+          type: string
+          maxLength: 256
+          minLength: 1
+        type:
+          type: string
+      required:
+      - type
+    SubjectNoneType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SubjectNameType'
+    SubjectPersonNameType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SubjectNameType'
+      - type: object
+        properties:
+          firstName:
+            type: string
+            maxLength: 30
+            minLength: 1
+          surname:
+            type: string
+            maxLength: 81
+            minLength: 1
+      required:
+      - firstName
+      - surname
+    V3_StatusResponse:
+      type: object
+      properties:
+        processingCode:
+          type: integer
+          format: int32
+          maximum: 999
+          minimum: 100
+        processingDescription:
+          type: string
+          maxLength: 256
+          minLength: 1
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+          format: date-time
+        upoReferenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        upoUrl:
+          type: string
+          maxLength: 512
+          minLength: 1
+          pattern: "http[s]?:\\/{2}([0-9a-z][0-9a-z_-]*\\.)+[0-9a-z][0-9a-z_-]*(([0-9a-zA-Z][0-9a-zA-Z_-]*\\\
+            .?)*\\/?)*"
+      required:
+      - processingCode
+      - processingDescription
+      - referenceNumber
+      - timestamp

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<ns3:InitSessionTokenRequest xmlns="http://ksef.mf.gov.pl/schema/gtw/svc/online/types/2021/10/01/0001" xmlns:ns2="http://ksef.mf.gov.pl/schema/gtw/svc/types/2021/10/01/0001" xmlns:ns3="http://ksef.mf.gov.pl/schema/gtw/svc/online/auth/request/2021/10/01/0001">
+  <ns3:Context>
+    <Challenge>{challenge}</Challenge>
+    <Identifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:SubjectIdentifierByCompanyType">
+      <ns2:Identifier>{nip}</ns2:Identifier>
+    </Identifier>
+    <DocumentType>
+      <ns2:Service>KSeF</ns2:Service>
+      <ns2:FormCode>
+        <ns2:SystemCode>FA (2)</ns2:SystemCode>
+        <ns2:SchemaVersion>1-0E</ns2:SchemaVersion>
+        <ns2:TargetNamespace>http://crd.gov.pl/wzor/2023/06/29/12648/</ns2:TargetNamespace>
+        <ns2:Value>FA</ns2:Value>
+      </ns2:FormCode>
+    </DocumentType>
+    <Token>{token}</Token>
+  </ns3:Context>
+</ns3:InitSessionTokenRequest>
