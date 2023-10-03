@@ -1,4 +1,6 @@
 #!/usr/bin/env vpython3
+import os
+import hashlib
 import time
 import logging
 import logging.config
@@ -6,6 +8,7 @@ import ast
 import datetime
 import configparser
 import json
+from base64 import b64encode
 
 logging.basicConfig(level=logging.INFO)
 with open("logging.ini", "rt") as fp:
@@ -18,7 +21,7 @@ import httpx
 from dateutil.tz import tzlocal
 from dateutil import parser
 
-from ksef_client import Client, AuthenticatedClient, models
+from ksef_client import Client, AuthenticatedClient, models, types
 from ksef_client.api.interfejsy_interaktywne_sesja import *
 from ksef_client.api.interfejsy_interaktywne_zapytania import *
 from ksef_client.api.interfejsy_interaktywne_faktury import *
@@ -142,7 +145,7 @@ class Main:
         )
         print('*'*10, response.status_code, response.parsed)
 
-    def query1(self):
+    def query1(self, datefrom, dateto):
         print('*'*20, 'query_invoice_async_init.sync_detailed')
         json_body = models.QueryInvoiceRequest(
             query_criteria=models.QueryCriteriaInvoiceRangeType(
@@ -150,8 +153,8 @@ class Main:
                     models.QueryCriteriaInvoiceTypeSubjectType.SUBJECT1
                 ),
                 type='range',
-                invoicing_date_from=datetime.datetime(2023, 9, 28, tzinfo=tzlocal()),
-                invoicing_date_to=datetime.datetime(2023, 9, 29, tzinfo=tzlocal()),
+                invoicing_date_from=datefrom,
+                invoicing_date_to=dateto,
             ),
         )
         response = query_invoice_sync.sync_detailed(
@@ -161,6 +164,7 @@ class Main:
             page_offset=0,
         )
         print('*'*10, response.status_code, response.parsed)
+        self.querysave(response)
 
     def query2(self):
         print('*'*20, 'query_invoice_sync.sync_detailed')
@@ -181,6 +185,9 @@ class Main:
             page_offset=0,
         )
         print('*'*10, response.status_code, response.parsed)
+        self.querysave(response)
+
+    def querysave(self, response):
         sh = self.authclient.get_headers()
         self.authclient.headers.update({
             'Accept': 'application/octet-stream'
@@ -200,13 +207,48 @@ class Main:
             open('%s.xml'%xno, 'wb').write(resp.parsed.additional_properties['content'])
         self.authclient.headers = sh
 
+    def upload1(self, fname):
+        print('*'*20, 'send_invoice.sync_detailed')
+        data = open(fname, 'rb').read()
+        size = len(data)
+        crc = b64encode(hashlib.sha256(data).digest()).decode()
+        data = b64encode(data).decode()
+        json_body = models.SendInvoiceRequest(
+            invoice_hash=models.File1MBHashType(
+                hash_sha=models.HashSHAType(
+                    algorithm="SHA-256",
+                    encoding="Base64",
+                    value=types.Bytes(
+                        payload=crc
+                    )
+                ),
+                file_size=size,
+            ),
+            invoice_payload=models.InvoicePayloadPlainType(
+                type="plain",
+                invoice_body=types.Bytes(
+                    payload=data
+                )
+            )
+        )
+        response = send_invoice.sync_detailed(
+            client=self.authclient,
+            json_body=json_body,
+        )
+        print('*'*10, response.status_code, response.parsed)
+
+
 def main():
     cls = Main()
     try:
         cls.login()
         try:
-            cls.query1()
-            cls.query2()
+            cls.query1(
+                datetime.datetime(2023, 10, 3, tzinfo=tzlocal()),
+                datetime.datetime(2023, 10, 3, 16, 46, 0, tzinfo=tzlocal())
+            )
+            #cls.query2()
+            #cls.upload1('fv-001.xml')
         finally:
             cls.logout()
     except EOFError as e:
