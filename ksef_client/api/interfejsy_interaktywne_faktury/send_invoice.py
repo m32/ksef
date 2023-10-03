@@ -1,3 +1,6 @@
+import logging
+logger = logging.getLogger(__name__)
+
 from typing import Any, Dict, Optional, Union
 
 import httpx
@@ -76,11 +79,13 @@ def sync_detailed(
         client=client,
         json_body=json_body,
     )
+    logger.debug('send_invoice: %s', kwargs)
 
     response = httpx.request(
         verify=client.verify_ssl,
         **kwargs,
     )
+    logger.debug('send_invoice: %s %s', response, response.content)
 
     return _build_response(response=response)
 

@@ -27,6 +27,16 @@ class File:
         return self.file_name, self.payload, self.mime_type
 
 
+@attr.s(auto_attribs=True)
+class Bytes:
+    """Contains information for file uploads"""
+
+    payload: BinaryIO
+
+    def to_tuple(self) -> FileJsonType:
+        """Return a tuple representation that httpx will accept for multipart/form-data"""
+        return self.payload
+
 T = TypeVar("T")
 
 
