@@ -38,7 +38,8 @@ class GetResponse200:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+        #d = src_dict.copy()
+        d = {'content': src_dict}
         get_response_200 = cls(
         )
 

@@ -19,7 +19,9 @@ def _get_kwargs(
 
 ) -> Dict[str, Any]:
     
-
+    headers = {
+        'Accept': 'application/octet-stream',
+    }
     cookies = {}
 
 
@@ -32,6 +34,7 @@ def _get_kwargs(
     return {
         "method": "get",
         "url": "/online/Invoice/Get/{KSeFReferenceNumber}".format(KSeFReferenceNumber=k_se_f_reference_number,),
+        "headers": headers,
     }
 
 
