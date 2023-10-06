@@ -35,3 +35,51 @@ index 74e06f7..35a1fd9 100644
          credentials_role_response_base_type_object_role_type = cls(
          )
  
+diff --git a/ksef/online/api/faktury/get.py b/ksef/online/api/faktury/get.py
+index 815623e..f68bc3e 100644
+--- a/ksef/online/api/faktury/get.py
++++ b/ksef/online/api/faktury/get.py
+@@ -20,6 +20,9 @@ def _get_kwargs(
+ ) -> Dict[str, Any]:
+     
+ 
++    headers = {
++        'Accept': 'application/octet-stream',
++    }
+     cookies = {}
+ 
+ 
+@@ -32,6 +35,7 @@ def _get_kwargs(
+     return {
+         "method": "get",
+         "url": "/online/Invoice/Get/{KSeFReferenceNumber}".format(KSeFReferenceNumber=k_se_f_reference_number,),
++        "headers": headers,
+     }
+ 
+ 
+diff --git a/ksef/online/models/get_response_200.py b/ksef/online/models/get_response_200.py
+index d3cd000..4f9eea4 100644
+--- a/ksef/online/models/get_response_200.py
++++ b/ksef/online/models/get_response_200.py
+@@ -38,7 +38,7 @@ class GetResponse200:
+ 
+     @classmethod
+     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+-        d = src_dict.copy()
++        d = {'content': src_dict}
+         get_response_200 = cls(
+         )
+ 
+diff --git a/ksef/online/models/hash_sha_type.py b/ksef/online/models/hash_sha_type.py
+index 52b4b27..90b7682 100644
+--- a/ksef/online/models/hash_sha_type.py
++++ b/ksef/online/models/hash_sha_type.py
+@@ -60,7 +60,7 @@ class HashSHAType:
+         encoding = d.pop("encoding")
+ 
+         value = File(
+-             payload = BytesIO(d.pop("value"))
++             payload = BytesIO(d.pop("value").encode())
+         )
+ 
+ 

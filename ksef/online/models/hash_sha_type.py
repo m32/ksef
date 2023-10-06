@@ -60,7 +60,7 @@ class HashSHAType:
         encoding = d.pop("encoding")
 
         value = File(
-             payload = BytesIO(d.pop("value"))
+             payload = BytesIO(d.pop("value").encode())
         )
 
 
