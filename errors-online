@@ -1,0 +1,135 @@
+Warning(s) encountered while generating. Client was generated, but some pieces may be missing
+
+Unable to process schema /components/schemas/CredentialsContextType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsContextType
+
+Unable to process schema /components/schemas/CredentialsIdentifierRequestIndividualCertificateFingerprintType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierRequestIndividualCertificateFingerprintType
+
+Unable to process schema /components/schemas/CredentialsIdentifierRequestIndividualNipType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierRequestIndividualNipType
+
+Unable to process schema /components/schemas/CredentialsIdentifierRequestIndividualPeselType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierRequestIndividualPeselType
+
+Unable to process schema /components/schemas/CredentialsIdentifierRequestInstitutionalNipType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierRequestInstitutionalNipType
+
+Unable to process schema /components/schemas/CredentialsIdentifierRequestInternalType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierRequestInternalType
+
+Unable to process schema /components/schemas/CredentialsIdentifierResponseAuthorisationTokenType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierResponseAuthorisationTokenType
+
+Unable to process schema /components/schemas/CredentialsIdentifierResponseIndividualCertificateFingerprintType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierResponseIndividualCertificateFingerprintType
+
+Unable to process schema /components/schemas/CredentialsIdentifierResponseIndividualNipType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierResponseIndividualNipType
+
+Unable to process schema /components/schemas/CredentialsIdentifierResponseIndividualPeselType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierResponseIndividualPeselType
+
+Unable to process schema /components/schemas/CredentialsIdentifierResponseInternalIdentifierType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierResponseInternalIdentifierType
+
+Unable to process schema /components/schemas/CredentialsParentType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsParentType
+
+Unable to process schema /components/schemas/CredentialsRoleResponseGrantedForInstitutionType:
+<class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsRoleResponseGrantedForInstitutionType
+
+Unable to process schema /components/schemas/CredentialsRoleResponseStandardContextDetailsType:
+<class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsRoleResponseStandardContextDetailsType
+
+Unable to process schema /components/schemas/CredentialsRoleResponseStandardDetailsType:
+<class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsRoleResponseStandardDetailsType
+/components/schemas/CredentialsPlainType
+
+Unable to process schema /components/schemas/CredentialsRoleResponseStandardPlainType:
+<class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsRoleResponseStandardPlainType
+
+Unable to process schema /components/schemas/CredentialsRoleResponseTokenType:
+<class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsRoleResponseTokenType
+/components/schemas/CredentialsTokenType
+
+Unable to process schema /components/schemas/CredentialsTokenType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+
+Unable to process schema /components/schemas/V2_CredentialsRoleResponseGrantedByInstitutionType:
+<class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/V2_CredentialsRoleResponseGrantedByInstitutionType
+
+Unable to process schema /components/schemas/V2_CredentialsRoleResponseGrantedForIndividualDirectType:
+<class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/V2_CredentialsRoleResponseGrantedForIndividualDirectType
+
+Unable to process schema /components/schemas/V2_CredentialsRoleResponseGrantedForIndividualInheritedType:
+<class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/V2_CredentialsRoleResponseGrantedForIndividualInheritedType
+
+Unable to process schema /components/schemas/V2_CredentialsRoleResponseGrantedForIndividualTokenType:
+<class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/V2_CredentialsRoleResponseGrantedForIndividualTokenType
+If you believe this was a mistake or this tool is missing a feature you need, please open an issue at https://github.com/openapi-generators/openapi-python-client/issues/new/choose

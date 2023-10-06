@@ -1,0 +1,46 @@
+tag_overrides:
+  Interfejsy interaktywne - faktury: faktury
+  Interfejsy interaktywne - płatności: platnosci
+  Interfejsy interaktywne - poświadczenia: poswiadczenia
+  Interfejsy interaktywne - sesja: sesja
+  Interfejsy interaktywne - zapytania: zapytania
+
+operationId_overrides:
+  online.invoice.invoice.get: get
+  online.invoice.invoice.send: send
+  online.invoice.invoice.status: status
+
+  online.payment.payment.identifier.get.reference.numbers: get
+  online.payment.payment.identifier.request: request
+
+  online.credentials.credentials.context.grant: context_grant
+  online.credentials.credentials.context.revoke: context_revoke
+  online.credentials.credentials.grant: grant
+  online.credentials.credentials.revoke: revoke
+  online.credentials.credentials.status: status
+  online.credentials.generate.token: token_generate
+  online.credentials.revoke.token: token_revoke
+
+  online.session.authorisation.challenge: authorisation_challenge
+  online.session.internal.identifier.generate: identifier_generate
+  online.session.session.signed.init: init_signed
+  online.session.session.token.init: init_token
+  online.session.session.status.plain: status_plain
+  online.session.session.status.reference.number: status_reference
+  online.session.session.terminate.plain: terminate
+
+  online.query.query.context.credentials: context_credentials
+  online.query.query.credentials: credentials
+  online.query.query.invoice.fetch: invoice_fetch
+  online.query.query.invoice.init: invoice_init
+  online.query.query.invoice.status: invoice_status
+  online.query.query.invoice: invoice
+
+project_name_override: ksefonline
+package_name_override: ../ksef/online
+package_version_override: 0.0.1
+
+field_prefix: attr_
+use_path_prefixes_for_title_model_names: True
+post_hooks: []
+http_timeout: 5

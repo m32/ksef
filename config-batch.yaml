@@ -1,0 +1,16 @@
+tag_overrides:
+    Wysyłka wsadowa: wysylka
+
+operationId_overrides:
+    batch.init: init
+    batch.finish: finish
+    batch.upload: upload
+
+project_name_override: ksefbatch
+package_name_override: ../ksef/batch
+package_version_override: 0.0.1
+
+field_prefix: attr_
+use_path_prefixes_for_title_model_names: True
+post_hooks: []
+http_timeout: 5

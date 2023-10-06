@@ -1,0 +1,13 @@
+4 validation errors for OpenAPI
+paths./online/Invoice/Status/{InvoiceElementReferenceNumber}.get.externalDocs.url
+  Field required [type=missing, input_value={'description': "Obsługi...ur/faktury w usłudze."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.3/v/missing
+paths./online/Query/Invoice/Sync.post.externalDocs.url
+  Field required [type=missing, input_value={'description': "Obsługi...ur/faktury w usłudze."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.3/v/missing
+paths./online/Session/Status.get.externalDocs.url
+  Field required [type=missing, input_value={'description': "Obsługi...ur/faktury w usłudze."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.3/v/missing
+paths./online/Session/Status/{ReferenceNumber}.get.externalDocs.url
+  Field required [type=missing, input_value={'description': "Obsługi...ur/faktury w usłudze."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.3/v/missing

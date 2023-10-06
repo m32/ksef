@@ -1,0 +1,26 @@
+{% if use_poetry %}
+[tool.poetry]
+name = "{{ project_name }}"
+version = "{{ package_version }}"
+description = "{{ package_description }}"
+
+authors = []
+
+readme = "README.md"
+packages = [
+    {include = "{{ package_name }}"},
+]
+include = ["CHANGELOG.md", "{{ package_name }}/py.typed"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+httpx = ">=0.20.0,<0.26.0"
+attrs = ">=21.3.0"
+python-dateutil = "^2.8.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+{% endif %}
+{% include "pyproject_no_poetry.toml.jinja" %}

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+one(){
+rm -rf ksef$1
+rm -rf ksef/$1
+/devel/bin/python3/bin/openapi-python-client \
+generate \
+--path KSeF-$1.yaml \
+--config config-$1.yaml 2>errors-$1
+}
+
+all(){
+one batch
+one common
+one online
+}
+
+case "$1" in
+    all|batch|common|online)
+        one $1
+        ;;
+    *)
+        cat <<-EOF
+usage: $0 all|batch|common|online
+EOF
+        ;;
+esac

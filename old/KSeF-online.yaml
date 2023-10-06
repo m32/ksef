@@ -463,7 +463,6 @@ paths:
     get:
       description: Sprawdzenie statusu wysłanej faktury
       externalDocs:
-        url: http://missing
         description: |-
           Obsługiwany nagłówek 'ksef-number-variant'
           Obsługiwane wartości:
@@ -828,7 +827,6 @@ paths:
     post:
       description: Zapytanie o faktury
       externalDocs:
-        url: http://missing
         description: |-
           Obsługiwany nagłówek 'ksef-number-variant'
           Obsługiwane wartości:
@@ -1188,7 +1186,6 @@ paths:
     get:
       description: Sprawdzenie statusu obecnego przetwarzania interaktywnego
       externalDocs:
-        url: http://missing
         description: |-
           Obsługiwany nagłówek 'ksef-number-variant'
           Obsługiwane wartości:
@@ -1287,7 +1284,6 @@ paths:
     get:
       description: Sprawdzenie statusu przetwarzania na podstawie numeru referencyjnego
       externalDocs:
-        url: http://missing
         description: |-
           Obsługiwany nagłówek 'ksef-number-variant'
           Obsługiwane wartości:

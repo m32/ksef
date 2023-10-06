@@ -1,0 +1,18 @@
+tag_overrides:
+    Interfejsy wspólne - pobranie faktury: pobranie
+    Interfejsy wspólne - status: status
+    Interfejsy wspólne - UPO: upo
+
+operationId_overrides:
+    common.invoice.ksef: ksef
+    common.status: status
+    common.upo: upo
+
+project_name_override: ksefcommon
+package_name_override: ../ksef/common
+package_version_override: 0.0.1
+
+field_prefix: attr_
+use_path_prefixes_for_title_model_names: True
+post_hooks: []
+http_timeout: 5
