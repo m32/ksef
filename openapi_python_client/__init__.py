@@ -270,7 +270,12 @@ class Project:  # pylint: disable=too-many-instance-attributes
         api_dir.mkdir()
         api_init_path = api_dir / "__init__.py"
         api_init_template = self.env.get_template("api_init.py.jinja")
-        api_init_path.write_text(api_init_template.render(), encoding=self.file_encoding)
+        api_init_path.write_text(
+            api_init_template.render(
+                tags=self.openapi.endpoint_collections_by_tag.keys()
+            ),
+            encoding=self.file_encoding
+        )
 
         endpoint_collections_by_tag = self.openapi.endpoint_collections_by_tag
         endpoint_template = self.env.get_template(

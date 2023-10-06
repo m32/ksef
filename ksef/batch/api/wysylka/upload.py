@@ -7,12 +7,12 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from ...types import File, FileJsonType
-from typing import Dict
 from typing import cast
+from ...models.exception_response import ExceptionResponse
 from ...models.upload_response import UploadResponse
 from io import BytesIO
-from ...models.exception_response import ExceptionResponse
+from ...types import File, FileJsonType
+from typing import Dict
 
 
 
