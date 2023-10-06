@@ -24,8 +24,7 @@ import httpx
 from dateutil.tz import tzlocal
 from dateutil import parser
 
-from ksef.online import Client, AuthenticatedClient, models, types, errors
-from ksef.online.api import sesja, zapytania, faktury
+from ksef.online import Client, AuthenticatedClient, models, types, errors, api
 
 class Main:
     def __init__(self):
@@ -61,7 +60,7 @@ class Main:
         )
 
         if token is None:
-            response = sesja.authorisation_challenge.sync_detailed(
+            response = api.sesja.authorisation_challenge.sync_detailed(
                 client=client,
                 json_body=models.AuthorisationChallengeRequest(
                     context_identifier=models.SubjectIdentifierByCompanyType(
@@ -88,7 +87,7 @@ class Main:
             data = types.Content(data)
             #data = models.InitSessionSignedRequest(data)
 
-            response = sesja.init_token.sync_detailed(
+            response = api.sesja.init_token.sync_detailed(
                 client=client,
                 content=data
             )
@@ -117,7 +116,7 @@ class Main:
 
     def getStatus(self):
         while True:
-            response = sesja.status_reference.sync_detailed(
+            response = api.sesja.status_reference.sync_detailed(
                 client=self.authclient,
                 page_size=100,
                 page_offset=0,
@@ -130,7 +129,7 @@ class Main:
 
     def logout(self):
         os.unlink('SessionToken')
-        response = sesja.terminate.sync_detailed(
+        response = api.sesja.terminate.sync_detailed(
             client=self.authclient,
         )
 
@@ -145,13 +144,12 @@ class Main:
                 invoicing_date_to=dateto,
             ),
         )
-        response = zapytania.invoice.sync_detailed(
+        response = api.zapytania.invoice.sync_detailed(
             client=self.authclient,
             json_body=json_body,
             page_size=100,
             page_offset=0,
         )
-        print('*'*10, response.status_code, response.parsed)
         self.querysave(response)
 
     def query2(self, datefrom, dateto):
@@ -165,7 +163,7 @@ class Main:
                 invoicing_date_to=dateto,
             ),
         )
-        response = zapytania.invoice.sync_detailed(
+        response = api.zapytania.invoice.sync_detailed(
             client=self.authclient,
             json_body=json_body,
             page_size=100,
@@ -184,7 +182,7 @@ class Main:
             xno = rec.ksef_reference_number
             xdate = rec.invoicing_date
             xhash = rec.invoice_hash.hash_sha.value.payload.getvalue().decode()
-            resp = faktury.get.sync_detailed(
+            resp = api.faktury.get.sync_detailed(
                 client=self.authclient,
                 k_se_f_reference_number=xno,
             )
@@ -213,7 +211,7 @@ class Main:
                 )
             )
         )
-        response = faktury.send.sync_detailed(
+        response = api.faktury.send.sync_detailed(
             client=self.authclient,
             json_body=json_body,
         )
@@ -224,7 +222,7 @@ class Main:
         response = self.uploaddata(data)
         no = response.element_reference_number
         # processingCode ma ilka stanow
-        response = faktury.status.sync_detailed(
+        response = api.faktury.status.sync_detailed(
             client=self.authclient,
             invoice_element_reference_number=no
         )
@@ -235,11 +233,12 @@ def main():
     try:
         cls.login()
         try:
-            if 0:
+            if 1:
                 cls.query1(
                     datetime.datetime(2023, 10, 3, tzinfo=tzlocal()),
                     datetime.datetime(2023, 10, 3, 16, 46, 0, tzinfo=tzlocal()),
                 )
+            if 1:
                 cls.query2(
                     datetime.datetime(2023, 9, 29, tzinfo=tzlocal()),
                     datetime.datetime(2023, 9, 30, tzinfo=tzlocal()),
@@ -248,7 +247,7 @@ def main():
                 cls.upload('fv-1696558560.443855.xml')
         finally:
             pass
-            cls.logout()
+            #cls.logout()
     except EOFError as e:
         print(e)
 

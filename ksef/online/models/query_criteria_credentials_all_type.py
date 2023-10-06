@@ -8,8 +8,8 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..models.query_criteria_credentials_all_type_query_credentials_scope_result_type import QueryCriteriaCredentialsAllTypeQueryCredentialsScopeResultType
 from ..models.query_criteria_credentials_all_type_query_credentials_type_result_type import QueryCriteriaCredentialsAllTypeQueryCredentialsTypeResultType
+from ..models.query_criteria_credentials_all_type_query_credentials_scope_result_type import QueryCriteriaCredentialsAllTypeQueryCredentialsScopeResultType
 
 
 

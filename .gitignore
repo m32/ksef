@@ -165,4 +165,5 @@ todo-*
 ksefbatch/
 ksefcommon/
 ksefonline/
+SessionToken
 fv-*.xml

@@ -7,12 +7,12 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from ...models.exception_response import ExceptionResponse
+from typing import Dict
 from io import BytesIO
 from ...models.init_session_response import InitSessionResponse
+from ...models.exception_response import ExceptionResponse
 from ...types import File, FileJsonType
 from typing import cast
-from typing import Dict
 
 
 
@@ -23,10 +23,6 @@ def _get_kwargs(
 ) -> Dict[str, Any]:
     
 
-    headers = {
-        'Content-Type': 'application/octet-stream',
-        'Accept': 'application/json',
-    }
     cookies = {}
 
 
@@ -40,7 +36,6 @@ def _get_kwargs(
         "method": "post",
         "url": "/online/Session/InitToken",
         "content": content.to_bytes(),
-        "headers": headers,
     }
 
 

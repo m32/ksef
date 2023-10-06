@@ -8,15 +8,15 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import cast, List
+from typing import Dict
 from ..types import UNSET, Unset
+from typing import cast, List
 from typing import Union
 from typing import cast
-from typing import Dict
 
 if TYPE_CHECKING:
-  from ..models.credentials_base_type_object_object_identifier import CredentialsBaseTypeObjectObjectIdentifier
   from ..models.credentials_base_type_object_object_credentials_role_list_item import CredentialsBaseTypeObjectObjectCredentialsRoleListItem
+  from ..models.credentials_base_type_object_object_identifier import CredentialsBaseTypeObjectObjectIdentifier
 
 
 
@@ -41,8 +41,8 @@ class CredentialsBaseTypeObjectObject:
 
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.credentials_base_type_object_object_identifier import CredentialsBaseTypeObjectObjectIdentifier
         from ..models.credentials_base_type_object_object_credentials_role_list_item import CredentialsBaseTypeObjectObjectCredentialsRoleListItem
+        from ..models.credentials_base_type_object_object_identifier import CredentialsBaseTypeObjectObjectIdentifier
         type = self.type
         credentials_role_list: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.credentials_role_list, Unset):
@@ -76,8 +76,8 @@ class CredentialsBaseTypeObjectObject:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.credentials_base_type_object_object_identifier import CredentialsBaseTypeObjectObjectIdentifier
         from ..models.credentials_base_type_object_object_credentials_role_list_item import CredentialsBaseTypeObjectObjectCredentialsRoleListItem
+        from ..models.credentials_base_type_object_object_identifier import CredentialsBaseTypeObjectObjectIdentifier
         d = src_dict.copy()
         type = d.pop("type")
 

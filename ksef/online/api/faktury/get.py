@@ -7,10 +7,10 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from ...models.get_response_200 import GetResponse200
-from typing import cast
-from ...models.exception_response import ExceptionResponse
 from typing import Dict
+from ...models.get_response_200 import GetResponse200
+from ...models.exception_response import ExceptionResponse
+from typing import cast
 
 
 
@@ -19,9 +19,7 @@ def _get_kwargs(
 
 ) -> Dict[str, Any]:
     
-    headers = {
-        'Accept': 'application/octet-stream',
-    }
+
     cookies = {}
 
 
@@ -34,7 +32,6 @@ def _get_kwargs(
     return {
         "method": "get",
         "url": "/online/Invoice/Get/{KSeFReferenceNumber}".format(KSeFReferenceNumber=k_se_f_reference_number,),
-        "headers": headers,
     }
 
 

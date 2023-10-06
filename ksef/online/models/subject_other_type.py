@@ -8,11 +8,11 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from ..models.subject_other_type_subject_other_type import SubjectOtherTypeSubjectOtherType
+from typing import Dict
 from ..types import UNSET, Unset
 from typing import Union
 from typing import cast
-from ..models.subject_other_type_subject_other_type import SubjectOtherTypeSubjectOtherType
-from typing import Dict
 
 if TYPE_CHECKING:
   from ..models.subject_name_type import SubjectNameType

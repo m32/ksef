@@ -8,12 +8,12 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from dateutil.parser import isoparse
+from typing import Dict
 import datetime
 from ..types import UNSET, Unset
 from typing import Union
 from typing import cast
-from dateutil.parser import isoparse
-from typing import Dict
 
 if TYPE_CHECKING:
   from ..models.credentials_role_response_base_type_object_role_type import CredentialsRoleResponseBaseTypeObjectRoleType
