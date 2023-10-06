@@ -23,6 +23,10 @@ def _get_kwargs(
 ) -> Dict[str, Any]:
     
 
+    headers = {
+        'Content-Type': 'application/octet-stream',
+        'Accept': 'application/json',
+    }
     cookies = {}
 
 
@@ -36,6 +40,7 @@ def _get_kwargs(
         "method": "post",
         "url": "/online/Session/InitToken",
         "content": content.to_bytes(),
+        "headers": headers,
     }
 
 

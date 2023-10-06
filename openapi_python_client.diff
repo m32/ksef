@@ -1,0 +1,37 @@
+diff --git a/ksef/online/api/sesja/init_token.py b/ksef/online/api/sesja/init_token.py
+index 3f1621f..f089c37 100644
+--- a/ksef/online/api/sesja/init_token.py
++++ b/ksef/online/api/sesja/init_token.py
+@@ -23,6 +23,10 @@ def _get_kwargs(
+ ) -> Dict[str, Any]:
+     
+ 
++    headers = {
++        'Content-Type': 'application/octet-stream',
++        'Accept': 'application/json',
++    }
+     cookies = {}
+ 
+ 
+@@ -36,6 +40,7 @@ def _get_kwargs(
+         "method": "post",
+         "url": "/online/Session/InitToken",
+         "content": content.to_bytes(),
++        "headers": headers,
+     }
+ 
+ 
+diff --git a/ksef/online/models/credentials_role_response_base_type_object_role_type.py b/ksef/online/models/credentials_role_response_base_type_object_role_type.py
+index 74e06f7..35a1fd9 100644
+--- a/ksef/online/models/credentials_role_response_base_type_object_role_type.py
++++ b/ksef/online/models/credentials_role_response_base_type_object_role_type.py
+@@ -38,7 +38,8 @@ class CredentialsRoleResponseBaseTypeObjectRoleType:
+ 
+     @classmethod
+     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+-        d = src_dict.copy()
++        #d = src_dict.copy()
++        d = {src_dict:src_dict}
+         credentials_role_response_base_type_object_role_type = cls(
+         )
+ 

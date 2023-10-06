@@ -38,7 +38,8 @@ class CredentialsRoleResponseBaseTypeObjectRoleType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+        #d = src_dict.copy()
+        d = {src_dict:src_dict}
         credentials_role_response_base_type_object_role_type = cls(
         )
 
