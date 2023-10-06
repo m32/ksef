@@ -89,7 +89,7 @@ class StatusResponse:
             upo = UNSET
         else:
             upo = File(
-             payload = BytesIO(_upo)
+             payload = BytesIO(_upo.encode())
         )
 
 

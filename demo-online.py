@@ -30,6 +30,7 @@ class Main:
     def __init__(self):
         self.config = configparser.ConfigParser()
         self.config.read('ksef.ini')
+        self.section = 'ksef-demo'
 
         self.headers = {
             'Accept': '*/*',
@@ -55,7 +56,7 @@ class Main:
             token = reference_number = None
 
         client = Client(
-            base_url=self.config.get('ksef', 'api'),
+            base_url=self.config.get(self.section, 'api'),
             headers=self.headers
         )
 
@@ -65,7 +66,7 @@ class Main:
                 json_body=models.AuthorisationChallengeRequest(
                     context_identifier=models.SubjectIdentifierByCompanyType(
                         type='onip',
-                        identifier=self.config.get('ksef', 'nip')
+                        identifier=self.config.get('user', 'nip')
                     )
                 )
             )
@@ -76,13 +77,13 @@ class Main:
             millisec = str(int(millisec))
 
             token = self.encrypt(
-                auth_token=self.config.get('ksef', 'token'),
+                auth_token=self.config.get('user', 'token'),
                 challenge_timestamp=millisec,
-                pemdata=self.config.get('ksef', 'publickey'),
+                pemdata=self.config.get(self.section, 'publickey'),
             )
             data = open('InitSessionTokenRequest.xml', 'rb').read()
             data = data.replace(b'{challenge}', response.parsed.challenge.encode('ascii'))
-            data = data.replace(b'{nip}', self.config.get('ksef', 'nip').encode('ascii'))
+            data = data.replace(b'{nip}', self.config.get('user', 'nip').encode('ascii'))
             data = data.replace(b'{token}', token)
             data = types.Content(data)
             #data = models.InitSessionSignedRequest(data)
@@ -221,33 +222,38 @@ class Main:
         data = open(fname, 'rb').read()
         response = self.uploaddata(data)
         no = response.element_reference_number
-        # processingCode ma ilka stanow
-        response = api.faktury.status.sync_detailed(
-            client=self.authclient,
-            invoice_element_reference_number=no
-        )
-        return response.parsed
+        # processingCode ma kilka stanow
+        # 100 - zarejestrowany, 3??, 200 - w archiwum
+        for i in range(4):
+            response = api.faktury.status.sync_detailed(
+                client=self.authclient,
+                invoice_element_reference_number=no
+            )
+            time.sleep(5)
 
 def main():
     cls = Main()
     try:
         cls.login()
         try:
-            if 1:
+            if 0:
                 cls.query1(
                     datetime.datetime(2023, 10, 3, tzinfo=tzlocal()),
                     datetime.datetime(2023, 10, 3, 16, 46, 0, tzinfo=tzlocal()),
                 )
-            if 1:
+            if 0:
                 cls.query2(
                     datetime.datetime(2023, 9, 29, tzinfo=tzlocal()),
                     datetime.datetime(2023, 9, 30, tzinfo=tzlocal()),
                 )
             if 0:
-                cls.upload('fv-1696558560.443855.xml')
+                for fname in (
+                    'fv-1696621761.893093.xml',
+                    'fv-1696621762.334318.xml',
+                ):
+                    cls.upload(fname)
         finally:
-            pass
-            #cls.logout()
+           cls.logout()
     except EOFError as e:
         print(e)
 
