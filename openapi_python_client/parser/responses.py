@@ -30,6 +30,9 @@ def _source_by_content_type(content_type: str) -> Optional[str]:
         "application/json": "response.json()",
         "application/octet-stream": "response.content",
         "text/html": "response.text",
+        "application/vnd.v2+json": "response.json()",
+        "application/vnd.v3+json": "response.json()",
+        "application/vnd.v3+octet-stream": "response.content",
     }
     source = known_content_types.get(content_type)
     if source is None and content_type.endswith("+json"):

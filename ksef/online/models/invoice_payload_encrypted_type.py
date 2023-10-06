@@ -8,9 +8,9 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import Dict
-from io import BytesIO
 from typing import cast
+from io import BytesIO
+from typing import Dict
 from ..types import File, FileJsonType
 
 if TYPE_CHECKING:

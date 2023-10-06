@@ -9,8 +9,8 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 from typing import cast, List
-from typing import Dict
 from typing import cast
+from typing import Dict
 
 if TYPE_CHECKING:
   from ..models.credentials_role_request_token_type import CredentialsRoleRequestTokenType

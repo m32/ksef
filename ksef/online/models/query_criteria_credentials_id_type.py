@@ -8,10 +8,10 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..models.query_criteria_credentials_id_type_query_credentials_scope_result_type import QueryCriteriaCredentialsIdTypeQueryCredentialsScopeResultType
+from typing import cast
 from ..models.query_criteria_credentials_id_type_query_credentials_type_result_type import QueryCriteriaCredentialsIdTypeQueryCredentialsTypeResultType
 from typing import Dict
-from typing import cast
+from ..models.query_criteria_credentials_id_type_query_credentials_scope_result_type import QueryCriteriaCredentialsIdTypeQueryCredentialsScopeResultType
 
 if TYPE_CHECKING:
   from ..models.credentials_identifier_request_type import CredentialsIdentifierRequestType

@@ -8,10 +8,10 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-import datetime
 from ..models.query_criteria_invoice_type_subject_type import QueryCriteriaInvoiceTypeSubjectType
-from dateutil.parser import isoparse
+import datetime
 from typing import cast
+from dateutil.parser import isoparse
 
 
 

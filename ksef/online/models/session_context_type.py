@@ -8,16 +8,16 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import Union
-from ..types import UNSET, Unset
-from typing import Dict
-from typing import cast
 from typing import cast, List
+from ..types import UNSET, Unset
+from typing import Union
+from typing import cast
+from typing import Dict
 
 if TYPE_CHECKING:
   from ..models.subject_name_type import SubjectNameType
-  from ..models.subject_identifier_by_type import SubjectIdentifierByType
   from ..models.credentials_role_response_base_type_object import CredentialsRoleResponseBaseTypeObject
+  from ..models.subject_identifier_by_type import SubjectIdentifierByType
 
 
 
@@ -43,8 +43,8 @@ class SessionContextType:
 
     def to_dict(self) -> Dict[str, Any]:
         from ..models.subject_name_type import SubjectNameType
-        from ..models.subject_identifier_by_type import SubjectIdentifierByType
         from ..models.credentials_role_response_base_type_object import CredentialsRoleResponseBaseTypeObject
+        from ..models.subject_identifier_by_type import SubjectIdentifierByType
         context_identifier = self.context_identifier.to_dict()
 
         credentials_role_list = []
@@ -77,8 +77,8 @@ class SessionContextType:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.subject_name_type import SubjectNameType
-        from ..models.subject_identifier_by_type import SubjectIdentifierByType
         from ..models.credentials_role_response_base_type_object import CredentialsRoleResponseBaseTypeObject
+        from ..models.subject_identifier_by_type import SubjectIdentifierByType
         d = src_dict.copy()
         context_identifier = SubjectIdentifierByType.from_dict(d.pop("contextIdentifier"))
 

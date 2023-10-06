@@ -8,21 +8,21 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-import datetime
-from typing import Union
-from ..types import UNSET, Unset
 from typing import cast, List
-from ..models.v2_query_criteria_invoice_detail_type_invoice_types_item import V2QueryCriteriaInvoiceDetailTypeInvoiceTypesItem
-from typing import Dict
 from ..models.v2_query_criteria_invoice_detail_type_currency_codes_item import V2QueryCriteriaInvoiceDetailTypeCurrencyCodesItem
-from typing import cast
+import datetime
+from ..types import UNSET, Unset
+from typing import Union
 from ..models.v2_query_criteria_invoice_detail_type_amount_type import V2QueryCriteriaInvoiceDetailTypeAmountType
-from ..models.v2_query_criteria_invoice_type_subject_type import V2QueryCriteriaInvoiceTypeSubjectType
+from typing import cast
 from dateutil.parser import isoparse
+from ..models.v2_query_criteria_invoice_type_subject_type import V2QueryCriteriaInvoiceTypeSubjectType
+from typing import Dict
+from ..models.v2_query_criteria_invoice_detail_type_invoice_types_item import V2QueryCriteriaInvoiceDetailTypeInvoiceTypesItem
 
 if TYPE_CHECKING:
-  from ..models.v2_subject_to_query_type import V2SubjectToQueryType
   from ..models.v2_subject_by_query_type import V2SubjectByQueryType
+  from ..models.v2_subject_to_query_type import V2SubjectToQueryType
 
 
 
@@ -71,8 +71,8 @@ class V2QueryCriteriaInvoiceDetailType:
 
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.v2_subject_to_query_type import V2SubjectToQueryType
         from ..models.v2_subject_by_query_type import V2SubjectByQueryType
+        from ..models.v2_subject_to_query_type import V2SubjectToQueryType
         subject_type = self.subject_type.value
 
         type = self.type
@@ -155,8 +155,8 @@ class V2QueryCriteriaInvoiceDetailType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.v2_subject_to_query_type import V2SubjectToQueryType
         from ..models.v2_subject_by_query_type import V2SubjectByQueryType
+        from ..models.v2_subject_to_query_type import V2SubjectToQueryType
         d = src_dict.copy()
         subject_type = V2QueryCriteriaInvoiceTypeSubjectType(d.pop("subjectType"))
 

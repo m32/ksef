@@ -7,9 +7,9 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from ...models.upo_response_200 import UpoResponse200
 from typing import Dict
 from typing import cast
+from ...models.upo_response_200 import UpoResponse200
 from ...models.exception_response import ExceptionResponse
 
 

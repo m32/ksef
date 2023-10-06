@@ -7,10 +7,10 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import Dict
-from ...models.query_invoice_request import QueryInvoiceRequest
 from ...models.exception_response import ExceptionResponse
+from typing import Dict
 from typing import cast
+from ...models.query_invoice_request import QueryInvoiceRequest
 from ...models.query_invoice_async_init_response import QueryInvoiceAsyncInitResponse
 
 

@@ -8,13 +8,13 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from typing import Union
 from dateutil.parser import isoparse
-from io import BytesIO
-from ..types import File, FileJsonType
-from ..types import UNSET, Unset
 import datetime
 from typing import cast
-from typing import Union
+from ..types import File, FileJsonType
+from io import BytesIO
+from ..types import UNSET, Unset
 
 
 

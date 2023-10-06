@@ -7,9 +7,9 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
+from typing import cast
 from ...models.exception_response import ExceptionResponse
 from ...models.internal_identifier_generated_response import InternalIdentifierGeneratedResponse
-from typing import cast
 from typing import Dict
 
 
