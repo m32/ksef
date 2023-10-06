@@ -94,4 +94,4 @@ data = data.format(
     vilosc=vilosc,
     vcnetto=vcnetto,
 )
-open('{}.xml'.format(serial), 'wt').write(data)
+open('fv-{}.xml'.format(serial), 'wt').write(data)
