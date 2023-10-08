@@ -170,6 +170,7 @@ ksefcommon/
 ksefonline/
 SessionToken
 fv-*.xml
+query-*.xml
 upo-*.xml
 upo.csv
 xml/
