@@ -1,4 +1,5 @@
 #!/usr/bin/env vpython3
+import os
 import sys
 import logging
 import logging.config
@@ -43,7 +44,7 @@ class Main:
             client=self.client,
             reference_number=session,
         )
-        if response.parsed.processing_code == 200:
+        if response.status_code == 200 and response.parsed.processing_code == 200:
             upo = response.parsed.upo.payload
             upo = b64decode(upo.getvalue())
             open('upo-{}.xml'.format(session), 'wb').write(upo)
@@ -51,8 +52,18 @@ class Main:
 def main():
     cls = Main()
     try:
-        cls.upo(sys.argv[1])
-        #cls.upo1('20231006-SE-93381FAB12-BD2B9843ED-A2', '8511172404-20231006-9853C3051C26-95')
+        for a in sys.argv:
+            cls.upo(a)
+        if os.path.exists('upo.csv'):
+            sessions = []
+            with open('upo.csv', 'rt') as fp:
+                for line in fp.readlines():
+                    session, ksefid = line.strip().split('|')
+                    if session not in sessions:
+                        cls.upo(session)
+                        #cls.upo1(session, ksefid)
+                        sessions.append(session)
+            os.unlink('upo.csv')
     except EOFError as e:
         print(e)
 

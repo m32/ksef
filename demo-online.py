@@ -1,5 +1,7 @@
 #!/usr/bin/env vpython3
 import os
+import sys
+import getopt
 import hashlib
 import time
 import logging
@@ -92,6 +94,8 @@ class Main:
                 client=client,
                 content=data
             )
+            if response.status_code != 201:
+                raise EOFError(response.status_code, response.parsed)
             token = response.parsed.session_token.token
             reference_number = response.parsed.reference_number
             with open('SessionToken', 'wt') as fp:
@@ -123,9 +127,13 @@ class Main:
                 page_offset=0,
                 reference_number=self.reference_number,
             )
+            if response.status_code != 200:
+                if os.path.exists('SessionToken'):
+                    os.unlink('SessionToken')
+                raise EOFError(response.status_code, response.parsed)
             # czekamy na uruchomienie procesu roboczego
             if response.parsed.processing_code == 315:
-                break
+                return response
             time.sleep(5)
 
     def logout(self):
@@ -134,11 +142,12 @@ class Main:
             client=self.authclient,
         )
 
-    def query1(self, datefrom, dateto):
+    def query(self, subject, datefrom, dateto):
+        subjectType = getattr(models.QueryCriteriaInvoiceTypeSubjectType, 'SUBJECT'+subject)
         json_body = models.QueryInvoiceRequest(
             query_criteria=models.QueryCriteriaInvoiceRangeType(
                 subject_type=models.QueryCriteriaInvoiceTypeSubjectType(
-                    models.QueryCriteriaInvoiceTypeSubjectType.SUBJECT1
+                    subjectType
                 ),
                 type='range',
                 invoicing_date_from=datefrom,
@@ -151,44 +160,28 @@ class Main:
             page_size=100,
             page_offset=0,
         )
-        self.querysave(response)
+        if response.status_code != 200:
+            raise EOFError(response.status_code, response.parsed)
 
-    def query2(self, datefrom, dateto):
-        json_body = models.QueryInvoiceRequest(
-            query_criteria=models.QueryCriteriaInvoiceRangeType(
-                subject_type=models.QueryCriteriaInvoiceTypeSubjectType(
-                    models.QueryCriteriaInvoiceTypeSubjectType.SUBJECT2
-                ),
-                type='range',
-                invoicing_date_from=datefrom,
-                invoicing_date_to=dateto,
-            ),
-        )
-        response = api.zapytania.invoice.sync_detailed(
-            client=self.authclient,
-            json_body=json_body,
-            page_size=100,
-            page_offset=0,
-        )
-        self.querysave(response)
-
-    def querysave(self, response):
         sh = self.authclient._headers.copy()
-        self.authclient._headers.update({
-            'Accept': 'application/octet-stream'
-            #'Accept': '*/*',
-        })
-        for no in range(response.parsed.number_of_elements):
-            rec = response.parsed.invoice_header_list[no]
-            xno = rec.ksef_reference_number
-            xdate = rec.invoicing_date
-            xhash = rec.invoice_hash.hash_sha.value.payload.getvalue().decode()
-            resp = api.faktury.get.sync_detailed(
-                client=self.authclient,
-                k_se_f_reference_number=xno,
-            )
-            open('%s.xml'%xno, 'wb').write(resp.parsed.additional_properties['content'])
-        self.authclient._headers = sh
+        try:
+            self.authclient._headers.update({
+                'Accept': 'application/octet-stream'
+                #'Accept': '*/*',
+            })
+            for no in range(response.parsed.number_of_elements):
+                rec = response.parsed.invoice_header_list[no]
+                xno = rec.ksef_reference_number
+                xdate = rec.invoicing_date
+                xhash = rec.invoice_hash.hash_sha.value.payload.getvalue().decode()
+                resp = api.faktury.get.sync_detailed(
+                    client=self.authclient,
+                    k_se_f_reference_number=xno,
+                )
+                with open('query-{}-{}.xml'.format(subject, xno), 'wb') as fp:
+                    fp.write(resp.parsed.additional_properties['content'])
+        finally:
+            self.authclient._headers = sh
 
     def uploaddata(self, data):
         size = len(data)
@@ -216,45 +209,65 @@ class Main:
             client=self.authclient,
             json_body=json_body,
         )
-        return response.parsed
+        # 202 = accepted
+        if response.status_code != 202:
+            raise EOFError(response.status_code, response.parsed)
+        return response
 
     def upload(self, fname):
         data = open(fname, 'rb').read()
         response = self.uploaddata(data)
-        no = response.element_reference_number
-        # processingCode ma kilka stanow
-        # 100 - zarejestrowany, 3??, 200 - w archiwum
-        for i in range(4):
+        no = response.parsed.element_reference_number
+        while response.parsed.processing_code != 200 and response.parsed.processing_code < 400:
             response = api.faktury.status.sync_detailed(
                 client=self.authclient,
                 invoice_element_reference_number=no
             )
+            if response.status_code == 400:
+                break
             time.sleep(5)
 
+        if response.parsed.processing_code == 200:
+            with open('upo.csv', 'at') as fp:
+                fp.write('{}|{}\n'.format(
+                    self.reference_number, response.parsed.element_reference_number
+                ))
+
 def main():
+    dateto = datetime.datetime.now(tz=tzlocal())
+    datefrom = datetime.datetime(year=dateto.year, month=dateto.month, day=dateto.day, tzinfo=tzlocal())
+    query = None
+    opts, args = getopt.getopt(sys.argv[1:], '', [
+        'date-from=',
+        'date-to=',
+        'query=',
+    ])
+    for o, a in opts:
+        if o == '--date-from':
+            datefrom = parser.parse(a)
+        elif o == '--date-to':
+            dateto = parser.parse(a)
+        elif o == '--query':
+            assert a in '123'
+            query = a
+    if query is None and not args:
+        print('Nic do zrobienia, podaj parametry query albo dodaj listę plików do zapisania w ksef')
+        print(sys.argv[0], '--query=1|2 [--date-from=...] [--date-to=...]')
+        print(sys.argv[0], 'fv-1.xml fv-2.xml')
+        return
     cls = Main()
     try:
         cls.login()
         try:
-            if 0:
-                cls.query1(
-                    datetime.datetime(2023, 10, 3, tzinfo=tzlocal()),
-                    datetime.datetime(2023, 10, 3, 16, 46, 0, tzinfo=tzlocal()),
-                )
-            if 0:
-                cls.query2(
-                    datetime.datetime(2023, 9, 29, tzinfo=tzlocal()),
-                    datetime.datetime(2023, 9, 30, tzinfo=tzlocal()),
-                )
-            if 0:
-                for fname in (
-                    'fv-1696621761.893093.xml',
-                    'fv-1696621762.334318.xml',
-                ):
-                    cls.upload(fname)
+            if query is not None:
+                cls.query(query, datefrom, dateto)
+            for fname in args:
+                cls.upload(fname)
         finally:
-           cls.logout()
+            cls.logout()
+            pass
     except EOFError as e:
+        print('+'*20, 'EOFError')
         print(e)
 
 main()

@@ -162,6 +162,8 @@ cython_debug/
 demo/
 openapi-python-client/
 todo-*
+ksef.log.*
+ksef.log
 x-*
 ksefbatch/
 ksefcommon/
@@ -169,4 +171,5 @@ ksefonline/
 SessionToken
 fv-*.xml
 upo-*.xml
+upo.csv
 xml/
