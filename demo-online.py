@@ -227,11 +227,12 @@ class Main:
                 break
             time.sleep(5)
 
-        if response.parsed.processing_code == 200:
+        if response.status_code == 200 and response.parsed.processing_code == 200:
             with open('upo.csv', 'at') as fp:
                 fp.write('{}|{}\n'.format(
                     self.reference_number, response.parsed.element_reference_number
                 ))
+        raise EOFError(response.status_code, response.parsed)
 
 def main():
     dateto = datetime.datetime.now(tz=tzlocal())
