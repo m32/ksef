@@ -1,7 +1,13 @@
 # ksef
-Biblioteka do komunikacji z systemem KSeF
+Biblioteka do komunikacji z systemem KSeF w wykorzystanniem generatora: https://github.com/openapi-generators/openapi-python-client
 
-konfiguracja w pliku ksef.ini, należy wypełnić:
+Generacja osbywa się komendą ./x-openapi-python-client-git all|batch|common|online
+Przed uruchomieniem generatora należy doinstalować wymagane przez niego pakiety.
+
+Generator nie obsługuje wszystkich typów użytych w ksef, w związku z tym po generacji należy dodać poprawki:
+patch -p1 <openapi_python_client.diff
+
+Konfiguracja w pliku ksef.ini, należy wypełnić:
 * nip = numer nip firmy na konto której się logujemy
 * token = wygenerowany token po interaktywnym zalogowaniu się na konto firmy - lub podany przez właściciela firmy
 
