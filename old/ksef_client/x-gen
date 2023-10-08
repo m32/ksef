@@ -1,4 +1,0 @@
-/devel/bin/python3/bin/openapi-python-client \
-generate \
---path KSeF-online.yaml \
---config config.yaml
