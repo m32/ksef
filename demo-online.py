@@ -29,10 +29,11 @@ from dateutil import parser
 from ksef.online import Client, AuthenticatedClient, models, types, errors, api
 
 class Main:
-    def __init__(self):
+    def __init__(self, user, server):
         self.config = configparser.ConfigParser()
         self.config.read('ksef.ini')
-        self.section = 'ksef-demo'
+        self.server = server
+        self.user = user
 
         self.headers = {
             'Accept': '*/*',
@@ -58,7 +59,7 @@ class Main:
             token = reference_number = None
 
         client = Client(
-            base_url=self.config.get(self.section, 'api'),
+            base_url=self.config.get(self.server, 'api'),
             headers=self.headers
         )
 
@@ -68,7 +69,7 @@ class Main:
                 json_body=models.AuthorisationChallengeRequest(
                     context_identifier=models.SubjectIdentifierByCompanyType(
                         type='onip',
-                        identifier=self.config.get('user', 'nip')
+                        identifier=self.config.get(self.user, 'nip')
                     )
                 )
             )
@@ -79,13 +80,13 @@ class Main:
             millisec = str(int(millisec))
 
             token = self.encrypt(
-                auth_token=self.config.get('user', 'token'),
+                auth_token=self.config.get(self.user, 'token'),
                 challenge_timestamp=millisec,
-                pemdata=self.config.get(self.section, 'publickey'),
+                pemdata=self.config.get(self.server, 'publickey'),
             )
             data = open('InitSessionTokenRequest.xml', 'rb').read()
             data = data.replace(b'{challenge}', response.parsed.challenge.encode('ascii'))
-            data = data.replace(b'{nip}', self.config.get('user', 'nip').encode('ascii'))
+            data = data.replace(b'{nip}', self.config.get(self.user, 'nip').encode('ascii'))
             data = data.replace(b'{token}', token)
             data = types.Content(data)
             #data = models.InitSessionSignedRequest(data)
@@ -238,10 +239,14 @@ def main():
     dateto = datetime.datetime.now(tz=tzlocal())
     datefrom = datetime.datetime(year=dateto.year, month=dateto.month, day=dateto.day, tzinfo=tzlocal())
     query = None
+    server = 'ksef-demo'
+    user = 'user'
     opts, args = getopt.getopt(sys.argv[1:], '', [
         'date-from=',
         'date-to=',
         'query=',
+        'server=',
+        'user=',
     ])
     for o, a in opts:
         if o == '--date-from':
@@ -251,12 +256,16 @@ def main():
         elif o == '--query':
             assert a in '123'
             query = a
+        elif o == '--server':
+            server = a
+        elif o == '--user':
+            user = a
     if query is None and not args:
         print('Nic do zrobienia, podaj parametry query albo dodaj listę plików do zapisania w ksef')
         print(sys.argv[0], '--query=1|2 [--date-from=...] [--date-to=...]')
         print(sys.argv[0], 'fv-1.xml fv-2.xml')
         return
-    cls = Main()
+    cls = Main(user, server)
     try:
         cls.login()
         try:
