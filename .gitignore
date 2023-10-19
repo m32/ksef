@@ -164,7 +164,6 @@ openapi-python-client/
 todo-*
 ksef.log.*
 ksef.log
-x-*
 ksefbatch/
 ksefcommon/
 ksefonline/
@@ -174,3 +173,4 @@ query-*.xml
 upo-*.xml
 upo.csv
 xml/
+x-cert-*
