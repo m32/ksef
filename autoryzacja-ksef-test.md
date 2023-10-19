@@ -43,7 +43,10 @@ token="tu wpisujesz to co zostało wygenerowane"
 - wybierasz rodzaj uprawnienia
 - jeżeli chcesz się logować certyfikaten to:
     - wybierasz firmę i wpisujesz jej NIP, ten wygenerowany przez x-cert.sh
-    - wybierasz osobę, to w polu "Wskaż rodzaj podmiotu uprawnionego" wybierasz "Osoba fizyczna", wpisujesz jej NIP/PESEL, ten wygenerowany przez x-cert.sh
+    - wybierasz osobę, to w polu "Wskaż rodzaj podmiotu uprawnionego" wybierasz "Osoba fizyczna" to:
+        - wpisujesz jej NIP/PESEL, ten wygenerowany przez x-cert.sh
+        - imię musi być identyczne jak w certyfikacie: Jan
+        - nazwisko musi być identyczne jak w certyfikacie: Babacki
 - klikasz guzik "Nadaj uprawnienie"
 
 Od tego momentu możesz w pkt 4. logować się w ramach wygenerowanych uprawnień przy pomocy wygenerowanego certyfikatem
