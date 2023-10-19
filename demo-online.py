@@ -28,6 +28,27 @@ from dateutil import parser
 
 from ksef.online import Client, AuthenticatedClient, models, types, errors, api
 
+class KSEFError(Exception):
+    def __init__(self, rc, parsed):
+        self.rc = rc
+        self.parsed = parsed
+        try:
+            errors = parsed.exception.exception_detail_list
+            krc = errors[0].exception_code
+            kmsg = errors[0].exception_description
+        except:
+            krc = -1
+            kmsg = 'unparsable'
+            import traceback; traceback.print_exc()
+        self.krc = krc
+        self.kmsg = kmsg
+
+    def __str__(self):
+        return 'KSEFError: rc={} msg={}'.format(self.krc, self.kmsg)
+
+    __repr__ = __str__
+
+
 class Main:
     def __init__(self, user, server):
         self.config = configparser.ConfigParser()
@@ -74,7 +95,7 @@ class Main:
                 )
             )
             if response.status_code != 201:
-                raise EOFError(response.status_code, response.parsed)
+                raise KSEFError(response.status_code, response.parsed)
             #millisec = parser.parse(response.parsed.timestamp)
             millisec = response.parsed.timestamp.timestamp() * 1000
             millisec = str(int(millisec))
@@ -96,7 +117,7 @@ class Main:
                 content=data
             )
             if response.status_code != 201:
-                raise EOFError(response.status_code, response.parsed)
+                raise KSEFError(response.status_code, response.parsed)
             token = response.parsed.session_token.token
             reference_number = response.parsed.reference_number
             with open('SessionToken', 'wt') as fp:
@@ -131,13 +152,14 @@ class Main:
             if response.status_code != 200:
                 if os.path.exists('SessionToken'):
                     os.unlink('SessionToken')
-                raise EOFError(response.status_code, response.parsed)
+                raise KSEFError(response.status_code, response.parsed)
             # czekamy na uruchomienie procesu roboczego
             if response.parsed.processing_code == 315:
                 return response
             time.sleep(5)
 
     def logout(self):
+        return
         os.unlink('SessionToken')
         response = api.sesja.terminate.sync_detailed(
             client=self.authclient,
@@ -174,7 +196,7 @@ class Main:
             page_offset=0,
         )
         if response.status_code != 200:
-            raise EOFError(response.status_code, response.parsed)
+            raise KSEFError(response.status_code, response.parsed)
 
         sh = self.authclient._headers.copy()
         try:
@@ -224,7 +246,7 @@ class Main:
         )
         # 202 = accepted
         if response.status_code != 202:
-            raise EOFError(response.status_code, response.parsed)
+            raise KSEFError(response.status_code, response.parsed)
         return response
 
     def upload(self, fname):
@@ -245,7 +267,7 @@ class Main:
                 fp.write('{}|{}\n'.format(
                     self.reference_number, response.parsed.element_reference_number
                 ))
-        raise EOFError(response.status_code, response.parsed)
+        raise KSEFError(response.status_code, response.parsed)
 
 def main():
     dateto = datetime.datetime.now(tz=tzlocal())
@@ -293,8 +315,9 @@ def main():
         finally:
             cls.logout()
             pass
-    except EOFError as e:
-        print('+'*20, 'EOFError')
+    except KSEFError as e:
+        print('+'*20, 'KSEFError')
         print(e)
+        print(e.parsed)
 
 main()
