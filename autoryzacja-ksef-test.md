@@ -1,4 +1,4 @@
-Na stronie https://ksef-test.mf.gov.pl/web wybieramy:
+Na stronie https://ksef-test.mf.gov.pl/web wybierasz:
 1. Strona główna KSEF
 - Uwirzytelnij się w krajowym Systemie e-Faktur
 2. Kontekst logowania
@@ -44,7 +44,7 @@ token="tu wpisujesz to co zostało wygenerowane"
 - jeżeli chcesz się logować certyfikaten to:
     - wybierasz firmę i wpisujesz jej NIP, ten wygenerowany przez x-cert.sh
     - wybierasz osobę, to w polu "Wskaż rodzaj podmiotu uprawnionego" wybierasz "Osoba fizyczna" to:
-        - wpisujesz jej NIP/PESEL, ten wygenerowany przez x-cert.sh
+        - wpisujesz jej NIP(5330957838)/PESEL(53081422566), ten wygenerowany przez x-cert.sh
         - imię musi być identyczne jak w certyfikacie: Jan
         - nazwisko musi być identyczne jak w certyfikacie: Babacki
 - klikasz guzik "Nadaj uprawnienie"
