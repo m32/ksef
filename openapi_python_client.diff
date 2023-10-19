@@ -83,6 +83,20 @@ index 52b4b27..90b7682 100644
          )
  
  
+diff --git a/ksef/online/models/subject_name_type.py b/ksef/online/models/subject_name_type.py
+index 1107cbc..05d844d 100644
+--- a/ksef/online/models/subject_name_type.py
++++ b/ksef/online/models/subject_name_type.py
+@@ -51,7 +51,7 @@ class SubjectNameType:
+     @classmethod
+     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+         d = src_dict.copy()
+-        type = d.pop("type")
++        type = d.pop("type", None)
+ 
+         trade_name = d.pop("tradeName", UNSET)
+ 
+
 diff --git a/ksef/common/models/status_response.py b/ksef/common/models/status_response.py
 index 393e09b..fdd3f06 100644
 --- a/ksef/common/models/status_response.py

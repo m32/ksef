@@ -51,7 +51,7 @@ class SubjectNameType:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        type = d.pop("type")
+        type = d.pop("type", None)
 
         trade_name = d.pop("tradeName", UNSET)
 
