@@ -36,6 +36,7 @@ openssl x509 -signkey x-cert-vat-key.pem -in x-cert-vat.csr -req -days 3650 -out
 openssl pkcs12 -export -out x-cert-vat.p12 -inkey x-cert-vat-key.pem -in x-cert-vat.pem
 }
 
+echo "Hasło musi być zgodne z tym co jest wpisane w x-sign-endesive-xml.py, czyli: 12345678"
 cert-pesel
 cert-nip
 cert-vat
