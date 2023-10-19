@@ -49,4 +49,4 @@ token="tu wpisujesz to co zostało wygenerowane"
         - nazwisko musi być identyczne jak w certyfikacie: Babacki
 - klikasz guzik "Nadaj uprawnienie"
 
-Od tego momentu możesz w pkt 4. logować się w ramach wygenerowanych uprawnień przy pomocy wygenerowanego certyfikatem
+Od tego momentu możesz w pkt 4. logować się w ramach wygenerowanych uprawnień przy pomocy wygenerowanego certyfikatu
