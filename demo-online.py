@@ -143,18 +143,30 @@ class Main:
             client=self.authclient,
         )
 
-    def query(self, subject, datefrom, dateto):
+    def query(self, subject, datefrom, dateto, incremental=True):
         subjectType = getattr(models.QueryCriteriaInvoiceTypeSubjectType, 'SUBJECT'+subject)
-        json_body = models.QueryInvoiceRequest(
-            query_criteria=models.QueryCriteriaInvoiceRangeType(
-                subject_type=models.QueryCriteriaInvoiceTypeSubjectType(
-                    subjectType
+        if incremental:
+            json_body = models.QueryInvoiceRequest(
+                query_criteria=models.QueryCriteriaInvoiceIncrementalType(
+                    subject_type=models.QueryCriteriaInvoiceTypeSubjectType(
+                        subjectType
+                    ),
+                    type='incremental',
+                    acquisition_timestamp_threshold_from=datefrom,
+                    acquisition_timestamp_threshold_to=dateto,
                 ),
-                type='range',
-                invoicing_date_from=datefrom,
-                invoicing_date_to=dateto,
-            ),
-        )
+            )
+        else:
+            json_body = models.QueryInvoiceRequest(
+                query_criteria=models.QueryCriteriaInvoiceRangeType(
+                    subject_type=models.QueryCriteriaInvoiceTypeSubjectType(
+                        subjectType
+                    ),
+                    type='range',
+                    invoicing_date_from=datefrom,
+                    invoicing_date_to=dateto,
+                ),
+            )
         response = api.zapytania.invoice.sync_detailed(
             client=self.authclient,
             json_body=json_body,
@@ -239,12 +251,14 @@ def main():
     dateto = datetime.datetime.now(tz=tzlocal())
     datefrom = datetime.datetime(year=dateto.year, month=dateto.month, day=dateto.day, tzinfo=tzlocal())
     query = None
+    querytype = True
     server = 'ksef-demo'
     user = 'user'
     opts, args = getopt.getopt(sys.argv[1:], '', [
         'date-from=',
         'date-to=',
         'query=',
+        'query-type=',
         'server=',
         'user=',
     ])
@@ -256,21 +270,24 @@ def main():
         elif o == '--query':
             assert a in '123'
             query = a
+        elif o == '--query-type':
+            assert a in ('incremental', 'range')
+            querytype = a == 'incremental'
         elif o == '--server':
             server = a
         elif o == '--user':
             user = a
     if query is None and not args:
         print('Nic do zrobienia, podaj parametry query albo dodaj listę plików do zapisania w ksef')
-        print(sys.argv[0], '--query=1|2 [--date-from=...] [--date-to=...] [--server=ksef-demo|ksef-prod|ksef-test] [--user=user??] [fv-1.xml fv-2.xml ...]')
-        print('./demo-online.py --server=ksef-test --user=user3 --query=2 --date-from=2023-10-17T09:00:00T+0200 --date-to=2023-10-17T10:00:00T+0200')
+        print(sys.argv[0], '[--query=1|2] [--query-type=incremental|range] [--date-from=...] [--date-to=...] [--server=ksef-demo|ksef-prod|ksef-test] [--user=user??] [fv-1.xml fv-2.xml ...]')
+        print('./demo-online.py --server=ksef-test --user=user3 --query=2 --date-from=2023-10-17T09:00:00+02:00 --date-to=2023-10-17T10:00:00+02:00')
         return
     cls = Main(user, server)
     try:
         cls.login()
         try:
             if query is not None:
-                cls.query(query, datefrom, dateto)
+                cls.query(query, datefrom, dateto, querytype)
             for fname in args:
                 cls.upload(fname)
         finally:
