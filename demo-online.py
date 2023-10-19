@@ -262,8 +262,8 @@ def main():
             user = a
     if query is None and not args:
         print('Nic do zrobienia, podaj parametry query albo dodaj listę plików do zapisania w ksef')
-        print(sys.argv[0], '--query=1|2 [--date-from=...] [--date-to=...]')
-        print(sys.argv[0], 'fv-1.xml fv-2.xml')
+        print(sys.argv[0], '--query=1|2 [--date-from=...] [--date-to=...] [--server=ksef-demo|ksef-prod|ksef-test] [--user=user??] [fv-1.xml fv-2.xml ...]')
+        print('./demo-online.py --server=ksef-test --user=user3 --query=2 --date-from=2023-10-17T09:00:00T+0200 --date-to=2023-10-17T10:00:00T+0200')
         return
     cls = Main(user, server)
     try:
