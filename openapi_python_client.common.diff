@@ -1,0 +1,13 @@
+diff --git a/ksef/common/models/status_response.py b/ksef/common/models/status_response.py
+index 393e09b..fdd3f06 100644
+--- a/ksef/common/models/status_response.py
++++ b/ksef/common/models/status_response.py
+@@ -89,7 +89,7 @@ class StatusResponse:
+             upo = UNSET
+         else:
+             upo = File(
+-             payload = BytesIO(_upo)
++             payload = BytesIO(_upo.encode())
+         )
+ 
+ 
