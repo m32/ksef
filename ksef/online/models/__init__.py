@@ -89,6 +89,7 @@ from .status_invoice_response import StatusInvoiceResponse
 from .subject_authorized_type import SubjectAuthorizedType
 from .subject_authorized_type_subject_authorized_type import SubjectAuthorizedTypeSubjectAuthorizedType
 from .subject_by_type import SubjectByType
+from .subject_complete_name_type import SubjectCompleteNameType
 from .subject_full_name_type import SubjectFullNameType
 from .subject_identifier_by_company_type import SubjectIdentifierByCompanyType
 from .subject_identifier_by_type import SubjectIdentifierByType
@@ -220,6 +221,7 @@ __all__ = (
     "SubjectAuthorizedType",
     "SubjectAuthorizedTypeSubjectAuthorizedType",
     "SubjectByType",
+    "SubjectCompleteNameType",
     "SubjectFullNameType",
     "SubjectIdentifierByCompanyType",
     "SubjectIdentifierByType",

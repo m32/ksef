@@ -7,9 +7,9 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import Dict
-from ...models.send_invoice_request import SendInvoiceRequest
 from ...models.send_invoice_response import SendInvoiceResponse
+from ...models.send_invoice_request import SendInvoiceRequest
+from typing import Dict
 from ...models.exception_response import ExceptionResponse
 from typing import cast
 

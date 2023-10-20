@@ -12,9 +12,9 @@ from typing import Dict
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.credentials_identifier_request_institutional_type import CredentialsIdentifierRequestInstitutionalType
   from ..models.credentials_identifier_request_individual_type import CredentialsIdentifierRequestIndividualType
   from ..models.credentials_role_request_context_described_type import CredentialsRoleRequestContextDescribedType
+  from ..models.credentials_identifier_request_institutional_type import CredentialsIdentifierRequestInstitutionalType
 
 
 
@@ -39,9 +39,9 @@ class GrantContextCredentialsRequestType:
 
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.credentials_identifier_request_institutional_type import CredentialsIdentifierRequestInstitutionalType
         from ..models.credentials_identifier_request_individual_type import CredentialsIdentifierRequestIndividualType
         from ..models.credentials_role_request_context_described_type import CredentialsRoleRequestContextDescribedType
+        from ..models.credentials_identifier_request_institutional_type import CredentialsIdentifierRequestInstitutionalType
         context_identifier = self.context_identifier.to_dict()
 
         credentials_identifier = self.credentials_identifier.to_dict()
@@ -63,9 +63,9 @@ class GrantContextCredentialsRequestType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.credentials_identifier_request_institutional_type import CredentialsIdentifierRequestInstitutionalType
         from ..models.credentials_identifier_request_individual_type import CredentialsIdentifierRequestIndividualType
         from ..models.credentials_role_request_context_described_type import CredentialsRoleRequestContextDescribedType
+        from ..models.credentials_identifier_request_institutional_type import CredentialsIdentifierRequestInstitutionalType
         d = src_dict.copy()
         context_identifier = CredentialsIdentifierRequestInstitutionalType.from_dict(d.pop("contextIdentifier"))
 

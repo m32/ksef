@@ -6,7 +6,7 @@ info:
     url: https://ksef.mf.gov.pl
   description: Krajowy System e-Faktur
   title: KSeF
-  version: 2.0.1
+  version: 2.0.3
 externalDocs:
   description: Dokumentacja
   url: https://www.gov.pl/web/kas/krajowy-system-e-faktur
@@ -995,8 +995,15 @@ paths:
                   description: Przykład błędnej odpowiedzi
                   summary: Przykład błędnej odpowiedzi
                   value:
-                    timestamp: 2021-10-01T12:13:14.999Z
-                    internalIdentifier: 2366841886-80251
+                    exception:
+                      serviceCtx: srvDVAKA
+                      serviceCode: 20211001-EX-FFFFFFFFFF-FFFFFFFFFF-FF
+                      serviceName: online.session.internal.identifier.generate
+                      timestamp: 2021-10-01T12:13:14.999Z
+                      referenceNumber: 20211001-SE-FFFFFFFFFF-FFFFFFFFFF-FF
+                      exceptionDetailList:
+                      - exceptionCode: 12345
+                        exceptionDescription: Opis błędu.
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
           description: Nieautoryzowany dostęp
@@ -3069,7 +3076,7 @@ components:
         contextIdentifier:
           $ref: '#/components/schemas/SubjectIdentifierByType'
         contextName:
-          $ref: '#/components/schemas/SubjectNameType'
+          $ref: '#/components/schemas/SubjectCompleteNameType'
         credentialsRoleList:
           type: array
           items:
@@ -3246,6 +3253,15 @@ components:
       required:
       - issuedByIdentifier
       - issuedByName
+    SubjectCompleteNameType:
+      type: object
+      properties:
+        fullName:
+          type: string
+          maxLength: 256
+          minLength: 1
+      required:
+      - fullName
     SubjectFullNameType:
       type: object
       allOf:
@@ -3985,7 +4001,7 @@ components:
         contextIdentifier:
           $ref: '#/components/schemas/SubjectIdentifierByType'
         contextName:
-          $ref: '#/components/schemas/SubjectNameType'
+          $ref: '#/components/schemas/SubjectCompleteNameType'
         credentialsRoleList:
           type: array
           items:

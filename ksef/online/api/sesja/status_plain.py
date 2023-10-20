@@ -7,12 +7,12 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import Dict
-from ...models.session_status_response import SessionStatusResponse
-from ...types import UNSET, Unset
-from ...models.exception_response import ExceptionResponse
 from typing import Union
+from ...models.session_status_response import SessionStatusResponse
+from typing import Dict
 from typing import Optional
+from ...models.exception_response import ExceptionResponse
+from ...types import UNSET, Unset
 from typing import cast
 
 

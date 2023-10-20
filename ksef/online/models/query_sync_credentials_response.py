@@ -8,10 +8,10 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from dateutil.parser import isoparse
-from typing import Dict
-import datetime
 from typing import cast, List
+import datetime
+from typing import Dict
+from dateutil.parser import isoparse
 from typing import cast
 
 if TYPE_CHECKING:

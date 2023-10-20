@@ -7,9 +7,9 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import Dict
-from ...models.status_credentials_response import StatusCredentialsResponse
 from ...models.revoke_token_request import RevokeTokenRequest
+from ...models.status_credentials_response import StatusCredentialsResponse
+from typing import Dict
 from ...models.exception_response import ExceptionResponse
 from typing import cast
 

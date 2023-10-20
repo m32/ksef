@@ -7,10 +7,10 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from ...models.request_payment_identifier_request import RequestPaymentIdentifierRequest
-from typing import Dict
 from ...models.request_payment_identifier_response import RequestPaymentIdentifierResponse
+from typing import Dict
 from ...models.exception_response import ExceptionResponse
+from ...models.request_payment_identifier_request import RequestPaymentIdentifierRequest
 from typing import cast
 
 

@@ -8,15 +8,15 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..models.subject_other_type_subject_other_type import SubjectOtherTypeSubjectOtherType
-from typing import Dict
-from ..types import UNSET, Unset
 from typing import Union
+from ..models.subject_other_type_subject_other_type import SubjectOtherTypeSubjectOtherType
+from ..types import UNSET, Unset
+from typing import Dict
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.subject_name_type import SubjectNameType
   from ..models.subject_identifier_other_to_type import SubjectIdentifierOtherToType
+  from ..models.subject_name_type import SubjectNameType
 
 
 
@@ -41,8 +41,8 @@ class SubjectOtherType:
 
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.subject_name_type import SubjectNameType
         from ..models.subject_identifier_other_to_type import SubjectIdentifierOtherToType
+        from ..models.subject_name_type import SubjectNameType
         issued_to_identifier = self.issued_to_identifier.to_dict()
 
         subject_other_type = self.subject_other_type.value
@@ -67,8 +67,8 @@ class SubjectOtherType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.subject_name_type import SubjectNameType
         from ..models.subject_identifier_other_to_type import SubjectIdentifierOtherToType
+        from ..models.subject_name_type import SubjectNameType
         d = src_dict.copy()
         issued_to_identifier = SubjectIdentifierOtherToType.from_dict(d.pop("issuedToIdentifier"))
 

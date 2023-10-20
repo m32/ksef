@@ -7,10 +7,10 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from ...models.authorisation_challenge_request import AuthorisationChallengeRequest
 from typing import Dict
-from ...models.exception_response import ExceptionResponse
 from ...models.authorisation_challenge_response import AuthorisationChallengeResponse
+from ...models.authorisation_challenge_request import AuthorisationChallengeRequest
+from ...models.exception_response import ExceptionResponse
 from typing import cast
 
 

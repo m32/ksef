@@ -8,21 +8,21 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from dateutil.parser import isoparse
-from typing import Dict
-import datetime
-from ..types import UNSET, Unset
 from ..models.invoice_header_type_invoice_type import InvoiceHeaderTypeInvoiceType
-from typing import cast, List
 from typing import Union
+from typing import cast, List
+import datetime
+from typing import Dict
+from ..types import UNSET, Unset
+from dateutil.parser import isoparse
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.file_unlimited_hash_type import FileUnlimitedHashType
-  from ..models.subject_authorized_type import SubjectAuthorizedType
-  from ..models.subject_by_type import SubjectByType
-  from ..models.subject_to_type import SubjectToType
   from ..models.subject_other_type import SubjectOtherType
+  from ..models.subject_authorized_type import SubjectAuthorizedType
+  from ..models.file_unlimited_hash_type import FileUnlimitedHashType
+  from ..models.subject_to_type import SubjectToType
+  from ..models.subject_by_type import SubjectByType
 
 
 
@@ -77,11 +77,11 @@ class InvoiceHeaderType:
 
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.file_unlimited_hash_type import FileUnlimitedHashType
-        from ..models.subject_authorized_type import SubjectAuthorizedType
-        from ..models.subject_by_type import SubjectByType
-        from ..models.subject_to_type import SubjectToType
         from ..models.subject_other_type import SubjectOtherType
+        from ..models.subject_authorized_type import SubjectAuthorizedType
+        from ..models.file_unlimited_hash_type import FileUnlimitedHashType
+        from ..models.subject_to_type import SubjectToType
+        from ..models.subject_by_type import SubjectByType
         acquisition_timestamp = self.acquisition_timestamp.isoformat()
 
         currency = self.currency
@@ -173,11 +173,11 @@ class InvoiceHeaderType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.file_unlimited_hash_type import FileUnlimitedHashType
-        from ..models.subject_authorized_type import SubjectAuthorizedType
-        from ..models.subject_by_type import SubjectByType
-        from ..models.subject_to_type import SubjectToType
         from ..models.subject_other_type import SubjectOtherType
+        from ..models.subject_authorized_type import SubjectAuthorizedType
+        from ..models.file_unlimited_hash_type import FileUnlimitedHashType
+        from ..models.subject_to_type import SubjectToType
+        from ..models.subject_by_type import SubjectByType
         d = src_dict.copy()
         acquisition_timestamp = isoparse(d.pop("acquisitionTimestamp"))
 

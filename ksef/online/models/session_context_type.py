@@ -8,15 +8,15 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import Dict
-from ..types import UNSET, Unset
-from typing import cast, List
 from typing import Union
+from typing import cast, List
+from ..types import UNSET, Unset
+from typing import Dict
 from typing import cast
 
 if TYPE_CHECKING:
+  from ..models.subject_complete_name_type import SubjectCompleteNameType
   from ..models.subject_identifier_by_type import SubjectIdentifierByType
-  from ..models.subject_name_type import SubjectNameType
   from ..models.credentials_role_response_base_type_object import CredentialsRoleResponseBaseTypeObject
 
 
@@ -32,18 +32,18 @@ class SessionContextType:
         Attributes:
             context_identifier (SubjectIdentifierByType):
             credentials_role_list (List['CredentialsRoleResponseBaseTypeObject']):
-            context_name (Union[Unset, SubjectNameType]):
+            context_name (Union[Unset, SubjectCompleteNameType]):
      """
 
     context_identifier: 'SubjectIdentifierByType'
     credentials_role_list: List['CredentialsRoleResponseBaseTypeObject']
-    context_name: Union[Unset, 'SubjectNameType'] = UNSET
+    context_name: Union[Unset, 'SubjectCompleteNameType'] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.subject_complete_name_type import SubjectCompleteNameType
         from ..models.subject_identifier_by_type import SubjectIdentifierByType
-        from ..models.subject_name_type import SubjectNameType
         from ..models.credentials_role_response_base_type_object import CredentialsRoleResponseBaseTypeObject
         context_identifier = self.context_identifier.to_dict()
 
@@ -76,8 +76,8 @@ class SessionContextType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.subject_complete_name_type import SubjectCompleteNameType
         from ..models.subject_identifier_by_type import SubjectIdentifierByType
-        from ..models.subject_name_type import SubjectNameType
         from ..models.credentials_role_response_base_type_object import CredentialsRoleResponseBaseTypeObject
         d = src_dict.copy()
         context_identifier = SubjectIdentifierByType.from_dict(d.pop("contextIdentifier"))
@@ -96,11 +96,11 @@ class SessionContextType:
 
 
         _context_name = d.pop("contextName", UNSET)
-        context_name: Union[Unset, SubjectNameType]
+        context_name: Union[Unset, SubjectCompleteNameType]
         if isinstance(_context_name,  Unset):
             context_name = UNSET
         else:
-            context_name = SubjectNameType.from_dict(_context_name)
+            context_name = SubjectCompleteNameType.from_dict(_context_name)
 
 
 

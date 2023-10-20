@@ -8,17 +8,17 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from dateutil.parser import isoparse
 from ..models.query_criteria_invoice_detail_type_amount_type import QueryCriteriaInvoiceDetailTypeAmountType
-from ..models.query_criteria_invoice_detail_type_currency_codes_item import QueryCriteriaInvoiceDetailTypeCurrencyCodesItem
 from ..models.query_criteria_invoice_type_subject_type import QueryCriteriaInvoiceTypeSubjectType
-from typing import Dict
-import datetime
-from ..types import UNSET, Unset
-from typing import cast, List
 from typing import Union
-from typing import cast
+from typing import cast, List
+import datetime
 from ..models.query_criteria_invoice_detail_type_invoice_types_item import QueryCriteriaInvoiceDetailTypeInvoiceTypesItem
+from ..types import UNSET, Unset
+from typing import Dict
+from dateutil.parser import isoparse
+from ..models.query_criteria_invoice_detail_type_currency_codes_item import QueryCriteriaInvoiceDetailTypeCurrencyCodesItem
+from typing import cast
 
 if TYPE_CHECKING:
   from ..models.subject_to_type import SubjectToType

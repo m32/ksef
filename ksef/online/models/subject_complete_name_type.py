@@ -8,41 +8,34 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
-from typing import Union
 
 
 
 
 
 
-T = TypeVar("T", bound="SubjectNameType")
+T = TypeVar("T", bound="SubjectCompleteNameType")
 
 
 @_attrs_define
-class SubjectNameType:
+class SubjectCompleteNameType:
     """ 
         Attributes:
-            type (str):
-            trade_name (Union[Unset, str]):
+            full_name (str):
      """
 
-    type: str
-    trade_name: Union[Unset, str] = UNSET
+    full_name: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
     def to_dict(self) -> Dict[str, Any]:
-        type = self.type
-        trade_name = self.trade_name
+        full_name = self.full_name
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({
-            "type": type,
+            "fullName": full_name,
         })
-        if trade_name is not UNSET:
-            field_dict["tradeName"] = trade_name
 
         return field_dict
 
@@ -51,17 +44,14 @@ class SubjectNameType:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        type = d.pop("type", None)
+        full_name = d.pop("fullName")
 
-        trade_name = d.pop("tradeName", UNSET)
-
-        subject_name_type = cls(
-            type=type,
-            trade_name=trade_name,
+        subject_complete_name_type = cls(
+            full_name=full_name,
         )
 
-        subject_name_type.additional_properties = d
-        return subject_name_type
+        subject_complete_name_type.additional_properties = d
+        return subject_complete_name_type
 
     @property
     def additional_keys(self) -> List[str]:
