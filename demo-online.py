@@ -165,9 +165,9 @@ class Main:
             client=self.authclient,
         )
 
-    def query(self, subject, datefrom, dateto, incremental=True):
+    def query(self, subject, datefrom, dateto, qtype):
         subjectType = getattr(models.QueryCriteriaInvoiceTypeSubjectType, 'SUBJECT'+subject)
-        if incremental:
+        if qtype == 'incremental':
             json_body = models.QueryInvoiceRequest(
                 query_criteria=models.QueryCriteriaInvoiceIncrementalType(
                     subject_type=models.QueryCriteriaInvoiceTypeSubjectType(
@@ -178,7 +178,7 @@ class Main:
                     acquisition_timestamp_threshold_to=dateto,
                 ),
             )
-        else:
+        elif qtype == 'range':
             json_body = models.QueryInvoiceRequest(
                 query_criteria=models.QueryCriteriaInvoiceRangeType(
                     subject_type=models.QueryCriteriaInvoiceTypeSubjectType(
@@ -189,6 +189,8 @@ class Main:
                     invoicing_date_to=dateto,
                 ),
             )
+        else:
+            raise ValueError(f'Niewspierany typ "{qtype}"')
         response = api.zapytania.invoice.sync_detailed(
             client=self.authclient,
             json_body=json_body,
@@ -293,15 +295,15 @@ def main():
             assert a in '123'
             query = a
         elif o == '--query-type':
-            assert a in ('incremental', 'range')
-            querytype = a == 'incremental'
+            assert a in ('incremental', 'range', 'detail')
+            querytype = a
         elif o == '--server':
             server = a
         elif o == '--user':
             user = a
     if query is None and not args:
         print('Nic do zrobienia, podaj parametry query albo dodaj listę plików do zapisania w ksef')
-        print(sys.argv[0], '[--query=1|2] [--query-type=incremental|range] [--date-from=...] [--date-to=...] [--server=ksef-demo|ksef-prod|ksef-test] [--user=user??] [fv-1.xml fv-2.xml ...]')
+        print(sys.argv[0], '[--query=1|2] [--query-type=incremental|range|detail] [--date-from=...] [--date-to=...] [--server=ksef-demo|ksef-prod|ksef-test] [--user=user??] [fv-1.xml fv-2.xml ...]')
         print('./demo-online.py --server=ksef-test --user=user3 --query=2 --date-from=2023-10-17T09:00:00+02:00 --date-to=2023-10-17T10:00:00+02:00')
         return
     cls = Main(user, server)
