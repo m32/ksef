@@ -159,7 +159,6 @@ class Main:
             time.sleep(5)
 
     def logout(self):
-        return
         os.unlink('SessionToken-'+self.user)
         response = api.sesja.terminate.sync_detailed(
             client=self.authclient,
@@ -215,7 +214,7 @@ class Main:
                     client=self.authclient,
                     k_se_f_reference_number=xno,
                 )
-                with open('query-{}-{}.xml'.format(subject, xno), 'wb') as fp:
+                with open('query-{}-{}-{}.xml'.format(self.user, subject, xno), 'wb') as fp:
                     fp.write(resp.parsed.additional_properties['content'])
         finally:
             self.authclient._headers = sh
@@ -265,10 +264,11 @@ class Main:
             time.sleep(5)
 
         if response.status_code == 200 and response.parsed.processing_code == 200:
-            with open('upo.csv', 'at') as fp:
+            with open('upo-{}.csv'.format(self.user), 'at') as fp:
                 fp.write('{}|{}\n'.format(
                     self.reference_number, response.parsed.element_reference_number
                 ))
+            os.rename(fname, 'send-{}'.format(fname))
         else:
             raise KSEFError(response.status_code, response.parsed)
 
@@ -279,6 +279,7 @@ def main():
     querytype = True
     server = 'ksef-demo'
     user = 'user'
+    logout = False
     opts, args = getopt.getopt(sys.argv[1:], '', [
         'date-from=',
         'date-to=',
@@ -286,6 +287,7 @@ def main():
         'query-type=',
         'server=',
         'user=',
+        'logout',
     ])
     for o, a in opts:
         if o == '--date-from':
@@ -302,6 +304,8 @@ def main():
             server = a
         elif o == '--user':
             user = a
+        elif o == '--logout':
+            logout = True
     if query is None and not args:
         print('Nic do zrobienia, podaj parametry query albo dodaj listę plików do zapisania w ksef')
         print(sys.argv[0], '[--query=1|2] [--query-type=incremental|range|detail] [--date-from=...] [--date-to=...] [--server=ksef-demo|ksef-prod|ksef-test] [--user=user??] [fv-1.xml fv-2.xml ...]')
@@ -316,8 +320,8 @@ def main():
             for fname in args:
                 cls.upload(fname)
         finally:
-            cls.logout()
-            pass
+            if logout:
+                cls.logout()
     except KSEFError as e:
         print('+'*20, 'KSEFError')
         print(e)

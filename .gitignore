@@ -168,10 +168,11 @@ ksefbatch/
 ksefcommon/
 ksefonline/
 SessionToken
+send-fv-*.xml
 fv-*.xml
 query-*.xml
 upo-*.xml
-upo.csv
+upo-*.csv
 xml/
 x-cert-*
 SessionToken-*
