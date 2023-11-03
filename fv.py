@@ -1,4 +1,5 @@
 #!/usr/bin/env vpython3
+import sys
 from random import randint
 import datetime
 from dateutil.tz import tzlocal, tzutc
@@ -7,12 +8,15 @@ from dateutil import parser
 now = datetime.datetime.now(tz=tzlocal())
 serial = (now - datetime.datetime(1970, 1, 1, tzinfo=tzutc())).total_seconds()
 
-vcnetto = randint(10, 2000)*1.0
+vcnetto = randint(10, 100)*1.0
 vilosc = randint(1, 5)
 vnetto = vcnetto * vilosc
 vpvat = 23
 vvat = vnetto * vpvat / 100.0
 vbrutto = vnetto + vvat
+prefix = sys.argv[1]
+snip, snazwa, sadres = sys.argv[2], sys.argv[3], sys.argv[4]
+dnip, dnazwa, dadres = sys.argv[5], sys.argv[6], sys.argv[7]
 
 data = '''\
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
@@ -28,22 +32,22 @@ data = '''\
   </Naglowek>
   <Podmiot1>
     <DaneIdentyfikacyjne>
-      <NIP>8511172404</NIP>
-      <Nazwa>gm</Nazwa>
+      <NIP>{snip}</NIP>
+      <Nazwa>{snazwa}</Nazwa>
     </DaneIdentyfikacyjne>
     <Adres>
       <KodKraju>PL</KodKraju>
-      <AdresL1>gm-adres</AdresL1>
+      <AdresL1>{sadres}</AdresL1>
     </Adres>
   </Podmiot1>
   <Podmiot2>
     <DaneIdentyfikacyjne>
-      <NIP>8521008161</NIP>
-      <Nazwa>dm</Nazwa>
+      <NIP>{dnip}</NIP>
+      <Nazwa>{dnazwa}</Nazwa>
     </DaneIdentyfikacyjne>
     <Adres>
       <KodKraju>PL</KodKraju>
-      <AdresL1>dm-adres</AdresL1>
+      <AdresL1>{dadres}</AdresL1>
     </Adres>
   </Podmiot2>
   <Fa>
@@ -85,6 +89,8 @@ data = '''\
 '''
 data = data.format(
     datawytworzenia=now.isoformat(),
+    snip=snip, snazwa=snazwa, sadres=sadres,
+    dnip=dnip, dnazwa=dnazwa, dadres=dadres,
     rmd=now.strftime('%Y-%m-%d'),
     serial=serial,
     vnetto=vnetto,
@@ -94,4 +100,4 @@ data = data.format(
     vilosc=vilosc,
     vcnetto=vcnetto,
 )
-open('fv-{}.xml'.format(serial), 'wt').write(data)
+open('{}-{}.xml'.format(prefix, serial), 'wt').write(data)

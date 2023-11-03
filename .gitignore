@@ -174,3 +174,4 @@ upo-*.xml
 upo.csv
 xml/
 x-cert-*
+SessionToken-*
