@@ -75,7 +75,7 @@ class Main:
 
     def login(self):
         try:
-            token, reference_number = open('SessionToken', 'rt').read().split('|')
+            token, reference_number = open('SessionToken-'+self.user, 'rt').read().split('|')
         except:
             token = reference_number = None
 
@@ -120,7 +120,7 @@ class Main:
                 raise KSEFError(response.status_code, response.parsed)
             token = response.parsed.session_token.token
             reference_number = response.parsed.reference_number
-            with open('SessionToken', 'wt') as fp:
+            with open('SessionToken-'+self.user, 'wt') as fp:
                 fp.write(token)
                 fp.write('|')
                 fp.write(reference_number)
@@ -150,8 +150,8 @@ class Main:
                 reference_number=self.reference_number,
             )
             if response.status_code != 200:
-                if os.path.exists('SessionToken'):
-                    os.unlink('SessionToken')
+                if os.path.exists('SessionToken-'+self.user):
+                    os.unlink('SessionToken-'+self.user)
                 raise KSEFError(response.status_code, response.parsed)
             # czekamy na uruchomienie procesu roboczego
             if response.parsed.processing_code == 315:
@@ -160,7 +160,7 @@ class Main:
 
     def logout(self):
         return
-        os.unlink('SessionToken')
+        os.unlink('SessionToken-'+self.user)
         response = api.sesja.terminate.sync_detailed(
             client=self.authclient,
         )
@@ -269,7 +269,8 @@ class Main:
                 fp.write('{}|{}\n'.format(
                     self.reference_number, response.parsed.element_reference_number
                 ))
-        raise KSEFError(response.status_code, response.parsed)
+        else:
+            raise KSEFError(response.status_code, response.parsed)
 
 def main():
     dateto = datetime.datetime.now(tz=tzlocal())
