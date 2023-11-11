@@ -1,0 +1,93 @@
+diff --git a/ksef/batch/api/wysylka/init.py b/ksef/batch/api/wysylka/init.py
+index 8235eb2..00f1d3c 100644
+--- a/ksef/batch/api/wysylka/init.py
++++ b/ksef/batch/api/wysylka/init.py
+@@ -23,6 +23,10 @@ def _get_kwargs(
+ ) -> Dict[str, Any]:
+     
+ 
++    headers = {
++        'Content-Type': 'application/octet-stream',
++        'Accept': 'application/json',
++    }
+     cookies = {}
+ 
+ 
+@@ -36,6 +40,7 @@ def _get_kwargs(
+         "method": "post",
+         "url": "/batch/Init",
+         "content": content.to_bytes(),
++        "headers": headers,
+     }
+ 
+ 
+diff --git a/ksef/batch/api/wysylka/upload.py b/ksef/batch/api/wysylka/upload.py
+index 17f66e3..c3ef9f2 100644
+--- a/ksef/batch/api/wysylka/upload.py
++++ b/ksef/batch/api/wysylka/upload.py
+@@ -21,23 +21,20 @@ def _get_kwargs(
+     part_name: str,
+     *,
+     content: File,
+-
++    headers: dict,
+ ) -> Dict[str, Any]:
+     
+ 
++    headers.update({
++        'Content-Type': 'application/octet-stream',
++        'Accept': 'application/json',
++    })
+     cookies = {}
+-
+-
+-    
+-
+-    
+-
+-    
+-
+     return {
+         "method": "put",
+         "url": "/batch/Upload/{ReferenceNumber}/{PartName}".format(ReferenceNumber=reference_number,PartName=part_name,),
+         "content": content.to_bytes(),
++        "headers": headers,
+     }
+ 
+ 
+@@ -75,7 +72,7 @@ def sync_detailed(
+     *,
+     client: Union[AuthenticatedClient, Client],
+     content: File,
+-
++    headers: dict,
+ ) -> Response[Union[ExceptionResponse, UploadResponse]]:
+     """ Wysyłka wsadowa paczki faktur do KSeF - załadowanie części paczki
+ 
+@@ -99,7 +96,7 @@ def sync_detailed(
+         reference_number=reference_number,
+ part_name=part_name,
+ content=content,
+-
++headers=headers,
+     )
+ 
+     print("*"*20, "/batch/Upload/{ReferenceNumber}/{PartName}")
+@@ -118,7 +115,7 @@ def sync(
+     *,
+     client: Union[AuthenticatedClient, Client],
+     content: File,
+-
++    headers: dict,
+ ) -> Optional[Union[ExceptionResponse, UploadResponse]]:
+     """ Wysyłka wsadowa paczki faktur do KSeF - załadowanie części paczki
+ 
+@@ -143,7 +140,7 @@ def sync(
+ part_name=part_name,
+ client=client,
+ content=content,
+-
++headers=headers,
+     ).parsed
+ 
+ async def asyncio_detailed(
