@@ -12,12 +12,14 @@ from lxml import etree
 top = os.getcwd()
 
 def download(url):
-    # http://crd.gov.pl/wzor/2014/12/22/1949/schemat.xsd
     if url[:7] == 'http://':
-        fname = url.split('/')
-        assert fname[2] in ('crd.gov.pl', 'jpk.mf.gov.pl')
-        fname = '/'.join(fname[3:])
-        filepath = '/'.join((top, fname))
+        fname = url[7:].split('/')
+        assert fname[0] in ('crd.gov.pl', 'jpk.mf.gov.pl', 'ksef.mf.gov.pl', 'ksef-test.mf.gov.pl', 'ksef-demo.mf.gov.pl')
+        filepath = '/'.join((top, 'schematy-dokumentow', '/'.join(fname)))
+    elif url[:8] == 'https://':
+        fname = url[8:].split('/')
+        assert fname[0] in ('crd.gov.pl', 'jpk.mf.gov.pl', 'ksef.mf.gov.pl', 'ksef-test.mf.gov.pl', 'ksef-demo.mf.gov.pl')
+        filepath = '/'.join((top, 'schematy-dokumentow', '/'.join(fname)))
     else:
         filepath = url
     #        print('download', url, filepath)
@@ -117,33 +119,6 @@ class Deklaracja:
         result = transform(self.tree)
         result = etree.tostring(result)
         return result
-
-    def info(self):
-        self.info_naglowek()
-        self.info_osoba()
-
-    def info_naglowek(self):
-        naglowek = '/doc:Deklaracja/doc:Naglowek'
-        formularz = self.tree.xpath( naglowek+'/doc:KodFormularza', namespaces=self.nsmap )[0]
-        wariant = self.tree.xpath( naglowek+'/doc:WariantFormularza', namespaces=self.nsmap )[0].text
-
-        self.xsdformularz = formularz.text
-        self.xsdwariant = wariant
-        self.xsdwersja = formularz.get('wersjaSchemy')
-
-    def info_osoba(self):
-        path = '/doc:Deklaracja/doc:Podmiot1/etd:OsobaFizyczna'
-        podmiot = self.tree.xpath( path, namespaces=self.nsmap )
-        if podmiot:
-            self.firmanip = self.tree.xpath( path+'/etd:NIP', namespaces=self.nsmap )[0].text
-            imie = self.tree.xpath( path+'/etd:ImiePierwsze', namespaces=self.nsmap )[0].text
-            nazwisko = self.tree.xpath( path+'/etd:Nazwisko', namespaces=self.nsmap )[0].text
-            self.firmanazwa = imie+' '+nazwisko
-        else:
-            path = '/doc:Deklaracja/doc:Podmiot1/etd:OsobaNiefizyczna'
-            podmiot = self.tree.xpath( path, namespaces=self.nsmap )
-            self.firmanip = self.tree.xpath( path+'/etd:NIP', namespaces=self.nsmap )[0].text
-            self.firmanazwa = self.tree.xpath( path+'/etd:PelnaNazwa', namespaces=self.nsmap )[0].text
 
 class XADESParser(Parser):
     def __init__(self, xml):
