@@ -84,7 +84,6 @@ class Main:
         #    }
         #}
 
-        session = parsed.reference_number
         for pkg in parsed.package_signature.package_part_signature_list:
             data = open(pkg.part_file_name, 'rb').read()
             content = types.Content(data)
@@ -98,8 +97,10 @@ class Main:
                 content=content,
                 headers=headers,
             )
+            # TODO - dlaczego 200 jak w dokumentacji jest 201 ?
             if response.status_code != 200:
                 raise KSEFError(response.status_code, response.parsed)
+
         json_body = models.FinishRequest(
             reference_number=parsed.reference_number,
         )
@@ -109,6 +110,11 @@ class Main:
         )
         if response.status_code != 200:
             raise KSEFError(response.status_code, response.parsed)
+
+        with open('upo-{}.csv'.format(self.user), 'at') as fp:
+            fp.write('{}|{}\n'.format(
+                parsed.reference_number, ''
+            ))
 
 def main():
     server = 'ksef-demo'
