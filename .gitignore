@@ -176,3 +176,8 @@ upo-*.csv
 xml/
 x-cert-*
 SessionToken-*
+schematy-dokumentow/
+ksefbatch.xml
+ksefbatch.zip
+ksefbatch.zip-enc
+ksefbatch.zip-enc-*
