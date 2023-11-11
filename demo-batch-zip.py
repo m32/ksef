@@ -48,6 +48,7 @@ class Main:
         with zipfile.ZipFile(fnamezip, mode='w', compression=zipfile.ZIP_DEFLATED) as zf:
             for fname in files:
                 zf.write(fname)
+                os.rename(fname, 'send-{}'.format(fname))
 
         fnamepartfmt = '''\
             <ns2:PackagePartSignature>
