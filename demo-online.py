@@ -214,7 +214,7 @@ class Main:
                     client=self.authclient,
                     k_se_f_reference_number=xno,
                 )
-                with open('query-{}-{}-{}.xml'.format(self.user, subject, xno), 'wb') as fp:
+                with open('query-{}+{}+{}.xml'.format(self.user, subject, xno), 'wb') as fp:
                     fp.write(resp.parsed.additional_properties['content'])
         finally:
             self.authclient._headers = sh
@@ -251,6 +251,8 @@ class Main:
         return response
 
     def upload(self, fname):
+        if not os.path.exists(fname):
+            return
         data = open(fname, 'rb').read()
         response = self.uploaddata(data)
         no = response.parsed.element_reference_number
@@ -273,7 +275,7 @@ class Main:
             raise KSEFError(response.status_code, response.parsed)
 
 def main():
-    dateto = datetime.datetime.now(tz=tzlocal())
+    now = dateto = datetime.datetime.now(tz=tzlocal())
     datefrom = datetime.datetime(year=dateto.year, month=dateto.month, day=dateto.day, tzinfo=tzlocal())
     query = None
     querytype = True
@@ -292,8 +294,10 @@ def main():
     for o, a in opts:
         if o == '--date-from':
             datefrom = parser.parse(a)
+            datefrom = datefrom.replace(tzinfo=tzlocal())
         elif o == '--date-to':
             dateto = parser.parse(a)
+            dateto = dateto.replace(tzinfo=tzlocal())
         elif o == '--query':
             assert a in '123'
             query = a
@@ -316,7 +320,14 @@ def main():
         cls.login()
         try:
             if query is not None:
-                cls.query(query, datefrom, dateto, querytype)
+                print('q', query, datefrom ,dateto)
+                datefrom = min(now, datefrom)
+                dateto = min(now, dateto)
+                print('q', query, datefrom ,dateto)
+                while datefrom < dateto:
+                    dateend = datefrom + datetime.timedelta(minutes=15)
+                    cls.query(query, datefrom, dateend, querytype)
+                    datefrom = dateend
             for fname in args:
                 cls.upload(fname)
         finally:
