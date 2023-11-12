@@ -5,7 +5,7 @@ import mimetypes
 import shutil
 import subprocess
 from enum import Enum
-from importlib.metadata import version
+#from importlib.metadata import version
 from pathlib import Path
 from subprocess import CalledProcessError
 from typing import Any, Dict, List, Optional, Sequence, Union
@@ -21,7 +21,7 @@ from .config import Config
 from .parser import GeneratorData, import_string_from_class
 from .parser.errors import ErrorLevel, GeneratorError
 
-__version__ = version(__package__)
+__version__ = '0.15.2'
 
 
 class MetaType(str, Enum):
