@@ -6,7 +6,7 @@ info:
     url: https://ksef.mf.gov.pl
   description: Krajowy System e-Faktur
   title: KSeF
-  version: 2.0.0
+  version: 2.0.4
 externalDocs:
   description: Dokumentacja
   url: https://www.gov.pl/web/kas/krajowy-system-e-faktur
@@ -309,6 +309,7 @@ components:
           type: string
           maxLength: 256
           minLength: 1
+          nullable: true
         type:
           type: string
       required:

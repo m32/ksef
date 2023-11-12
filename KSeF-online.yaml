@@ -6,7 +6,7 @@ info:
     url: https://ksef.mf.gov.pl
   description: Krajowy System e-Faktur
   title: KSeF
-  version: 2.0.3
+  version: 2.0.4
 externalDocs:
   description: Dokumentacja
   url: https://www.gov.pl/web/kas/krajowy-system-e-faktur
@@ -461,15 +461,13 @@ paths:
       - Interfejsy interaktywne - faktury
   /online/Invoice/Status/{InvoiceElementReferenceNumber}:
     get:
-      description: Sprawdzenie statusu wysłanej faktury
-      externalDocs:
-        url: http://missing
-        description: |-
-          Obsługiwany nagłówek 'ksef-number-variant'
-          Obsługiwane wartości:
-          'v35'
-          'v36'
-          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+      description: |-
+        Sprawdzenie statusu wysłanej faktury
+        Obsługiwany nagłówek 'ksef-number-variant'
+        Obsługiwane wartości:
+        'v35'
+        'v36'
+        Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
       operationId: online.invoice.invoice.status
       parameters:
       - in: path
@@ -826,15 +824,13 @@ paths:
       - Interfejsy interaktywne - zapytania
   /online/Query/Invoice/Sync:
     post:
-      description: Zapytanie o faktury
-      externalDocs:
-        url: http://missing
-        description: |-
-          Obsługiwany nagłówek 'ksef-number-variant'
-          Obsługiwane wartości:
-          'v35'
-          'v36'
-          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+      description: |- 
+        Zapytanie o faktury
+        Obsługiwany nagłówek 'ksef-number-variant'
+        Obsługiwane wartości:
+        'v35'
+        'v36'
+        Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
       operationId: online.query.query.invoice
       parameters:
       - in: query
@@ -1193,15 +1189,13 @@ paths:
       - Interfejsy interaktywne - sesja
   /online/Session/Status:
     get:
-      description: Sprawdzenie statusu obecnego przetwarzania interaktywnego
-      externalDocs:
-        url: http://missing
-        description: |-
-          Obsługiwany nagłówek 'ksef-number-variant'
-          Obsługiwane wartości:
-          'v35'
-          'v36'
-          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+      description: |-
+        Sprawdzenie statusu obecnego przetwarzania interaktywnego
+        Obsługiwany nagłówek 'ksef-number-variant'
+                  Obsługiwane wartości:
+                  'v35'
+                  'v36'
+                  Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
       operationId: online.session.session.status.plain
       parameters:
       - in: query
@@ -1292,15 +1286,13 @@ paths:
       - Interfejsy interaktywne - sesja
   /online/Session/Status/{ReferenceNumber}:
     get:
-      description: Sprawdzenie statusu przetwarzania na podstawie numeru referencyjnego
-      externalDocs:
-        url: http://missing
-        description: |-
-          Obsługiwany nagłówek 'ksef-number-variant'
-          Obsługiwane wartości:
-          'v35'
-          'v36'
-          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+      description: |-
+        Sprawdzenie statusu przetwarzania na podstawie numeru referencyjnego
+        Obsługiwany nagłówek 'ksef-number-variant'
+        Obsługiwane wartości:
+        'v35'
+        'v36'
+        Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
       operationId: online.session.session.status.reference.number
       parameters:
       - in: path
@@ -1463,6 +1455,21 @@ paths:
       - Interfejsy interaktywne - sesja
 components:
   schemas:
+    AuthenticationIdentifierType:
+      type: object
+      properties:
+        identifier:
+          type: string
+        type:
+          type: string
+          enum:
+          - onip
+          - fingerprint
+          - nip
+          - pesel
+      required:
+      - identifier
+      - type
     AuthorisationChallengeRequest:
       type: object
       properties:
@@ -3439,6 +3446,7 @@ components:
           type: string
           maxLength: 256
           minLength: 1
+          nullable: true
         type:
           type: string
       required:
@@ -3619,6 +3627,10 @@ components:
     V2_InitSessionResponse:
       type: object
       properties:
+        authenticationIdentifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationIdentifierType'
         referenceNumber:
           type: string
           pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
