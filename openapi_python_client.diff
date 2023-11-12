@@ -1,0 +1,148 @@
+diff -r /devel/00mirror-cvs/00-m32/openapi-python-client/openapi_python_client/config.py ./config.py
+26a27,28
+>     tag_overrides: Dict[str, str] = {}
+>     operationId_overrides: Dict[str, str] = {}
+diff -r /devel/00mirror-cvs/00-m32/openapi-python-client/openapi_python_client/__init__.py ./__init__.py
+8c8
+< from importlib.metadata import version
+---
+> #from importlib.metadata import version
+24c24
+< __version__ = version(__package__)
+---
+> __version__ = '0.15.2'
+273c273,278
+<         api_init_path.write_text(api_init_template.render(), encoding=self.file_encoding)
+---
+>         api_init_path.write_text(
+>             api_init_template.render(
+>                 tags=self.openapi.endpoint_collections_by_tag.keys()
+>             ),
+>             encoding=self.file_encoding
+>         )
+Only in .: m32.diff
+diff -r /devel/00mirror-cvs/00-m32/openapi-python-client/openapi_python_client/parser/openapi.py ./parser/openapi.py
+61c61,64
+<                 tag = utils.PythonIdentifier(value=(operation.tags or ["default"])[0], prefix="tag")
+---
+>                 tags = operation.tags or ["default"]
+>                 tag = config.tag_overrides.get(tags[0], None)
+>                 if tag is None:
+>                     tag = utils.PythonIdentifier(value=(tags)[0], prefix="tag")
+128a132
+>     content_body: Optional[Property] = None
+153a158,178
+>     def parse_content_body(
+>         *, body: oai.RequestBody, schemas: Schemas, parent_name: str, config: Config
+>     ) -> Tuple[Union[Property, PropertyError, None], Schemas]:
+>         """Return form_body and updated schemas"""
+>         body_content = body.content
+>         content = body_content.get("application/octet-stream")
+>         if content is not None and content.media_type_schema is not None:
+>             prop, schemas = property_from_data(
+>                 name="content_data",
+>                 required=True,
+>                 data=content.media_type_schema,
+>                 schemas=schemas,
+>                 parent_name=parent_name,
+>                 config=config,
+>             )
+>             if isinstance(prop, ModelProperty):
+>                 schemas = attr.evolve(schemas, classes_by_name={**schemas.classes_by_name, prop.class_info.name: prop})
+>             return prop, schemas
+>         return None, schemas
+> 
+>     @staticmethod
+251a277,289
+>         content_body, schemas = Endpoint.parse_content_body(
+>             body=data.requestBody, schemas=schemas, parent_name=endpoint.name, config=config
+>         )
+>         if isinstance(content_body, ParseError):
+>             return (
+>                 ParseError(
+>                     header=f"Cannot parse content body of endpoint {endpoint.name}",
+>                     detail=content_body.detail,
+>                     data=content_body.data,
+>                 ),
+>                 schemas,
+>             )
+> 
+260a299,303
+>         if content_body is not None:
+>             #endpoint.header_parameters['Content-Type'] = 'application/octet-stream'
+>             endpoint.content_body = content_body
+>             endpoint.relative_imports.update(endpoint.content_body.get_imports(prefix=models_relative_prefix))
+>             endpoint.relative_imports.update(endpoint.content_body.get_lazy_imports(prefix=models_relative_prefix))
+499a543
+>             name = config.operationId_overrides.get(name, name)
+537a582,583
+>         if self.content_body:
+>             yield self.content_body
+diff -r /devel/00mirror-cvs/00-m32/openapi-python-client/openapi_python_client/parser/responses.py ./parser/responses.py
+32a33,35
+>         "application/vnd.v2+json": "response.json()",
+>         "application/vnd.v3+json": "response.json()",
+>         "application/vnd.v3+octet-stream": "response.content",
+diff -r /devel/00mirror-cvs/00-m32/openapi-python-client/openapi_python_client/templates/api_init.py.jinja ./templates/api_init.py.jinja
+1a2,6
+> from . import (
+> {% for tag in tags %}
+>     {{tag}},
+> {% endfor %}
+> )
+diff -r /devel/00mirror-cvs/00-m32/openapi-python-client/openapi_python_client/templates/endpoint_init.py.jinja ./templates/endpoint_init.py.jinja
+0a1,5
+> from . import (
+> {% for endpoint in endpoint_collection.endpoints %}
+>     {{endpoint.name}},
+> {% endfor %}
+> )
+diff -r /devel/00mirror-cvs/00-m32/openapi-python-client/openapi_python_client/templates/endpoint_macros.py.jinja ./templates/endpoint_macros.py.jinja
+81a82,92
+> {% macro content_body(endpoint) %}
+> {% if endpoint.content_body %}
+>     {% set property = endpoint.content_body %}
+>     {% set destination = "content_" + property.python_name %}
+>     {% import "property_templates/" + property.template as prop_template %}
+>     {% if prop_template.transform_content %}
+> {{ prop_template.transform_content(property, property.python_name, destination) }}
+>     {% endif %}
+> {% endif %}
+> {% endmacro %}
+> 
+106a118,121
+> {# Content data if any #}
+> {% if endpoint.content_body %}
+> content: {{ endpoint.content_body.get_type_string() }},
+> {% endif %}
+136a152,154
+> {% endif %}
+> {% if endpoint.content_body %}
+> content=content,
+diff -r /devel/00mirror-cvs/00-m32/openapi-python-client/openapi_python_client/templates/endpoint_module.py.jinja ./templates/endpoint_module.py.jinja
+47a48,49
+>     {% elif endpoint.content_body %}
+>         "content": content.to_bytes(),
+100a103,104
+>     print("*"*20, "{{ endpoint.path }}")
+>     print(kwargs)
+103a108,109
+>     print("*"*20, "/{{ endpoint.path }}")
+>     print(response, response.content)
+diff -r /devel/00mirror-cvs/00-m32/openapi-python-client/openapi_python_client/templates/types.py.jinja ./templates/types.py.jinja
+16a17
+> ContentType = BinaryIO
+29a31,43
+> 
+> @define
+> class Content:
+>     """ Contains information for file uploads """
+> 
+>     payload: BinaryIO
+> 
+>     def to_bytes(self) -> ContentType:
+>         """ Return a tuple representation that httpx will accept for multipart/form-data """
+>         return self.payload
+> 
+>     def to_tuple(self) -> ContentType:
+>         return self.payload
