@@ -8,14 +8,14 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import cast
-from ..types import UNSET, Unset
 from typing import Dict
+from typing import cast
 from typing import Union
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-  from ..models.subject_name_type import SubjectNameType
   from ..models.subject_identifier_by_type import SubjectIdentifierByType
+  from ..models.subject_name_type import SubjectNameType
 
 
 
@@ -38,8 +38,8 @@ class V2SubjectByQueryType:
 
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.subject_name_type import SubjectNameType
         from ..models.subject_identifier_by_type import SubjectIdentifierByType
+        from ..models.subject_name_type import SubjectNameType
         issued_by_identifier = self.issued_by_identifier.to_dict()
 
         issued_by_name: Union[Unset, Dict[str, Any]] = UNSET
@@ -61,8 +61,8 @@ class V2SubjectByQueryType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.subject_name_type import SubjectNameType
         from ..models.subject_identifier_by_type import SubjectIdentifierByType
+        from ..models.subject_name_type import SubjectNameType
         d = src_dict.copy()
         issued_by_identifier = SubjectIdentifierByType.from_dict(d.pop("issuedByIdentifier"))
 

@@ -8,6 +8,7 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from typing import Optional
 from ..types import UNSET, Unset
 from typing import Union
 
@@ -24,11 +25,11 @@ class SubjectNameType:
     """ 
         Attributes:
             type (str):
-            trade_name (Union[Unset, str]):
+            trade_name (Union[Unset, None, str]):
      """
 
     type: str
-    trade_name: Union[Unset, str] = UNSET
+    trade_name: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 

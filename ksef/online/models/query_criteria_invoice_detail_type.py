@@ -8,21 +8,21 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..models.query_criteria_invoice_detail_type_amount_type import QueryCriteriaInvoiceDetailTypeAmountType
-from ..models.query_criteria_invoice_type_subject_type import QueryCriteriaInvoiceTypeSubjectType
-from typing import Union
-from typing import cast, List
-import datetime
-from ..models.query_criteria_invoice_detail_type_invoice_types_item import QueryCriteriaInvoiceDetailTypeInvoiceTypesItem
-from ..types import UNSET, Unset
-from typing import Dict
-from dateutil.parser import isoparse
-from ..models.query_criteria_invoice_detail_type_currency_codes_item import QueryCriteriaInvoiceDetailTypeCurrencyCodesItem
 from typing import cast
+from dateutil.parser import isoparse
+from ..models.query_criteria_invoice_type_subject_type import QueryCriteriaInvoiceTypeSubjectType
+from ..models.query_criteria_invoice_detail_type_currency_codes_item import QueryCriteriaInvoiceDetailTypeCurrencyCodesItem
+from typing import Dict
+from ..types import UNSET, Unset
+from typing import Union
+import datetime
+from typing import cast, List
+from ..models.query_criteria_invoice_detail_type_amount_type import QueryCriteriaInvoiceDetailTypeAmountType
+from ..models.query_criteria_invoice_detail_type_invoice_types_item import QueryCriteriaInvoiceDetailTypeInvoiceTypesItem
 
 if TYPE_CHECKING:
-  from ..models.subject_to_type import SubjectToType
   from ..models.subject_by_type import SubjectByType
+  from ..models.subject_to_type import SubjectToType
 
 
 
@@ -71,8 +71,8 @@ class QueryCriteriaInvoiceDetailType:
 
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.subject_to_type import SubjectToType
         from ..models.subject_by_type import SubjectByType
+        from ..models.subject_to_type import SubjectToType
         subject_type = self.subject_type.value
 
         type = self.type
@@ -155,8 +155,8 @@ class QueryCriteriaInvoiceDetailType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.subject_to_type import SubjectToType
         from ..models.subject_by_type import SubjectByType
+        from ..models.subject_to_type import SubjectToType
         d = src_dict.copy()
         subject_type = QueryCriteriaInvoiceTypeSubjectType(d.pop("subjectType"))
 

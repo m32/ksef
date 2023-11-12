@@ -7,11 +7,11 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from ...models.grant_context_credentials_request import GrantContextCredentialsRequest
+from typing import cast
 from ...models.status_credentials_response import StatusCredentialsResponse
 from typing import Dict
+from ...models.grant_context_credentials_request import GrantContextCredentialsRequest
 from ...models.exception_response import ExceptionResponse
-from typing import cast
 
 
 

@@ -7,13 +7,13 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import Union
-from ...models.session_status_response import SessionStatusResponse
-from typing import Dict
-from typing import Optional
-from ...models.exception_response import ExceptionResponse
-from ...types import UNSET, Unset
 from typing import cast
+from typing import Optional
+from typing import Dict
+from ...models.session_status_response import SessionStatusResponse
+from typing import Union
+from ...types import UNSET, Unset
+from ...models.exception_response import ExceptionResponse
 
 
 
@@ -99,6 +99,12 @@ def sync_detailed(
     """ Sprawdzenie statusu aktywnej sesji interaktywnej
 
      Sprawdzenie statusu obecnego przetwarzania interaktywnego
+    Obsługiwany nagłówek 'ksef-number-variant'
+              Obsługiwane wartości:
+              'v35'
+              'v36'
+              Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w
+    usłudze.
 
     Args:
         page_size (Union[Unset, None, int]):  Default: 10.
@@ -142,6 +148,12 @@ def sync(
     """ Sprawdzenie statusu aktywnej sesji interaktywnej
 
      Sprawdzenie statusu obecnego przetwarzania interaktywnego
+    Obsługiwany nagłówek 'ksef-number-variant'
+              Obsługiwane wartości:
+              'v35'
+              'v36'
+              Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w
+    usłudze.
 
     Args:
         page_size (Union[Unset, None, int]):  Default: 10.
@@ -176,6 +188,12 @@ async def asyncio_detailed(
     """ Sprawdzenie statusu aktywnej sesji interaktywnej
 
      Sprawdzenie statusu obecnego przetwarzania interaktywnego
+    Obsługiwany nagłówek 'ksef-number-variant'
+              Obsługiwane wartości:
+              'v35'
+              'v36'
+              Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w
+    usłudze.
 
     Args:
         page_size (Union[Unset, None, int]):  Default: 10.
@@ -215,6 +233,12 @@ async def asyncio(
     """ Sprawdzenie statusu aktywnej sesji interaktywnej
 
      Sprawdzenie statusu obecnego przetwarzania interaktywnego
+    Obsługiwany nagłówek 'ksef-number-variant'
+              Obsługiwane wartości:
+              'v35'
+              'v36'
+              Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w
+    usłudze.
 
     Args:
         page_size (Union[Unset, None, int]):  Default: 10.

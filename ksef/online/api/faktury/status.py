@@ -7,10 +7,10 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import cast
-from ...models.status_invoice_response import StatusInvoiceResponse
 from typing import Dict
 from ...models.exception_response import ExceptionResponse
+from typing import cast
+from ...models.status_invoice_response import StatusInvoiceResponse
 
 
 
@@ -81,6 +81,11 @@ def sync_detailed(
     """ Sprawdzenie statusu wysłanej faktury
 
      Sprawdzenie statusu wysłanej faktury
+    Obsługiwany nagłówek 'ksef-number-variant'
+    Obsługiwane wartości:
+    'v35'
+    'v36'
+    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         invoice_element_reference_number (str):
@@ -118,6 +123,11 @@ def sync(
     """ Sprawdzenie statusu wysłanej faktury
 
      Sprawdzenie statusu wysłanej faktury
+    Obsługiwany nagłówek 'ksef-number-variant'
+    Obsługiwane wartości:
+    'v35'
+    'v36'
+    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         invoice_element_reference_number (str):
@@ -146,6 +156,11 @@ async def asyncio_detailed(
     """ Sprawdzenie statusu wysłanej faktury
 
      Sprawdzenie statusu wysłanej faktury
+    Obsługiwany nagłówek 'ksef-number-variant'
+    Obsługiwane wartości:
+    'v35'
+    'v36'
+    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         invoice_element_reference_number (str):
@@ -179,6 +194,11 @@ async def asyncio(
     """ Sprawdzenie statusu wysłanej faktury
 
      Sprawdzenie statusu wysłanej faktury
+    Obsługiwany nagłówek 'ksef-number-variant'
+    Obsługiwane wartości:
+    'v35'
+    'v36'
+    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         invoice_element_reference_number (str):

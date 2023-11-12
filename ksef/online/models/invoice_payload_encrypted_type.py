@@ -8,10 +8,10 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from io import BytesIO
-from typing import Dict
-from typing import cast
 from ..types import File, FileJsonType
+from typing import cast
+from typing import Dict
+from io import BytesIO
 
 if TYPE_CHECKING:
   from ..models.file_2mb_hash_type import File2MBHashType

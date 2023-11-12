@@ -7,10 +7,10 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from ...models.exception_response import ExceptionResponse
 from typing import Dict
-from ...models.terminate_session_response import TerminateSessionResponse
+from ...models.exception_response import ExceptionResponse
 from typing import cast
+from ...models.terminate_session_response import TerminateSessionResponse
 
 
 

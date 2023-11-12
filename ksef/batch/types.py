@@ -38,6 +38,9 @@ class Content:
         """ Return a tuple representation that httpx will accept for multipart/form-data """
         return self.payload
 
+    def to_tuple(self) -> ContentType:
+        return self.payload
+
 
 T = TypeVar("T")
 

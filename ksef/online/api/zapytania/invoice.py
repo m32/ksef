@@ -7,11 +7,11 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
+from typing import cast
 from ...models.query_invoice_request import QueryInvoiceRequest
 from typing import Dict
-from ...models.query_invoice_sync_response import QueryInvoiceSyncResponse
 from ...models.exception_response import ExceptionResponse
-from typing import cast
+from ...models.query_invoice_sync_response import QueryInvoiceSyncResponse
 
 
 
@@ -97,6 +97,11 @@ def sync_detailed(
     """ Zapytanie o faktury
 
      Zapytanie o faktury
+    Obsługiwany nagłówek 'ksef-number-variant'
+    Obsługiwane wartości:
+    'v35'
+    'v36'
+    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         page_size (int):
@@ -140,6 +145,11 @@ def sync(
     """ Zapytanie o faktury
 
      Zapytanie o faktury
+    Obsługiwany nagłówek 'ksef-number-variant'
+    Obsługiwane wartości:
+    'v35'
+    'v36'
+    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         page_size (int):
@@ -174,6 +184,11 @@ async def asyncio_detailed(
     """ Zapytanie o faktury
 
      Zapytanie o faktury
+    Obsługiwany nagłówek 'ksef-number-variant'
+    Obsługiwane wartości:
+    'v35'
+    'v36'
+    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         page_size (int):
@@ -213,6 +228,11 @@ async def asyncio(
     """ Zapytanie o faktury
 
      Zapytanie o faktury
+    Obsługiwany nagłówek 'ksef-number-variant'
+    Obsługiwane wartości:
+    'v35'
+    'v36'
+    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         page_size (int):

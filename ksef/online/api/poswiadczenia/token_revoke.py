@@ -8,10 +8,10 @@ from ...types import Response, UNSET
 from ... import errors
 
 from ...models.revoke_token_request import RevokeTokenRequest
+from typing import cast
 from ...models.status_credentials_response import StatusCredentialsResponse
 from typing import Dict
 from ...models.exception_response import ExceptionResponse
-from typing import cast
 
 
 

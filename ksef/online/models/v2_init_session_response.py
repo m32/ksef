@@ -8,12 +8,16 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from dateutil.parser import isoparse
-import datetime
-from typing import Dict
 from typing import cast
+from dateutil.parser import isoparse
+from typing import Dict
+import datetime
+from typing import Union
+from ..types import UNSET, Unset
+from typing import cast, List
 
 if TYPE_CHECKING:
+  from ..models.authentication_identifier_type import AuthenticationIdentifierType
   from ..models.v2_initialised_session_type import V2InitialisedSessionType
 
 
@@ -30,20 +34,34 @@ class V2InitSessionResponse:
             reference_number (str):
             session_token (V2InitialisedSessionType):
             timestamp (datetime.datetime):
+            authentication_identifiers (Union[Unset, List['AuthenticationIdentifierType']]):
      """
 
     reference_number: str
     session_token: 'V2InitialisedSessionType'
     timestamp: datetime.datetime
+    authentication_identifiers: Union[Unset, List['AuthenticationIdentifierType']] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.authentication_identifier_type import AuthenticationIdentifierType
         from ..models.v2_initialised_session_type import V2InitialisedSessionType
         reference_number = self.reference_number
         session_token = self.session_token.to_dict()
 
         timestamp = self.timestamp.isoformat()
+
+        authentication_identifiers: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.authentication_identifiers, Unset):
+            authentication_identifiers = []
+            for authentication_identifiers_item_data in self.authentication_identifiers:
+                authentication_identifiers_item = authentication_identifiers_item_data.to_dict()
+
+                authentication_identifiers.append(authentication_identifiers_item)
+
+
+
 
 
         field_dict: Dict[str, Any] = {}
@@ -53,6 +71,8 @@ class V2InitSessionResponse:
             "sessionToken": session_token,
             "timestamp": timestamp,
         })
+        if authentication_identifiers is not UNSET:
+            field_dict["authenticationIdentifiers"] = authentication_identifiers
 
         return field_dict
 
@@ -60,6 +80,7 @@ class V2InitSessionResponse:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.authentication_identifier_type import AuthenticationIdentifierType
         from ..models.v2_initialised_session_type import V2InitialisedSessionType
         d = src_dict.copy()
         reference_number = d.pop("referenceNumber")
@@ -74,10 +95,21 @@ class V2InitSessionResponse:
 
 
 
+        authentication_identifiers = []
+        _authentication_identifiers = d.pop("authenticationIdentifiers", UNSET)
+        for authentication_identifiers_item_data in (_authentication_identifiers or []):
+            authentication_identifiers_item = AuthenticationIdentifierType.from_dict(authentication_identifiers_item_data)
+
+
+
+            authentication_identifiers.append(authentication_identifiers_item)
+
+
         v2_init_session_response = cls(
             reference_number=reference_number,
             session_token=session_token,
             timestamp=timestamp,
+            authentication_identifiers=authentication_identifiers,
         )
 
         v2_init_session_response.additional_properties = d

@@ -8,11 +8,11 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import Union
-from typing import cast
-from ..models.package_part_signature_init_response_type_method import PackagePartSignatureInitResponseTypeMethod
-from ..types import UNSET, Unset
 from typing import Dict
+from ..models.package_part_signature_init_response_type_method import PackagePartSignatureInitResponseTypeMethod
+from typing import Union
+from ..types import UNSET, Unset
+from typing import cast
 from typing import cast, List
 
 if TYPE_CHECKING:

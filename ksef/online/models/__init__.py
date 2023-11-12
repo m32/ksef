@@ -1,5 +1,7 @@
 """ Contains all the data models used in inputs/outputs """
 
+from .authentication_identifier_type import AuthenticationIdentifierType
+from .authentication_identifier_type_type import AuthenticationIdentifierTypeType
 from .authorisation_challenge_request import AuthorisationChallengeRequest
 from .authorisation_challenge_response import AuthorisationChallengeResponse
 from .credentials_base_type_object_object import CredentialsBaseTypeObjectObject
@@ -132,6 +134,8 @@ from .v2_subject_by_query_type import V2SubjectByQueryType
 from .v2_subject_to_query_type import V2SubjectToQueryType
 
 __all__ = (
+    "AuthenticationIdentifierType",
+    "AuthenticationIdentifierTypeType",
     "AuthorisationChallengeRequest",
     "AuthorisationChallengeResponse",
     "CredentialsBaseTypeObjectObject",
