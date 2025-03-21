@@ -32,11 +32,12 @@ class KSEFError(Exception):
     def __init__(self, rc, parsed):
         self.rc = rc
         self.parsed = parsed
+        print(parsed)
         try:
             errors = parsed.exception.exception_detail_list
             krc = errors[0].exception_code
             kmsg = errors[0].exception_description
-        except:
+        except IndexError:
             krc = -1
             kmsg = 'unparsable'
             import traceback; traceback.print_exc()

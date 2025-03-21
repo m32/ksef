@@ -7,18 +7,26 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
+from typing import Union
 from typing import Dict
-from ...models.exception_response import ExceptionResponse
+from ...types import UNSET, Unset
 from typing import cast
+from ...models.exception_response import ExceptionResponse
 from ...models.status_invoice_response import StatusInvoiceResponse
 
 
 
 def _get_kwargs(
     invoice_element_reference_number: str,
+    *,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Dict[str, Any]:
-    
+    headers = {}
+    if not isinstance(ksef_number_variant, Unset):
+        headers["ksef-number-variant"] = ksef_number_variant
+
+
 
     cookies = {}
 
@@ -32,6 +40,7 @@ def _get_kwargs(
     return {
         "method": "get",
         "url": "/online/Invoice/Status/{InvoiceElementReferenceNumber}".format(InvoiceElementReferenceNumber=invoice_element_reference_number,),
+        "headers": headers,
     }
 
 
@@ -76,19 +85,16 @@ def sync_detailed(
     invoice_element_reference_number: str,
     *,
     client: AuthenticatedClient,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Response[Union[Any, ExceptionResponse, StatusInvoiceResponse]]:
     """ Sprawdzenie statusu wysłanej faktury
 
      Sprawdzenie statusu wysłanej faktury
-    Obsługiwany nagłówek 'ksef-number-variant'
-    Obsługiwane wartości:
-    'v35'
-    'v36'
-    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         invoice_element_reference_number (str):
+        ksef_number_variant (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -101,6 +107,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         invoice_element_reference_number=invoice_element_reference_number,
+ksef_number_variant=ksef_number_variant,
 
     )
 
@@ -118,19 +125,16 @@ def sync(
     invoice_element_reference_number: str,
     *,
     client: AuthenticatedClient,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Optional[Union[Any, ExceptionResponse, StatusInvoiceResponse]]:
     """ Sprawdzenie statusu wysłanej faktury
 
      Sprawdzenie statusu wysłanej faktury
-    Obsługiwany nagłówek 'ksef-number-variant'
-    Obsługiwane wartości:
-    'v35'
-    'v36'
-    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         invoice_element_reference_number (str):
+        ksef_number_variant (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -144,6 +148,7 @@ def sync(
     return sync_detailed(
         invoice_element_reference_number=invoice_element_reference_number,
 client=client,
+ksef_number_variant=ksef_number_variant,
 
     ).parsed
 
@@ -151,19 +156,16 @@ async def asyncio_detailed(
     invoice_element_reference_number: str,
     *,
     client: AuthenticatedClient,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Response[Union[Any, ExceptionResponse, StatusInvoiceResponse]]:
     """ Sprawdzenie statusu wysłanej faktury
 
      Sprawdzenie statusu wysłanej faktury
-    Obsługiwany nagłówek 'ksef-number-variant'
-    Obsługiwane wartości:
-    'v35'
-    'v36'
-    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         invoice_element_reference_number (str):
+        ksef_number_variant (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -176,6 +178,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         invoice_element_reference_number=invoice_element_reference_number,
+ksef_number_variant=ksef_number_variant,
 
     )
 
@@ -189,19 +192,16 @@ async def asyncio(
     invoice_element_reference_number: str,
     *,
     client: AuthenticatedClient,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Optional[Union[Any, ExceptionResponse, StatusInvoiceResponse]]:
     """ Sprawdzenie statusu wysłanej faktury
 
      Sprawdzenie statusu wysłanej faktury
-    Obsługiwany nagłówek 'ksef-number-variant'
-    Obsługiwane wartości:
-    'v35'
-    'v36'
-    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         invoice_element_reference_number (str):
+        ksef_number_variant (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -215,5 +215,6 @@ async def asyncio(
     return (await asyncio_detailed(
         invoice_element_reference_number=invoice_element_reference_number,
 client=client,
+ksef_number_variant=ksef_number_variant,
 
     )).parsed

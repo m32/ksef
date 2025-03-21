@@ -7,12 +7,12 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import cast
+from typing import Union
 from typing import Optional
 from typing import Dict
 from ...models.query_sync_credentials_response import QuerySyncCredentialsResponse
-from typing import Union
 from ...types import UNSET, Unset
+from typing import cast
 from ...models.exception_response import ExceptionResponse
 
 

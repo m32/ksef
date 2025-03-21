@@ -8,8 +8,8 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
 from typing import Union
+from ..types import UNSET, Unset
 
 
 
@@ -23,26 +23,27 @@ T = TypeVar("T", bound="CredentialsIdentifierRequestInstitutionalType")
 class CredentialsIdentifierRequestInstitutionalType:
     """ 
         Attributes:
-            type (str):
             identifier (Union[Unset, str]):
+            type (Union[Unset, str]):
      """
 
-    type: str
     identifier: Union[Unset, str] = UNSET
+    type: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
     def to_dict(self) -> Dict[str, Any]:
-        type = self.type
         identifier = self.identifier
+        type = self.type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({
-            "type": type,
         })
         if identifier is not UNSET:
             field_dict["identifier"] = identifier
+        if type is not UNSET:
+            field_dict["type"] = type
 
         return field_dict
 
@@ -51,13 +52,13 @@ class CredentialsIdentifierRequestInstitutionalType:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        type = d.pop("type")
-
         identifier = d.pop("identifier", UNSET)
 
+        type = d.pop("type", UNSET)
+
         credentials_identifier_request_institutional_type = cls(
-            type=type,
             identifier=identifier,
+            type=type,
         )
 
         credentials_identifier_request_institutional_type.additional_properties = d

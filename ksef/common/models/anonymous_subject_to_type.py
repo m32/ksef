@@ -8,8 +8,8 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import cast
 from typing import Dict
+from typing import cast
 
 if TYPE_CHECKING:
   from ..models.anonymous_subject_identifier_to_type import AnonymousSubjectIdentifierToType

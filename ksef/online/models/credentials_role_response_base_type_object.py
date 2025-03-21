@@ -8,15 +8,16 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import cast
+from typing import Union
 from dateutil.parser import isoparse
 from typing import Dict
+from typing import cast
 import datetime
 from ..types import UNSET, Unset
-from typing import Union
 
 if TYPE_CHECKING:
   from ..models.credentials_role_response_base_type_object_role_type import CredentialsRoleResponseBaseTypeObjectRoleType
+  from ..models.credentials_identifier_response_type import CredentialsIdentifierResponseType
 
 
 
@@ -32,22 +33,29 @@ class CredentialsRoleResponseBaseTypeObject:
             start_timestamp (datetime.datetime):
             type (str):
             role_description (Union[Unset, str]):
+            role_recipient_identifier (Union[Unset, CredentialsIdentifierResponseType]):
             role_type (Union[Unset, CredentialsRoleResponseBaseTypeObjectRoleType]):
      """
 
     start_timestamp: datetime.datetime
     type: str
     role_description: Union[Unset, str] = UNSET
+    role_recipient_identifier: Union[Unset, 'CredentialsIdentifierResponseType'] = UNSET
     role_type: Union[Unset, 'CredentialsRoleResponseBaseTypeObjectRoleType'] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
     def to_dict(self) -> Dict[str, Any]:
         from ..models.credentials_role_response_base_type_object_role_type import CredentialsRoleResponseBaseTypeObjectRoleType
+        from ..models.credentials_identifier_response_type import CredentialsIdentifierResponseType
         start_timestamp = self.start_timestamp.isoformat()
 
         type = self.type
         role_description = self.role_description
+        role_recipient_identifier: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.role_recipient_identifier, Unset):
+            role_recipient_identifier = self.role_recipient_identifier.to_dict()
+
         role_type: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.role_type, Unset):
             role_type = self.role_type.to_dict()
@@ -61,6 +69,8 @@ class CredentialsRoleResponseBaseTypeObject:
         })
         if role_description is not UNSET:
             field_dict["roleDescription"] = role_description
+        if role_recipient_identifier is not UNSET:
+            field_dict["roleRecipientIdentifier"] = role_recipient_identifier
         if role_type is not UNSET:
             field_dict["roleType"] = role_type
 
@@ -71,6 +81,7 @@ class CredentialsRoleResponseBaseTypeObject:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.credentials_role_response_base_type_object_role_type import CredentialsRoleResponseBaseTypeObjectRoleType
+        from ..models.credentials_identifier_response_type import CredentialsIdentifierResponseType
         d = src_dict.copy()
         start_timestamp = isoparse(d.pop("startTimestamp"))
 
@@ -80,6 +91,16 @@ class CredentialsRoleResponseBaseTypeObject:
         type = d.pop("type")
 
         role_description = d.pop("roleDescription", UNSET)
+
+        _role_recipient_identifier = d.pop("roleRecipientIdentifier", UNSET)
+        role_recipient_identifier: Union[Unset, CredentialsIdentifierResponseType]
+        if isinstance(_role_recipient_identifier,  Unset):
+            role_recipient_identifier = UNSET
+        else:
+            role_recipient_identifier = CredentialsIdentifierResponseType.from_dict(_role_recipient_identifier)
+
+
+
 
         _role_type = d.pop("roleType", UNSET)
         role_type: Union[Unset, CredentialsRoleResponseBaseTypeObjectRoleType]
@@ -95,6 +116,7 @@ class CredentialsRoleResponseBaseTypeObject:
             start_timestamp=start_timestamp,
             type=type,
             role_description=role_description,
+            role_recipient_identifier=role_recipient_identifier,
             role_type=role_type,
         )
 

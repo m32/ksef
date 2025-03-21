@@ -12,8 +12,8 @@ from typing import Dict
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.credentials_role_request_context_base_type import CredentialsRoleRequestContextBaseType
   from ..models.credentials_identifier_request_institutional_type import CredentialsIdentifierRequestInstitutionalType
+  from ..models.credentials_role_request_context_base_type import CredentialsRoleRequestContextBaseType
   from ..models.credentials_identifier_request_individual_type import CredentialsIdentifierRequestIndividualType
 
 
@@ -39,8 +39,8 @@ class RevokeContextCredentialsRequestType:
 
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.credentials_role_request_context_base_type import CredentialsRoleRequestContextBaseType
         from ..models.credentials_identifier_request_institutional_type import CredentialsIdentifierRequestInstitutionalType
+        from ..models.credentials_role_request_context_base_type import CredentialsRoleRequestContextBaseType
         from ..models.credentials_identifier_request_individual_type import CredentialsIdentifierRequestIndividualType
         context_identifier = self.context_identifier.to_dict()
 
@@ -63,8 +63,8 @@ class RevokeContextCredentialsRequestType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.credentials_role_request_context_base_type import CredentialsRoleRequestContextBaseType
         from ..models.credentials_identifier_request_institutional_type import CredentialsIdentifierRequestInstitutionalType
+        from ..models.credentials_role_request_context_base_type import CredentialsRoleRequestContextBaseType
         from ..models.credentials_identifier_request_individual_type import CredentialsIdentifierRequestIndividualType
         d = src_dict.copy()
         context_identifier = CredentialsIdentifierRequestInstitutionalType.from_dict(d.pop("contextIdentifier"))

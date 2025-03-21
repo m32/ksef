@@ -7,20 +7,27 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from ...models.query_invoice_async_init_response import QueryInvoiceAsyncInitResponse
-from typing import cast
-from ...models.query_invoice_request import QueryInvoiceRequest
+from typing import Union
 from typing import Dict
+from ...types import UNSET, Unset
+from typing import cast
+from ...models.query_invoice_async_init_response import QueryInvoiceAsyncInitResponse
 from ...models.exception_response import ExceptionResponse
+from ...models.query_invoice_request import QueryInvoiceRequest
 
 
 
 def _get_kwargs(
     *,
     json_body: QueryInvoiceRequest,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Dict[str, Any]:
-    
+    headers = {}
+    if not isinstance(ksef_number_variant, Unset):
+        headers["ksef-number-variant"] = ksef_number_variant
+
+
 
     cookies = {}
 
@@ -37,6 +44,7 @@ def _get_kwargs(
         "method": "post",
         "url": "/online/Query/Invoice/Async/Init",
         "json": json_json_body,
+        "headers": headers,
     }
 
 
@@ -78,6 +86,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     json_body: QueryInvoiceRequest,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Response[Union[ExceptionResponse, QueryInvoiceAsyncInitResponse]]:
     """ Inicjalizacja zapytania o faktury
@@ -85,6 +94,7 @@ def sync_detailed(
      Inicjalizacja zapytania o faktury
 
     Args:
+        ksef_number_variant (Union[Unset, str]):
         json_body (QueryInvoiceRequest):
 
     Raises:
@@ -98,6 +108,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         json_body=json_body,
+ksef_number_variant=ksef_number_variant,
 
     )
 
@@ -115,6 +126,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     json_body: QueryInvoiceRequest,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Optional[Union[ExceptionResponse, QueryInvoiceAsyncInitResponse]]:
     """ Inicjalizacja zapytania o faktury
@@ -122,6 +134,7 @@ def sync(
      Inicjalizacja zapytania o faktury
 
     Args:
+        ksef_number_variant (Union[Unset, str]):
         json_body (QueryInvoiceRequest):
 
     Raises:
@@ -136,6 +149,7 @@ def sync(
     return sync_detailed(
         client=client,
 json_body=json_body,
+ksef_number_variant=ksef_number_variant,
 
     ).parsed
 
@@ -143,6 +157,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     json_body: QueryInvoiceRequest,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Response[Union[ExceptionResponse, QueryInvoiceAsyncInitResponse]]:
     """ Inicjalizacja zapytania o faktury
@@ -150,6 +165,7 @@ async def asyncio_detailed(
      Inicjalizacja zapytania o faktury
 
     Args:
+        ksef_number_variant (Union[Unset, str]):
         json_body (QueryInvoiceRequest):
 
     Raises:
@@ -163,6 +179,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         json_body=json_body,
+ksef_number_variant=ksef_number_variant,
 
     )
 
@@ -176,6 +193,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     json_body: QueryInvoiceRequest,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Optional[Union[ExceptionResponse, QueryInvoiceAsyncInitResponse]]:
     """ Inicjalizacja zapytania o faktury
@@ -183,6 +201,7 @@ async def asyncio(
      Inicjalizacja zapytania o faktury
 
     Args:
+        ksef_number_variant (Union[Unset, str]):
         json_body (QueryInvoiceRequest):
 
     Raises:
@@ -197,5 +216,6 @@ async def asyncio(
     return (await asyncio_detailed(
         client=client,
 json_body=json_body,
+ksef_number_variant=ksef_number_variant,
 
     )).parsed

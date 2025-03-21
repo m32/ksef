@@ -7,12 +7,12 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import Dict
-from ...types import File, FileJsonType
-from typing import cast
-from ...models.upload_response import UploadResponse
 from io import BytesIO
+from ...models.upload_response import UploadResponse
 from ...models.exception_response import ExceptionResponse
+from typing import cast
+from ...types import File, FileJsonType
+from typing import Dict
 
 
 
@@ -30,6 +30,14 @@ def _get_kwargs(
         'Accept': 'application/json',
     })
     cookies = {}
+
+
+    
+
+    
+
+    
+
     return {
         "method": "put",
         "url": "/batch/Upload/{ReferenceNumber}/{PartName}".format(ReferenceNumber=reference_number,PartName=part_name,),

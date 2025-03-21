@@ -8,9 +8,9 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from typing import Union
 from typing import Optional
 from ..types import UNSET, Unset
-from typing import Union
 
 
 
@@ -52,7 +52,7 @@ class SubjectNameType:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        type = d.pop("type", None)
+        type = d.pop("type")
 
         trade_name = d.pop("tradeName", UNSET)
 

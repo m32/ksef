@@ -8,12 +8,12 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import Dict
 from ..models.package_part_signature_init_response_type_method import PackagePartSignatureInitResponseTypeMethod
-from typing import Union
-from ..types import UNSET, Unset
-from typing import cast
 from typing import cast, List
+from typing import cast
+from ..types import UNSET, Unset
+from typing import Dict
+from typing import Union
 
 if TYPE_CHECKING:
   from ..models.header_entry_type import HeaderEntryType

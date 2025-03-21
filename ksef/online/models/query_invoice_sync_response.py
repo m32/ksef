@@ -8,11 +8,11 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import cast
 from dateutil.parser import isoparse
 from typing import Dict
-import datetime
 from typing import cast, List
+from typing import cast
+import datetime
 
 if TYPE_CHECKING:
   from ..models.invoice_header_type import InvoiceHeaderType

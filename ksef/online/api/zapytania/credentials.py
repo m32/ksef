@@ -7,11 +7,11 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import cast
-from ...models.query_sync_credentials_request import QuerySyncCredentialsRequest
 from typing import Dict
 from ...models.query_sync_credentials_response import QuerySyncCredentialsResponse
+from typing import cast
 from ...models.exception_response import ExceptionResponse
+from ...models.query_sync_credentials_request import QuerySyncCredentialsRequest
 
 
 

@@ -8,10 +8,10 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import cast
-from typing import Dict
-from ..types import UNSET, Unset
 from typing import Union
+from typing import Dict
+from typing import cast
+from ..types import UNSET, Unset
 from ..models.v2_credentials_role_granted_for_institution_inheritance_type_role_type import V2CredentialsRoleGrantedForInstitutionInheritanceTypeRoleType
 
 if TYPE_CHECKING:

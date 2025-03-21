@@ -1,6 +1,7 @@
 #!/usr/bin/env vpython3
 import os
 import sys
+import time
 import getopt
 import logging
 import logging.config
@@ -60,6 +61,10 @@ class Main:
         )
         if response.status_code != 201:
             raise KSEFError(response.status_code, response.parsed)
+        for i in range(10):
+            print(i,end='.')
+            time.sleep(1)
+        print()
         parsed = response.parsed
         #{
         #    "timestamp":"2023-11-11T22:18:59.328Z",

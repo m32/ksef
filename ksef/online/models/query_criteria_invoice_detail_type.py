@@ -8,17 +8,18 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import cast
-from dateutil.parser import isoparse
-from ..models.query_criteria_invoice_type_subject_type import QueryCriteriaInvoiceTypeSubjectType
-from ..models.query_criteria_invoice_detail_type_currency_codes_item import QueryCriteriaInvoiceDetailTypeCurrencyCodesItem
-from typing import Dict
-from ..types import UNSET, Unset
-from typing import Union
-import datetime
-from typing import cast, List
 from ..models.query_criteria_invoice_detail_type_amount_type import QueryCriteriaInvoiceDetailTypeAmountType
+from ..models.query_criteria_invoice_type_subject_type import QueryCriteriaInvoiceTypeSubjectType
+from dateutil.parser import isoparse
+from typing import Union
+from typing import Dict
 from ..models.query_criteria_invoice_detail_type_invoice_types_item import QueryCriteriaInvoiceDetailTypeInvoiceTypesItem
+from typing import cast, List
+from ..models.query_criteria_invoice_detail_type_schema_type import QueryCriteriaInvoiceDetailTypeSchemaType
+from typing import cast
+import datetime
+from ..types import UNSET, Unset
+from ..models.query_criteria_invoice_detail_type_currency_codes_item import QueryCriteriaInvoiceDetailTypeCurrencyCodesItem
 
 if TYPE_CHECKING:
   from ..models.subject_by_type import SubjectByType
@@ -41,6 +42,9 @@ class QueryCriteriaInvoiceDetailType:
             invoicing_date_to (datetime.datetime): yyyy-MM-dd'T'HH:mm:ss | maximum date range is current time (+ max 6
                 hours), the difference between date field and #invoicingDateFrom cannot be greater than 24 months, date field
                 cannot be before #invoicingDateFrom
+            hiding_date_from (Union[Unset, datetime.datetime]): yyyy-MM-dd'T'HH:mm:ss
+            hiding_date_to (Union[Unset, datetime.datetime]): yyyy-MM-dd'T'HH:mm:ss
+            is_hidden (Union[Unset, bool]):
             amount_from (Union[Unset, float]):
             amount_to (Union[Unset, float]):
             amount_type (Union[Unset, QueryCriteriaInvoiceDetailTypeAmountType]):
@@ -49,6 +53,7 @@ class QueryCriteriaInvoiceDetailType:
             invoice_number (Union[Unset, str]):
             invoice_types (Union[Unset, List[QueryCriteriaInvoiceDetailTypeInvoiceTypesItem]]):
             ksef_reference_number (Union[Unset, str]):
+            schema_type (Union[Unset, QueryCriteriaInvoiceDetailTypeSchemaType]):
             subject_by (Union[Unset, SubjectByType]):
             subject_to (Union[Unset, SubjectToType]):
      """
@@ -57,6 +62,9 @@ class QueryCriteriaInvoiceDetailType:
     type: str
     invoicing_date_from: datetime.datetime
     invoicing_date_to: datetime.datetime
+    hiding_date_from: Union[Unset, datetime.datetime] = UNSET
+    hiding_date_to: Union[Unset, datetime.datetime] = UNSET
+    is_hidden: Union[Unset, bool] = UNSET
     amount_from: Union[Unset, float] = UNSET
     amount_to: Union[Unset, float] = UNSET
     amount_type: Union[Unset, QueryCriteriaInvoiceDetailTypeAmountType] = UNSET
@@ -65,6 +73,7 @@ class QueryCriteriaInvoiceDetailType:
     invoice_number: Union[Unset, str] = UNSET
     invoice_types: Union[Unset, List[QueryCriteriaInvoiceDetailTypeInvoiceTypesItem]] = UNSET
     ksef_reference_number: Union[Unset, str] = UNSET
+    schema_type: Union[Unset, QueryCriteriaInvoiceDetailTypeSchemaType] = UNSET
     subject_by: Union[Unset, 'SubjectByType'] = UNSET
     subject_to: Union[Unset, 'SubjectToType'] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -80,6 +89,15 @@ class QueryCriteriaInvoiceDetailType:
 
         invoicing_date_to = self.invoicing_date_to.isoformat()
 
+        hiding_date_from: Union[Unset, str] = UNSET
+        if not isinstance(self.hiding_date_from, Unset):
+            hiding_date_from = self.hiding_date_from.isoformat()
+
+        hiding_date_to: Union[Unset, str] = UNSET
+        if not isinstance(self.hiding_date_to, Unset):
+            hiding_date_to = self.hiding_date_to.isoformat()
+
+        is_hidden = self.is_hidden
         amount_from = self.amount_from
         amount_to = self.amount_to
         amount_type: Union[Unset, str] = UNSET
@@ -111,6 +129,10 @@ class QueryCriteriaInvoiceDetailType:
 
 
         ksef_reference_number = self.ksef_reference_number
+        schema_type: Union[Unset, str] = UNSET
+        if not isinstance(self.schema_type, Unset):
+            schema_type = self.schema_type.value
+
         subject_by: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.subject_by, Unset):
             subject_by = self.subject_by.to_dict()
@@ -128,6 +150,12 @@ class QueryCriteriaInvoiceDetailType:
             "invoicingDateFrom": invoicing_date_from,
             "invoicingDateTo": invoicing_date_to,
         })
+        if hiding_date_from is not UNSET:
+            field_dict["hidingDateFrom"] = hiding_date_from
+        if hiding_date_to is not UNSET:
+            field_dict["hidingDateTo"] = hiding_date_to
+        if is_hidden is not UNSET:
+            field_dict["isHidden"] = is_hidden
         if amount_from is not UNSET:
             field_dict["amountFrom"] = amount_from
         if amount_to is not UNSET:
@@ -144,6 +172,8 @@ class QueryCriteriaInvoiceDetailType:
             field_dict["invoiceTypes"] = invoice_types
         if ksef_reference_number is not UNSET:
             field_dict["ksefReferenceNumber"] = ksef_reference_number
+        if schema_type is not UNSET:
+            field_dict["schemaType"] = schema_type
         if subject_by is not UNSET:
             field_dict["subjectBy"] = subject_by
         if subject_to is not UNSET:
@@ -174,6 +204,28 @@ class QueryCriteriaInvoiceDetailType:
 
 
 
+
+        _hiding_date_from = d.pop("hidingDateFrom", UNSET)
+        hiding_date_from: Union[Unset, datetime.datetime]
+        if isinstance(_hiding_date_from,  Unset):
+            hiding_date_from = UNSET
+        else:
+            hiding_date_from = isoparse(_hiding_date_from)
+
+
+
+
+        _hiding_date_to = d.pop("hidingDateTo", UNSET)
+        hiding_date_to: Union[Unset, datetime.datetime]
+        if isinstance(_hiding_date_to,  Unset):
+            hiding_date_to = UNSET
+        else:
+            hiding_date_to = isoparse(_hiding_date_to)
+
+
+
+
+        is_hidden = d.pop("isHidden", UNSET)
 
         amount_from = d.pop("amountFrom", UNSET)
 
@@ -215,6 +267,16 @@ class QueryCriteriaInvoiceDetailType:
 
         ksef_reference_number = d.pop("ksefReferenceNumber", UNSET)
 
+        _schema_type = d.pop("schemaType", UNSET)
+        schema_type: Union[Unset, QueryCriteriaInvoiceDetailTypeSchemaType]
+        if isinstance(_schema_type,  Unset):
+            schema_type = UNSET
+        else:
+            schema_type = QueryCriteriaInvoiceDetailTypeSchemaType(_schema_type)
+
+
+
+
         _subject_by = d.pop("subjectBy", UNSET)
         subject_by: Union[Unset, SubjectByType]
         if isinstance(_subject_by,  Unset):
@@ -240,6 +302,9 @@ class QueryCriteriaInvoiceDetailType:
             type=type,
             invoicing_date_from=invoicing_date_from,
             invoicing_date_to=invoicing_date_to,
+            hiding_date_from=hiding_date_from,
+            hiding_date_to=hiding_date_to,
+            is_hidden=is_hidden,
             amount_from=amount_from,
             amount_to=amount_to,
             amount_type=amount_type,
@@ -248,6 +313,7 @@ class QueryCriteriaInvoiceDetailType:
             invoice_number=invoice_number,
             invoice_types=invoice_types,
             ksef_reference_number=ksef_reference_number,
+            schema_type=schema_type,
             subject_by=subject_by,
             subject_to=subject_to,
         )

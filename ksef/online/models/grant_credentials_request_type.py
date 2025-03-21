@@ -8,13 +8,13 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import Dict
 from typing import cast, List
 from typing import cast
+from typing import Dict
 
 if TYPE_CHECKING:
-  from ..models.credentials_identifier_request_type import CredentialsIdentifierRequestType
   from ..models.credentials_role_request_standard_described_type import CredentialsRoleRequestStandardDescribedType
+  from ..models.credentials_identifier_request_type import CredentialsIdentifierRequestType
 
 
 
@@ -37,8 +37,8 @@ class GrantCredentialsRequestType:
 
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.credentials_identifier_request_type import CredentialsIdentifierRequestType
         from ..models.credentials_role_request_standard_described_type import CredentialsRoleRequestStandardDescribedType
+        from ..models.credentials_identifier_request_type import CredentialsIdentifierRequestType
         credentials_identifier = self.credentials_identifier.to_dict()
 
         credentials_role_list = []
@@ -64,8 +64,8 @@ class GrantCredentialsRequestType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.credentials_identifier_request_type import CredentialsIdentifierRequestType
         from ..models.credentials_role_request_standard_described_type import CredentialsRoleRequestStandardDescribedType
+        from ..models.credentials_identifier_request_type import CredentialsIdentifierRequestType
         d = src_dict.copy()
         credentials_identifier = CredentialsIdentifierRequestType.from_dict(d.pop("credentialsIdentifier"))
 

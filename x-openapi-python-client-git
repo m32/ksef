@@ -16,7 +16,10 @@ one online
 }
 
 case "$1" in
-    all|batch|common|online)
+    all)
+        all
+        ;;
+    batch|common|online)
         one $1
         ;;
     *)

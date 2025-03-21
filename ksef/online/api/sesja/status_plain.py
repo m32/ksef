@@ -7,13 +7,13 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import cast
+from typing import Union
 from typing import Optional
 from typing import Dict
-from ...models.session_status_response import SessionStatusResponse
-from typing import Union
 from ...types import UNSET, Unset
+from typing import cast
 from ...models.exception_response import ExceptionResponse
+from ...models.session_status_response import SessionStatusResponse
 
 
 
@@ -22,9 +22,14 @@ def _get_kwargs(
     page_size: Union[Unset, None, int] = 10,
     page_offset: Union[Unset, None, int] = 0,
     include_details: Union[Unset, None, bool] = True,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Dict[str, Any]:
-    
+    headers = {}
+    if not isinstance(ksef_number_variant, Unset):
+        headers["ksef-number-variant"] = ksef_number_variant
+
+
 
     cookies = {}
 
@@ -51,6 +56,7 @@ def _get_kwargs(
         "method": "get",
         "url": "/online/Session/Status",
         "params": params,
+        "headers": headers,
     }
 
 
@@ -94,22 +100,18 @@ def sync_detailed(
     page_size: Union[Unset, None, int] = 10,
     page_offset: Union[Unset, None, int] = 0,
     include_details: Union[Unset, None, bool] = True,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Response[Union[ExceptionResponse, SessionStatusResponse]]:
     """ Sprawdzenie statusu aktywnej sesji interaktywnej
 
      Sprawdzenie statusu obecnego przetwarzania interaktywnego
-    Obsługiwany nagłówek 'ksef-number-variant'
-              Obsługiwane wartości:
-              'v35'
-              'v36'
-              Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w
-    usłudze.
 
     Args:
         page_size (Union[Unset, None, int]):  Default: 10.
         page_offset (Union[Unset, None, int]):
         include_details (Union[Unset, None, bool]):  Default: True.
+        ksef_number_variant (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -124,6 +126,7 @@ def sync_detailed(
         page_size=page_size,
 page_offset=page_offset,
 include_details=include_details,
+ksef_number_variant=ksef_number_variant,
 
     )
 
@@ -143,22 +146,18 @@ def sync(
     page_size: Union[Unset, None, int] = 10,
     page_offset: Union[Unset, None, int] = 0,
     include_details: Union[Unset, None, bool] = True,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Optional[Union[ExceptionResponse, SessionStatusResponse]]:
     """ Sprawdzenie statusu aktywnej sesji interaktywnej
 
      Sprawdzenie statusu obecnego przetwarzania interaktywnego
-    Obsługiwany nagłówek 'ksef-number-variant'
-              Obsługiwane wartości:
-              'v35'
-              'v36'
-              Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w
-    usłudze.
 
     Args:
         page_size (Union[Unset, None, int]):  Default: 10.
         page_offset (Union[Unset, None, int]):
         include_details (Union[Unset, None, bool]):  Default: True.
+        ksef_number_variant (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -174,6 +173,7 @@ def sync(
 page_size=page_size,
 page_offset=page_offset,
 include_details=include_details,
+ksef_number_variant=ksef_number_variant,
 
     ).parsed
 
@@ -183,22 +183,18 @@ async def asyncio_detailed(
     page_size: Union[Unset, None, int] = 10,
     page_offset: Union[Unset, None, int] = 0,
     include_details: Union[Unset, None, bool] = True,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Response[Union[ExceptionResponse, SessionStatusResponse]]:
     """ Sprawdzenie statusu aktywnej sesji interaktywnej
 
      Sprawdzenie statusu obecnego przetwarzania interaktywnego
-    Obsługiwany nagłówek 'ksef-number-variant'
-              Obsługiwane wartości:
-              'v35'
-              'v36'
-              Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w
-    usłudze.
 
     Args:
         page_size (Union[Unset, None, int]):  Default: 10.
         page_offset (Union[Unset, None, int]):
         include_details (Union[Unset, None, bool]):  Default: True.
+        ksef_number_variant (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -213,6 +209,7 @@ async def asyncio_detailed(
         page_size=page_size,
 page_offset=page_offset,
 include_details=include_details,
+ksef_number_variant=ksef_number_variant,
 
     )
 
@@ -228,22 +225,18 @@ async def asyncio(
     page_size: Union[Unset, None, int] = 10,
     page_offset: Union[Unset, None, int] = 0,
     include_details: Union[Unset, None, bool] = True,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Optional[Union[ExceptionResponse, SessionStatusResponse]]:
     """ Sprawdzenie statusu aktywnej sesji interaktywnej
 
      Sprawdzenie statusu obecnego przetwarzania interaktywnego
-    Obsługiwany nagłówek 'ksef-number-variant'
-              Obsługiwane wartości:
-              'v35'
-              'v36'
-              Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w
-    usłudze.
 
     Args:
         page_size (Union[Unset, None, int]):  Default: 10.
         page_offset (Union[Unset, None, int]):
         include_details (Union[Unset, None, bool]):  Default: True.
+        ksef_number_variant (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -259,5 +252,6 @@ async def asyncio(
 page_size=page_size,
 page_offset=page_offset,
 include_details=include_details,
+ksef_number_variant=ksef_number_variant,
 
     )).parsed

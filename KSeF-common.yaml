@@ -6,7 +6,7 @@ info:
     url: https://ksef.mf.gov.pl
   description: Krajowy System e-Faktur
   title: KSeF
-  version: 2.0.4
+  version: 2.6.0
 externalDocs:
   description: Dokumentacja
   url: https://www.gov.pl/web/kas/krajowy-system-e-faktur
@@ -78,6 +78,9 @@ paths:
             application/vnd.v3+json:
               schema:
                 $ref: '#/components/schemas/V3_StatusResponse'
+            application/vnd.v4+json:
+              schema:
+                $ref: '#/components/schemas/V4_StatusResponse'
           description: OK
         "400":
           content:
@@ -88,6 +91,43 @@ paths:
       summary: Interfejs wspólny pobrania statusu przetwarzania wsadowego
       tags:
       - Interfejsy wspólne - status
+  /common/Upo/ondemand/{ReferenceNumber}/{KsefReferenceNumber}:
+    get:
+      description: Pobieranie UPO na żądanie
+      operationId: common.upo.on.demand
+      parameters:
+      - in: path
+        name: ReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+      - in: path
+        name: KsefReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpoOnDemandResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      summary: Interfejs wspólny pobrania UPO na żądanie
+      tags:
+      - Interfejsy wspólne - UPO na żądanie
   /common/Upo/{ReferenceNumber}/{UpoReferenceNumber}:
     get:
       description: Pobieranie UPO
@@ -125,8 +165,202 @@ paths:
       summary: Interfejs wspólny pobrania UPO
       tags:
       - Interfejsy wspólne - UPO
+  /common/accessPointsProvidersList:
+    get:
+      description: Pobieranie listy Dostawców usług Peppol
+      operationId: common.get.access.points.providers.list
+      parameters:
+      - in: query
+        name: PageSize
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 10
+      - in: query
+        name: PageOffset
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPointsProvidersListResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      summary: Interfejs wspólny pobrania listy Dostawców usług Peppol zarejestrowanych
+        w KSeF
+      tags:
+      - Interfejsy wspólne - obsługa faktur PEF
+  /common/download/{KsefReferenceNumber}:
+    post:
+      description: Pobranie faktury z repozytorium KSeF na podstawie kryteriów opartych
+        o numer KSeF i skrót dokumentu
+      operationId: common.invoice.download
+      parameters:
+      - in: path
+        name: KsefReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceDownloadRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                type: object
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      summary: Pobranie faktury z repozytorium KSeF - kryteria oparte o numer KSeF
+        i skrót dokumentu
+      tags:
+      - Interfejsy wspólne - pobranie faktury
+  /common/registerAccessPointProvider:
+    post:
+      description: Rejerstracja w KSeF nowego dostawcę usług Peppol
+      operationId: common.register.access.point.provider
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterAccessPointResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nie znaleziono wyszukiwanej treści
+      summary: "Metoda umożliwia rejestrację w KSeF nowego dostawcę usług Peppol,\
+        \ który posiada aktywny certyfikat Peppol"
+      tags:
+      - Interfejsy wspólne - rejestracja w KSeF nowego dostawcy usług Peppol
+  /common/verification/{KsefReferenceNumber}:
+    post:
+      description: Weryfikacja faktury
+      operationId: common.invoice.verification
+      parameters:
+      - in: path
+        name: KsefReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/InvoiceVerificationRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceVerificationResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      summary: Interfejs wspólny weryfikacji faktury
+      tags:
+      - Interfejsy wspólne - weryfikacja faktury
 components:
   schemas:
+    AccessPointsProviderType:
+      type: object
+      properties:
+        nameAPP:
+          type: string
+        numerAPP:
+          type: string
+      required:
+      - nameAPP
+      - numerAPP
+    AccessPointsProvidersListResponse:
+      type: object
+      properties:
+        accessPointsProviderList:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessPointsProviderType'
+        numberOfElements:
+          type: integer
+          format: int64
+          minimum: 0
+        pageOffset:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+        pageSize:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 10
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+          format: date-time
+      required:
+      - numberOfElements
+      - pageOffset
+      - pageSize
+      - referenceNumber
+      - timestamp
     AnonymousSubjectIdentifierToCompanyType:
       type: object
       allOf:
@@ -231,6 +465,43 @@ components:
       - serviceCtx
       - serviceName
       - timestamp
+    HashSHAType:
+      type: object
+      properties:
+        algorithm:
+          type: string
+          pattern: SHA-256
+        encoding:
+          type: string
+          pattern: Base64
+        value:
+          type: string
+          format: binary
+          maxLength: 44
+          minLength: 44
+      required:
+      - algorithm
+      - encoding
+      - value
+    InvoiceDownloadRequest:
+      type: object
+      properties:
+        dueValue:
+          type: string
+          pattern: "(\\-)?\\d{1,10}(\\.\\d{2})?"
+        hashSHA:
+          $ref: '#/components/schemas/HashSHAType'
+        invoiceNumber:
+          type: string
+          maxLength: 256
+          minLength: 1
+        subjectTo:
+          $ref: '#/components/schemas/AnonymousSubjectIdentifierToType'
+      required:
+      - dueValue
+      - hashSHA
+      - invoiceNumber
+      - subjectTo
     InvoiceQueryDetailsType:
       type: object
       properties:
@@ -258,6 +529,49 @@ components:
       required:
       - invoiceDetails
       - ksefReferenceNumber
+    InvoiceVerificationRequest:
+      type: object
+      properties:
+        hashSHA:
+          $ref: '#/components/schemas/HashSHAType'
+      required:
+      - hashSHA
+    InvoiceVerificationResponse:
+      type: object
+      properties:
+        acquisitionTimestamp:
+          type: string
+          format: date-time
+        hash:
+          type: string
+        invoiceType:
+          type: string
+          enum:
+          - VAT
+          - KOR
+          - ZAL
+          - ROZ
+          - UPR
+          - KOR_ZAL
+          - KOR_ROZ
+          - VAT_PEF
+          - VAT_PEF_SP
+          - KOR_PEF
+        ksefReferenceNumber:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+        schemaVersion:
+          type: string
+        subjectBy:
+          $ref: '#/components/schemas/SubjectIdentifierByType'
+    RegisterAccessPointResponse:
+      type: object
+      properties:
+        referenceNumber:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
     StatusResponse:
       type: object
       properties:
@@ -296,6 +610,40 @@ components:
             minLength: 1
       required:
       - fullName
+    SubjectIdentifierByCompanyType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SubjectIdentifierByType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            pattern: "[1-9]((\\d[1-9])|([1-9]\\d))\\d{7}"
+      required:
+      - identifier
+    SubjectIdentifierByType:
+      type: object
+      discriminator:
+        mapping:
+          int: '#/components/schemas/SubjectIdentifierInternalType'
+          onip: '#/components/schemas/SubjectIdentifierByCompanyType'
+        propertyName: type
+      properties:
+        type:
+          type: string
+      required:
+      - type
+    SubjectIdentifierInternalType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SubjectIdentifierByType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            pattern: "[1-9]((\\d[1-9])|([1-9]\\d))\\d{7}-\\d{5}"
+      required:
+      - identifier
     SubjectNameType:
       type: object
       discriminator:
@@ -335,6 +683,33 @@ components:
       required:
       - firstName
       - surname
+    UpoOnDemandResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+        upo:
+          type: string
+    UpoPageType:
+      type: object
+      properties:
+        upoPageNumber:
+          type: integer
+          format: int32
+          minimum: 0
+        upoReferenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        upoUrl:
+          type: string
+          maxLength: 512
+          minLength: 1
+          pattern: "http[s]?:\\/{2}([0-9a-z][0-9a-z_-]*\\.)+[0-9a-z][0-9a-z_-]*(([0-9a-zA-Z][0-9a-zA-Z_-]*\\\
+            .?)*\\/?)*"
+      required:
+      - upoPageNumber
+      - upoReferenceNumber
+      - upoUrl
     V3_StatusResponse:
       type: object
       properties:
@@ -367,3 +742,34 @@ components:
       - processingDescription
       - referenceNumber
       - timestamp
+    V4_StatusResponse:
+      type: object
+      properties:
+        processingCode:
+          type: integer
+          format: int32
+          maximum: 999
+          minimum: 100
+        processingDescription:
+          type: string
+          maxLength: 256
+          minLength: 1
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+          format: date-time
+        upoPageCount:
+          type: integer
+          format: int32
+        upoPageList:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpoPageType'
+      required:
+      - processingCode
+      - processingDescription
+      - referenceNumber
+      - timestamp
+      - upoPageCount

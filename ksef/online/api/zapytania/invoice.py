@@ -7,10 +7,12 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import cast
-from ...models.query_invoice_request import QueryInvoiceRequest
+from typing import Union
 from typing import Dict
+from ...types import UNSET, Unset
+from typing import cast
 from ...models.exception_response import ExceptionResponse
+from ...models.query_invoice_request import QueryInvoiceRequest
 from ...models.query_invoice_sync_response import QueryInvoiceSyncResponse
 
 
@@ -20,9 +22,14 @@ def _get_kwargs(
     json_body: QueryInvoiceRequest,
     page_size: int,
     page_offset: int,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Dict[str, Any]:
-    
+    headers = {}
+    if not isinstance(ksef_number_variant, Unset):
+        headers["ksef-number-variant"] = ksef_number_variant
+
+
 
     cookies = {}
 
@@ -49,6 +56,7 @@ def _get_kwargs(
         "url": "/online/Query/Invoice/Sync",
         "json": json_json_body,
         "params": params,
+        "headers": headers,
     }
 
 
@@ -92,20 +100,17 @@ def sync_detailed(
     json_body: QueryInvoiceRequest,
     page_size: int,
     page_offset: int,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Response[Union[ExceptionResponse, QueryInvoiceSyncResponse]]:
     """ Zapytanie o faktury
 
      Zapytanie o faktury
-    Obsługiwany nagłówek 'ksef-number-variant'
-    Obsługiwane wartości:
-    'v35'
-    'v36'
-    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         page_size (int):
         page_offset (int):
+        ksef_number_variant (Union[Unset, str]):
         json_body (QueryInvoiceRequest):
 
     Raises:
@@ -121,6 +126,7 @@ def sync_detailed(
         json_body=json_body,
 page_size=page_size,
 page_offset=page_offset,
+ksef_number_variant=ksef_number_variant,
 
     )
 
@@ -140,20 +146,17 @@ def sync(
     json_body: QueryInvoiceRequest,
     page_size: int,
     page_offset: int,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Optional[Union[ExceptionResponse, QueryInvoiceSyncResponse]]:
     """ Zapytanie o faktury
 
      Zapytanie o faktury
-    Obsługiwany nagłówek 'ksef-number-variant'
-    Obsługiwane wartości:
-    'v35'
-    'v36'
-    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         page_size (int):
         page_offset (int):
+        ksef_number_variant (Union[Unset, str]):
         json_body (QueryInvoiceRequest):
 
     Raises:
@@ -170,6 +173,7 @@ def sync(
 json_body=json_body,
 page_size=page_size,
 page_offset=page_offset,
+ksef_number_variant=ksef_number_variant,
 
     ).parsed
 
@@ -179,20 +183,17 @@ async def asyncio_detailed(
     json_body: QueryInvoiceRequest,
     page_size: int,
     page_offset: int,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Response[Union[ExceptionResponse, QueryInvoiceSyncResponse]]:
     """ Zapytanie o faktury
 
      Zapytanie o faktury
-    Obsługiwany nagłówek 'ksef-number-variant'
-    Obsługiwane wartości:
-    'v35'
-    'v36'
-    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         page_size (int):
         page_offset (int):
+        ksef_number_variant (Union[Unset, str]):
         json_body (QueryInvoiceRequest):
 
     Raises:
@@ -208,6 +209,7 @@ async def asyncio_detailed(
         json_body=json_body,
 page_size=page_size,
 page_offset=page_offset,
+ksef_number_variant=ksef_number_variant,
 
     )
 
@@ -223,20 +225,17 @@ async def asyncio(
     json_body: QueryInvoiceRequest,
     page_size: int,
     page_offset: int,
+    ksef_number_variant: Union[Unset, str] = UNSET,
 
 ) -> Optional[Union[ExceptionResponse, QueryInvoiceSyncResponse]]:
     """ Zapytanie o faktury
 
      Zapytanie o faktury
-    Obsługiwany nagłówek 'ksef-number-variant'
-    Obsługiwane wartości:
-    'v35'
-    'v36'
-    Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
 
     Args:
         page_size (int):
         page_offset (int):
+        ksef_number_variant (Union[Unset, str]):
         json_body (QueryInvoiceRequest):
 
     Raises:
@@ -253,5 +252,6 @@ async def asyncio(
 json_body=json_body,
 page_size=page_size,
 page_offset=page_offset,
+ksef_number_variant=ksef_number_variant,
 
     )).parsed

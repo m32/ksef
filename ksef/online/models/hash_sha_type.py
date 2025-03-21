@@ -8,8 +8,8 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import File, FileJsonType
 from io import BytesIO
+from ..types import File, FileJsonType
 
 
 

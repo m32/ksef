@@ -9,8 +9,8 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 import datetime
-from typing import cast
 from dateutil.parser import isoparse
+from typing import cast
 
 
 
@@ -24,19 +24,25 @@ T = TypeVar("T", bound="RequestPaymentIdentifierResponse")
 class RequestPaymentIdentifierResponse:
     """ 
         Attributes:
-            payment_identifier (str):
+            element_reference_number (str):
+            processing_code (int):
+            processing_description (str):
             reference_number (str):
             timestamp (datetime.datetime):
      """
 
-    payment_identifier: str
+    element_reference_number: str
+    processing_code: int
+    processing_description: str
     reference_number: str
     timestamp: datetime.datetime
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
     def to_dict(self) -> Dict[str, Any]:
-        payment_identifier = self.payment_identifier
+        element_reference_number = self.element_reference_number
+        processing_code = self.processing_code
+        processing_description = self.processing_description
         reference_number = self.reference_number
         timestamp = self.timestamp.isoformat()
 
@@ -44,7 +50,9 @@ class RequestPaymentIdentifierResponse:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({
-            "paymentIdentifier": payment_identifier,
+            "elementReferenceNumber": element_reference_number,
+            "processingCode": processing_code,
+            "processingDescription": processing_description,
             "referenceNumber": reference_number,
             "timestamp": timestamp,
         })
@@ -56,7 +64,11 @@ class RequestPaymentIdentifierResponse:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        payment_identifier = d.pop("paymentIdentifier")
+        element_reference_number = d.pop("elementReferenceNumber")
+
+        processing_code = d.pop("processingCode")
+
+        processing_description = d.pop("processingDescription")
 
         reference_number = d.pop("referenceNumber")
 
@@ -66,7 +78,9 @@ class RequestPaymentIdentifierResponse:
 
 
         request_payment_identifier_response = cls(
-            payment_identifier=payment_identifier,
+            element_reference_number=element_reference_number,
+            processing_code=processing_code,
+            processing_description=processing_description,
             reference_number=reference_number,
             timestamp=timestamp,
         )

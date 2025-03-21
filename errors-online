@@ -36,6 +36,12 @@ Properties has conflicting values
 Failure to process schema has resulted in the removal of:
 /components/schemas/CredentialsIdentifierRequestInternalType
 
+Unable to process schema /components/schemas/CredentialsIdentifierRequestTypePeppolProviderType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierRequestTypePeppolProviderType
+
 Unable to process schema /components/schemas/CredentialsIdentifierResponseAuthorisationTokenType:
 Properties has conflicting values
 
@@ -65,6 +71,12 @@ Properties has conflicting values
 
 Failure to process schema has resulted in the removal of:
 /components/schemas/CredentialsIdentifierResponseInternalIdentifierType
+
+Unable to process schema /components/schemas/CredentialsIdentifierResponsePeppolProviderType:
+Properties has conflicting values
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/CredentialsIdentifierResponsePeppolProviderType
 
 Unable to process schema /components/schemas/CredentialsParentType:
 Properties has conflicting values
@@ -114,6 +126,12 @@ Unable to process schema /components/schemas/V2_CredentialsRoleResponseGrantedBy
 
 Failure to process schema has resulted in the removal of:
 /components/schemas/V2_CredentialsRoleResponseGrantedByInstitutionType
+
+Unable to process schema /components/schemas/V2_CredentialsRoleResponseGrantedForAccountingType:
+<class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types
+
+Failure to process schema has resulted in the removal of:
+/components/schemas/V2_CredentialsRoleResponseGrantedForAccountingType
 
 Unable to process schema /components/schemas/V2_CredentialsRoleResponseGrantedForIndividualDirectType:
 <class 'openapi_python_client.parser.properties.model_property.ModelProperty'>, <class 'openapi_python_client.parser.properties.enum_property.EnumProperty'>Properties have incompatible types

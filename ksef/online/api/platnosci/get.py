@@ -7,15 +7,18 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
-from typing import Dict
-from ...models.get_payment_identifier_reference_numbers_response import GetPaymentIdentifierReferenceNumbersResponse
 from ...models.exception_response import ExceptionResponse
+from ...models.get_payment_identifier_reference_numbers_response import GetPaymentIdentifierReferenceNumbersResponse
+from typing import Dict
 from typing import cast
 
 
 
 def _get_kwargs(
     payment_identifier: str,
+    *,
+    page_size: int,
+    page_offset: int,
 
 ) -> Dict[str, Any]:
     
@@ -23,7 +26,16 @@ def _get_kwargs(
     cookies = {}
 
 
-    
+    params: Dict[str, Any] = {}
+    params["PageSize"] = page_size
+
+
+    params["PageOffset"] = page_offset
+
+
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
 
     
 
@@ -32,6 +44,7 @@ def _get_kwargs(
     return {
         "method": "get",
         "url": "/online/Payment/Identifier/GetReferenceNumbers/{PaymentIdentifier}".format(PaymentIdentifier=payment_identifier,),
+        "params": params,
     }
 
 
@@ -76,6 +89,8 @@ def sync_detailed(
     payment_identifier: str,
     *,
     client: AuthenticatedClient,
+    page_size: int,
+    page_offset: int,
 
 ) -> Response[Union[Any, ExceptionResponse, GetPaymentIdentifierReferenceNumbersResponse]]:
     """ Pobranie listy faktur dla identyfikatora płatności
@@ -84,6 +99,8 @@ def sync_detailed(
 
     Args:
         payment_identifier (str):
+        page_size (int):
+        page_offset (int):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -96,6 +113,8 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         payment_identifier=payment_identifier,
+page_size=page_size,
+page_offset=page_offset,
 
     )
 
@@ -113,6 +132,8 @@ def sync(
     payment_identifier: str,
     *,
     client: AuthenticatedClient,
+    page_size: int,
+    page_offset: int,
 
 ) -> Optional[Union[Any, ExceptionResponse, GetPaymentIdentifierReferenceNumbersResponse]]:
     """ Pobranie listy faktur dla identyfikatora płatności
@@ -121,6 +142,8 @@ def sync(
 
     Args:
         payment_identifier (str):
+        page_size (int):
+        page_offset (int):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -134,6 +157,8 @@ def sync(
     return sync_detailed(
         payment_identifier=payment_identifier,
 client=client,
+page_size=page_size,
+page_offset=page_offset,
 
     ).parsed
 
@@ -141,6 +166,8 @@ async def asyncio_detailed(
     payment_identifier: str,
     *,
     client: AuthenticatedClient,
+    page_size: int,
+    page_offset: int,
 
 ) -> Response[Union[Any, ExceptionResponse, GetPaymentIdentifierReferenceNumbersResponse]]:
     """ Pobranie listy faktur dla identyfikatora płatności
@@ -149,6 +176,8 @@ async def asyncio_detailed(
 
     Args:
         payment_identifier (str):
+        page_size (int):
+        page_offset (int):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -161,6 +190,8 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         payment_identifier=payment_identifier,
+page_size=page_size,
+page_offset=page_offset,
 
     )
 
@@ -174,6 +205,8 @@ async def asyncio(
     payment_identifier: str,
     *,
     client: AuthenticatedClient,
+    page_size: int,
+    page_offset: int,
 
 ) -> Optional[Union[Any, ExceptionResponse, GetPaymentIdentifierReferenceNumbersResponse]]:
     """ Pobranie listy faktur dla identyfikatora płatności
@@ -182,6 +215,8 @@ async def asyncio(
 
     Args:
         payment_identifier (str):
+        page_size (int):
+        page_offset (int):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -195,5 +230,7 @@ async def asyncio(
     return (await asyncio_detailed(
         payment_identifier=payment_identifier,
 client=client,
+page_size=page_size,
+page_offset=page_offset,
 
     )).parsed

@@ -8,16 +8,16 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from typing import cast
-from typing import Dict
-from ..types import UNSET, Unset
 from typing import Union
+from typing import Dict
 from typing import cast, List
+from typing import cast
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+  from ..models.v2_credentials_role_response_base_type_object import V2CredentialsRoleResponseBaseTypeObject
   from ..models.subject_complete_name_type import SubjectCompleteNameType
   from ..models.subject_identifier_by_type import SubjectIdentifierByType
-  from ..models.v2_credentials_role_response_base_type_object import V2CredentialsRoleResponseBaseTypeObject
 
 
 
@@ -42,9 +42,9 @@ class V2SessionContextType:
 
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.v2_credentials_role_response_base_type_object import V2CredentialsRoleResponseBaseTypeObject
         from ..models.subject_complete_name_type import SubjectCompleteNameType
         from ..models.subject_identifier_by_type import SubjectIdentifierByType
-        from ..models.v2_credentials_role_response_base_type_object import V2CredentialsRoleResponseBaseTypeObject
         context_identifier = self.context_identifier.to_dict()
 
         credentials_role_list = []
@@ -76,9 +76,9 @@ class V2SessionContextType:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.v2_credentials_role_response_base_type_object import V2CredentialsRoleResponseBaseTypeObject
         from ..models.subject_complete_name_type import SubjectCompleteNameType
         from ..models.subject_identifier_by_type import SubjectIdentifierByType
-        from ..models.v2_credentials_role_response_base_type_object import V2CredentialsRoleResponseBaseTypeObject
         d = src_dict.copy()
         context_identifier = SubjectIdentifierByType.from_dict(d.pop("contextIdentifier"))
 

@@ -6,7 +6,7 @@ info:
     url: https://ksef.mf.gov.pl
   description: Krajowy System e-Faktur
   title: KSeF
-  version: 2.0.4
+  version: 2.6.0
 externalDocs:
   description: Dokumentacja
   url: https://www.gov.pl/web/kas/krajowy-system-e-faktur
@@ -27,6 +27,82 @@ tags:
     url: https://ksef.mf.gov.pl
   name: KSeF
 paths:
+  /online/Credentials/AccountingGrant:
+    post:
+      description: Nadanie poświadczeń dla biura rachunkowego
+      operationId: online.credentials.credentials.accounting.grant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GrantAccountingCredentialsRequest'
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusCredentialsResponse'
+          description: Dane zostały zapisane
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nie znaleziono danych
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      security:
+      - SessionToken: []
+      summary: Nadanie poświadczeń dla biura rachunkowego
+      tags:
+      - Interfejsy interaktywne - poświadczenia
+  /online/Credentials/AccountingRevoke:
+    post:
+      description: Odebranie poświadczeń biur rachunkowych
+      operationId: online.credentials.credentials.accounting.revoke
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RevokeAccountingCredentialsRequest'
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusCredentialsResponse'
+          description: Dane zostały zapisane
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nie znaleziono danych
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      security:
+      - SessionToken: []
+      summary: Odebranie poświadczeń biur rachunkowych
+      tags:
+      - Interfejsy interaktywne - poświadczenia
   /online/Credentials/ContextGrant:
     post:
       description: Nadanie poświadczeń kontekstowych
@@ -367,6 +443,144 @@ paths:
       summary: Pobranie faktury
       tags:
       - Interfejsy interaktywne - faktury
+  /online/Invoice/Scam/Cancel:
+    post:
+      description: Wycofanie faktury scamowej
+      operationId: online.invoice.scam.invoice.cancel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelScamInvoiceRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScamInvoiceResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+      security:
+      - SessionToken: []
+      summary: Wycofanie faktury scamowej
+      tags:
+      - Interfejsy interaktywne - faktury
+  /online/Invoice/Scam/Report:
+    post:
+      description: Zgłoszenie faktury scamowej
+      operationId: online.invoice.scam.invoice.report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportScamInvoiceRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScamInvoiceResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+      security:
+      - SessionToken: []
+      summary: Zgłoszenie faktury scamowej
+      tags:
+      - Interfejsy interaktywne - faktury
+  /online/Invoice/Scam/Status/{scamElementReferenceNumber}:
+    get:
+      description: Pobranie statusu zgłoszenia nadużycia faktury
+      operationId: online.invoice.scam.invoice.status
+      parameters:
+      - in: path
+        name: scamElementReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScamInvoiceResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+      security:
+      - SessionToken: []
+      summary: Pobranie statusu zgłoszenia nadużycia faktury
+      tags:
+      - Interfejsy interaktywne - faktury
+  /online/Invoice/Scam/{KSeFReferenceNumber}:
+    get:
+      description: Pobranie zgłoszenia nadużycia faktury
+      operationId: online.invoice.scam.invoice.get
+      parameters:
+      - in: path
+        name: KSeFReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScamInvoiceStatusResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+      security:
+      - SessionToken: []
+      summary: Pobranie zgłoszenia nadużycia faktury
+      tags:
+      - Interfejsy interaktywne - faktury
   /online/Invoice/Send:
     put:
       description: 'Wysyłka faktury '
@@ -461,15 +675,18 @@ paths:
       - Interfejsy interaktywne - faktury
   /online/Invoice/Status/{InvoiceElementReferenceNumber}:
     get:
-      description: |-
-        Sprawdzenie statusu wysłanej faktury
-        Obsługiwany nagłówek 'ksef-number-variant'
-        Obsługiwane wartości:
-        'v35'
-        'v36'
-        Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+      description: Sprawdzenie statusu wysłanej faktury
       operationId: online.invoice.invoice.status
       parameters:
+      - description: |-
+          Obsługiwane wartości:
+          'v35'
+          'v36'
+          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+        in: header
+        name: ksef-number-variant
+        schema:
+          type: string
       - in: path
         name: InvoiceElementReferenceNumber
         required: true
@@ -547,6 +764,308 @@ paths:
       summary: Sprawdzenie statusu wysłanej faktury
       tags:
       - Interfejsy interaktywne - faktury
+  /online/Invoice/Visibility/Hide:
+    post:
+      description: Ukrywanie wybranej faktury
+      operationId: online.invoice.invoice.hide
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HideInvoiceRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisibilityInvoiceResponseStatusMain'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+      security:
+      - SessionToken: []
+      summary: Ukrywanie wybranej faktury
+      tags:
+      - Interfejsy interaktywne - faktury
+  /online/Invoice/Visibility/Show:
+    post:
+      description: Anulowanie ukrycia wybranej faktury
+      operationId: online.invoice.invoice.show
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShowInvoiceRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisibilityInvoiceResponseStatusMain'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+      security:
+      - SessionToken: []
+      summary: Anulowanie ukrycia wybranej faktury
+      tags:
+      - Interfejsy interaktywne - faktury
+  /online/Invoice/Visibility/Status/{HidingElementReferenceNumber}:
+    get:
+      description: Sprawdzenie statusu operacji ukrycia/odsłonienia faktury
+      operationId: online.invoice.invoice.visibility.status
+      parameters:
+      - description: |-
+          Obsługiwane wartości:
+          'v35'
+          'v36'
+          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+        in: header
+        name: ksef-number-variant
+        schema:
+          type: string
+      - in: path
+        name: HidingElementReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                response example:
+                  description: Przykład poprawnej odpowiedzi
+                  summary: Przykład poprawnej odpowiedzi
+                  value:
+                    timestamp: 2021-10-01T12:13:14.999Z
+                    referenceNumber: 20211001-SE-FFFFFFFFFF-FFFFFFFFFF-FF
+                    processingCode: 200
+                    processingDescription: Zakończenie etapu przywracania widoczności
+                      faktury
+                    elementReferenceNumber: 20211001-EE-FFFFFFFFFF-FFFFFFFFFF-FF
+                    invoiceStatus:
+                      invoiceNumber: INV_1111111111_2222222222_4727711098527000
+                      ksefReferenceNumber: 1111111111-20211001-FFFFFF-FFFFFF-FF
+                      acquisitionTimestamp: 2021-10-01T12:13:14.999Z
+              schema:
+                $ref: '#/components/schemas/VisibilityInvoiceStatusResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              examples:
+                response example:
+                  description: Przykład błędnej odpowiedzi
+                  summary: Przykład błędnej odpowiedzi
+                  value: "{\"exception\":{\"serviceCtx\":\"srvDVAKA\",\"serviceCode\"\
+                    :\"20211001-EX-FFFFFFFFFF-FFFFFFFFFF-FF\",\"serviceName\":\"{\"\
+                    timestamp\":\"2021-10-01T12:13:14.999Z\",\"referenceNumber\":\"\
+                    20211001-SE-FFFFFFFFFF-FFFFFFFFFF-FF\",\"processingCode\":200,\"\
+                    processingDescription\":\"Zakończenie etapu przywracania widocznoś\
+                    ci faktury\",\"elementReferenceNumber\":\"20211001-EE-FFFFFFFFFF-FFFFFFFFFF-FF\"\
+                    ,\"invoiceStatus\":{\"invoiceNumber\":\"INV_1111111111_2222222222_4727711098527000\"\
+                    ,\"ksefReferenceNumber\":\"1111111111-20211001-FFFFFF-FFFFFF-FF\"\
+                    ,\"acquisitionTimestamp\":\"2021-10-01T12:13:14.999Z\"}}\",\"\
+                    timestamp\":\"2021-10-01T12:13:14.999Z\",\"referenceNumber\":\"\
+                    20211001-SE-FFFFFFFFFF-FFFFFFFFFF-FF\",\"exceptionDetailList\"\
+                    :[{\"exceptionCode\":12345,\"exceptionDescription\":\"Opis błę\
+                    du.\"}]}}"
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              examples:
+                response example:
+                  description: Przykład błędnej odpowiedzi
+                  summary: Przykład błędnej odpowiedzi
+                  value: "{\"exception\":{\"serviceCtx\":\"srvDVAKA\",\"serviceCode\"\
+                    :\"20211001-EX-FFFFFFFFFF-FFFFFFFFFF-FF\",\"serviceName\":\"{\"\
+                    timestamp\":\"2021-10-01T12:13:14.999Z\",\"referenceNumber\":\"\
+                    20211001-SE-FFFFFFFFFF-FFFFFFFFFF-FF\",\"processingCode\":200,\"\
+                    processingDescription\":\"Zakończenie etapu przywracania widocznoś\
+                    ci faktury\",\"elementReferenceNumber\":\"20211001-EE-FFFFFFFFFF-FFFFFFFFFF-FF\"\
+                    ,\"invoiceStatus\":{\"invoiceNumber\":\"INV_1111111111_2222222222_4727711098527000\"\
+                    ,\"ksefReferenceNumber\":\"1111111111-20211001-FFFFFF-FFFFFF-FF\"\
+                    ,\"acquisitionTimestamp\":\"2021-10-01T12:13:14.999Z\"}}\",\"\
+                    timestamp\":\"2021-10-01T12:13:14.999Z\",\"referenceNumber\":\"\
+                    20211001-SE-FFFFFFFFFF-FFFFFFFFFF-FF\",\"exceptionDetailList\"\
+                    :[{\"exceptionCode\":12345,\"exceptionDescription\":\"Opis błę\
+                    du.\"}]}}"
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      security:
+      - SessionToken: []
+      summary: Sprawdzenie statusu operacji ukrycia/odsłonienia faktury
+      tags:
+      - Interfejsy interaktywne - faktury
+  /online/Invoice/Visibility/{KSeFReferenceNumber}:
+    get:
+      description: Sprawdzenie statusu widoczności faktury
+      operationId: online.invoice.invoice.visibility.get
+      parameters:
+      - description: |-
+          Obsługiwane wartości:
+          'v35'
+          'v36'
+          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+        in: header
+        name: ksef-number-variant
+        schema:
+          type: string
+      - in: path
+        name: KSeFReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                response example:
+                  description: Przykład poprawnej odpowiedzi
+                  summary: Przykład poprawnej odpowiedzi
+                  value:
+                    ksefReferenceNumber: 5555555555-20230706-10E6E639E8F1-5B
+                    isHidden: false
+                    reason: Powód ukrycia/przywrócenia z ukrycia
+                    timestamp: Timestamp ukrycia/przywrócenia z ukrycia
+              schema:
+                $ref: '#/components/schemas/VisibilityInvoiceGetResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              examples:
+                response example:
+                  description: Przykład błędnej odpowiedzi
+                  summary: Przykład błędnej odpowiedzi
+                  value: "{\"exception\":{\"serviceCtx\":\"srvDVAKA\",\"serviceCode\"\
+                    :\"20211001-EX-FFFFFFFFFF-FFFFFFFFFF-FF\",\"serviceName\":\"{\n\
+                    \    \"ksefReferenceNumber\": \"5555555555-20230706-10E6E639E8F1-5B\"\
+                    ,\n    \"isHidden\": false,\n    \"reason\": \"Powód ukrycia/przywró\
+                    cenia z ukrycia\",\n    \"timestamp\": \"Timestamp ukrycia/przywró\
+                    cenia z ukrycia\"\n}\",\"timestamp\":\"2021-10-01T12:13:14.999Z\"\
+                    ,\"referenceNumber\":\"20211001-SE-FFFFFFFFFF-FFFFFFFFFF-FF\"\
+                    ,\"exceptionDetailList\":[{\"exceptionCode\":12345,\"exceptionDescription\"\
+                    :\"Opis błędu.\"}]}}"
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              examples:
+                response example:
+                  description: Przykład błędnej odpowiedzi
+                  summary: Przykład błędnej odpowiedzi
+                  value: "{\"exception\":{\"serviceCtx\":\"srvDVAKA\",\"serviceCode\"\
+                    :\"20211001-EX-FFFFFFFFFF-FFFFFFFFFF-FF\",\"serviceName\":\"{\n\
+                    \    \"ksefReferenceNumber\": \"5555555555-20230706-10E6E639E8F1-5B\"\
+                    ,\n    \"isHidden\": false,\n    \"reason\": \"Powód ukrycia/przywró\
+                    cenia z ukrycia\",\n    \"timestamp\": \"Timestamp ukrycia/przywró\
+                    cenia z ukrycia\"\n}\",\"timestamp\":\"2021-10-01T12:13:14.999Z\"\
+                    ,\"referenceNumber\":\"20211001-SE-FFFFFFFFFF-FFFFFFFFFF-FF\"\
+                    ,\"exceptionDetailList\":[{\"exceptionCode\":12345,\"exceptionDescription\"\
+                    :\"Opis błędu.\"}]}}"
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      security:
+      - SessionToken: []
+      summary: Sprawdzenie statusu widoczności faktury
+      tags:
+      - Interfejsy interaktywne - faktury
+  /online/Payment/Identifier/GetPaymentIdentifiers/{KSeFReferenceNumber}:
+    get:
+      description: Pobranie listy identyfikatorów płatności dla faktury
+      operationId: online.payment.payment.identifier.get.payment.identifiers
+      parameters:
+      - in: path
+        name: KSeFReferenceNumber
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: PageSize
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 10
+      - in: query
+        name: PageOffset
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPaymentIdentifiersByKSeFNumberResponse'
+          description: Pobranie listy identyfikatorów płatności dla faktury
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      security:
+      - SessionToken: []
+      summary: Pobranie listy identyfikatorów płatności dla faktury
+      tags:
+      - Interfejsy interaktywne - płatności
   /online/Payment/Identifier/GetReferenceNumbers/{PaymentIdentifier}:
     get:
       description: Pobranie listy faktur dla identyfikatora płatności
@@ -557,6 +1076,22 @@ paths:
         required: true
         schema:
           type: string
+      - in: query
+        name: PageSize
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 10
+      - in: query
+        name: PageOffset
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
       responses:
         "200":
           content:
@@ -623,6 +1158,96 @@ paths:
       summary: Wygenerowanie identyfikatora płatności
       tags:
       - Interfejsy interaktywne - płatności
+  /online/Payment/Identifier/Status/{PaymentElementReferenceNumber}:
+    get:
+      description: Sprawdzenie statusu operacji generowanie identyfikatorów zbiorczych
+      operationId: online.payment.payment.identifier.status
+      parameters:
+      - in: path
+        name: PaymentElementReferenceNumber
+        required: true
+        schema:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestPaymentIdentifierStatusResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+        "404":
+          content:
+            application/json: {}
+          description: Nie znaleziono wyszukiwanej treści
+      security:
+      - SessionToken: []
+      summary: Sprawdzenie statusu operacji generowanie identyfikatorów zbiorczych
+      tags:
+      - Interfejsy interaktywne - płatności
+  /online/Query/Credential/Accounting/Sync:
+    post:
+      description: Zapytanie o poświadczenia nadane przez biuro rachunkowe
+      operationId: online.query.query.accounting.credentials
+      parameters:
+      - in: query
+        name: PageSize
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 10
+      - in: query
+        name: PageOffset
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuerySyncAccountingCredentialsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuerySyncCredentialsAccountingResponseMain'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+      security:
+      - SessionToken: []
+      summary: Zapytanie o poświadczenia nadane przez biuro rachunkowe
+      tags:
+      - Interfejsy interaktywne - zapytania
   /online/Query/Credential/Context/Sync:
     get:
       description: Zapytanie o poświadczenia nadane przez jednostkę nadrzędną
@@ -750,6 +1375,16 @@ paths:
     post:
       description: Inicjalizacja zapytania o faktury
       operationId: online.query.query.invoice.init
+      parameters:
+      - description: |-
+          Obsługiwane wartości:
+          'v35'
+          'v36'
+          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+        in: header
+        name: ksef-number-variant
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -824,15 +1459,18 @@ paths:
       - Interfejsy interaktywne - zapytania
   /online/Query/Invoice/Sync:
     post:
-      description: |- 
-        Zapytanie o faktury
-        Obsługiwany nagłówek 'ksef-number-variant'
-        Obsługiwane wartości:
-        'v35'
-        'v36'
-        Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+      description: Zapytanie o faktury
       operationId: online.query.query.invoice
       parameters:
+      - description: |-
+          Obsługiwane wartości:
+          'v35'
+          'v36'
+          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+        in: header
+        name: ksef-number-variant
+        schema:
+          type: string
       - in: query
         name: PageSize
         required: true
@@ -880,6 +1518,59 @@ paths:
       security:
       - SessionToken: []
       summary: Zapytanie o faktury
+      tags:
+      - Interfejsy interaktywne - zapytania
+  /online/Query/PaymentIdentifier/Sync:
+    post:
+      description: Uzyskanie listy identyfikatorów zbiorczych wygenerowanych w podanym
+        kontekście
+      operationId: online.query.query.payment.identifier
+      parameters:
+      - in: query
+        name: PageSize
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 50
+          minimum: 10
+      - in: query
+        name: PageOffset
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 50
+          minimum: 0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryPaymentRequest'
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryPaymentIdentifierResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieprawidłowe wywołanie
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: Nieautoryzowany dostęp
+      security:
+      - SessionToken: []
+      summary: Uzyskanie listy identyfikatorów zbiorczych wygenerowanych w podanym
+        kontekście
       tags:
       - Interfejsy interaktywne - zapytania
   /online/Session/AuthorisationChallenge:
@@ -1189,15 +1880,18 @@ paths:
       - Interfejsy interaktywne - sesja
   /online/Session/Status:
     get:
-      description: |-
-        Sprawdzenie statusu obecnego przetwarzania interaktywnego
-        Obsługiwany nagłówek 'ksef-number-variant'
-                  Obsługiwane wartości:
-                  'v35'
-                  'v36'
-                  Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+      description: Sprawdzenie statusu obecnego przetwarzania interaktywnego
       operationId: online.session.session.status.plain
       parameters:
+      - description: |-
+          Obsługiwane wartości:
+          'v35'
+          'v36'
+          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+        in: header
+        name: ksef-number-variant
+        schema:
+          type: string
       - in: query
         name: PageSize
         schema:
@@ -1212,6 +1906,7 @@ paths:
           type: integer
           format: int32
           default: 0
+          maximum: 1000000
           minimum: 0
       - in: query
         name: IncludeDetails
@@ -1286,15 +1981,18 @@ paths:
       - Interfejsy interaktywne - sesja
   /online/Session/Status/{ReferenceNumber}:
     get:
-      description: |-
-        Sprawdzenie statusu przetwarzania na podstawie numeru referencyjnego
-        Obsługiwany nagłówek 'ksef-number-variant'
-        Obsługiwane wartości:
-        'v35'
-        'v36'
-        Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+      description: Sprawdzenie statusu przetwarzania na podstawie numeru referencyjnego
       operationId: online.session.session.status.reference.number
       parameters:
+      - description: |-
+          Obsługiwane wartości:
+          'v35'
+          'v36'
+          Brak nagłówka daje domyślną 35 znakową długość zwracanego numeru KSeF dla faktur/faktury w usłudze.
+        in: header
+        name: ksef-number-variant
+        schema:
+          type: string
       - in: path
         name: ReferenceNumber
         required: true
@@ -1315,6 +2013,7 @@ paths:
           type: integer
           format: int32
           default: 0
+          maximum: 1000000
           minimum: 0
       - in: query
         name: IncludeDetails
@@ -1467,6 +2166,7 @@ components:
           - fingerprint
           - nip
           - pesel
+          - peppol
       required:
       - identifier
       - type
@@ -1489,6 +2189,60 @@ components:
       required:
       - challenge
       - timestamp
+    CancelScamInvoiceRequest:
+      type: object
+      properties:
+        scamReportCancelation:
+          $ref: '#/components/schemas/CancelScamInvoiceType'
+    CancelScamInvoiceType:
+      type: object
+      properties:
+        ksefReferenceNumber:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+        reportCancelationReason:
+          type: string
+          maxLength: 1024
+          minLength: 1
+      required:
+      - ksefReferenceNumber
+      - reportCancelationReason
+    CredentialAccountingRequestType:
+      type: object
+      properties:
+        credentialsRoleList:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialRoleRequestAccountingBaseType'
+          maxItems: 2
+          minItems: 1
+          uniqueItems: true
+        partnerCredentialIdentifier:
+          $ref: '#/components/schemas/CredentialsIdentifierRequestAccountingType'
+        targetCredentialIdentifier:
+          $ref: '#/components/schemas/CredentialsIdentifierRequestType'
+      required:
+      - credentialsRoleList
+      - partnerCredentialIdentifier
+      - targetCredentialIdentifier
+    CredentialRoleRequestAccountingBaseType:
+      type: object
+      properties:
+        description:
+          type: string
+          writeOnly: true
+        roleDescription:
+          type: string
+          maxLength: 256
+          minLength: 5
+        roleType:
+          type: string
+          enum:
+          - invoice_read
+          - invoice_write
+      required:
+      - roleDescription
+      - roleType
     CredentialsBaseTypeObjectObject:
       type: object
       discriminator:
@@ -1523,6 +2277,79 @@ components:
             uniqueItems: true
           identifier:
             $ref: '#/components/schemas/CredentialsIdentifierResponseType'
+    CredentialsIdentifierRequestAccountingAllPartnersType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CredentialsIdentifierRequestAccountingType'
+    CredentialsIdentifierRequestAccountingFingerprintsType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CredentialsIdentifierRequestAccountingType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            pattern: "[0-9A-F]{64}"
+      required:
+      - identifier
+    CredentialsIdentifierRequestAccountingIndividualNipType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CredentialsIdentifierRequestAccountingType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            pattern: "[1-9]((\\d[1-9])|([1-9]\\d))\\d{7}"
+      required:
+      - identifier
+    CredentialsIdentifierRequestAccountingIndividualPeselType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CredentialsIdentifierRequestAccountingType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            pattern: "[0-9]{4}[0-3][0-9]{6}"
+      required:
+      - identifier
+    CredentialsIdentifierRequestAccountingInstitutionalNipType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CredentialsIdentifierRequestAccountingType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            pattern: "[1-9]((\\d[1-9])|([1-9]\\d))\\d{7}"
+      required:
+      - identifier
+    CredentialsIdentifierRequestAccountingInternalType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CredentialsIdentifierRequestAccountingType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            pattern: "[1-9]((\\d[1-9])|([1-9]\\d))\\d{7}-\\d{5}"
+      required:
+      - identifier
+    CredentialsIdentifierRequestAccountingType:
+      type: object
+      discriminator:
+        mapping:
+          allPartners: '#/components/schemas/CredentialsIdentifierRequestAccountingAllPartnersType'
+          fingerprint: '#/components/schemas/CredentialsIdentifierRequestAccountingFingerprintsType'
+          int: '#/components/schemas/CredentialsIdentifierRequestAccountingInternalType'
+          nip: '#/components/schemas/CredentialsIdentifierRequestAccountingIndividualNipType'
+          onip: '#/components/schemas/CredentialsIdentifierRequestAccountingInstitutionalNipType'
+          pesel: '#/components/schemas/CredentialsIdentifierRequestAccountingIndividualPeselType'
+        propertyName: type
+      properties:
+        type:
+          type: string
     CredentialsIdentifierRequestIndividualCertificateFingerprintType:
       type: object
       allOf:
@@ -1569,8 +2396,6 @@ components:
           type: string
         type:
           type: string
-      required:
-      - type
     CredentialsIdentifierRequestInstitutionalNipType:
       type: object
       allOf:
@@ -1594,8 +2419,6 @@ components:
           type: string
         type:
           type: string
-      required:
-      - type
     CredentialsIdentifierRequestInternalType:
       type: object
       allOf:
@@ -1614,6 +2437,7 @@ components:
           fingerprint: '#/components/schemas/CredentialsIdentifierRequestIndividualCertificateFingerprintType'
           nip: '#/components/schemas/CredentialsIdentifierRequestIndividualNipType'
           onip: '#/components/schemas/CredentialsIdentifierRequestInstitutionalNipType'
+          peppolId: '#/components/schemas/CredentialsIdentifierRequestTypePeppolProviderType'
           pesel: '#/components/schemas/CredentialsIdentifierRequestIndividualPeselType'
         propertyName: type
       properties:
@@ -1621,8 +2445,17 @@ components:
           type: string
         type:
           type: string
+    CredentialsIdentifierRequestTypePeppolProviderType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CredentialsIdentifierRequestType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            pattern: "^P[A-Z]{2}[0-9]{6}$"
       required:
-      - type
+      - identifier
     CredentialsIdentifierResponseAuthorisationTokenType:
       type: object
       allOf:
@@ -1686,6 +2519,17 @@ components:
             pattern: "[1-9]((\\d[1-9])|([1-9]\\d))\\d{7}-\\d{5}"
       required:
       - identifier
+    CredentialsIdentifierResponsePeppolProviderType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CredentialsIdentifierResponseType'
+      - type: object
+        properties:
+          identifier:
+            type: string
+            pattern: "^P[A-Z]{2}[0-9]{6}$"
+      required:
+      - identifier
     CredentialsIdentifierResponseSystemType:
       type: object
       allOf:
@@ -1706,6 +2550,7 @@ components:
           int: '#/components/schemas/CredentialsIdentifierResponseInternalIdentifierType'
           nip: '#/components/schemas/CredentialsIdentifierResponseIndividualNipType'
           onip: '#/components/schemas/CredentialsIdentifierResponseInstitutionalNipType'
+          peppolId: '#/components/schemas/CredentialsIdentifierResponsePeppolProviderType'
           pesel: '#/components/schemas/CredentialsIdentifierResponseIndividualPeselType'
           system: '#/components/schemas/CredentialsIdentifierResponseSystemType'
           token: '#/components/schemas/CredentialsIdentifierResponseAuthorisationTokenType'
@@ -1749,6 +2594,7 @@ components:
           type: string
           enum:
           - credentials_manage
+          - vat_ue_manage
       required:
       - roleType
     CredentialsRoleRequestContextDescribedType:
@@ -1762,6 +2608,7 @@ components:
           type: string
           enum:
           - credentials_manage
+          - vat_ue_manage
       required:
       - roleDescription
       - roleType
@@ -1838,6 +2685,8 @@ components:
       properties:
         roleDescription:
           type: string
+        roleRecipientIdentifier:
+          $ref: '#/components/schemas/CredentialsIdentifierResponseType'
         roleType:
           type: object
         startTimestamp:
@@ -1917,6 +2766,8 @@ components:
       - $ref: '#/components/schemas/CredentialsRoleResponseBaseTypeObject'
       - type: object
         properties:
+          associatedIdentifier:
+            $ref: '#/components/schemas/CredentialsIdentifierResponseType'
           credentialsAssignmentType:
             type: string
             enum:
@@ -2170,12 +3021,67 @@ components:
     GetPaymentIdentifierReferenceNumbersResponse:
       type: object
       properties:
+        createdAt:
+          type: string
+          format: date-time
         ksefReferenceNumberList:
           type: array
           items:
-            type: string
-          maxItems: 100
+            $ref: '#/components/schemas/KsefReferenceNumberListResponseObject'
+          maxItems: 10000
           minItems: 1
+          uniqueItems: true
+        numberOfElements:
+          type: integer
+          format: int64
+          minimum: 0
+        pageOffset:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+        pageSize:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 10
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+          format: date-time
+      required:
+      - createdAt
+      - ksefReferenceNumberList
+      - numberOfElements
+      - pageOffset
+      - pageSize
+      - referenceNumber
+      - timestamp
+    GetPaymentIdentifiersByKSeFNumberResponse:
+      type: object
+      properties:
+        isSubject:
+          type: number
+        numberOfElements:
+          type: integer
+          format: int64
+          minimum: 0
+        pageOffset:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+        pageSize:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 10
+        paymentIdentifiersList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentIdentifierType'
           uniqueItems: true
         referenceNumber:
           type: string
@@ -2184,9 +3090,20 @@ components:
           type: string
           format: date-time
       required:
-      - ksefReferenceNumberList
+      - isSubject
+      - numberOfElements
+      - pageOffset
+      - pageSize
+      - paymentIdentifiersList
       - referenceNumber
       - timestamp
+    GrantAccountingCredentialsRequest:
+      type: object
+      properties:
+        grantCredentials:
+          $ref: '#/components/schemas/CredentialAccountingRequestType'
+      required:
+      - grantCredentials
     GrantContextCredentialsRequest:
       type: object
       properties:
@@ -2247,6 +3164,26 @@ components:
       - algorithm
       - encoding
       - value
+    HideInvoiceRequest:
+      type: object
+      properties:
+        invoiceHideRequest:
+          $ref: '#/components/schemas/HideInvoiceRequestType'
+      required:
+      - invoiceHideRequest
+    HideInvoiceRequestType:
+      type: object
+      properties:
+        hidingReason:
+          type: string
+          maxLength: 256
+          minLength: 1
+        ksefReferenceNumber:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+      required:
+      - hidingReason
+      - ksefReferenceNumber
     InitSessionResponse:
       type: object
       deprecated: true
@@ -2334,6 +3271,11 @@ components:
         gross:
           type: string
           pattern: "(\\-)?\\d{1,10}(\\.\\d{2})?"
+        hidden:
+          type: boolean
+        hidingTime:
+          type: string
+          format: date-time
         invoiceHash:
           $ref: '#/components/schemas/FileUnlimitedHashType'
         invoiceReferenceNumber:
@@ -2350,6 +3292,9 @@ components:
           - UPR
           - KOR_ZAL
           - KOR_ROZ
+          - VAT_PEF
+          - VAT_PEF_SP
+          - KOR_PEF
         invoicingDate:
           type: string
           format: date
@@ -2393,6 +3338,7 @@ components:
       - currency
       - faP17Annotation
       - gross
+      - hidden
       - invoiceHash
       - invoiceReferenceNumber
       - invoiceType
@@ -2452,6 +3398,52 @@ components:
         ksefReferenceNumber:
           type: string
           pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{12})-([0-9A-F]{2})"
+    KsefReferenceNumberListResponseObject:
+      type: object
+      properties:
+        isSubject:
+          type: number
+        ksefReferenceNumber:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{12})-([0-9A-F]{2})"
+      required:
+      - isSubject
+      - ksefReferenceNumber
+    PaymentIdentifierObject:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        numberOfKsefReferenceNumbers:
+          type: integer
+          format: int64
+        paymentIdentifier:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-([0-9A-Z]{2})(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])-([0-9A-F]{12})-([0-9A-F]{2})"
+      required:
+      - createdAt
+      - numberOfKsefReferenceNumbers
+      - paymentIdentifier
+    PaymentIdentifierType:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        paymentIdentifier:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-([0-9A-Z]{2})(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])-([0-9A-F]{12})-([0-9A-F]{2})"
+      required:
+      - createdAt
+      - paymentIdentifier
+    QueryCriteriaAccountingCredentialsType:
+      type: object
+      properties:
+        assigneeIdentifier:
+          $ref: '#/components/schemas/CredentialsIdentifierRequestType'
+        partnerIdentifier:
+          $ref: '#/components/schemas/CredentialsIdentifierRequestAccountingType'
     QueryCriteriaCredentialsAllType:
       type: object
       allOf:
@@ -2726,6 +3718,9 @@ components:
               - UPR
               - KOR_ZAL
               - KOR_ROZ
+              - VAT_PEF
+              - VAT_PEF_SP
+              - KOR_PEF
             uniqueItems: true
           invoicingDateFrom:
             type: string
@@ -2740,6 +3735,12 @@ components:
           ksefReferenceNumber:
             type: string
             pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+          schemaType:
+            type: string
+            enum:
+            - VAT
+            - VAT_RR
+            - PEF
           subjectBy:
             $ref: '#/components/schemas/SubjectByType'
           subjectTo:
@@ -2797,6 +3798,16 @@ components:
           range: '#/components/schemas/QueryCriteriaInvoiceRangeType'
         propertyName: type
       properties:
+        hidingDateFrom:
+          type: string
+          format: date-time
+          description: yyyy-MM-dd'T'HH:mm:ss
+        hidingDateTo:
+          type: string
+          format: date-time
+          description: yyyy-MM-dd'T'HH:mm:ss
+        isHidden:
+          type: boolean
         subjectType:
           type: string
           enum:
@@ -2923,6 +3934,103 @@ components:
       - pageSize
       - referenceNumber
       - timestamp
+    QueryPaymentCriteriaType:
+      type: object
+      properties:
+        createdDateFrom:
+          type: string
+          format: date-time
+          description: yyyy-MM-dd'T'HH:mm:ss
+        createdDateTo:
+          type: string
+          format: date-time
+          description: yyyy-MM-dd'T'HH:mm:ss
+        numberOfInvoiceFrom:
+          type: integer
+          format: int32
+        numberOfInvoiceTo:
+          type: integer
+          format: int32
+        paymentIdentifier:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-([0-9A-Z]{2})(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])-([0-9A-F]{12})-([0-9A-F]{2})"
+    QueryPaymentIdentifierResponse:
+      type: object
+      properties:
+        numberOfElements:
+          type: integer
+          format: int64
+          minimum: 0
+        pageOffset:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+        pageSize:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 10
+        paymentIdentifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentIdentifierObject'
+          maxItems: 50
+          minItems: 1
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+          format: date-time
+      required:
+      - numberOfElements
+      - pageOffset
+      - pageSize
+      - paymentIdentifiers
+      - referenceNumber
+      - timestamp
+    QueryPaymentRequest:
+      type: object
+      properties:
+        queryCriteria:
+          $ref: '#/components/schemas/QueryPaymentCriteriaType'
+    QuerySyncAccountingCredentialsRequest:
+      type: object
+      properties:
+        queryCriteria:
+          $ref: '#/components/schemas/QueryCriteriaAccountingCredentialsType'
+      required:
+      - queryCriteria
+    QuerySyncCredentialsAccountingResponseMain:
+      type: object
+      properties:
+        numberOfElements:
+          type: integer
+          format: int64
+          minimum: 0
+        pageOffset:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+        pageSize:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 10
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+          format: date-time
+      required:
+      - numberOfElements
+      - pageOffset
+      - pageSize
+      - referenceNumber
+      - timestamp
     QuerySyncCredentialsRequest:
       type: object
       properties:
@@ -2950,6 +4058,24 @@ components:
       - credentialsList
       - referenceNumber
       - timestamp
+    ReportScamInvoiceRequest:
+      type: object
+      properties:
+        scamReport:
+          $ref: '#/components/schemas/ReportScamInvoiceType'
+    ReportScamInvoiceType:
+      type: object
+      properties:
+        ksefReferenceNumber:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+        reportReason:
+          type: string
+          maxLength: 1024
+          minLength: 1
+      required:
+      - ksefReferenceNumber
+      - reportReason
     RequestPaymentIdentifierRequest:
       type: object
       properties:
@@ -2957,17 +4083,26 @@ components:
           type: array
           items:
             type: string
-          maxItems: 100
-          minItems: 1
+          maxItems: 10000
+          minItems: 2
           uniqueItems: true
       required:
       - ksefReferenceNumberList
     RequestPaymentIdentifierResponse:
       type: object
       properties:
-        paymentIdentifier:
+        elementReferenceNumber:
           type: string
           pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        processingCode:
+          type: integer
+          format: int32
+          maximum: 999
+          minimum: 100
+        processingDescription:
+          type: string
+          maxLength: 256
+          minLength: 1
         referenceNumber:
           type: string
           pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
@@ -2975,9 +4110,50 @@ components:
           type: string
           format: date-time
       required:
-      - paymentIdentifier
+      - elementReferenceNumber
+      - processingCode
+      - processingDescription
       - referenceNumber
       - timestamp
+    RequestPaymentIdentifierStatusResponse:
+      type: object
+      properties:
+        elementReferenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        paymentIdentifier:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-([0-9A-Z]{2})(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])-([0-9A-F]{12})-([0-9A-F]{2})"
+        processingCode:
+          type: integer
+          format: int32
+          maximum: 999
+          minimum: 100
+        processingDescription:
+          type: string
+          maxLength: 256
+          minLength: 1
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+          format: date-time
+      required:
+      - elementReferenceNumber
+      - processingCode
+      - processingDescription
+      - referenceNumber
+      - timestamp
+    RevokeAccountingCredentialsRequest:
+      type: object
+      properties:
+        revokeCredential:
+          $ref: '#/components/schemas/CredentialAccountingRequestType'
+        revokeCredentials:
+          $ref: '#/components/schemas/CredentialAccountingRequestType'
+      required:
+      - revokeCredentials
     RevokeContextCredentialsRequest:
       type: object
       properties:
@@ -3040,6 +4216,43 @@ components:
       required:
       - sourceTokenIdentifier
       - tokenNumber
+    ScamInvoiceResponse:
+      type: object
+      properties:
+        elementReferenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        processingCode:
+          type: integer
+          format: int32
+        processingDescription:
+          type: string
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+      required:
+      - elementReferenceNumber
+      - processingCode
+      - processingDescription
+      - referenceNumber
+      - timestamp
+    ScamInvoiceStatusResponse:
+      type: object
+      properties:
+        activeScamReport:
+          type: boolean
+        ksefReferenceNumber:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+        reason:
+          type: string
+        timestamp:
+          type: string
+      required:
+      - activeScamReport
+      - ksefReferenceNumber
     SendInvoiceRequest:
       type: object
       properties:
@@ -3177,6 +4390,26 @@ components:
       - processingDescription
       - referenceNumber
       - timestamp
+    ShowInvoiceRequest:
+      type: object
+      properties:
+        invoiceHideCancelationRequest:
+          $ref: '#/components/schemas/ShowInvoiceRequestType'
+      required:
+      - invoiceHideCancelationRequest
+    ShowInvoiceRequestType:
+      type: object
+      properties:
+        hidingCancelationReason:
+          type: string
+          maxLength: 256
+          minLength: 1
+        ksefReferenceNumber:
+          type: string
+          pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+      required:
+      - hidingCancelationReason
+      - ksefReferenceNumber
     StatusCredentialsResponse:
       type: object
       properties:
@@ -3541,6 +4774,7 @@ components:
       type: object
       discriminator:
         mapping:
+          accounting: '#/components/schemas/V2_CredentialsRoleResponseGrantedForAccountingType'
           direct: '#/components/schemas/V2_CredentialsRoleResponseGrantedForIndividualDirectType'
           granted: '#/components/schemas/V2_CredentialsRoleResponseGrantedByInstitutionType'
           inherited: '#/components/schemas/V2_CredentialsRoleResponseGrantedForIndividualInheritedType'
@@ -3563,6 +4797,8 @@ components:
         properties:
           roleGrantorIdentifier:
             $ref: '#/components/schemas/CredentialsIdentifierResponseInstitutionalNipType'
+          roleRecipientIdentifier:
+            $ref: '#/components/schemas/CredentialsIdentifierResponseType'
           roleType:
             type: string
             enum:
@@ -3577,12 +4813,27 @@ components:
             - local_government_sub_unit
             - vat_group_unit
             - vat_group_sub_unit
+    V2_CredentialsRoleResponseGrantedForAccountingType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/V2_CredentialsRoleResponseBaseTypeObject'
+      - type: object
+        properties:
+          roleRecipientIdentifier:
+            $ref: '#/components/schemas/CredentialsIdentifierResponseType'
+          roleType:
+            type: string
+            enum:
+            - invoice_read
+            - invoice_write
     V2_CredentialsRoleResponseGrantedForIndividualDirectType:
       type: object
       allOf:
       - $ref: '#/components/schemas/V2_CredentialsRoleResponseBaseTypeObject'
       - type: object
         properties:
+          roleRecipientIdentifier:
+            $ref: '#/components/schemas/CredentialsIdentifierResponseType'
           roleType:
             type: string
             enum:
@@ -3603,6 +4854,8 @@ components:
         properties:
           parent:
             $ref: '#/components/schemas/V2_CredentialsRoleGrantedForInstitutionInheritanceType'
+          roleRecipientIdentifier:
+            $ref: '#/components/schemas/CredentialsIdentifierResponseType'
           roleType:
             type: string
             enum:
@@ -3876,6 +5129,9 @@ components:
               - UPR
               - KOR_ZAL
               - KOR_ROZ
+              - VAT_PEF
+              - VAT_PEF_SP
+              - KOR_PEF
             uniqueItems: true
           invoicingDateFrom:
             type: string
@@ -3890,6 +5146,12 @@ components:
           ksefReferenceNumber:
             type: string
             pattern: "([1-9]((\\d[1-9])|([1-9]\\d))\\d{7}|M\\d{9}|[A-Z]{3}\\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"
+          schemaType:
+            type: string
+            enum:
+            - VAT
+            - VAT_RR
+            - PEF
           subjectBy:
             $ref: '#/components/schemas/V2_SubjectByQueryType'
           subjectTo:
@@ -3947,6 +5209,16 @@ components:
           range: '#/components/schemas/V2_QueryCriteriaInvoiceRangeType'
         propertyName: type
       properties:
+        hidingDateFrom:
+          type: string
+          format: date-time
+          description: yyyy-MM-dd'T'HH:mm:ss
+        hidingDateTo:
+          type: string
+          format: date-time
+          description: yyyy-MM-dd'T'HH:mm:ss
+        isHidden:
+          type: boolean
         subjectType:
           type: string
           enum:
@@ -4042,6 +5314,81 @@ components:
           $ref: '#/components/schemas/SubjectNameType'
       required:
       - issuedToIdentifier
+    VisibilityInvoiceGetResponse:
+      type: object
+      properties:
+        visibilityInvoiceGetResponseType:
+          $ref: '#/components/schemas/VisibilityInvoiceGetResponseType'
+      required:
+      - visibilityInvoiceGetResponseType
+    VisibilityInvoiceGetResponseType:
+      type: object
+      properties:
+        isHidden:
+          type: boolean
+        ksefReferenceNumber:
+          type: string
+        reason:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+      required:
+      - ksefReferenceNumber
+    VisibilityInvoiceResponseStatusMain:
+      type: object
+      properties:
+        elementReferenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        processingCode:
+          type: integer
+          format: int32
+          maximum: 999
+          minimum: 100
+        processingDescription:
+          type: string
+          maxLength: 256
+          minLength: 1
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+          format: date-time
+      required:
+      - elementReferenceNumber
+      - processingCode
+      - processingDescription
+      - referenceNumber
+      - timestamp
+    VisibilityInvoiceStatusResponse:
+      type: object
+      properties:
+        elementReferenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        processingCode:
+          type: integer
+          format: int32
+          maximum: 999
+          minimum: 100
+        processingDescription:
+          type: string
+          maxLength: 256
+          minLength: 1
+        referenceNumber:
+          type: string
+          pattern: "(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-Z]{2})-([0-9A-F]{10})-([0-9A-F]{10})-([0-9A-F]{2})"
+        timestamp:
+          type: string
+          format: date-time
+      required:
+      - elementReferenceNumber
+      - processingCode
+      - processingDescription
+      - referenceNumber
+      - timestamp
   securitySchemes:
     SessionToken:
       description: Token

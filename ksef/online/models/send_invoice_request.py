@@ -12,8 +12,8 @@ from typing import Dict
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.invoice_payload_type import InvoicePayloadType
   from ..models.file_1mb_hash_type import File1MBHashType
+  from ..models.invoice_payload_type import InvoicePayloadType
 
 
 
@@ -36,8 +36,8 @@ class SendInvoiceRequest:
 
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.invoice_payload_type import InvoicePayloadType
         from ..models.file_1mb_hash_type import File1MBHashType
+        from ..models.invoice_payload_type import InvoicePayloadType
         invoice_hash = self.invoice_hash.to_dict()
 
         invoice_payload = self.invoice_payload.to_dict()
@@ -56,8 +56,8 @@ class SendInvoiceRequest:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.invoice_payload_type import InvoicePayloadType
         from ..models.file_1mb_hash_type import File1MBHashType
+        from ..models.invoice_payload_type import InvoicePayloadType
         d = src_dict.copy()
         invoice_hash = File1MBHashType.from_dict(d.pop("invoiceHash"))
 

@@ -1,0 +1,231 @@
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   ksef/batch/api/wysylka/finish.py
+	modified:   ksef/batch/api/wysylka/init.py
+	modified:   ksef/batch/api/wysylka/upload.py
+	modified:   ksef/batch/models/exception_response.py
+	modified:   ksef/batch/models/exception_type.py
+	modified:   ksef/batch/models/finish_response.py
+	modified:   ksef/batch/models/init_response.py
+	modified:   ksef/batch/models/package_part_signature_init_response_type.py
+	modified:   ksef/batch/models/package_signature_init_response_type.py
+	modified:   ksef/batch/models/upload_response.py
+	modified:   ksef/common/api/__init__.py
+	new file:   ksef/common/api/common/__init__.py
+	new file:   ksef/common/api/common/common_get_access_points_providers_list.py
+	new file:   ksef/common/api/common/common_invoice_verification.py
+	new file:   ksef/common/api/common/common_register_access_point_provider.py
+	new file:   ksef/common/api/common/common_upo_on_demand.py
+	modified:   ksef/common/api/pobranie/__init__.py
+	new file:   ksef/common/api/pobranie/common_invoice_download.py
+	modified:   ksef/common/api/pobranie/ksef.py
+	modified:   ksef/common/api/status/status.py
+	modified:   ksef/common/models/__init__.py
+	new file:   ksef/common/models/access_points_provider_type.py
+	new file:   ksef/common/models/access_points_providers_list_response.py
+	modified:   ksef/common/models/anonymous_subject_to_type.py
+	new file:   ksef/common/models/common_invoice_download_response_200.py
+	new file:   ksef/common/models/common_register_access_point_provider_content_data.py
+	modified:   ksef/common/models/exception_response.py
+	modified:   ksef/common/models/exception_type.py
+	new file:   ksef/common/models/hash_sha_type.py
+	new file:   ksef/common/models/invoice_download_request.py
+	modified:   ksef/common/models/invoice_query_details_type.py
+	modified:   ksef/common/models/invoice_request_k_se_f.py
+	new file:   ksef/common/models/invoice_verification_request.py
+	new file:   ksef/common/models/invoice_verification_response.py
+	new file:   ksef/common/models/invoice_verification_response_invoice_type.py
+	new file:   ksef/common/models/register_access_point_response.py
+	modified:   ksef/common/models/status_response.py
+	modified:   ksef/common/models/subject_full_name_type.py
+	renamed:    ksef/online/models/subject_name_type.py.orig -> ksef/common/models/subject_identifier_by_company_type.py
+	new file:   ksef/common/models/subject_identifier_by_type.py
+	new file:   ksef/common/models/subject_identifier_internal_type.py
+	modified:   ksef/common/models/subject_name_type.py
+	modified:   ksef/common/models/subject_person_name_type.py
+	new file:   ksef/common/models/upo_on_demand_response.py
+	new file:   ksef/common/models/upo_page_type.py
+	modified:   ksef/common/models/v3_status_response.py
+	new file:   ksef/common/models/v4_status_response.py
+	modified:   ksef/online/api/faktury/__init__.py
+	modified:   ksef/online/api/faktury/get.py
+	new file:   ksef/online/api/faktury/online_invoice_invoice_hide.py
+	new file:   ksef/online/api/faktury/online_invoice_invoice_show.py
+	new file:   ksef/online/api/faktury/online_invoice_invoice_visibility_get.py
+	new file:   ksef/online/api/faktury/online_invoice_invoice_visibility_status.py
+	new file:   ksef/online/api/faktury/online_invoice_scam_invoice_cancel.py
+	new file:   ksef/online/api/faktury/online_invoice_scam_invoice_get.py
+	new file:   ksef/online/api/faktury/online_invoice_scam_invoice_report.py
+	new file:   ksef/online/api/faktury/online_invoice_scam_invoice_status.py
+	modified:   ksef/online/api/faktury/send.py
+	modified:   ksef/online/api/faktury/status.py
+	modified:   ksef/online/api/platnosci/__init__.py
+	modified:   ksef/online/api/platnosci/get.py
+	new file:   ksef/online/api/platnosci/online_payment_payment_identifier_get_payment_identifiers.py
+	new file:   ksef/online/api/platnosci/online_payment_payment_identifier_status.py
+	modified:   ksef/online/api/platnosci/request.py
+	modified:   ksef/online/api/poswiadczenia/__init__.py
+	modified:   ksef/online/api/poswiadczenia/context_grant.py
+	modified:   ksef/online/api/poswiadczenia/context_revoke.py
+	modified:   ksef/online/api/poswiadczenia/grant.py
+	new file:   ksef/online/api/poswiadczenia/online_credentials_credentials_accounting_grant.py
+	new file:   ksef/online/api/poswiadczenia/online_credentials_credentials_accounting_revoke.py
+	modified:   ksef/online/api/poswiadczenia/revoke.py
+	modified:   ksef/online/api/poswiadczenia/status.py
+	modified:   ksef/online/api/poswiadczenia/token_generate.py
+	modified:   ksef/online/api/poswiadczenia/token_revoke.py
+	modified:   ksef/online/api/sesja/authorisation_challenge.py
+	modified:   ksef/online/api/sesja/identifier_generate.py
+	modified:   ksef/online/api/sesja/init_signed.py
+	modified:   ksef/online/api/sesja/init_token.py
+	modified:   ksef/online/api/sesja/status_plain.py
+	modified:   ksef/online/api/sesja/status_reference.py
+	modified:   ksef/online/api/sesja/terminate.py
+	modified:   ksef/online/api/zapytania/__init__.py
+	modified:   ksef/online/api/zapytania/context_credentials.py
+	modified:   ksef/online/api/zapytania/credentials.py
+	modified:   ksef/online/api/zapytania/invoice.py
+	modified:   ksef/online/api/zapytania/invoice_fetch.py
+	modified:   ksef/online/api/zapytania/invoice_init.py
+	modified:   ksef/online/api/zapytania/invoice_status.py
+	new file:   ksef/online/api/zapytania/online_query_query_accounting_credentials.py
+	new file:   ksef/online/api/zapytania/online_query_query_payment_identifier.py
+	modified:   ksef/online/models/__init__.py
+	modified:   ksef/online/models/authentication_identifier_type_type.py
+	modified:   ksef/online/models/authorisation_challenge_response.py
+	new file:   ksef/online/models/cancel_scam_invoice_request.py
+	new file:   ksef/online/models/cancel_scam_invoice_type.py
+	new file:   ksef/online/models/credential_accounting_request_type.py
+	new file:   ksef/online/models/credential_role_request_accounting_base_type.py
+	new file:   ksef/online/models/credential_role_request_accounting_base_type_role_type.py
+	modified:   ksef/online/models/credentials_base_type_object_object.py
+	new file:   ksef/online/models/credentials_identifier_request_accounting_fingerprints_type.py
+	new file:   ksef/online/models/credentials_identifier_request_accounting_individual_nip_type.py
+	new file:   ksef/online/models/credentials_identifier_request_accounting_individual_pesel_type.py
+	new file:   ksef/online/models/credentials_identifier_request_accounting_institutional_nip_type.py
+	new file:   ksef/online/models/credentials_identifier_request_accounting_internal_type.py
+	new file:   ksef/online/models/credentials_identifier_request_accounting_type.py
+	modified:   ksef/online/models/credentials_identifier_request_individual_type.py
+	modified:   ksef/online/models/credentials_identifier_request_institutional_type.py
+	modified:   ksef/online/models/credentials_identifier_request_type.py
+	modified:   ksef/online/models/credentials_identifier_response_type.py
+	modified:   ksef/online/models/credentials_role_request_context_base_type_role_type.py
+	modified:   ksef/online/models/credentials_role_request_context_described_type_role_type.py
+	modified:   ksef/online/models/credentials_role_response_base_type_object.py
+	modified:   ksef/online/models/exception_type.py
+	modified:   ksef/online/models/generate_token_request_type.py
+	modified:   ksef/online/models/generate_token_response.py
+	modified:   ksef/online/models/get_payment_identifier_reference_numbers_response.py
+	new file:   ksef/online/models/get_payment_identifiers_by_k_se_f_number_response.py
+	new file:   ksef/online/models/grant_accounting_credentials_request.py
+	modified:   ksef/online/models/grant_context_credentials_request_type.py
+	modified:   ksef/online/models/grant_credentials_request_type.py
+	modified:   ksef/online/models/hash_sha_type.py
+	new file:   ksef/online/models/hide_invoice_request.py
+	new file:   ksef/online/models/hide_invoice_request_type.py
+	modified:   ksef/online/models/init_session_response.py
+	modified:   ksef/online/models/internal_identifier_generated_response.py
+	modified:   ksef/online/models/invoice_division_plain_part_type.py
+	modified:   ksef/online/models/invoice_header_type.py
+	modified:   ksef/online/models/invoice_header_type_invoice_type.py
+	modified:   ksef/online/models/invoice_payload_encrypted_type.py
+	modified:   ksef/online/models/invoice_payload_plain_type.py
+	modified:   ksef/online/models/invoice_status_type.py
+	new file:   ksef/online/models/ksef_reference_number_list_response_object.py
+	new file:   ksef/online/models/payment_identifier_object.py
+	new file:   ksef/online/models/payment_identifier_type.py
+	new file:   ksef/online/models/query_criteria_accounting_credentials_type.py
+	modified:   ksef/online/models/query_criteria_credentials_id_type.py
+	modified:   ksef/online/models/query_criteria_invoice_detail_type.py
+	modified:   ksef/online/models/query_criteria_invoice_detail_type_invoice_types_item.py
+	new file:   ksef/online/models/query_criteria_invoice_detail_type_schema_type.py
+	modified:   ksef/online/models/query_criteria_invoice_incremental_type.py
+	modified:   ksef/online/models/query_criteria_invoice_range_type.py
+	modified:   ksef/online/models/query_criteria_invoice_type.py
+	modified:   ksef/online/models/query_invoice_async_init_response.py
+	modified:   ksef/online/models/query_invoice_async_status_response.py
+	modified:   ksef/online/models/query_invoice_sync_response.py
+	new file:   ksef/online/models/query_payment_criteria_type.py
+	new file:   ksef/online/models/query_payment_identifier_response.py
+	new file:   ksef/online/models/query_payment_request.py
+	new file:   ksef/online/models/query_sync_accounting_credentials_request.py
+	new file:   ksef/online/models/query_sync_credentials_accounting_response_main.py
+	modified:   ksef/online/models/query_sync_credentials_response.py
+	new file:   ksef/online/models/report_scam_invoice_request.py
+	new file:   ksef/online/models/report_scam_invoice_type.py
+	modified:   ksef/online/models/request_payment_identifier_response.py
+	new file:   ksef/online/models/request_payment_identifier_status_response.py
+	new file:   ksef/online/models/revoke_accounting_credentials_request.py
+	modified:   ksef/online/models/revoke_context_credentials_request_type.py
+	modified:   ksef/online/models/revoke_credentials_request_type.py
+	new file:   ksef/online/models/scam_invoice_response.py
+	new file:   ksef/online/models/scam_invoice_status_response.py
+	modified:   ksef/online/models/send_invoice_request.py
+	modified:   ksef/online/models/send_invoice_response.py
+	modified:   ksef/online/models/session_context_type.py
+	modified:   ksef/online/models/session_invoice_status_type.py
+	modified:   ksef/online/models/session_status_response.py
+	new file:   ksef/online/models/show_invoice_request.py
+	new file:   ksef/online/models/show_invoice_request_type.py
+	modified:   ksef/online/models/status_credentials_response.py
+	modified:   ksef/online/models/status_invoice_response.py
+	modified:   ksef/online/models/subject_authorized_type.py
+	modified:   ksef/online/models/subject_by_type.py
+	modified:   ksef/online/models/subject_full_name_type.py
+	modified:   ksef/online/models/subject_name_type.py
+	modified:   ksef/online/models/subject_other_type.py
+	modified:   ksef/online/models/subject_person_name_type.py
+	modified:   ksef/online/models/subject_to_type.py
+	modified:   ksef/online/models/terminate_session_response.py
+	modified:   ksef/online/models/v2_credentials_role_granted_for_institution_inheritance_type.py
+	modified:   ksef/online/models/v2_credentials_role_response_base_type_object.py
+	modified:   ksef/online/models/v2_init_session_response.py
+	modified:   ksef/online/models/v2_query_criteria_invoice_detail_type.py
+	modified:   ksef/online/models/v2_query_criteria_invoice_detail_type_invoice_types_item.py
+	new file:   ksef/online/models/v2_query_criteria_invoice_detail_type_schema_type.py
+	modified:   ksef/online/models/v2_query_criteria_invoice_incremental_type.py
+	modified:   ksef/online/models/v2_query_criteria_invoice_range_type.py
+	modified:   ksef/online/models/v2_query_criteria_invoice_type.py
+	modified:   ksef/online/models/v2_revoke_token_response.py
+	modified:   ksef/online/models/v2_session_context_type.py
+	modified:   ksef/online/models/v2_subject_by_query_type.py
+	modified:   ksef/online/models/v2_subject_to_query_type.py
+	new file:   ksef/online/models/visibility_invoice_get_response.py
+	new file:   ksef/online/models/visibility_invoice_get_response_type.py
+	new file:   ksef/online/models/visibility_invoice_response_status_main.py
+	new file:   ksef/online/models/visibility_invoice_status_response.py
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   KSeF-common.yaml
+	modified:   KSeF-online.yaml
+	modified:   LICENSE
+	deleted:    demo-batch-zip-gm.sh
+	deleted:    demo-batch-zip-upload-gm.sh
+	modified:   demo-batch-zip-upload.py
+	deleted:    demo-online-gm-2.sh
+	deleted:    demo-online-tr-2.sh
+	modified:   demo-online.py
+	deleted:    demo-upo-gm.sh
+	deleted:    demo-upo-tr.sh
+	deleted:    errors-batch
+	deleted:    errors-common
+	modified:   errors-online
+	deleted:    fv-bad
+	deleted:    fv-bad-001.xml
+	deleted:    fv-gm-tr.sh
+	deleted:    fv-tr-gm.sh
+	deleted:    ksef-openapi/demo-online.py
+	deleted:    ksef-openapi/x-openapi-generator-cli
+	deleted:    schemat.xsd
+	deleted:    styl.xsl
+	modified:   x-openapi-python-client-git
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	xx
+

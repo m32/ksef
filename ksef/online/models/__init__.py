@@ -4,9 +4,20 @@ from .authentication_identifier_type import AuthenticationIdentifierType
 from .authentication_identifier_type_type import AuthenticationIdentifierTypeType
 from .authorisation_challenge_request import AuthorisationChallengeRequest
 from .authorisation_challenge_response import AuthorisationChallengeResponse
+from .cancel_scam_invoice_request import CancelScamInvoiceRequest
+from .cancel_scam_invoice_type import CancelScamInvoiceType
+from .credential_accounting_request_type import CredentialAccountingRequestType
+from .credential_role_request_accounting_base_type import CredentialRoleRequestAccountingBaseType
+from .credential_role_request_accounting_base_type_role_type import CredentialRoleRequestAccountingBaseTypeRoleType
 from .credentials_base_type_object_object import CredentialsBaseTypeObjectObject
 from .credentials_base_type_object_object_credentials_role_list_item import CredentialsBaseTypeObjectObjectCredentialsRoleListItem
 from .credentials_base_type_object_object_identifier import CredentialsBaseTypeObjectObjectIdentifier
+from .credentials_identifier_request_accounting_fingerprints_type import CredentialsIdentifierRequestAccountingFingerprintsType
+from .credentials_identifier_request_accounting_individual_nip_type import CredentialsIdentifierRequestAccountingIndividualNipType
+from .credentials_identifier_request_accounting_individual_pesel_type import CredentialsIdentifierRequestAccountingIndividualPeselType
+from .credentials_identifier_request_accounting_institutional_nip_type import CredentialsIdentifierRequestAccountingInstitutionalNipType
+from .credentials_identifier_request_accounting_internal_type import CredentialsIdentifierRequestAccountingInternalType
+from .credentials_identifier_request_accounting_type import CredentialsIdentifierRequestAccountingType
 from .credentials_identifier_request_individual_type import CredentialsIdentifierRequestIndividualType
 from .credentials_identifier_request_institutional_type import CredentialsIdentifierRequestInstitutionalType
 from .credentials_identifier_request_type import CredentialsIdentifierRequestType
@@ -35,12 +46,16 @@ from .generate_token_request import GenerateTokenRequest
 from .generate_token_request_type import GenerateTokenRequestType
 from .generate_token_response import GenerateTokenResponse
 from .get_payment_identifier_reference_numbers_response import GetPaymentIdentifierReferenceNumbersResponse
+from .get_payment_identifiers_by_k_se_f_number_response import GetPaymentIdentifiersByKSeFNumberResponse
 from .get_response_200 import GetResponse200
+from .grant_accounting_credentials_request import GrantAccountingCredentialsRequest
 from .grant_context_credentials_request import GrantContextCredentialsRequest
 from .grant_context_credentials_request_type import GrantContextCredentialsRequestType
 from .grant_credentials_request import GrantCredentialsRequest
 from .grant_credentials_request_type import GrantCredentialsRequestType
 from .hash_sha_type import HashSHAType
+from .hide_invoice_request import HideInvoiceRequest
+from .hide_invoice_request_type import HideInvoiceRequestType
 from .init_session_response import InitSessionResponse
 from .initialised_session_type import InitialisedSessionType
 from .internal_identifier_generated_response import InternalIdentifierGeneratedResponse
@@ -52,6 +67,10 @@ from .invoice_payload_encrypted_type import InvoicePayloadEncryptedType
 from .invoice_payload_plain_type import InvoicePayloadPlainType
 from .invoice_payload_type import InvoicePayloadType
 from .invoice_status_type import InvoiceStatusType
+from .ksef_reference_number_list_response_object import KsefReferenceNumberListResponseObject
+from .payment_identifier_object import PaymentIdentifierObject
+from .payment_identifier_type import PaymentIdentifierType
+from .query_criteria_accounting_credentials_type import QueryCriteriaAccountingCredentialsType
 from .query_criteria_credentials_all_type import QueryCriteriaCredentialsAllType
 from .query_criteria_credentials_all_type_query_credentials_scope_result_type import QueryCriteriaCredentialsAllTypeQueryCredentialsScopeResultType
 from .query_criteria_credentials_all_type_query_credentials_type_result_type import QueryCriteriaCredentialsAllTypeQueryCredentialsTypeResultType
@@ -63,6 +82,7 @@ from .query_criteria_invoice_detail_type import QueryCriteriaInvoiceDetailType
 from .query_criteria_invoice_detail_type_amount_type import QueryCriteriaInvoiceDetailTypeAmountType
 from .query_criteria_invoice_detail_type_currency_codes_item import QueryCriteriaInvoiceDetailTypeCurrencyCodesItem
 from .query_criteria_invoice_detail_type_invoice_types_item import QueryCriteriaInvoiceDetailTypeInvoiceTypesItem
+from .query_criteria_invoice_detail_type_schema_type import QueryCriteriaInvoiceDetailTypeSchemaType
 from .query_criteria_invoice_incremental_type import QueryCriteriaInvoiceIncrementalType
 from .query_criteria_invoice_range_type import QueryCriteriaInvoiceRangeType
 from .query_criteria_invoice_type import QueryCriteriaInvoiceType
@@ -71,21 +91,34 @@ from .query_invoice_async_init_response import QueryInvoiceAsyncInitResponse
 from .query_invoice_async_status_response import QueryInvoiceAsyncStatusResponse
 from .query_invoice_request import QueryInvoiceRequest
 from .query_invoice_sync_response import QueryInvoiceSyncResponse
+from .query_payment_criteria_type import QueryPaymentCriteriaType
+from .query_payment_identifier_response import QueryPaymentIdentifierResponse
+from .query_payment_request import QueryPaymentRequest
+from .query_sync_accounting_credentials_request import QuerySyncAccountingCredentialsRequest
+from .query_sync_credentials_accounting_response_main import QuerySyncCredentialsAccountingResponseMain
 from .query_sync_credentials_request import QuerySyncCredentialsRequest
 from .query_sync_credentials_response import QuerySyncCredentialsResponse
+from .report_scam_invoice_request import ReportScamInvoiceRequest
+from .report_scam_invoice_type import ReportScamInvoiceType
 from .request_payment_identifier_request import RequestPaymentIdentifierRequest
 from .request_payment_identifier_response import RequestPaymentIdentifierResponse
+from .request_payment_identifier_status_response import RequestPaymentIdentifierStatusResponse
+from .revoke_accounting_credentials_request import RevokeAccountingCredentialsRequest
 from .revoke_context_credentials_request import RevokeContextCredentialsRequest
 from .revoke_context_credentials_request_type import RevokeContextCredentialsRequestType
 from .revoke_credentials_request import RevokeCredentialsRequest
 from .revoke_credentials_request_type import RevokeCredentialsRequestType
 from .revoke_token_request import RevokeTokenRequest
 from .revoke_token_request_type import RevokeTokenRequestType
+from .scam_invoice_response import ScamInvoiceResponse
+from .scam_invoice_status_response import ScamInvoiceStatusResponse
 from .send_invoice_request import SendInvoiceRequest
 from .send_invoice_response import SendInvoiceResponse
 from .session_context_type import SessionContextType
 from .session_invoice_status_type import SessionInvoiceStatusType
 from .session_status_response import SessionStatusResponse
+from .show_invoice_request import ShowInvoiceRequest
+from .show_invoice_request_type import ShowInvoiceRequestType
 from .status_credentials_response import StatusCredentialsResponse
 from .status_invoice_response import StatusInvoiceResponse
 from .subject_authorized_type import SubjectAuthorizedType
@@ -121,6 +154,7 @@ from .v2_query_criteria_invoice_detail_type import V2QueryCriteriaInvoiceDetailT
 from .v2_query_criteria_invoice_detail_type_amount_type import V2QueryCriteriaInvoiceDetailTypeAmountType
 from .v2_query_criteria_invoice_detail_type_currency_codes_item import V2QueryCriteriaInvoiceDetailTypeCurrencyCodesItem
 from .v2_query_criteria_invoice_detail_type_invoice_types_item import V2QueryCriteriaInvoiceDetailTypeInvoiceTypesItem
+from .v2_query_criteria_invoice_detail_type_schema_type import V2QueryCriteriaInvoiceDetailTypeSchemaType
 from .v2_query_criteria_invoice_incremental_type import V2QueryCriteriaInvoiceIncrementalType
 from .v2_query_criteria_invoice_range_type import V2QueryCriteriaInvoiceRangeType
 from .v2_query_criteria_invoice_type import V2QueryCriteriaInvoiceType
@@ -132,15 +166,30 @@ from .v2_revoke_token_response import V2RevokeTokenResponse
 from .v2_session_context_type import V2SessionContextType
 from .v2_subject_by_query_type import V2SubjectByQueryType
 from .v2_subject_to_query_type import V2SubjectToQueryType
+from .visibility_invoice_get_response import VisibilityInvoiceGetResponse
+from .visibility_invoice_get_response_type import VisibilityInvoiceGetResponseType
+from .visibility_invoice_response_status_main import VisibilityInvoiceResponseStatusMain
+from .visibility_invoice_status_response import VisibilityInvoiceStatusResponse
 
 __all__ = (
     "AuthenticationIdentifierType",
     "AuthenticationIdentifierTypeType",
     "AuthorisationChallengeRequest",
     "AuthorisationChallengeResponse",
+    "CancelScamInvoiceRequest",
+    "CancelScamInvoiceType",
+    "CredentialAccountingRequestType",
+    "CredentialRoleRequestAccountingBaseType",
+    "CredentialRoleRequestAccountingBaseTypeRoleType",
     "CredentialsBaseTypeObjectObject",
     "CredentialsBaseTypeObjectObjectCredentialsRoleListItem",
     "CredentialsBaseTypeObjectObjectIdentifier",
+    "CredentialsIdentifierRequestAccountingFingerprintsType",
+    "CredentialsIdentifierRequestAccountingIndividualNipType",
+    "CredentialsIdentifierRequestAccountingIndividualPeselType",
+    "CredentialsIdentifierRequestAccountingInstitutionalNipType",
+    "CredentialsIdentifierRequestAccountingInternalType",
+    "CredentialsIdentifierRequestAccountingType",
     "CredentialsIdentifierRequestIndividualType",
     "CredentialsIdentifierRequestInstitutionalType",
     "CredentialsIdentifierRequestType",
@@ -169,12 +218,16 @@ __all__ = (
     "GenerateTokenRequestType",
     "GenerateTokenResponse",
     "GetPaymentIdentifierReferenceNumbersResponse",
+    "GetPaymentIdentifiersByKSeFNumberResponse",
     "GetResponse200",
+    "GrantAccountingCredentialsRequest",
     "GrantContextCredentialsRequest",
     "GrantContextCredentialsRequestType",
     "GrantCredentialsRequest",
     "GrantCredentialsRequestType",
     "HashSHAType",
+    "HideInvoiceRequest",
+    "HideInvoiceRequestType",
     "InitialisedSessionType",
     "InitSessionResponse",
     "InternalIdentifierGeneratedResponse",
@@ -186,6 +239,10 @@ __all__ = (
     "InvoicePayloadPlainType",
     "InvoicePayloadType",
     "InvoiceStatusType",
+    "KsefReferenceNumberListResponseObject",
+    "PaymentIdentifierObject",
+    "PaymentIdentifierType",
+    "QueryCriteriaAccountingCredentialsType",
     "QueryCriteriaCredentialsAllType",
     "QueryCriteriaCredentialsAllTypeQueryCredentialsScopeResultType",
     "QueryCriteriaCredentialsAllTypeQueryCredentialsTypeResultType",
@@ -197,6 +254,7 @@ __all__ = (
     "QueryCriteriaInvoiceDetailTypeAmountType",
     "QueryCriteriaInvoiceDetailTypeCurrencyCodesItem",
     "QueryCriteriaInvoiceDetailTypeInvoiceTypesItem",
+    "QueryCriteriaInvoiceDetailTypeSchemaType",
     "QueryCriteriaInvoiceIncrementalType",
     "QueryCriteriaInvoiceRangeType",
     "QueryCriteriaInvoiceType",
@@ -205,21 +263,34 @@ __all__ = (
     "QueryInvoiceAsyncStatusResponse",
     "QueryInvoiceRequest",
     "QueryInvoiceSyncResponse",
+    "QueryPaymentCriteriaType",
+    "QueryPaymentIdentifierResponse",
+    "QueryPaymentRequest",
+    "QuerySyncAccountingCredentialsRequest",
+    "QuerySyncCredentialsAccountingResponseMain",
     "QuerySyncCredentialsRequest",
     "QuerySyncCredentialsResponse",
+    "ReportScamInvoiceRequest",
+    "ReportScamInvoiceType",
     "RequestPaymentIdentifierRequest",
     "RequestPaymentIdentifierResponse",
+    "RequestPaymentIdentifierStatusResponse",
+    "RevokeAccountingCredentialsRequest",
     "RevokeContextCredentialsRequest",
     "RevokeContextCredentialsRequestType",
     "RevokeCredentialsRequest",
     "RevokeCredentialsRequestType",
     "RevokeTokenRequest",
     "RevokeTokenRequestType",
+    "ScamInvoiceResponse",
+    "ScamInvoiceStatusResponse",
     "SendInvoiceRequest",
     "SendInvoiceResponse",
     "SessionContextType",
     "SessionInvoiceStatusType",
     "SessionStatusResponse",
+    "ShowInvoiceRequest",
+    "ShowInvoiceRequestType",
     "StatusCredentialsResponse",
     "StatusInvoiceResponse",
     "SubjectAuthorizedType",
@@ -255,6 +326,7 @@ __all__ = (
     "V2QueryCriteriaInvoiceDetailTypeAmountType",
     "V2QueryCriteriaInvoiceDetailTypeCurrencyCodesItem",
     "V2QueryCriteriaInvoiceDetailTypeInvoiceTypesItem",
+    "V2QueryCriteriaInvoiceDetailTypeSchemaType",
     "V2QueryCriteriaInvoiceIncrementalType",
     "V2QueryCriteriaInvoiceRangeType",
     "V2QueryCriteriaInvoiceType",
@@ -266,4 +338,8 @@ __all__ = (
     "V2SessionContextType",
     "V2SubjectByQueryType",
     "V2SubjectToQueryType",
+    "VisibilityInvoiceGetResponse",
+    "VisibilityInvoiceGetResponseType",
+    "VisibilityInvoiceResponseStatusMain",
+    "VisibilityInvoiceStatusResponse",
 )

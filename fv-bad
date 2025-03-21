@@ -1,6 +1,0 @@
-fv-bad-001.xml - dokument bez sekcji z nazwą odbiorcy, po odszukaniu dokumentu i pobraniu jego treści ksef generuje jsona:
-    "subjectTo":{"issuedToIdentifier":{"type":"onip","identifier":"9999999999"},"issuedToName":null}
-    pole issuedToName jest opcjonalne, ale skoro jest to powinno być typu SubjectNameType i generuje błąd w:
-    File "/ksef/online/models/subject_name_type.py", line 53, in from_dict
-    d = src_dict.copy()
-AttributeError: 'NoneType' object has no attribute 'copy'

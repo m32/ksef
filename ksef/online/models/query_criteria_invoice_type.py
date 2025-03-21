@@ -9,6 +9,11 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 from ..models.query_criteria_invoice_type_subject_type import QueryCriteriaInvoiceTypeSubjectType
+from typing import Union
+from dateutil.parser import isoparse
+from typing import cast
+import datetime
+from ..types import UNSET, Unset
 
 
 
@@ -24,10 +29,16 @@ class QueryCriteriaInvoiceType:
         Attributes:
             subject_type (QueryCriteriaInvoiceTypeSubjectType):
             type (str):
+            hiding_date_from (Union[Unset, datetime.datetime]): yyyy-MM-dd'T'HH:mm:ss
+            hiding_date_to (Union[Unset, datetime.datetime]): yyyy-MM-dd'T'HH:mm:ss
+            is_hidden (Union[Unset, bool]):
      """
 
     subject_type: QueryCriteriaInvoiceTypeSubjectType
     type: str
+    hiding_date_from: Union[Unset, datetime.datetime] = UNSET
+    hiding_date_to: Union[Unset, datetime.datetime] = UNSET
+    is_hidden: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
 
@@ -35,6 +46,15 @@ class QueryCriteriaInvoiceType:
         subject_type = self.subject_type.value
 
         type = self.type
+        hiding_date_from: Union[Unset, str] = UNSET
+        if not isinstance(self.hiding_date_from, Unset):
+            hiding_date_from = self.hiding_date_from.isoformat()
+
+        hiding_date_to: Union[Unset, str] = UNSET
+        if not isinstance(self.hiding_date_to, Unset):
+            hiding_date_to = self.hiding_date_to.isoformat()
+
+        is_hidden = self.is_hidden
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -42,6 +62,12 @@ class QueryCriteriaInvoiceType:
             "subjectType": subject_type,
             "type": type,
         })
+        if hiding_date_from is not UNSET:
+            field_dict["hidingDateFrom"] = hiding_date_from
+        if hiding_date_to is not UNSET:
+            field_dict["hidingDateTo"] = hiding_date_to
+        if is_hidden is not UNSET:
+            field_dict["isHidden"] = is_hidden
 
         return field_dict
 
@@ -57,9 +83,34 @@ class QueryCriteriaInvoiceType:
 
         type = d.pop("type")
 
+        _hiding_date_from = d.pop("hidingDateFrom", UNSET)
+        hiding_date_from: Union[Unset, datetime.datetime]
+        if isinstance(_hiding_date_from,  Unset):
+            hiding_date_from = UNSET
+        else:
+            hiding_date_from = isoparse(_hiding_date_from)
+
+
+
+
+        _hiding_date_to = d.pop("hidingDateTo", UNSET)
+        hiding_date_to: Union[Unset, datetime.datetime]
+        if isinstance(_hiding_date_to,  Unset):
+            hiding_date_to = UNSET
+        else:
+            hiding_date_to = isoparse(_hiding_date_to)
+
+
+
+
+        is_hidden = d.pop("isHidden", UNSET)
+
         query_criteria_invoice_type = cls(
             subject_type=subject_type,
             type=type,
+            hiding_date_from=hiding_date_from,
+            hiding_date_to=hiding_date_to,
+            is_hidden=is_hidden,
         )
 
         query_criteria_invoice_type.additional_properties = d
