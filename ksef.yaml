@@ -1,0 +1,23 @@
+project_name_override: ksefproject
+
+field_prefix: attr_
+use_path_prefixes_for_title_model_names: True
+post_hooks: []
+http_timeout: 5
+
+tag_overrides:
+    Aktywne sesje: sessions
+    Certyfikaty: certificates
+    Certyfikaty klucza publicznego: publickey
+    Dane testowe: testdata
+    Nadawanie uprawnień: permissions
+    Odbieranie uprawnień: permissions
+    Operacje: operations
+    Pobieranie faktur: invoices
+    Status wysyłki i UPO: status
+    Tokeny KSeF: tokens
+    Usługi Peppol: peppol
+    Uzyskiwanie dostępu: auth
+    Wysyłka interaktywna: sendonline
+    Wysyłka wsadowa: sendoffline
+    Wyszukiwanie nadanych uprawnień: permissions

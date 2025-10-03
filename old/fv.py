@@ -14,9 +14,9 @@ vnetto = vcnetto * vilosc
 vpvat = 23
 vvat = vnetto * vpvat / 100.0
 vbrutto = vnetto + vvat
-
-snip, snazwa, sadres = sys.argv[1], sys.argv[2], sys.argv[3]
-dnip, dnazwa, dadres = sys.argv[4], sys.argv[5], sys.argv[6]
+prefix = sys.argv[1]
+snip, snazwa, sadres = sys.argv[2], sys.argv[3], sys.argv[4]
+dnip, dnazwa, dadres = sys.argv[5], sys.argv[6], sys.argv[7]
 
 data = '''\
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
@@ -25,7 +25,7 @@ data = '''\
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/">
   <Naglowek>
-    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <KodFormularza kodSystemowy="FA (2)" wersjaSchemy="1-0E">FA</KodFormularza>
     <WariantFormularza>2</WariantFormularza>
     <DataWytworzeniaFa>{datawytworzenia}</DataWytworzeniaFa>
     <SystemInfo>eRTa 11.10</SystemInfo>
@@ -100,4 +100,4 @@ data = data.format(
     vilosc=vilosc,
     vcnetto=vcnetto,
 )
-open(f'{snip}-{dnip}-{serial}.xml', 'wt').write(data)
+open('{}-{}.xml'.format(prefix, serial), 'wt').write(data)

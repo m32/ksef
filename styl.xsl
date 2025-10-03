@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://crd.gov.pl/wzor/2023/06/29/12648/" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://crd.gov.pl/wzor/2025/06/25/13775/" version="1.0">
 	<xsl:import href="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/07/eD/DefinicjeSzablony/WspolneSzablonyWizualizacji_v12-0E.xsl"/>
 	<xsl:output method="html" encoding="UTF-8" indent="yes" version="4.01" doctype-public="-//W3C//DTD HTML 4.01//EN" doctype-system="http://www.w3.org/TR/html4/strict.dtd"/>
 	<xsl:template name="TytulDokumentu">
@@ -20,6 +20,10 @@
 	.word-break {
     width:100%;
     word-break: break-all;
+	}
+	
+	.tlo-zalacznika {
+	background-color: #D3D3D3;
 	}
 
     .lewa {	border: 1px solid black; font-size: 1.2em; padding: 1px; vertical-align: top; text-align: left;}
@@ -60,9 +64,7 @@
 							<xsl:text>Faktura korygująca</xsl:text>
 						</xsl:when>
 						<xsl:when test="tns:Fa/tns:RodzajFaktury = 'ZAL'">
-							<xsl:text>Faktura (zaliczkowa)</xsl:text>
-							<br/>
-							<xsl:text>dokumentująca otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz faktura wystawiona w związku z art. 106f ust. 4 ustawy</xsl:text>
+							<xsl:text>Faktura dokumentująca otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz faktura wystawiona w związku z art. 106f ust. 4 ustawy (faktura zaliczkowa)</xsl:text>
 						</xsl:when>
 						<xsl:when test="tns:Fa/tns:RodzajFaktury = 'ROZ'">
 							<xsl:text>Faktura wystawiona w związku z art. 106f ust. 3 ustawy</xsl:text>
@@ -71,7 +73,7 @@
 							<xsl:text>Faktura, o której mowa w art. 106e ust. 5 pkt 3 ustawy</xsl:text>
 						</xsl:when>
 						<xsl:when test="tns:Fa/tns:RodzajFaktury = 'KOR_ZAL'">
-							<xsl:text>Faktura korygująca fakturę dokumentującą otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz fakturę wystawioną w związku z art. 106f ust. 4 ustawy</xsl:text>
+							<xsl:text>Faktura korygująca fakturę dokumentującą otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz fakturę wystawioną w związku z art. 106f ust. 4 ustawy (faktura korygująca fakturę zaliczkową)</xsl:text>
 						</xsl:when>
 						<xsl:when test="tns:Fa/tns:RodzajFaktury = 'KOR_ROZ'">
 							<xsl:text>Faktura korygująca fakturę wystawioną w związku z art. 106f ust. 3 ustawy</xsl:text>
@@ -79,12 +81,11 @@
 					</xsl:choose>
 				</xsl:with-param>
 			</xsl:call-template>
-			<xsl:call-template name="SystemTeleinfor"/>
+			<xsl:call-template name="NrFaktury"/>
 			<xsl:call-template name="SprzedawcaNabywca"/>
 			<xsl:call-template name="InnyPodmiot"/>
 			<xsl:call-template name="PodmiotUpowazniony"/>
-			<xsl:call-template name="NrFaktury"/>
-			<xsl:call-template name="FaktoraWiersze"/>
+			<xsl:call-template name="FakturaWiersze"/>
 			<xsl:call-template name="PodliczenieVAT"/>
 			<xsl:call-template name="Platnosc"/>
 			<xsl:call-template name="Adnotacje"/>
@@ -96,6 +97,14 @@
 			<xsl:call-template name="Zamowienie"/>
 			<xsl:call-template name="WZ"/>
 			<xsl:call-template name="Stopka"/>
+			<xsl:call-template name="NaglowekTytulowyZalacznik">
+				<xsl:with-param name="uzycie" select="'zalacznik'"/>
+				<xsl:with-param name="nazwa">
+					<xsl:text>Załącznik do faktury VAT</xsl:text>
+				</xsl:with-param>
+			</xsl:call-template>
+			<xsl:call-template name="Zalacznik"/>
+			<xsl:call-template name="SystemTeleinfor"/>
 		</div>
 	</xsl:template>
 	<xsl:template name="NaglowekTytulowyKSeF">
@@ -104,6 +113,7 @@
 		</div>
 	</xsl:template>
 	<xsl:template name="SystemTeleinfor">
+		<br/>
 		<td class="niewypelnianeopisy">Data i czas wytworzenia faktury: </td>
 		<td class="wypelniane">
 			<b>
@@ -122,15 +132,12 @@
 				</tr>
 			</table>
 		</xsl:if>
-		<br/>
-		<br/>
-		<br/>
 	</xsl:template>
 	<xsl:template name="NrFaktury">
 		<table class="break-word" width="100%">
 			<tr>
 				<td>
-			Trzyliterowy kod waluty (ISO 4217):
+					Kod waluty (ISO 4217):
 					<b>
 						<xsl:value-of select="tns:Fa/tns:KodWaluty"/>
 					</b>
@@ -411,7 +418,7 @@
 						<xsl:text>Adres e-mail: </xsl:text>
 						<xsl:for-each select="tns:Podmiot1/tns:DaneKontaktowe/tns:Email">
 							<xsl:value-of select="."/>
-							<xsl:text>; </xsl:text>
+							<xsl:text>, </xsl:text>
 						</xsl:for-each>
 					</xsl:if>
 				</td>
@@ -420,7 +427,7 @@
 						<xsl:text>Adres e-mail: </xsl:text>
 						<xsl:for-each select="tns:Podmiot2/tns:DaneKontaktowe/tns:Email">
 							<xsl:value-of select="."/>
-							<xsl:text>; </xsl:text>
+							<xsl:text>, </xsl:text>
 						</xsl:for-each>
 					</xsl:if>
 				</td>
@@ -431,7 +438,7 @@
 						<xsl:text>Numer telefonu: </xsl:text>
 						<xsl:for-each select="tns:Podmiot1/tns:DaneKontaktowe/tns:Telefon">
 							<xsl:value-of select="."/>
-							<xsl:text>; </xsl:text>
+							<xsl:text>, </xsl:text>
 						</xsl:for-each>
 					</xsl:if>
 				</td>
@@ -440,7 +447,7 @@
 						<xsl:text>Numer telefonu: </xsl:text>
 						<xsl:for-each select="tns:Podmiot2/tns:DaneKontaktowe/tns:Telefon">
 							<xsl:value-of select="."/>
-							<xsl:text>; </xsl:text>
+							<xsl:text>, </xsl:text>
 						</xsl:for-each>
 					</xsl:if>
 				</td>
@@ -476,20 +483,48 @@
 						</xsl:if>
 					</xsl:for-each>
 				</td>
-				<td style="width:50%">
-					<xsl:if test="tns:Podmiot2/tns:NrKlienta">
-						<xsl:text>Numer klienta dla przypadków, w których nabywca posługuje się nim w umowie lub zamówieniu: </xsl:text>
+				<xsl:if test="tns:Podmiot2/tns:NrKlienta">
+					<td style="width:50%">
+						<xsl:text>Numer klienta: </xsl:text>
 						<xsl:value-of select="tns:Podmiot2/tns:NrKlienta"/>
-					</xsl:if>
+					</td>
+				</xsl:if>
+			</tr>
+			<xsl:if test="tns:Podmiot2/tns:IDNabywcy">
+				<tr>
+					<td style="width:50%"/>
+					<td style="width:50%">
+						<xsl:text>ID nabywcy: </xsl:text>
+						<xsl:value-of select="tns:Podmiot2/tns:IDNabywcy"/>
+					</td>
+				</tr>
+			</xsl:if>
+			<tr>
+				<td style="width:50%"/>
+				<td style="width:50%">
+					<xsl:text>Faktura dotyczy jednostki podrzędniej JST: </xsl:text>
+					<xsl:choose>
+						<xsl:when test="tns:Podmiot2/tns:JST = '1'">
+								Tak
+							</xsl:when>
+						<xsl:when test="tns:Podmiot2/tns:JST = '2'">
+								Nie
+							</xsl:when>
+					</xsl:choose>
 				</td>
 			</tr>
 			<tr>
 				<td style="width:50%"/>
 				<td style="width:50%">
-					<xsl:if test="tns:Podmiot2/tns:IDNabywcy">
-						<xsl:text>Unikalny klucz powiązania danych nabywcy na fakturach korygujących, w przypadku gdy dane nabywcy na fakturze korygującej zmieniły się w stosunku do danych na fakturze korygowanej: </xsl:text>
-						<xsl:value-of select="tns:Podmiot2/tns:IDNabywcy"/>
-					</xsl:if>
+					<xsl:text>Faktura dotyczy członka GV: </xsl:text>
+					<xsl:choose>
+						<xsl:when test="tns:Podmiot2/tns:GV = '1'">
+								Tak
+							</xsl:when>
+						<xsl:when test="tns:Podmiot2/tns:GV = '2'">
+								Nie
+							</xsl:when>
+					</xsl:choose>
 				</td>
 			</tr>
 		</table>
@@ -565,42 +600,44 @@
 						</td>
 					</tr>
 				</xsl:for-each>
-				<xsl:for-each select="tns:Adres">
-					<tr>
-						<td style="width:50%"/>
-						<td style="width:50%">
-							<br/>
-							<b>Adres podmiotu trzeciego</b>
-						</td>
-					</tr>
-					<tr>
-						<td style="width:50%"/>
-						<td style="width:50%">
-							<xsl:text>Kod kraju: </xsl:text>
-							<xsl:apply-templates select="tns:KodKraju"/>
-						</td>
-					</tr>
-					<tr>
-						<td style="width:50%"/>
-						<td style="width:50%">
-							<xsl:text>Adres: </xsl:text>
-							<xsl:apply-templates select="tns:AdresL1"/>
-							<xsl:if test="tns:AdresL2">
-								<xsl:text> </xsl:text>
-								<xsl:apply-templates select="tns:AdresL2"/>
-							</xsl:if>
-						</td>
-					</tr>
-					<tr>
-						<td style="width:50%"/>
-						<td style="width:50%">
-							<xsl:if test="tns:GLN">
-								<xsl:text>GLN: </xsl:text>
-								<xsl:value-of select="tns:GLN"/>
-							</xsl:if>
-						</td>
-					</tr>
-				</xsl:for-each>
+				<xsl:if test="tns:Adres">
+					<xsl:for-each select="tns:Adres">
+						<tr>
+							<td style="width:50%"/>
+							<td style="width:50%">
+								<br/>
+								<b>Adres podmiotu trzeciego</b>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:50%"/>
+							<td style="width:50%">
+								<xsl:text>Kod kraju: </xsl:text>
+								<xsl:apply-templates select="tns:KodKraju"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:50%"/>
+							<td style="width:50%">
+								<xsl:text>Adres: </xsl:text>
+								<xsl:apply-templates select="tns:AdresL1"/>
+								<xsl:if test="tns:AdresL2">
+									<xsl:text> </xsl:text>
+									<xsl:apply-templates select="tns:AdresL2"/>
+								</xsl:if>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:50%"/>
+							<td style="width:50%">
+								<xsl:if test="tns:GLN">
+									<xsl:text>GLN: </xsl:text>
+									<xsl:value-of select="tns:GLN"/>
+								</xsl:if>
+							</td>
+						</tr>
+					</xsl:for-each>
+				</xsl:if>
 				<xsl:if test="tns:AdresKoresp">
 					<xsl:for-each select="tns:AdresKoresp">
 						<tr>
@@ -654,7 +691,7 @@
 								<xsl:text>Adres e-mail: </xsl:text>
 								<xsl:for-each select="tns:DaneKontaktowe/tns:Email">
 									<xsl:value-of select="."/>
-									<xsl:text>; </xsl:text>
+									<xsl:text>, </xsl:text>
 								</xsl:for-each>
 							</xsl:if>
 						</td>
@@ -666,7 +703,7 @@
 								<xsl:text>Numer telefonu: </xsl:text>
 								<xsl:for-each select="tns:DaneKontaktowe/tns:Telefon">
 									<xsl:value-of select="."/>
-									<xsl:text>; </xsl:text>
+									<xsl:text>, </xsl:text>
 								</xsl:for-each>
 							</xsl:if>
 						</td>
@@ -683,22 +720,22 @@
 							<br/>
 							<xsl:choose>
 								<xsl:when test="tns:Rola = '1'">
-									<xsl:text>Faktor - w przypadku, gdy na fakturze występują dane faktora</xsl:text>
+									<xsl:text>Faktor - w przypadku gdy na fakturze występują dane faktora</xsl:text>
 								</xsl:when>
 								<xsl:when test="tns:Rola = '2'">
-									<xsl:text>Odbiorca - w przypadku, gdy na fakturze występują dane jednostek wewnętrznych, oddziałów, wyodrębnionych w ramach nabywcy, które same nie stanowią nabywcy w rozumieniu ustawy</xsl:text>
+									<xsl:text>Odbiorca - w przypadku gdy na fakturze występują dane jednostek wewnętrznych, oddziałów, wyodrębnionych w ramach nabywcy, które same nie stanowią nabywcy w rozumieniu ustawy</xsl:text>
 								</xsl:when>
 								<xsl:when test="tns:Rola = '3'">
-									<xsl:text>Podmiot pierwotny - w przypadku, gdy na fakturze występują dane podmiotu będącego w stosunku do podatnika podmiotem przejętym lub przekształconym, który świadczył usługę lub dokonywał dostawy. Z wyłączeniem przypadków, o których mowa w art. 106j ust.2 pkt 3 ustawy, gdy dane te wykazywane są w części Podmiot1K</xsl:text>
+									<xsl:text>Podmiot pierwotny - w przypadku gdy na fakturze występują dane podmiotu będącego w stosunku do podatnika podmiotem przejętym lub przekształconym, który dokonywał dostawy lub świadczył usługę. Z wyłączeniem przypadków, o których mowa w art. 106j ust.2 pkt 3 ustawy, gdy dane te wykazywane są w części Podmiot1K</xsl:text>
 								</xsl:when>
 								<xsl:when test="tns:Rola = '4'">
-									<xsl:text>Dodatkowy nabywca - w przypadku, gdy na fakturze występują dane kolejnych (innych niż wymieniony w części Podmiot2) nabywców</xsl:text>
+									<xsl:text>Dodatkowy nabywca - w przypadku gdy na fakturze występują dane kolejnych (innych niż wymieniony w części Podmiot2) nabywców</xsl:text>
 								</xsl:when>
 								<xsl:when test="tns:Rola = '5'">
-									<xsl:text>Wystawca faktury - w przypadku, gdy na fakturze występują dane podmiotu wystawiającego fakturę w imieniu podatnika. Nie dotyczy przypadku, gdy wystawcą faktury jest nabywca</xsl:text>
+									<xsl:text>Wystawca faktury - w przypadku gdy na fakturze występują dane podmiotu wystawiającego fakturę w imieniu podatnika. Nie dotyczy przypadku, gdy wystawcą faktury jest nabywca</xsl:text>
 								</xsl:when>
 								<xsl:when test="tns:Rola = '6'">
-									<xsl:text>Dokonujący płatności - w przypadku, gdy na fakturze występują dane podmiotu regulującego zobowiązanie w miejsce nabywcy</xsl:text>
+									<xsl:text>Dokonujący płatności - w przypadku gdy na fakturze występują dane podmiotu regulującego zobowiązanie w miejsce nabywcy</xsl:text>
 								</xsl:when>
 								<xsl:when test="tns:Rola = '7'">
 									<xsl:text>Jednostka samorządu terytorialnego - wystawca</xsl:text>
@@ -711,6 +748,9 @@
 								</xsl:when>
 								<xsl:when test="tns:Rola = '10'">
 									<xsl:text>Członek grupy VAT - odbiorca</xsl:text>
+								</xsl:when>
+								<xsl:when test="tns:Rola = '11'">
+									<xsl:text>Pracownik</xsl:text>
 								</xsl:when>
 							</xsl:choose>
 						</td>
@@ -878,7 +918,6 @@
 									<xsl:text>Adres e-mail: </xsl:text>
 									<xsl:for-each select="tns:DaneKontaktowe/tns:EmailPU">
 										<xsl:value-of select="."/>
-										<xsl:text>; </xsl:text>
 									</xsl:for-each>
 								</xsl:if>
 							</td>
@@ -890,7 +929,6 @@
 									<xsl:text>Numer telefonu: </xsl:text>
 									<xsl:for-each select="tns:DaneKontaktowe/tns:TelefonPU">
 										<xsl:value-of select="."/>
-										<xsl:text>; </xsl:text>
 									</xsl:for-each>
 								</xsl:if>
 							</td>
@@ -915,7 +953,7 @@
 										<xsl:text>Komornik sądowy - w przypadku, o którym mowa w art. 106c pkt 2 ustawy</xsl:text>
 									</xsl:when>
 									<xsl:when test="tns:RolaPU = '3'">
-										<xsl:text>Przedstawiciel podatkowy - w przypadku, gdy na fakturze występują dane przedstawiciela podatkowego, o którym mowa w przepisach art. 18a - 18d ustawy</xsl:text>
+										<xsl:text>Przedstawiciel podatkowy - w przypadku gdy na fakturze występują dane przedstawiciela podatkowego, o którym mowa w art. 18a - 18d ustawy</xsl:text>
 									</xsl:when>
 								</xsl:choose>
 							</xsl:if>
@@ -925,7 +963,7 @@
 			</xsl:for-each>
 		</xsl:if>
 	</xsl:template>
-	<xsl:template name="FaktoraWiersze">
+	<xsl:template name="FakturaWiersze">
 		<br/>
 		<xsl:if test="tns:Fa/tns:FaWiersz">
 			<table class="white-space">
@@ -955,16 +993,16 @@
 						<td class="srodek" width="auto">
 							<xsl:value-of select="tns:NrWierszaFa"/>
 						</td>
-						<td class="srodek" width="auto">
+						<td class="lewa" width="auto">
 							<xsl:value-of select="tns:UU_ID"/>
 						</td>
 						<td class="lewa" width="auto">
 							<xsl:value-of select="tns:P_7"/>
 						</td>
-						<td class="srodek" width="auto">
+						<td class="lewa" width="auto">
 							<xsl:value-of select="tns:Indeks"/>
 						</td>
-						<td class="srodek" width="auto">
+						<td class="lewa" width="auto">
 							<xsl:value-of select="tns:P_8A"/>
 						</td>
 						<td class="prawa" width="auto">
@@ -1017,17 +1055,26 @@
 								<xsl:when test="tns:P_12 = '3'">
 									<xsl:text>3%</xsl:text>
 								</xsl:when>
-								<xsl:when test="tns:P_12 = '0'">
-									<xsl:text>0%</xsl:text>
+								<xsl:when test="tns:P_12 = '0 KR'">
+									<xsl:text>0% w przypadku sprzedaży towarów i świadczenia usług na terytorium kraju (z wyłączeniem WDT i eksportu)</xsl:text>
+								</xsl:when>
+								<xsl:when test="tns:P_12 = '0 WDT'">
+									<xsl:text>0% w przypadku wewnątrzwspólnotowej dostawy towarów (WDT)</xsl:text>
+								</xsl:when>
+								<xsl:when test="tns:P_12 = '0 EX'">
+									<xsl:text>0% w przypadku eksportu towarów</xsl:text>
 								</xsl:when>
 								<xsl:when test="tns:P_12 = 'zw'">
-									<xsl:text>zw</xsl:text>
+									<xsl:text>zwolnione od podatku</xsl:text>
 								</xsl:when>
 								<xsl:when test="tns:P_12 = 'oo'">
-									<xsl:text>oo</xsl:text>
+									<xsl:text>odwrotne obciążenie</xsl:text>
 								</xsl:when>
-								<xsl:when test="tns:P_12 = 'np'">
-									<xsl:text>np</xsl:text>
+								<xsl:when test="tns:P_12 = 'np I'">
+									<xsl:text>niepodlegające opodatkowaniu- dostawy towarów oraz świadczenia usług poza terytorium kraju, z wyłączeniem transakcji, o których mowa w art. 100 ust. 1 pkt 4 ustawy oraz OSS</xsl:text>
+								</xsl:when>
+								<xsl:when test="tns:P_12 = 'np II'">
+									<xsl:text>niepodlegajace opodatkowaniu na terytorium kraju, świadczenie usług  o których mowa w art. 100 ust. 1 pkt 4 ustawy</xsl:text>
 								</xsl:when>
 							</xsl:choose>
 						</td>
@@ -1107,7 +1154,7 @@
 		<br/>
 	</xsl:template>
 	<xsl:template name="PodliczenieVAT">
-		<xsl:if test="tns:Fa/tns:P_13_1|tns:Fa/tns:P_14_1|tns:Fa/tns:P_13_2|tns:Fa/tns:P_14_2|tns:Fa/tns:P_13_3|tns:Fa/tns:P_14_3|tns:Fa/tns:P_13_6|tns:Fa/tns:P_13_7|tns:Fa/tns:P_13_4|tns:Fa/tns:P_14_4|tns:Fa/tns:P_13_5">
+		<xsl:if test="tns:Fa/tns:P_13_1|tns:Fa/tns:P_14_1|tns:Fa/tns:P_13_2|tns:Fa/tns:P_14_2|tns:Fa/tns:P_13_3|tns:Fa/tns:P_14_3|tns:Fa/tns:P_13_6_1|tns:Fa/tns:P_13_6_2|tns:Fa/tns:P_13_6_3|tns:Fa/tns:P_13_7|tns:Fa/tns:P_13_4|tns:Fa/tns:P_14_4|tns:Fa/tns:P_13_5">
 			<b>Podsumowanie wg stawek</b>
 			<br/>
 			<br/>
@@ -1340,18 +1387,18 @@
 					<br/>
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<xsl:if test="tns:Fa/tns:KursWalutyZ">
-						Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w przepisach Działu VI ustawy na fakturach, o których mowa w art. 106b ust. 1 pkt 4 ustawy: 
+			<xsl:if test="tns:Fa/tns:KursWalutyZ">
+				<tr>
+					<td>
+						Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w dziale VI ustawy na fakturach, o których mowa w art. 106b ust. 1 pkt 4 ustawy: 
 						<b>
 							<xsl:value-of select="tns:Fa/tns:KursWalutyZ"/> PLN/<xsl:value-of select="tns:Fa/tns:KodWaluty"/>
 						</b>
-					</xsl:if>
 					<br/>
 					<br/>
 				</td>
-			</tr>
+				</tr>
+			</xsl:if>
 		</table>
 	</xsl:template>
 	<xsl:template name="Rozliczenie">
@@ -1448,58 +1495,102 @@
 	<xsl:template name="Platnosc">
 		<xsl:for-each select="tns:Fa/tns:Platnosc">
 			<b>Warunki płatności</b>
+			<br/>
 			<xsl:if test="tns:Zaplacono|tns:DataZaplaty">
-				<table class="normalna" width="60%">
-					<xsl:if test="tns:Zaplacono = '1'">
+				<xsl:if test="tns:Zaplacono = '1'">
+					<table class="break-word" width="100%">
 						<tr>
-							<td class="niewypelniane" width="30%">
-						Znacznik informujący, że kwota należności wynikająca z faktury została zapłacona: 
-						</td>
-							<td class="niewypelniane" width="30%">
-						Data zapłaty, jeśli do wystawienia faktury płatność została dokonana
-						</td>
-						</tr>
-						<tr>
-							<td class="srodek" width="30%">
+							<td>
+								Znacznik informujący, że należność wynikająca z faktury została zapłacona:
 								<input type="checkbox" checked="checked" disabled="disabled"/>
-								<b>1. Tak</b>
-							</td>
-							<td class="prawa" width="30%">
-								<xsl:value-of select="tns:DataZaplaty"/>
+								<b>1. zapłacono</b>
 							</td>
 						</tr>
-					</xsl:if>
-					<br/>
-				</table>
+						<tr>
+							<td>
+								Data zapłaty, jeśli do wystawienia faktury płatność została dokonana:
+								<b>
+									<xsl:value-of select="tns:DataZaplaty"/>
+								</b>
+							</td>
+						</tr>
+					</table>
+				</xsl:if>
 			</xsl:if>
 			<xsl:if test="tns:ZnacznikZaplatyCzesciowej|tns:ZaplataCzesciowa">
 				<table class="normalna" width="60%">
 					<br/>
 					<tr>
-						<td class="niewypelniane" width="20%" rowspan="2">Znacznik informujący, że kwota należności wynikająca z faktury została zapłacona w części:</td>
-						<td class="niewypelniane" width="40%" colspan="2">Dane zapłat częściowych</td>
-					</tr>
-					<tr>
-						<td class="niewypelniane" width="20%">Kwota zapłaty częściowej</td>
-						<td class="niewypelniane" width="20%">Data zapłaty częściowej, jeśli do wystawienia faktury płatność częściowa została dokonana</td>
-					</tr>
-					<tr>
-						<td class="wypelniane" width="20%" rowspan="100%">
-							<input type="checkbox" checked="checked" disabled="disabled"/>
-							<b>1. Tak</b>
+						<td class="niewypelniane" width="20%">Znacznik informujący, że należność wynikająca z faktury została zapłacona w części lub w całości:</td>
+						<td class="wypelniane, srodek" width="80%">
+							<xsl:choose>
+								<xsl:when test="tns:ZnacznikZaplatyCzesciowej = '1'">
+									<input type="checkbox" checked="checked" disabled="disabled"/>
+									<b>1 - zapłacono w części</b>
+								</xsl:when>
+								<xsl:when test="tns:ZnacznikZaplatyCzesciowej = '2'">
+									<input type="checkbox" checked="checked" disabled="disabled"/>
+									<b>2 - zapłacono w całości, jeśli należność wynikająca z faktury została zapłacona w dwóch lub więcej częściach, a ostatnia płatność jest płatnością końcową</b>
+								</xsl:when>
+							</xsl:choose>
 						</td>
-						<xsl:for-each select="tns:ZaplataCzesciowa">
-							<tr>
-								<td class="prawa" width="20%">
-									<xsl:value-of select="tns:KwotaZaplatyCzesciowej"/>
-								</td>
-								<td class="srodek" width="20%">
-									<xsl:value-of select="tns:DataZaplatyCzesciowej"/>
-									<br/>
-								</td>
-							</tr>
-						</xsl:for-each>
 					</tr>
+				</table>
+				<table class="normalna">
+					<tr>
+						<td class="niewypelniane" colspan="4">Dane zapłat częściowych</td>
+					</tr>
+					<tr>
+						<td class="niewypelniane" width="15%">Kwota zapłaty częściowej</td>
+						<td class="niewypelniane" width="15%">Data zapłaty częściowej, jeśli do wystawienia faktury płatność częściowa została dokonana</td>
+						<td class="niewypelniane" width="15%">Forma płatności / Znacznik innej formy płatności</td>
+						<td class="niewypelniane" width="55%">Uszczegółowienie innej formy płatności</td>
+					</tr>
+					<xsl:for-each select="tns:ZaplataCzesciowa">
+						<tr>
+							<td class="prawa" width="15%">
+								<xsl:value-of select="tns:KwotaZaplatyCzesciowej"/>
+							</td>
+							<td class="srodek" width="15%">
+								<xsl:value-of select="tns:DataZaplatyCzesciowej"/>
+								<br/>
+							</td>
+							<td class="srodek" width="15%">
+								<xsl:if test="tns:FormaPlatnosci">
+									<xsl:choose>
+										<xsl:when test="tns:FormaPlatnosci = '1'">
+											<xsl:text>Gotówka</xsl:text>
+										</xsl:when>
+										<xsl:when test="tns:FormaPlatnosci = '2'">
+											<xsl:text>Karta</xsl:text>
+										</xsl:when>
+										<xsl:when test="tns:FormaPlatnosci = '3'">
+											<xsl:text>Bon</xsl:text>
+										</xsl:when>
+										<xsl:when test="tns:FormaPlatnosci = '4'">
+											<xsl:text>Czek</xsl:text>
+										</xsl:when>
+										<xsl:when test="tns:FormaPlatnosci = '5'">
+											<xsl:text>Kredyt</xsl:text>
+										</xsl:when>
+										<xsl:when test="tns:FormaPlatnosci = '6'">
+											<xsl:text>Przelew</xsl:text>
+										</xsl:when>
+										<xsl:when test="tns:FormaPlatnosci = '7'">
+											<xsl:text>Mobilna</xsl:text>
+										</xsl:when>
+									</xsl:choose> 
+								</xsl:if>
+								<xsl:if test="tns:PlatnoscInna = '1'">
+									<input type="checkbox" checked="checked" disabled="disabled"/>
+									1 - inna forma płatności
+								</xsl:if>
+							</td>
+							<td class="lewa" width="55%">
+								<xsl:value-of select="tns:OpisPlatnosci"/>
+							</td>
+						</tr>
+					</xsl:for-each>
 				</table>
 			</xsl:if>
 			<xsl:if test="tns:TerminPlatnosci">
@@ -1561,10 +1652,10 @@
 				<table class="break-word">
 					<tr>
 						<td class="niewypelniane" width="20%">Znacznik innej formy płatności:</td>
-						<td class="niewypelniane" width="80%">Doprecyzowanie innej formy płatności</td>
+						<td class="niewypelniane" width="80%">Uszczegółowienie innej formy płatności</td>
 					</tr>
 					<tr>
-						<td class="wypelniane" width="20%">
+						<td class="wypelniane, srodek" width="20%">
 							<xsl:if test="tns:PlatnoscInna = '1'">
 								<input type="checkbox" checked="checked" disabled="disabled"/>
 								<b>1. Tak</b>
@@ -1603,7 +1694,7 @@
 										<xsl:text>Rachunek banku lub rachunek spółdzielczej kasy oszczędnościowo-kredytowej służący do dokonywania rozliczeń z tytułu nabywanych przez ten bank lub tę kasę wierzytelności pieniężnych</xsl:text>
 									</xsl:when>
 									<xsl:when test="tns:RachunekWlasnyBanku = '2'">
-										<xsl:text>Rachunek banku lub rachunek spółdzielczej kasy oszczędnościowo-kredytowej wykorzystywany przez ten bank lub tę kasę do pobrania należności od nabywcy towarów lub usługobiorcy za dostawę towarów lub świadczenie usług, potwierdzone fakturą, i przekazania jej w całości albo części dostawcy towarów lub usługodawcy</xsl:text>
+										<xsl:text>Rachunek banku lub rachunek spółdzielczej kasy oszczędnościowo-kredytowej wykorzystywany przez ten bank lub tę kasę do pobrania należności od nabywcy towarów lub usług za dostawę towarów lub świadczenie usług, potwierdzone fakturą, i przekazania jej w całości albo części dostawcy towarów lub usługodawcy</xsl:text>
 									</xsl:when>
 									<xsl:when test="tns:RachunekWlasnyBanku = '3'">
 										<xsl:text>Rachunek banku lub rachunek spółdzielczej kasy oszczędnościowo-kredytowej prowadzony przez ten bank lub tę kasę w ramach gospodarki własnej, niebędący rachunkiem rozliczeniowym</xsl:text>
@@ -1647,7 +1738,7 @@
 										<xsl:text>Rachunek banku lub rachunek spółdzielczej kasy oszczędnościowo-kredytowej służący do dokonywania rozliczeń z tytułu nabywanych przez ten bank lub tę kasę wierzytelności pieniężnych</xsl:text>
 									</xsl:when>
 									<xsl:when test="tns:RachunekWlasnyBanku = '2'">
-										<xsl:text>Rachunek banku lub rachunek spółdzielczej kasy oszczędnościowo-kredytowej wykorzystywany przez ten bank lub tę kasę do pobrania należności od nabywcy towarów lub usługobiorcy za dostawę towarów lub świadczenie usług, potwierdzone fakturą, i przekazania jej w całości albo części dostawcy towarów lub usługodawcy</xsl:text>
+										<xsl:text>Rachunek banku lub rachunek spółdzielczej kasy oszczędnościowo-kredytowej wykorzystywany przez ten bank lub tę kasę do pobrania należności od nabywcy towarów lub usług za dostawę towarów lub świadczenie usług, potwierdzone fakturą, i przekazania jej w całości albo części dostawcy towarów lub usługodawcy</xsl:text>
 									</xsl:when>
 									<xsl:when test="tns:RachunekWlasnyBanku = '3'">
 										<xsl:text>Rachunek banku lub rachunek spółdzielczej kasy oszczędnościowo-kredytowej prowadzony przez ten bank lub tę kasę w ramach gospodarki własnej, niebędący rachunkiem rozliczeniowym</xsl:text>
@@ -1672,7 +1763,7 @@
 					<tr>
 						<br/>
 						<td class="niewypelniane" width="50%">
-						Warunki, które nabywca powinien spełnić aby skorzystać ze skonta
+						Warunki, które nabywca powinien spełnić, aby skorzystać ze skonta
 						</td>
 						<td class="niewypelniane" width="50%">
 						Wysokość skonta
@@ -1687,6 +1778,22 @@
 						</td>
 					</tr>
 				</table>
+				<br/>
+			</xsl:if>
+			<xsl:if test="tns:LinkDoPlatnosci">
+				<div>Link do płatności bezgotówkowej -
+					<b>
+						<xsl:value-of select="tns:LinkDoPlatnosci"/>
+					</b>
+				</div>
+				<br/>
+			</xsl:if>
+			<xsl:if test="tns:IPKSeF">
+				<div>Identyfikator płatności Krajowego Systemu e-Faktur -
+					<b>
+						<xsl:value-of select="tns:IPKSeF"/>
+					</b>
+				</div>
 				<br/>
 			</xsl:if>
 		</xsl:for-each>
@@ -1704,7 +1811,7 @@
 					<td class="niewypelniane" width="25%">Mechanizm podzielonej płatności</td>
 				</tr>
 				<tr>
-					<td class="wypelniane" width="25%">
+					<td class="wypelniane, srodek" width="25%">
 						<xsl:choose>
 							<xsl:when test="tns:P_16 = '1'">
 								<input type="checkbox" checked="checked" disabled="disabled"/>
@@ -1720,7 +1827,7 @@
 							</xsl:when>
 						</xsl:choose>
 					</td>
-					<td class="wypelniane" width="25%">
+					<td class="wypelniane, srodek" width="25%">
 						<xsl:choose>
 							<xsl:when test="tns:P_17 = '1'">
 								<input type="checkbox" checked="checked" disabled="disabled"/>
@@ -1736,7 +1843,7 @@
 							</xsl:when>
 						</xsl:choose>
 					</td>
-					<td class="wypelniane" width="25%">
+					<td class="wypelniane, srodek" width="25%">
 						<xsl:choose>
 							<xsl:when test="tns:P_18 = '1'">
 								<input type="checkbox" checked="checked" disabled="disabled"/>
@@ -1752,7 +1859,7 @@
 							</xsl:when>
 						</xsl:choose>
 					</td>
-					<td class="wypelniane" width="25%">
+					<td class="wypelniane, srodek" width="25%">
 						<xsl:choose>
 							<xsl:when test="tns:P_18A = '1'">
 								<input type="checkbox" checked="checked" disabled="disabled"/>
@@ -1779,7 +1886,7 @@
 							<td class="niewypelniane" width="75%">Przepis, na podstawie którego podatnik stosuje zwolnienie od podatku </td>
 						</tr>
 						<tr>
-							<td class="wypelniane" width="25%">
+							<td class="wypelniane, srodek" width="25%">
 								<xsl:choose>
 									<xsl:when test="tns:P_19 = '1'">
 										<input type="checkbox" checked="checked" disabled="disabled"/>
@@ -1964,7 +2071,7 @@
 							<td class="niewypelniane" width="25%">Procedura marży - przedmioty kolekcjonerskie i antyki</td>
 						</tr>
 						<tr>
-							<td class="wypelniane" width="25%">
+							<td class="wypelniane, srodek" width="25%">
 								<xsl:if test="tns:P_PMarzy_2 = '1'">
 									<input type="checkbox" checked="checked" disabled="disabled"/>
 									<b>
@@ -1972,7 +2079,7 @@
 									</b>
 								</xsl:if>
 							</td>
-							<td class="wypelniane" width="25%">
+							<td class="wypelniane, srodek" width="25%">
 								<xsl:if test="tns:P_PMarzy_3_1 = '1'">
 									<input type="checkbox" checked="checked" disabled="disabled"/>
 									<b>
@@ -1980,7 +2087,7 @@
 									</b>
 								</xsl:if>
 							</td>
-							<td class="wypelniane" width="25%">
+							<td class="wypelniane, srodek" width="25%">
 								<xsl:if test="tns:P_PMarzy_3_2 = '1'">
 									<input type="checkbox" checked="checked" disabled="disabled"/>
 									<b>
@@ -1988,7 +2095,7 @@
 									</b>
 								</xsl:if>
 							</td>
-							<td class="wypelniane" width="25%">
+							<td class="wypelniane, srodek" width="25%">
 								<xsl:if test="tns:P_PMarzy_3_3 = '1'">
 									<input type="checkbox" checked="checked" disabled="disabled"/>
 									<b>
@@ -2098,11 +2205,11 @@
 				<xsl:if test="tns:KursUmowny|tns:WalutaUmowna">
 					<table width="100%">
 						<tr>
-							<td class="niewypelniane" width="50%">Kurs umowny - w przypadkach, gdy na fakturze znajduje się informacja o kursie, po którym zostały przeliczone kwoty wykazane na fakturze w złotych. Nie dotyczy przypadków, o których mowa w Dziale VI ustawy</td>
-							<td class="niewypelniane" width="50%">Waluta umowna - trzyliterowy kod waluty (ISO-4217) w przypadkach, gdy na fakturze znajduje się informacja o kursie, po którym zostały przeliczone kwoty wykazane na fakturze w złotych. Nie dotyczy przypadków, o których mowa w Dziale VI ustawy</td>
+							<td class="niewypelniane" width="50%">Kurs umowny - w przypadkach, gdy na fakturze znajduje się informacja o kursie, po którym zostały przeliczone kwoty wykazane na fakturze w złotych. Nie dotyczy przypadków, o których mowa w dziale VI ustawy</td>
+							<td class="niewypelniane" width="50%">Waluta umowna - kod waluty (ISO-4217) w przypadkach gdy na fakturze znajduje się informacja o kursie, po którym zostały przeliczone kwoty wykazane na fakturze w złotych. Nie dotyczy przypadków, o których mowa w dziale VI ustawy</td>
 						</tr>
 						<tr>
-							<td class="wypelniane" width="50%">
+							<td class="wypelniane, prawa" width="50%">
 								<xsl:value-of select="tns:KursUmowny"/>
 							</td>
 							<td class="wypelniane" width="50%">
@@ -2906,7 +3013,7 @@
 			</xsl:if>
 			<xsl:if test="tns:P_15ZK">
 				<div>
-								W przypadku korekt faktur zaliczkowych, kwota zapłaty przed korektą. W przypadku korekt faktur, o których mowa w art. 106f ust. 3 ustawy, kwota pozostała do zapłaty przed korektą: 
+					W przypadku korekt faktur zaliczkowych - kwota zapłaty przed korektą. W przypadku korekt faktur, o których mowa w art. 106f ust. 3 ustawy - kwota pozostała do zapłaty przed korektą: 
 							<b>
 						<xsl:value-of select="tns:P_15ZK"/>
 					</b>
@@ -2915,7 +3022,7 @@
 			</xsl:if>
 			<xsl:if test="tns:KursWalutyZK">
 				<div>
-								Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w Dziale VI ustawy przed korektą: 
+					Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w dziale VI ustawy przed korektą: 
 							<b>
 						<xsl:value-of select="tns:KursWalutyZK"/>
 					</b>
@@ -2925,45 +3032,45 @@
 		</xsl:for-each>
 	</xsl:template>
 	<xsl:template name="ZaliczkaCzesciowa">
-			<xsl:if test="tns:Fa/tns:ZaliczkaCzesciowa">
-				<table>
-					<b>Zaliczka Częściowa</b>
-					<br/>
-				</table>
-				<table class="break-word" width="60%">
+		<xsl:if test="tns:Fa/tns:ZaliczkaCzesciowa">
+			<table>
+				<b>Zaliczka Częściowa</b>
+				<br/>
+			</table>
+			<table class="break-word" width="60%">
+				<tr>
+					<td class="niewypelniane" colspan="3" width="60%">Dane dla przypadków faktur dokumentujących otrzymanie więcej niż jednej zaliczki oraz faktur rozliczeniowych dokumentujących jednocześnie otrzymanie części zapłaty przed dokonaniem czynności. W przypadku faktur rozliczeniowych różnica kwoty należności ogółem i sumy kwot wykazanych płatności stanowi kwotę pozostałą do zapłaty</td>
+				</tr>
+				<tr>
+					<td class="niewypelniane" width="20%">Data otrzymania płatności, o której mowa w art. 106b ust. 1 pkt 4 ustawy</td>
+					<td class="niewypelniane" width="20%">Kwota płatności, o której mowa w art. 106b ust. 1 pkt 4 ustawy, składająca się na kwotę ogółem. W przypadku faktur korygujących - korekta kwoty wynikającej z faktury korygowanej</td>
+					<td class="niewypelniane" width="20%">Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w dziale VI ustawy</td>
+					<td>
+						<table width="10%">
+							<tbody>
+								<tr>
+									<td/>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				<xsl:for-each select="tns:Fa/tns:ZaliczkaCzesciowa">
 					<tr>
-						<td class="niewypelniane" colspan="3" width="60%">Dane dla przypadków faktur dokumentujących otrzymanie więcej niż jednej zaliczki oraz faktur rozliczeniowych dokumentujących jednocześnie otrzymanie części zapłaty przed dokonaniem czynności. W przypadku faktur rozliczeniowych różnica kwoty należności ogółem i sumy kwot wykazanych płatności stanowi kwotę pozostałą do zapłaty</td>
-					</tr>
-					<tr>
-						<td class="niewypelniane" width="20%">Data otrzymania płatności, o której mowa w art. 106b ust. 1 pkt 4 ustawy</td>
-						<td class="niewypelniane" width="20%">Kwota płatności, o której mowa w art. 106b ust. 1 pkt 4 ustawy, składająca się na kwotę ogółem. W przypadku faktur korygujących korekta kwoty wynikającej z faktury korygowanej</td>
-						<td class="niewypelniane" width="20%">Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w Dziale VI ustawy</td>
-						<td>
-							<table width="10%">
-								<tbody>
-									<tr>
-										<td/>
-									</tr>
-								</tbody>
-							</table>
+						<td class="prawa" width="20%">
+							<xsl:value-of select="tns:P_6Z"/>
+						</td>
+						<td class="prawa" width="20%">
+							<xsl:value-of select="tns:P_15Z"/>
+						</td>
+						<td class="prawa" width="20%">
+							<xsl:value-of select="tns:KursWalutyZW"/>
 						</td>
 					</tr>
-					<xsl:for-each select="tns:Fa/tns:ZaliczkaCzesciowa">
-						<tr>
-							<td class="prawa" width="20%">
-								<xsl:value-of select="tns:P_6Z"/>
-							</td>
-							<td class="prawa" width="20%">
-								<xsl:value-of select="tns:P_15Z"/>
-							</td>
-							<td class="prawa" width="20%">
-								<xsl:value-of select="tns:KursWalutyZW"/>
-							</td>
-						</tr>
-					</xsl:for-each>
-				</table>
-				<br/>
-			</xsl:if>
+				</xsl:for-each>
+			</table>
+			<br/>
+		</xsl:if>
 	</xsl:template>
 	<xsl:template name="DodatkowyOpis">
 		<xsl:if test="tns:Fa/tns:DodatkowyOpis">
@@ -3113,20 +3220,20 @@
 				</table>
 				<table class="break-word">
 					<tr>
-						<td class="niewypelniane" width="30%">Numer Krajowego Rejestru Sądowego </td>
-						<td class="wypelniane" width="70%">
+						<td class="niewypelniane" width="10%">KRS</td>
+						<td class="wypelniane" width="90%">
 							<xsl:value-of select="tns:KRS"/>
 						</td>
 					</tr>
 					<tr>
-						<td class="niewypelniane" width="30%">REGON </td>
-						<td class="wypelniane" width="70%">
+						<td class="niewypelniane" width="10%">REGON</td>
+						<td class="wypelniane" width="90%">
 							<xsl:value-of select="tns:REGON"/>
 						</td>
 					</tr>
 					<tr>
-						<td class="niewypelniane" width="30%">Numer w Bazie Danych o Odpadach </td>
-						<td class="wypelniane" width="70%">
+						<td class="niewypelniane" width="10%">BDO</td>
+						<td class="wypelniane" width="90%">
 							<xsl:value-of select="tns:BDO"/>
 						</td>
 					</tr>
@@ -3138,6 +3245,139 @@
 				<a href="https://www.gov.pl/web/kas/krajowy-system-e-faktur">
 					<b>Krajowy System <font style="color:red">e</font>-Faktur</b>
 				</a>
+			</div>
+			<br/>
+			<br/>
+		</xsl:if>
+	</xsl:template>
+	<xsl:template name="Zalacznik">
+		<xsl:if test="tns:Zalacznik">
+			<xsl:for-each select="tns:Zalacznik/tns:BlokDanych">
+				<br/>
+				<br/>
+				<div>
+					<b>Szczegółowe dane załącznika <xsl:number value="position()" format=" (1) "/></b>
+				</div>
+				<br/>
+				<div>
+					Nagłówek bloku danych: <b>
+						<xsl:value-of select="tns:ZNaglowek"/>
+					</b>
+				</div>
+				<br/>
+				<table class="break-word" width="100%">
+					<tr>
+						<td class="niewypelniane" width="50%">Klucz</td>
+						<td class="niewypelniane" width="50%">Wartość</td>
+					</tr>
+					<xsl:for-each select="tns:MetaDane">
+						<tr>
+							<td class="lewa" width="50%">
+								<xsl:value-of select="tns:ZKlucz"/>
+							</td>
+							<td class="lewa" width="50%">
+								<xsl:value-of select="tns:ZWartosc"/>
+							</td>
+						</tr>
+					</xsl:for-each>
+				</table>
+				<br/>
+				<xsl:for-each select="tns:Tekst/tns:Akapit">
+					<div>
+						 Opis <xsl:number value="position()" format=" (1) "/>: <xsl:value-of select="."/>
+					</div>
+				</xsl:for-each>
+				<br/>
+				<div>
+					Tabela
+				</div>
+				<br/>
+				<xsl:for-each select="tns:Tabela">
+					<table class="break-word" width="100%">
+						<xsl:if test="tns:Opis">
+							<div>
+								<b>
+									<xsl:value-of select="tns:Opis"/>
+								</b>
+							</div>
+							<br/>
+						</xsl:if>
+						<tr>
+							<td class="niewypelniane" width="50%">Klucz</td>
+							<td class="niewypelniane" width="50%">Wartość</td>
+						</tr>
+						<xsl:for-each select="tns:TMetaDane">
+							<tr>
+								<td class="lewa" width="50%">
+									<xsl:value-of select="tns:TKlucz"/>
+								</td>
+								<td class="lewa" width="50%">
+									<xsl:value-of select="tns:TWartosc"/>
+								</td>
+							</tr>
+						</xsl:for-each>
+					</table>
+					<br/>
+					<table class="break-word" width="100%">
+						<tr>
+							<xsl:for-each select="tns:TNaglowek/tns:Kol">
+								<td class="niewypelniane" width="auto">
+									<xsl:value-of select="tns:NKom"/>
+								</td>
+							</xsl:for-each>
+						</tr>
+						<xsl:for-each select="tns:Wiersz">
+							<tr>
+								<xsl:for-each select="tns:WKom">
+									<td class="lewa" width="auto">
+										<xsl:value-of select="."/>
+									</td>
+								</xsl:for-each>
+							</tr>
+						</xsl:for-each>
+					</table>
+					<br/>
+					<table class="break-word" width="100%">
+						<tr>
+							<td class="niewypelniane" colspan="20">Podsumowania tabeli</td>
+						</tr>
+						<xsl:for-each select="tns:Suma">
+							<tr>
+								<xsl:for-each select="tns:SKom">
+									<td class="lewa" width="auto">
+										<xsl:value-of select="."/>
+									</td>
+								</xsl:for-each>
+							</tr>
+						</xsl:for-each>
+					</table>
+				</xsl:for-each>
+			</xsl:for-each>
+		</xsl:if>
+	</xsl:template>
+	<xsl:template name="NaglowekTytulowyZalacznik">
+		<xsl:param name="naglowek"/>
+		<xsl:param name="nazwa"/>
+		<xsl:param name="podstawy-prawne"/>
+		<xsl:param name="uzycie"/>
+		<div>
+			<xsl:choose>
+				<xsl:when test="$uzycie = 'deklaracja'">
+					<xsl:attribute name="class">tlo-formularza</xsl:attribute>
+				</xsl:when>
+				<xsl:when test="$uzycie = 'zalacznik'">
+					<xsl:attribute name="class">tlo-zalacznika</xsl:attribute>
+				</xsl:when>
+			</xsl:choose>
+			<xsl:if test="$nazwa">
+				<h1 class="nazwa">
+					<xsl:copy-of select="$nazwa"/>
+				</h1>
+			</xsl:if>
+		</div>
+		<xsl:if test="$podstawy-prawne">
+			<div class="prawne">
+				<xsl:copy-of select="$podstawy-prawne"/>
 			</div>
 		</xsl:if>
 	</xsl:template>

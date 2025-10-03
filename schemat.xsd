@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/" xmlns:tns="http://crd.gov.pl/wzor/2023/06/29/12648/" targetNamespace="http://crd.gov.pl/wzor/2023/06/29/12648/" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="pl">
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/" xmlns:tns="http://crd.gov.pl/wzor/2025/06/25/13775/" targetNamespace="http://crd.gov.pl/wzor/2025/06/25/13775/" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="pl">
 	<xsd:import namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/" schemaLocation="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/StrukturyDanych_v10-0E.xsd"/>
 	<xsd:simpleType name="TKodyKrajowUE">
 		<xsd:annotation>
@@ -997,6 +997,11 @@
 					<xsd:documentation>DOLAR WSCHODNIO­KARAIBSKI</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
+			<xsd:enumeration value="XCG">
+				<xsd:annotation>
+					<xsd:documentation>GULDEN KARAIBSKI</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="XDR">
 				<xsd:annotation>
 					<xsd:documentation>SDR MIĘDZYNARODOWY FUNDUSZ WALUTOWY</xsd:documentation>
@@ -1076,7 +1081,7 @@
 				<xsd:complexType>
 					<xsd:simpleContent>
 						<xsd:extension base="tns:TKodFormularza">
-							<xsd:attribute name="kodSystemowy" type="xsd:string" use="required" fixed="FA (2)"/>
+							<xsd:attribute name="kodSystemowy" type="xsd:string" use="required" fixed="FA (3)"/>
 							<xsd:attribute name="wersjaSchemy" type="xsd:string" use="required" fixed="1-0E"/>
 						</xsd:extension>
 					</xsd:simpleContent>
@@ -1085,7 +1090,7 @@
 			<xsd:element name="WariantFormularza">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:byte">
-						<xsd:enumeration value="2"/>
+						<xsd:enumeration value="3"/>
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
@@ -1095,7 +1100,7 @@
 				</xsd:annotation>
 				<xsd:simpleType>
 					<xsd:restriction base="etd:TDataCzas">
-						<xsd:minInclusive value="2022-01-01T00:00:00Z"/>
+						<xsd:minInclusive value="2025-09-01T00:00:00Z"/>
 						<xsd:maxInclusive value="2050-01-01T23:59:59Z"/>
 					</xsd:restriction>
 				</xsd:simpleType>
@@ -1168,6 +1173,15 @@
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:minLength value="1"/>
+			<xsd:maxLength value="256"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TZnakowy2">
+		<xsd:annotation>
+			<xsd:documentation>Typ znakowy ograniczony do 256 znaków</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="0"/>
 			<xsd:maxLength value="256"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -1256,6 +1270,15 @@
 			<xsd:maxInclusive value="2050-01-01"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="TDataU">
+		<xsd:annotation>
+			<xsd:documentation>Data zdarzenia w okresie od 1990-01-01 do 2050-01-01</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="etd:TData">
+			<xsd:minInclusive value="1990-01-01"/>
+			<xsd:maxInclusive value="2050-01-01"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="TDataCzas">
 		<xsd:annotation>
 			<xsd:documentation>Data i czas zdarzenia w okresie od 01.10.2021T00:00:00Z do 01.01.2050T23:59:59Z</xsd:documentation>
@@ -1286,7 +1309,8 @@
 			<xsd:documentation>Numer rachunku</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:string">
-			<xsd:pattern value="[0-9A-Z]{10,32}"/>
+			<xsd:minLength value="10"/>
+			<xsd:maxLength value="34"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="SWIFT_Type">
@@ -1470,7 +1494,7 @@
 			</xsd:enumeration>
 			<xsd:enumeration value="2">
 				<xsd:annotation>
-					<xsd:documentation>Rachunek banku lub rachunek spółdzielczej kasy oszczędnościowo-kredytowej wykorzystywany przez ten bank lub tę kasę do pobrania należności od nabywcy towarów lub usługobiorcy za dostawę towarów lub świadczenie usług, potwierdzone fakturą, i przekazania jej w całości albo części dostawcy towarów lub usługodawcy</xsd:documentation>
+					<xsd:documentation>Rachunek banku lub rachunek spółdzielczej kasy oszczędnościowo-kredytowej wykorzystywany przez ten bank lub tę kasę do pobrania należności od nabywcy towarów lub usług za dostawę towarów lub świadczenie usług, potwierdzone fakturą, i przekazania jej w całości albo części dostawcy towarów lub usługodawcy</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="3">
@@ -1538,7 +1562,7 @@
 		<xsd:sequence>
 			<xsd:choice>
 				<xsd:annotation>
-					<xsd:documentation>Numer, za pomocą którego nabywca towarów lub usług jest identyfikowany dla podatku lub podatku od wartości dodanej, pod którym otrzymał on towary lub usługi, z zastrzeżeniem art. 106e ust. 1 pkt 24 lit. b ustawy. Pole opcjonalne dla przypadku określonego w art. 106e ust. 5 pkt 2 ustawy. W przypadku faktur wystawianych w procedurze uproszczonej przez drugiego w kolejności podatnika, o którym mowa w art. 135 ust. 1 pkt 4 lit. b i c oraz ust. 2 ustawy, numer, o którym mowa w art. 136 ust. 1 pkt 4 ustawy</xsd:documentation>
+					<xsd:documentation>Numer, za pomocą którego nabywca towarów lub usług jest zidentyfikowany na potrzeby podatku lub podatku od wartości dodanej, pod którym otrzymał on towary lub usługi, z zastrzeżeniem art. 106e ust. 1 pkt 24 lit. b ustawy. Pole opcjonalne dla przypadku określonego w art. 106e ust. 5 pkt 2 ustawy. W przypadku faktur wystawianych w procedurze uproszczonej przez drugiego w kolejności podatnika, o którym mowa w art. 135 ust. 1 pkt 4 lit. b i c oraz ust. 2 ustawy - numer, o którym mowa w art. 136 ust. 1 pkt 4 ustawy</xsd:documentation>
 				</xsd:annotation>
 				<xsd:element name="NIP" type="etd:TNrNIP">
 					<xsd:annotation>
@@ -1568,9 +1592,7 @@
 							<xsd:documentation>Identyfikator podatkowy inny</xsd:documentation>
 						</xsd:annotation>
 						<xsd:simpleType>
-							<xsd:restriction base="etd:TNrIdentyfikacjiPodatkowej">
-								<xsd:pattern value="[a-zA-Z0-9]{1,50}"/>
-							</xsd:restriction>
+							<xsd:restriction base="etd:TNrIdentyfikacjiPodatkowej"/>
 						</xsd:simpleType>
 					</xsd:element>
 				</xsd:sequence>
@@ -1599,7 +1621,7 @@
 		<xsd:sequence>
 			<xsd:choice>
 				<xsd:annotation>
-					<xsd:documentation>Numer, za pomocą którego nabywca towarów lub usług jest identyfikowany dla podatku lub podatku od wartości dodanej, pod którym otrzymał on towary lub usługi, z zastrzeżeniem art. 106e ust. 1 pkt 24 lit. b ustawy. Pole opcjonalne dla przypadku określonego w art. 106e ust. 5 pkt 2 ustawy. W przypadku faktur wystawianych w procedurze uproszczonej przez drugiego w kolejności podatnika, o którym mowa w art. 135 ust. 1 pkt 4 lit. b i c oraz ust. 2 ustawy, numer, o którym mowa w art. 136 ust. 1 pkt 4 ustawy</xsd:documentation>
+					<xsd:documentation>Numer, za pomocą którego nabywca towarów lub usług jest zidentyfikowany na potrzeby podatku lub podatku od wartości dodanej, pod którym otrzymał on towary lub usługi, z zastrzeżeniem art. 106e ust. 1 pkt 24 lit. b ustawy. Pole opcjonalne dla przypadku określonego w art. 106e ust. 5 pkt 2 ustawy. W przypadku faktur wystawianych w procedurze uproszczonej przez drugiego w kolejności podatnika, o którym mowa w art. 135 ust. 1 pkt 4 lit. b i c oraz ust. 2 ustawy - numer, o którym mowa w art. 136 ust. 1 pkt 4 ustawy</xsd:documentation>
 				</xsd:annotation>
 				<xsd:element name="NIP" type="etd:TNrNIP">
 					<xsd:annotation>
@@ -1634,9 +1656,7 @@
 							<xsd:documentation>Identyfikator podatkowy inny</xsd:documentation>
 						</xsd:annotation>
 						<xsd:simpleType>
-							<xsd:restriction base="etd:TNrIdentyfikacjiPodatkowej">
-								<xsd:pattern value="[a-zA-Z0-9]{1,50}"/>
-							</xsd:restriction>
+							<xsd:restriction base="etd:TNrIdentyfikacjiPodatkowej"/>
 						</xsd:simpleType>
 					</xsd:element>
 				</xsd:sequence>
@@ -1702,7 +1722,7 @@
 			</xsd:enumeration>
 			<xsd:enumeration value="3">
 				<xsd:annotation>
-					<xsd:documentation>Przedstawiciel podatkowy - w przypadku, gdy na fakturze występują dane przedstawiciela podatkowego, o którym mowa w przepisach art. 18a - 18d ustawy</xsd:documentation>
+					<xsd:documentation>Przedstawiciel podatkowy - w przypadku gdy na fakturze występują dane przedstawiciela podatkowego, o którym mowa w art. 18a - 18d ustawy</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
@@ -1714,32 +1734,32 @@
 		<xsd:restriction base="xsd:integer">
 			<xsd:enumeration value="1">
 				<xsd:annotation>
-					<xsd:documentation>Faktor - w przypadku, gdy na fakturze występują dane faktora</xsd:documentation>
+					<xsd:documentation>Faktor - w przypadku gdy na fakturze występują dane faktora</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="2">
 				<xsd:annotation>
-					<xsd:documentation>Odbiorca - w przypadku, gdy na fakturze występują dane jednostek wewnętrznych, oddziałów, wyodrębnionych w ramach nabywcy, które same nie stanowią nabywcy w rozumieniu ustawy</xsd:documentation>
+					<xsd:documentation>Odbiorca - w przypadku gdy na fakturze występują dane jednostek wewnętrznych, oddziałów, wyodrębnionych w ramach nabywcy, które same nie stanowią nabywcy w rozumieniu ustawy</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="3">
 				<xsd:annotation>
-					<xsd:documentation>Podmiot pierwotny - w przypadku, gdy na fakturze występują dane podmiotu będącego w stosunku do podatnika podmiotem przejętym lub przekształconym, który świadczył usługę lub dokonywał dostawy. Z wyłączeniem przypadków, o których mowa w art. 106j ust.2 pkt 3 ustawy, gdy dane te wykazywane są w części Podmiot1K</xsd:documentation>
+					<xsd:documentation>Podmiot pierwotny - w przypadku gdy na fakturze występują dane podmiotu będącego w stosunku do podatnika podmiotem przejętym lub przekształconym, który dokonywał dostawy lub świadczył usługę. Z wyłączeniem przypadków, o których mowa w art. 106j ust.2 pkt 3 ustawy, gdy dane te wykazywane są w części Podmiot1K</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="4">
 				<xsd:annotation>
-					<xsd:documentation>Dodatkowy nabywca - w przypadku, gdy na fakturze występują dane kolejnych (innych niż wymieniony w części Podmiot2) nabywców</xsd:documentation>
+					<xsd:documentation>Dodatkowy nabywca - w przypadku gdy na fakturze występują dane kolejnych (innych niż wymieniony w części Podmiot2) nabywców</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="5">
 				<xsd:annotation>
-					<xsd:documentation>Wystawca faktury - w przypadku, gdy na fakturze występują dane podmiotu wystawiającego fakturę w imieniu podatnika. Nie dotyczy przypadku, gdy wystawcą faktury jest nabywca</xsd:documentation>
+					<xsd:documentation>Wystawca faktury - w przypadku gdy na fakturze występują dane podmiotu wystawiającego fakturę w imieniu podatnika. Nie dotyczy przypadku, gdy wystawcą faktury jest nabywca</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="6">
 				<xsd:annotation>
-					<xsd:documentation>Dokonujący płatności - w przypadku, gdy na fakturze występują dane podmiotu regulującego zobowiązanie w miejsce nabywcy</xsd:documentation>
+					<xsd:documentation>Dokonujący płatności - w przypadku gdy na fakturze występują dane podmiotu regulującego zobowiązanie w miejsce nabywcy</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="7">
@@ -1760,6 +1780,11 @@
 			<xsd:enumeration value="10">
 				<xsd:annotation>
 					<xsd:documentation>Członek grupy VAT - odbiorca</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="11">
+				<xsd:annotation>
+					<xsd:documentation>Pracownik</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
@@ -1789,7 +1814,7 @@
 			</xsd:enumeration>
 			<xsd:enumeration value="ZAL">
 				<xsd:annotation>
-					<xsd:documentation>Faktura dokumentująca otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz faktura wystawiona w związku z art. 106f ust. 4 ustawy</xsd:documentation>
+					<xsd:documentation>Faktura dokumentująca otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz faktura wystawiona w związku z art. 106f ust. 4 ustawy (faktura zaliczkowa)</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="ROZ">
@@ -1804,7 +1829,7 @@
 			</xsd:enumeration>
 			<xsd:enumeration value="KOR_ZAL">
 				<xsd:annotation>
-					<xsd:documentation>Faktura korygująca fakturę dokumentującą otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz fakturę wystawioną w związku z art. 106f ust. 4 ustawy</xsd:documentation>
+					<xsd:documentation>Faktura korygująca fakturę dokumentującą otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz fakturę wystawioną w związku z art. 106f ust. 4 ustawy (faktura korygująca fakturę zaliczkową)</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="KOR_ROZ">
@@ -1848,7 +1873,21 @@
 			<xsd:enumeration value="5"/>
 			<xsd:enumeration value="4"/>
 			<xsd:enumeration value="3"/>
-			<xsd:enumeration value="0"/>
+			<xsd:enumeration value="0 KR">
+				<xsd:annotation>
+					<xsd:documentation>Stawka 0% w przypadku sprzedaży towarów i świadczenia usług na terytorium kraju (z wyłączeniem WDT i eksportu)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="0 WDT">
+				<xsd:annotation>
+					<xsd:documentation>Stawka 0% w przypadku wewnątrzwspólnotowej dostawy towarów (WDT) </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="0 EX">
+				<xsd:annotation>
+					<xsd:documentation>Stawka 0% w przypadku eksportu towarów </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="zw">
 				<xsd:annotation>
 					<xsd:documentation>zwolnione od podatku</xsd:documentation>
@@ -1859,9 +1898,14 @@
 					<xsd:documentation>odwrotne obciążenie</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="np">
+			<xsd:enumeration value="np I">
 				<xsd:annotation>
-					<xsd:documentation>niepodlegające opodatkowaniu- dostawy towarów oraz świadczenia usług poza terytorium kraju</xsd:documentation>
+					<xsd:documentation>niepodlegające opodatkowaniu- dostawy towarów oraz świadczenia usług poza terytorium kraju, z wyłączeniem transakcji, o których mowa w art. 100 ust. 1 pkt 4 ustawy oraz OSS</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="np II">
+				<xsd:annotation>
+					<xsd:documentation>niepodlegajace opodatkowaniu na terytorium kraju, świadczenie usług o których mowa w art. 100 ust. 1 pkt 4 ustawy</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
@@ -2207,6 +2251,48 @@
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
+							<xsd:element name="JST">
+								<xsd:annotation>
+									<xsd:documentation>Znacznik jednostki podrzędnej JST.
+
+Wartość "1" oznacza, że faktura dotyczy jednostki podrzędnej JST. W takim przypadku, aby udostępnić fakturę jednostce podrzędnej JST, należy wypełnić sekcję Podmiot3, w szczególności podać NIP lub ID-Wew i określić rolę jako 8.                  
+Wartość "2" oznacza, że faktura nie dotyczy jednostki podrzędnej JST</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:integer">
+										<xsd:enumeration value="1">
+											<xsd:annotation>
+												<xsd:documentation>Tak</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+										<xsd:enumeration value="2">
+											<xsd:annotation>
+												<xsd:documentation>Nie</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="GV">
+								<xsd:annotation>
+									<xsd:documentation>Znacznik członka grupy VAT.                                                                Wartość "1" oznacza, że faktura dotyczy członka grupy VAT. W takim przypadku, aby udostępnić fakturę członkowi grupy VAT, należy wypełnić sekcję Podmiot3, w szczególności podać NIP lub ID-Wew i określić rolę jako 10.
+                                   Wartość "2" oznacza, że faktura nie dotyczy członka grupy VAT</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:integer">
+										<xsd:enumeration value="1">
+											<xsd:annotation>
+												<xsd:documentation>Tak</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+										<xsd:enumeration value="2">
+											<xsd:annotation>
+												<xsd:documentation>Nie</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
@@ -2236,7 +2322,7 @@
 									<xsd:documentation>Dane identyfikujące podmiot trzeci</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
-							<xsd:element name="Adres" type="tns:TAdres">
+							<xsd:element name="Adres" type="tns:TAdres" minOccurs="0">
 								<xsd:annotation>
 									<xsd:documentation>Adres podmiotu trzeciego</xsd:documentation>
 								</xsd:annotation>
@@ -2352,13 +2438,13 @@
 				</xsd:element>
 				<xsd:element name="Fa">
 					<xsd:annotation>
-						<xsd:documentation>Na podstawie art. 106a - 106q ustawy. Pola dotyczące wartości sprzedaży i podatku wypełnia się w walucie, w której wystawiono fakturę, z wyjątkiem pól dotyczących podatku przeliczonego zgodnie z przepisami Działu VI w związku z art. 106e ust. 11 ustawy. W przypadku wystawienia faktury korygującej, wypełnia się wszystkie pola wg stanu po korekcie, a pola dotyczące podstaw opodatkowania, podatku oraz należności ogółem wypełnia się poprzez różnicę</xsd:documentation>
+						<xsd:documentation>Na podstawie art. 106a - 106q ustawy. Pola dotyczące wartości sprzedaży i podatku wypełnia się w walucie, w której wystawiono fakturę, z wyjątkiem pól dotyczących podatku przeliczonego zgodnie z przepisami działu VI w związku z art. 106e ust. 11 ustawy. W przypadku wystawienia faktury korygującej wypełnia się wszystkie pola wg stanu po korekcie, a pola dotyczące podstaw opodatkowania, podatku oraz należności ogółem wypełnia się poprzez różnicę</xsd:documentation>
 					</xsd:annotation>
 					<xsd:complexType>
 						<xsd:sequence>
 							<xsd:element name="KodWaluty" type="tns:TKodWaluty">
 								<xsd:annotation>
-									<xsd:documentation>Trzyliterowy kod waluty (ISO 4217)</xsd:documentation>
+									<xsd:documentation>Kod waluty (ISO 4217)</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="P_1" type="tns:TDataT">
@@ -2389,7 +2475,7 @@
 								</xsd:element>
 								<xsd:element name="OkresFa">
 									<xsd:annotation>
-										<xsd:documentation>Okres, którego dotyczy faktura w przypadkach, o których mowa w art. 19a ust. 3 zdanie pierwsze i ust. 4 oraz ust. 5 pkt 4 ustawy</xsd:documentation>
+										<xsd:documentation>Okres, którego dotyczy faktura - w przypadkach, o których mowa w art. 19a ust. 3 zdanie pierwsze i ust. 4 oraz ust. 5 pkt 4 ustawy</xsd:documentation>
 									</xsd:annotation>
 									<xsd:complexType>
 										<xsd:sequence>
@@ -2413,17 +2499,17 @@
 								</xsd:annotation>
 								<xsd:element name="P_13_1" type="tns:TKwotowy">
 									<xsd:annotation>
-										<xsd:documentation>Suma wartości sprzedaży netto ze stawką podstawową - aktualnie 23% albo 22%. W przypadku faktur zaliczkowych, kwota zaliczki netto. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>Suma wartości sprzedaży netto objętej stawką podstawową - aktualnie 23% albo 22%. W przypadku faktur zaliczkowych - wartość zaliczki netto. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 								<xsd:element name="P_14_1" type="tns:TKwotowy">
 									<xsd:annotation>
-										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto objętej stawką podstawową - aktualnie 23% albo 22%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto objętej stawką podstawową - aktualnie 23% albo 22%. W przypadku faktur zaliczkowych - kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 								<xsd:element name="P_14_1W" type="tns:TKwotowy" minOccurs="0">
 									<xsd:annotation>
-										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej, kwota podatku od sumy wartości sprzedaży netto objętej stawką podstawową, przeliczona zgodnie z przepisami Działu VI w związku z art. 106e ust. 11 ustawy - aktualnie 23% albo 22%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej - kwota podatku od sumy wartości sprzedaży netto objętej stawką podstawową, przeliczona zgodnie z przepisami działu VI w związku z art. 106e ust. 11 ustawy - aktualnie 23% albo 22%. W przypadku faktur zaliczkowych - kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 							</xsd:sequence>
@@ -2433,17 +2519,17 @@
 								</xsd:annotation>
 								<xsd:element name="P_13_2" type="tns:TKwotowy">
 									<xsd:annotation>
-										<xsd:documentation>Suma wartości sprzedaży netto objętej stawką obniżoną pierwszą - aktualnie 8 % albo 7%. W przypadku faktur zaliczkowych, kwota zaliczki netto. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>Suma wartości sprzedaży netto objętej stawką obniżoną pierwszą - aktualnie 8 % albo 7%. W przypadku faktur zaliczkowych - wartość zaliczki netto. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 								<xsd:element name="P_14_2" type="tns:TKwotowy">
 									<xsd:annotation>
-										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto objętej stawką obniżoną pierwszą - aktualnie 8% albo 7%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto objętej stawką obniżoną pierwszą - aktualnie 8% albo 7%. W przypadku faktur zaliczkowych - kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 								<xsd:element name="P_14_2W" type="tns:TKwotowy" minOccurs="0">
 									<xsd:annotation>
-										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej, kwota podatku od sumy wartości sprzedaży netto objętej stawką obniżoną, przeliczona zgodnie z przepisami Działu VI w związku z art. 106e ust. 11 ustawy - aktualnie 8% albo 7%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej - kwota podatku od sumy wartości sprzedaży netto objętej stawką obniżoną pierwszą, przeliczona zgodnie z przepisami działu VI w związku z art. 106e ust. 11 ustawy - aktualnie 8% albo 7%. W przypadku faktur zaliczkowych - kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 							</xsd:sequence>
@@ -2453,17 +2539,17 @@
 								</xsd:annotation>
 								<xsd:element name="P_13_3" type="tns:TKwotowy">
 									<xsd:annotation>
-										<xsd:documentation>Suma wartości sprzedaży netto objętej stawką obniżoną drugą - aktualnie 5%. W przypadku faktur zaliczkowych, kwota zaliczki netto. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>Suma wartości sprzedaży netto objętej stawką obniżoną drugą - aktualnie 5%. W przypadku faktur zaliczkowych - wartość zaliczki netto. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 								<xsd:element name="P_14_3" type="tns:TKwotowy">
 									<xsd:annotation>
-										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto objętej stawką obniżoną drugą - aktualnie 5%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto objętej stawką obniżoną drugą - aktualnie 5%. W przypadku faktur zaliczkowych - kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 								<xsd:element name="P_14_3W" type="tns:TKwotowy" minOccurs="0">
 									<xsd:annotation>
-										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej, kwota podatku od sumy wartości sprzedaży netto objętej stawką obniżoną drugą, przeliczona zgodnie z przepisami Działu VI w związku z art. 106e ust. 11 ustawy - aktualnie 5%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej - kwota podatku od sumy wartości sprzedaży netto objętej stawką obniżoną drugą, przeliczona zgodnie z przepisami działu VI w związku z art. 106e ust. 11 ustawy - aktualnie 5%. W przypadku faktur zaliczkowych - kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 							</xsd:sequence>
@@ -2473,17 +2559,17 @@
 								</xsd:annotation>
 								<xsd:element name="P_13_4" type="tns:TKwotowy">
 									<xsd:annotation>
-										<xsd:documentation>Suma wartości sprzedaży netto objętej ryczałtem dla taksówek osobowych. W przypadku faktur zaliczkowych, kwota zaliczki netto. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>Suma wartości sprzedaży netto objętej ryczałtem dla taksówek osobowych. W przypadku faktur zaliczkowych - wartość zaliczki netto. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 								<xsd:element name="P_14_4" type="tns:TKwotowy">
 									<xsd:annotation>
-										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto w przypadku ryczałtu dla taksówek osobowych. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto w przypadku ryczałtu dla taksówek osobowych. W przypadku faktur zaliczkowych - kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 								<xsd:element name="P_14_4W" type="tns:TKwotowy" minOccurs="0">
 									<xsd:annotation>
-										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej, kwota podatku ryczałtu dla taksówek osobowych, przeliczona zgodnie z przepisami Działu VI w związku z art. 106e ust. 11 ustawy. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej - wysokość ryczałtu dla taksówek osobowych, przeliczona zgodnie z przepisami działu VI w związku z art. 106e ust. 11 ustawy. W przypadku faktur zaliczkowych - kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 							</xsd:sequence>
@@ -2493,63 +2579,63 @@
 								</xsd:annotation>
 								<xsd:element name="P_13_5" type="tns:TKwotowy">
 									<xsd:annotation>
-										<xsd:documentation>Suma wartości sprzedaży netto w przypadku procedury szczególnej, o której mowa w dziale XII w rozdziale 6a ustawy. W przypadku faktur zaliczkowych, kwota zaliczki netto. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>Suma wartości sprzedaży netto w przypadku procedury szczególnej, o której mowa w dziale XII w rozdziale 6a ustawy. W przypadku faktur zaliczkowych - wartość zaliczki netto. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 								<xsd:element name="P_14_5" type="tns:TKwotowy" minOccurs="0">
 									<xsd:annotation>
-										<xsd:documentation>Kwota podatku od wartości dodanej w przypadku procedury szczególnej, o której mowa w dziale XII w rozdziale 6a ustawy. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+										<xsd:documentation>Kwota podatku od wartości dodanej w przypadku procedury szczególnej, o której mowa w dziale XII w rozdziale 6a ustawy. W przypadku faktur zaliczkowych - kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 							</xsd:sequence>
 							<xsd:element name="P_13_6_1" type="tns:TKwotowy" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Suma wartości sprzedaży objętej stawką 0% z wyłączeniem wewnątrzwspólnotowej dostawy towarów i eksportu. W przypadku faktur zaliczkowych, kwota zaliczki. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+									<xsd:documentation>Suma wartości sprzedaży objętej stawką 0% z wyłączeniem wewnątrzwspólnotowej dostawy towarów i eksportu. W przypadku faktur zaliczkowych - wartość zaliczki. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="P_13_6_2" type="tns:TKwotowy" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Suma wartości sprzedaży objętej stawką 0% w przypadku wewnątrzwspólnotowej dostawy towarów. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+									<xsd:documentation>Suma wartości sprzedaży objętej stawką 0% w przypadku wewnątrzwspólnotowej dostawy towarów. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="P_13_6_3" type="tns:TKwotowy" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Suma wartości sprzedaży objętej stawką 0% w przypadku eksportu. W przypadku faktur zaliczkowych, kwota zaliczki. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+									<xsd:documentation>Suma wartości sprzedaży objętej stawką 0% w przypadku eksportu. W przypadku faktur zaliczkowych - wartość zaliczki. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="P_13_7" type="tns:TKwotowy" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Suma wartości sprzedaży zwolnionej od podatku. W przypadku faktur zaliczkowych, kwota zaliczki. W przypadku faktur korygujących, kwota różnicy wartości sprzedaży</xsd:documentation>
+									<xsd:documentation>Suma wartości sprzedaży zwolnionej od podatku. W przypadku faktur zaliczkowych - wartość zaliczki. W przypadku faktur korygujących - kwota różnicy wartości sprzedaży</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="P_13_8" type="tns:TKwotowy" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Suma wartości sprzedaży w przypadku dostawy towarów oraz świadczenia usług poza terytorium kraju, z wyłączeniem kwot wykazanych w polach P_13_5 i P_13_9. W przypadku faktur zaliczkowych, kwota zaliczki. W przypadku faktur korygujących, kwota różnicy wartości sprzedaży</xsd:documentation>
+									<xsd:documentation>Suma wartości sprzedaży w przypadku dostawy towarów oraz świadczenia usług poza terytorium kraju, z wyłączeniem kwot wykazanych w polach P_13_5 i P_13_9. W przypadku faktur zaliczkowych - wartość zaliczki. W przypadku faktur korygujących - kwota różnicy wartości sprzedaży</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="P_13_9" type="tns:TKwotowy" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Suma wartości świadczenia usług, o których mowa w art. 100 ust. 1 pkt 4 ustawy. W przypadku faktur zaliczkowych, kwota zaliczki. W przypadku faktur korygujących, kwota różnicy wartości sprzedaży</xsd:documentation>
+									<xsd:documentation>Suma wartości świadczenia usług, o których mowa w art. 100 ust. 1 pkt 4 ustawy. W przypadku faktur zaliczkowych - wartość zaliczki. W przypadku faktur korygujących - kwota różnicy wartości sprzedaży</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="P_13_10" type="tns:TKwotowy" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Suma wartości sprzedaży w procedurze odwrotnego obciążenia, dla której podatnikiem jest nabywca zgodnie z art. 17 ust. 1 pkt 7 i 8 ustawy oraz innych przypadków odwrotnego obciążenia występujących w obrocie krajowym. W przypadku faktur zaliczkowych, kwota zaliczki. W przypadku faktur korygujących, kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
+									<xsd:documentation>Suma wartości sprzedaży w procedurze odwrotnego obciążenia, dla której podatnikiem jest nabywca zgodnie z art. 17 ust. 1 pkt 7 i 8 ustawy oraz innych przypadków odwrotnego obciążenia występujących w obrocie krajowym. W przypadku faktur zaliczkowych - wartość zaliczki. W przypadku faktur korygujących - kwota różnicy, o której mowa w art. 106j ust. 2 pkt 5 ustawy</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="P_13_11" type="tns:TKwotowy" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Suma wartości sprzedaży w procedurze marży, o której mowa w art. 119 i art. 120 ustawy. W przypadku faktur zaliczkowych, kwota zaliczki. W przypadku faktur korygujących, kwota różnicy wartości sprzedaży</xsd:documentation>
+									<xsd:documentation>Suma wartości sprzedaży w procedurze marży, o której mowa w art. 119 i art. 120 ustawy. W przypadku faktur zaliczkowych - wartość zaliczki. W przypadku faktur korygujących - kwota różnicy wartości sprzedaży</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="P_15" type="tns:TKwotowy">
 								<xsd:annotation>
-									<xsd:documentation>Kwota należności ogółem. W przypadku faktur zaliczkowych kwota zapłaty dokumentowana fakturą. W przypadku faktur, o których mowa w art. 106f ust. 3 ustawy kwota pozostała do zapłaty. W przypadku faktur korygujących korekta kwoty wynikającej z faktury korygowanej. W przypadku, o którym mowa w art. 106j ust. 3 ustawy korekta kwot wynikających z faktur korygowanych</xsd:documentation>
+									<xsd:documentation>Kwota należności ogółem. W przypadku faktur zaliczkowych - kwota zapłaty dokumentowana fakturą. W przypadku faktur, o których mowa w art. 106f ust. 3 ustawy - kwota pozostała do zapłaty. W przypadku faktur korygujących - korekta kwoty wynikającej z faktury korygowanej. W przypadku, o którym mowa w art. 106j ust. 3 ustawy - korekta kwot wynikających z faktur korygowanych</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="KursWalutyZ" type="tns:TIlosci" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w przepisach Działu VI ustawy na fakturach, o których mowa w art. 106b ust. 1 pkt 4 ustawy</xsd:documentation>
+									<xsd:documentation>Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w dziale VI ustawy na fakturach, o których mowa w art. 106b ust. 1 pkt 4 ustawy</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="Adnotacje">
@@ -2560,17 +2646,17 @@
 									<xsd:sequence>
 										<xsd:element name="P_16" type="etd:TWybor1_2">
 											<xsd:annotation>
-												<xsd:documentation>W przypadku dostawy towarów lub świadczenia usług, w odniesieniu do których obowiązek podatkowy powstaje zgodnie z art. 19a ust. 5 pkt 1 lub art. 21 ust. 1 ustawy - wyrazy "metoda kasowa", należy podać wartość "1"; w przeciwnym przypadku - wartość "2"</xsd:documentation>
+												<xsd:documentation>W przypadku dostawy towarów lub świadczenia usług, w odniesieniu do których obowiązek podatkowy powstaje zgodnie z art. 19a ust. 5 pkt 1 lub art. 21 ust. 1 ustawy - wyrazy "metoda kasowa"; należy podać wartość "1", w przeciwnym przypadku - wartość "2"</xsd:documentation>
 											</xsd:annotation>
 										</xsd:element>
 										<xsd:element name="P_17" type="etd:TWybor1_2">
 											<xsd:annotation>
-												<xsd:documentation>W przypadku faktur, o których mowa w art. 106d ust. 1 ustawy - wyraz "samofakturowanie", należy podać wartość "1"; w przeciwnym przypadku - wartość "2"</xsd:documentation>
+												<xsd:documentation>W przypadku faktur, o których mowa w art. 106d ust. 1 ustawy - wyraz "samofakturowanie"; należy podać wartość "1", w przeciwnym przypadku - wartość "2"</xsd:documentation>
 											</xsd:annotation>
 										</xsd:element>
 										<xsd:element name="P_18" type="etd:TWybor1_2">
 											<xsd:annotation>
-												<xsd:documentation>W przypadku dostawy towarów lub wykonania usługi, dla których obowiązanym do rozliczenia podatku od wartości dodanej lub podatku o podobnym charakterze jest nabywca towaru lub usługi - wyrazy "odwrotne obciążenie", należy podać wartość "1", w przeciwnym przypadku - wartość "2"</xsd:documentation>
+												<xsd:documentation>W przypadku dostawy towarów lub wykonania usługi, dla których obowiązanym do rozliczenia podatku od wartości dodanej lub podatku o podobnym charakterze jest nabywca towaru lub usługi - wyrazy "odwrotne obciążenie"; należy podać wartość "1", w przeciwnym przypadku - wartość "2"</xsd:documentation>
 											</xsd:annotation>
 										</xsd:element>
 										<xsd:element name="P_18A" type="etd:TWybor1_2">
@@ -2585,7 +2671,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 													<xsd:sequence>
 														<xsd:element name="P_19" type="etd:TWybor1">
 															<xsd:annotation>
-																<xsd:documentation>Znacznik dostawy towarów lub świadczenia usług zwolnionych od podatku na podstawie art. 43 ust. 1, art. 113 ust. 1 i 9 albo przepisów wydanych na podstawie art. 82 ust. 3 ustawy lub na podstawie innych przepisów</xsd:documentation>
+																<xsd:documentation>Znacznik dostawy towarów lub świadczenia usług zwolnionych od podatku na podstawie art. 43 ust. 1 ustawy, art. 113 ust. 1 i 9 ustawy albo przepisów wydanych na podstawie art. 82 ust. 3 ustawy lub na podstawie innych przepisów</xsd:documentation>
 															</xsd:annotation>
 														</xsd:element>
 														<xsd:choice>
@@ -2608,7 +2694,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 													</xsd:sequence>
 													<xsd:element name="P_19N" type="etd:TWybor1">
 														<xsd:annotation>
-															<xsd:documentation>Znacznik braku dostawy towarów lub świadczenia usług zwolnionych od podatku na podstawie art. 43 ust. 1, art. 113 ust. 1 i 9 ustawy albo przepisów wydanych na podstawie art. 82 ust. 3 ustawy lub na podstawie innych przepisów</xsd:documentation>
+															<xsd:documentation>Znacznik braku dostawy towarów lub świadczenia usług zwolnionych od podatku na podstawie art. 43 ust. 1 ustawy, art. 113 ust. 1 i 9 ustawy albo przepisów wydanych na podstawie art. 82 ust. 3 ustawy lub na podstawie innych przepisów</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
 												</xsd:choice>
@@ -2670,34 +2756,34 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 																		<xsd:sequence>
 																			<xsd:element name="P_22B" type="tns:TZnakowy">
 																				<xsd:annotation>
-																					<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy - należy podać przebieg pojazdu</xsd:documentation>
+																					<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy, należy podać przebieg pojazdu</xsd:documentation>
 																				</xsd:annotation>
 																			</xsd:element>
 																			<xsd:choice minOccurs="0">
 																				<xsd:element name="P_22B1" type="tns:TZnakowy" minOccurs="0">
 																					<xsd:annotation>
-																						<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy - można podać numer VIN</xsd:documentation>
+																						<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy, można podać numer VIN</xsd:documentation>
 																					</xsd:annotation>
 																				</xsd:element>
 																				<xsd:element name="P_22B2" type="tns:TZnakowy" minOccurs="0">
 																					<xsd:annotation>
-																						<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy - można podać numer nadwozia</xsd:documentation>
+																						<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy, można podać numer nadwozia</xsd:documentation>
 																					</xsd:annotation>
 																				</xsd:element>
 																				<xsd:element name="P_22B3" type="tns:TZnakowy" minOccurs="0">
 																					<xsd:annotation>
-																						<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy - można podać numer podwozia</xsd:documentation>
+																						<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy, można podać numer podwozia</xsd:documentation>
 																					</xsd:annotation>
 																				</xsd:element>
 																				<xsd:element name="P_22B4" type="tns:TZnakowy" minOccurs="0">
 																					<xsd:annotation>
-																						<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy - można podać numer ramy</xsd:documentation>
+																						<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy, można podać numer ramy</xsd:documentation>
 																					</xsd:annotation>
 																				</xsd:element>
 																			</xsd:choice>
 																			<xsd:element name="P_22BT" type="tns:TZnakowy" minOccurs="0">
 																				<xsd:annotation>
-																					<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy - można podać typ nowego środka transportu</xsd:documentation>
+																					<xsd:documentation>Jeśli dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy, można podać typ nowego środka transportu</xsd:documentation>
 																				</xsd:annotation>
 																			</xsd:element>
 																		</xsd:sequence>
@@ -2740,7 +2826,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										</xsd:element>
 										<xsd:element name="P_23" type="etd:TWybor1_2">
 											<xsd:annotation>
-												<xsd:documentation>W przypadku faktur wystawianych w procedurze uproszczonej przez drugiego w kolejności podatnika, o którym mowa w art. 135 ust. 1 pkt 4 lit. b i c oraz ust. 2, zawierającej adnotację, o której mowa w art. 136 ust. 1 pkt 1 i stwierdzenie, o którym mowa w art. 136 ust. 1 pkt 2 ustawy, należy podać wartość "1", w przeciwnym przypadku - wartość "2"</xsd:documentation>
+												<xsd:documentation>W przypadku faktur wystawianych w procedurze uproszczonej przez drugiego w kolejności podatnika, o którym mowa w art. 135 ust. 1 pkt 4 lit. b i c oraz ust. 2 ustawy, zawierającej adnotację, o której mowa w art. 136 ust. 1 pkt 1 ustawy i stwierdzenie, o którym mowa w art. 136 ust. 1 pkt 2 ustawy, należy podać wartość "1", w przeciwnym przypadku - wartość "2"</xsd:documentation>
 											</xsd:annotation>
 										</xsd:element>
 										<xsd:element name="PMarzy">
@@ -2760,12 +2846,12 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 															</xsd:element>
 															<xsd:element name="P_PMarzy_3_1" type="etd:TWybor1">
 																<xsd:annotation>
-																	<xsd:documentation>Znacznik dostawy towarów używanych dla których podstawę opodatkowania stanowi marża, zgodnie z art. 120 ustawy, a faktura dokumentująca dostawę zawiera wyrazy "procedura marży - towary używane"</xsd:documentation>
+																	<xsd:documentation>Znacznik dostawy towarów używanych, dla których podstawę opodatkowania stanowi marża, zgodnie z art. 120 ustawy, a faktura dokumentująca dostawę zawiera wyrazy "procedura marży - towary używane"</xsd:documentation>
 																</xsd:annotation>
 															</xsd:element>
 															<xsd:element name="P_PMarzy_3_2" type="etd:TWybor1">
 																<xsd:annotation>
-																	<xsd:documentation>Znacznik dostawy dzieł sztuki dla których podstawę opodatkowania stanowi marża, zgodnie z art. 120 ustawy, a faktura dokumentująca dostawę zawiera wyrazy "procedura marży - dzieła sztuki"</xsd:documentation>
+																	<xsd:documentation>Znacznik dostawy dzieł sztuki, dla których podstawę opodatkowania stanowi marża, zgodnie z art. 120 ustawy, a faktura dokumentująca dostawę zawiera wyrazy "procedura marży - dzieła sztuki"</xsd:documentation>
 																</xsd:annotation>
 															</xsd:element>
 															<xsd:element name="P_PMarzy_3_3" type="etd:TWybor1">
@@ -2805,7 +2891,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										<xsd:documentation>Typ skutku korekty w ewidencji dla podatku od towarów i usług</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
-								<xsd:element name="DaneFaKorygowanej" maxOccurs="unbounded">
+								<xsd:element name="DaneFaKorygowanej" maxOccurs="50000">
 									<xsd:annotation>
 										<xsd:documentation>Dane faktury korygowanej</xsd:documentation>
 									</xsd:annotation>
@@ -2879,7 +2965,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 								</xsd:element>
 								<xsd:element name="Podmiot2K" minOccurs="0" maxOccurs="101">
 									<xsd:annotation>
-										<xsd:documentation>W przypadku korekty danych nabywcy występującego jako Podmiot2 lub dodatkowego nabywcy występującego jako Podmiot3 należy podać pełne dane tego podmiotu występujące na fakturze korygowanej. Korekcie nie podlegają błędne numery identyfikujące nabywcę oraz dodatkowego nabywcę. W przypadku korygowania pozostałych danych nabywcy lub dodatkowego nabywcy wskazany numer identyfikacyjny ma być tożsamy z numerem w części Podmiot2 względnie Podmiot3 faktury korygującej</xsd:documentation>
+										<xsd:documentation>W przypadku korekty danych nabywcy występującego jako Podmiot2 lub dodatkowego nabywcy występującego jako Podmiot3 należy podać pełne dane tego podmiotu występujące na fakturze korygowanej. Korekcie nie podlegają błędne numery NIP identyfikujące nabywcę oraz dodatkowego nabywcę - wówczas wymagana jest korekta faktury do wartości zerowych. W przypadku korygowania pozostałych danych nabywcy lub dodatkowego nabywcy wskazany numer identyfikacyjny ma być tożsamy z numerem w części Podmiot2 względnie Podmiot3 faktury korygującej</xsd:documentation>
 									</xsd:annotation>
 									<xsd:complexType>
 										<xsd:sequence>
@@ -2909,12 +2995,12 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 								<xsd:sequence minOccurs="0">
 									<xsd:element name="P_15ZK" type="tns:TKwotowy">
 										<xsd:annotation>
-											<xsd:documentation>W przypadku korekt faktur zaliczkowych, kwota zapłaty przed korektą. W przypadku korekt faktur, o których mowa w art. 106f ust. 3 ustawy, kwota pozostała do zapłaty przed korektą</xsd:documentation>
+											<xsd:documentation>W przypadku korekt faktur zaliczkowych - kwota zapłaty przed korektą. W przypadku korekt faktur, o których mowa w art. 106f ust. 3 ustawy - kwota pozostała do zapłaty przed korektą</xsd:documentation>
 										</xsd:annotation>
 									</xsd:element>
 									<xsd:element name="KursWalutyZK" type="tns:TIlosci" minOccurs="0">
 										<xsd:annotation>
-											<xsd:documentation>Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w Dziale VI ustawy przed korektą</xsd:documentation>
+											<xsd:documentation>Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w dziale VI ustawy przed korektą</xsd:documentation>
 										</xsd:annotation>
 									</xsd:element>
 								</xsd:sequence>
@@ -2932,12 +3018,12 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										</xsd:element>
 										<xsd:element name="P_15Z" type="tns:TKwotowy">
 											<xsd:annotation>
-												<xsd:documentation>Kwota płatności, o której mowa w art. 106b ust. 1 pkt 4 ustawy, składająca się na kwotę w polu P_15. W przypadku faktur korygujących korekta kwoty wynikającej z faktury korygowanej</xsd:documentation>
+												<xsd:documentation>Kwota płatności, o której mowa w art. 106b ust. 1 pkt 4 ustawy, składająca się na kwotę w polu P_15. W przypadku faktur korygujących  - korekta kwoty wynikającej z faktury korygowanej</xsd:documentation>
 											</xsd:annotation>
 										</xsd:element>
 										<xsd:element name="KursWalutyZW" type="tns:TIlosci" minOccurs="0">
 											<xsd:annotation>
-												<xsd:documentation>Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w Dziale VI ustawy</xsd:documentation>
+												<xsd:documentation>Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w dziale VI ustawy</xsd:documentation>
 											</xsd:annotation>
 										</xsd:element>
 									</xsd:sequence>
@@ -2991,7 +3077,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 							</xsd:element>
 							<xsd:element name="FaWiersz" minOccurs="0" maxOccurs="10000">
 								<xsd:annotation>
-									<xsd:documentation>Szczegółowe pozycje faktury w walucie, w której wystawiono fakturę - węzeł opcjonalny dla faktury zaliczkowej, faktury korygującej fakturę zaliczkową, oraz faktur korygujących dotyczących wszystkich dostaw towarów lub usług dokonanych lub świadczonych w danym okresie, o których mowa w art. 106j ust. 3 ustawy, dla których należy podać dane dotyczące opustu lub obniżki w podziale na stawki podatku i procedury w części Fa. W przypadku faktur korygujących, o których mowa w art. 106j ust. 3 ustawy, gdy opust lub obniżka ceny odnosi się do części dostaw towarów lub usług dokonanych lub świadczonych w danym okresie w części FaWiersz należy podać nazwy (rodzaje) towarów lub usług objętych korektą. W przypadku faktur, o których mowa w art. 106f ust. 3 ustawy, należy wykazać pełne wartości zamówienia lub umowy. W przypadku faktur korygujących pozycje faktury (w tym faktur korygujących faktury, o których mowa w art. 106f ust. 3 ustawy, jeśli korekta dotyczy wartości zamówienia), należy wykazać różnice wynikające z korekty poszczególnych pozycji lub dane pozycji korygowanych w stanie przed korektą i po korekcie jako osobne wiersze. W przypadku faktur korygujących faktury, o których mowa w art. 106f ust. 3 ustawy, jeśli korekta nie dotyczy wartości zamówienia i jednocześnie zmienia wysokość podstawy opodatkowania lub podatku, należy wprowadzić zapis wg stanu przed korektą i zapis w stanie po korekcie w celu potwierdzenia braku zmiany wartości danej pozycji faktury</xsd:documentation>
+									<xsd:documentation>Szczegółowe pozycje faktury w walucie, w której wystawiono fakturę - węzeł opcjonalny dla faktury zaliczkowej, faktury korygującej fakturę zaliczkową oraz faktur korygujących dotyczących wszystkich dostaw towarów lub usług dokonanych lub świadczonych w danym okresie, o których mowa w art. 106j ust. 3 ustawy, dla których należy podać dane dotyczące opustu lub obniżki w podziale na stawki podatku i procedury w części Fa. W przypadku faktur korygujących, o których mowa w art. 106j ust. 3 ustawy, gdy opust lub obniżka ceny odnosi się do części dostaw towarów lub usług dokonanych lub świadczonych w danym okresie w części FaWiersz należy podać nazwy (rodzaje) towarów lub usług objętych korektą. W przypadku faktur, o których mowa w art. 106f ust. 3 ustawy, należy wykazać pełne wartości zamówienia lub umowy. W przypadku faktur korygujących pozycje faktury (w tym faktur korygujących faktury, o których mowa w art. 106f ust. 3 ustawy, jeśli korekta dotyczy wartości zamówienia) należy wykazać różnice wynikające z korekty poszczególnych pozycji lub dane pozycji korygowanych wg stanu przed korektą i po korekcie jako osobne wiersze. W przypadku faktur korygujących faktury, o których mowa w art. 106f ust. 3 ustawy, jeśli korekta nie dotyczy wartości zamówienia i jednocześnie zmienia wysokość podstawy opodatkowania lub podatku, należy wprowadzić zapis wg stanu przed korektą i zapis wg stanu po korekcie w celu potwierdzenia braku zmiany wartości danej pozycji faktury</xsd:documentation>
 								</xsd:annotation>
 								<xsd:complexType>
 									<xsd:sequence>
@@ -3007,10 +3093,10 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										</xsd:element>
 										<xsd:element name="P_6A" type="tns:TDataT" minOccurs="0">
 											<xsd:annotation>
-												<xsd:documentation>Data dokonania lub zakończenia dostawy towarów lub wykonania usługi lub data otrzymania zapłaty, o której mowa w art. 106b ust. 1 pkt 4 ustawy, o ile taka data jest określona i różni się od daty wystawienia faktury. Pole wypełnia się dla przypadku, gdy dla poszczególnych pozycji faktury występują różne daty</xsd:documentation>
+												<xsd:documentation>Data dokonania lub zakończenia dostawy towarów lub wykonania usługi lub data otrzymania zapłaty, o której mowa w art. 106b ust. 1 pkt 4 ustawy, o ile taka data jest określona i różni się od daty wystawienia faktury. Pole wypełnia się w przypadku gdy dla poszczególnych pozycji faktury występują różne daty</xsd:documentation>
 											</xsd:annotation>
 										</xsd:element>
-										<xsd:element name="P_7" type="tns:TZnakowy" minOccurs="0">
+										<xsd:element name="P_7" type="tns:TZnakowy512" minOccurs="0">
 											<xsd:annotation>
 												<xsd:documentation>Nazwa (rodzaj) towaru lub usługi. Pole opcjonalne wyłącznie dla przypadku określonego w art 106j ust. 3 pkt 2 ustawy (faktura korygująca)</xsd:documentation>
 											</xsd:annotation>
@@ -3112,7 +3198,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										</xsd:element>
 										<xsd:element name="KursWaluty" type="tns:TIlosci" minOccurs="0">
 											<xsd:annotation>
-												<xsd:documentation>Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w Dziale VI ustawy</xsd:documentation>
+												<xsd:documentation>Kurs waluty stosowany do wyliczenia kwoty podatku w przypadkach, o których mowa w dziale VI ustawy</xsd:documentation>
 											</xsd:annotation>
 										</xsd:element>
 										<xsd:element name="StanPrzed" type="etd:TWybor1" minOccurs="0">
@@ -3202,7 +3288,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 											<xsd:sequence>
 												<xsd:element name="Zaplacono" type="etd:TWybor1">
 													<xsd:annotation>
-														<xsd:documentation>Znacznik informujący, że kwota należności wynikająca z faktury została zapłacona: 1 - zapłacono</xsd:documentation>
+														<xsd:documentation>Znacznik informujący, że należność wynikająca z faktury została zapłacona: 1 - zapłacono</xsd:documentation>
 													</xsd:annotation>
 												</xsd:element>
 												<xsd:element name="DataZaplaty" type="tns:TData">
@@ -3212,9 +3298,9 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 												</xsd:element>
 											</xsd:sequence>
 											<xsd:sequence>
-												<xsd:element name="ZnacznikZaplatyCzesciowej" type="etd:TWybor1">
+												<xsd:element name="ZnacznikZaplatyCzesciowej" type="etd:TWybor1_2">
 													<xsd:annotation>
-														<xsd:documentation>Znacznik informujący, że kwota należności wynikająca z faktury została zapłacona w części: 1 - zapłacono w części</xsd:documentation>
+														<xsd:documentation>Znacznik informujący, że należność wynikająca z faktury została zapłacona w części lub w całości:                                 1 - zapłacono w części;                           2 - zapłacono w całości, jeśli należność wynikająca z faktury została zapłacona w dwóch lub więcej częściach, a ostatnia płatność jest płatnością końcową</xsd:documentation>
 													</xsd:annotation>
 												</xsd:element>
 												<xsd:element name="ZaplataCzesciowa" maxOccurs="100">
@@ -3233,6 +3319,25 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 																	<xsd:documentation>Data zapłaty częściowej, jeśli do wystawienia faktury płatność częściowa została dokonana</xsd:documentation>
 																</xsd:annotation>
 															</xsd:element>
+															<xsd:choice minOccurs="0">
+																<xsd:element name="FormaPlatnosci" type="tns:TFormaPlatnosci">
+																	<xsd:annotation>
+																		<xsd:documentation>Forma płatności</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:sequence>
+																	<xsd:element name="PlatnoscInna" type="etd:TWybor1">
+																		<xsd:annotation>
+																			<xsd:documentation>Znacznik innej formy płatności: 1 - inna forma płatności</xsd:documentation>
+																		</xsd:annotation>
+																	</xsd:element>
+																	<xsd:element name="OpisPlatnosci" type="tns:TZnakowy">
+																		<xsd:annotation>
+																			<xsd:documentation>Uszczegółowienie innej formy płatności</xsd:documentation>
+																		</xsd:annotation>
+																	</xsd:element>
+																</xsd:sequence>
+															</xsd:choice>
 														</xsd:sequence>
 													</xsd:complexType>
 												</xsd:element>
@@ -3240,16 +3345,23 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										</xsd:choice>
 										<xsd:element name="TerminPlatnosci" minOccurs="0" maxOccurs="100">
 											<xsd:complexType>
-												<xsd:sequence>
-													<xsd:element name="Termin" type="tns:TData">
+												<xsd:sequence minOccurs="0">
+													<xsd:element name="Termin" type="tns:TData" minOccurs="0">
 														<xsd:annotation>
 															<xsd:documentation>Termin płatności</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
-													<xsd:element name="TerminOpis" type="tns:TZnakowy" minOccurs="0">
+													<xsd:element name="TerminOpis" minOccurs="0">
 														<xsd:annotation>
 															<xsd:documentation>Opis terminu płatności</xsd:documentation>
 														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="Ilosc" type="xsd:integer"/>
+																<xsd:element name="Jednostka" type="tns:TZnakowy50"/>
+																<xsd:element name="ZdarzeniePoczatkowe" type="tns:TZnakowy"/>
+															</xsd:sequence>
+														</xsd:complexType>
 													</xsd:element>
 												</xsd:sequence>
 											</xsd:complexType>
@@ -3268,7 +3380,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 												</xsd:element>
 												<xsd:element name="OpisPlatnosci" type="tns:TZnakowy">
 													<xsd:annotation>
-														<xsd:documentation>Doprecyzowanie innej formy płatności</xsd:documentation>
+														<xsd:documentation>Uszczegółowienie innej formy płatności</xsd:documentation>
 													</xsd:annotation>
 												</xsd:element>
 											</xsd:sequence>
@@ -3291,7 +3403,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 												<xsd:sequence>
 													<xsd:element name="WarunkiSkonta" type="tns:TZnakowy">
 														<xsd:annotation>
-															<xsd:documentation>Warunki, które nabywca powinien spełnić aby skorzystać ze skonta</xsd:documentation>
+															<xsd:documentation>Warunki, które nabywca powinien spełnić, aby skorzystać ze skonta</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
 													<xsd:element name="WysokoscSkonta" type="tns:TZnakowy">
@@ -3301,6 +3413,27 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 													</xsd:element>
 												</xsd:sequence>
 											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="LinkDoPlatnosci" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Link do płatności bezgotówkowej</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="tns:TZnakowy512">
+													<xsd:pattern value="(https?)://([a-zA-Z0-9][a-zA-Z0-9-]*\.)+[a-zA-Z]{2,}(:[0-9]{1,5})?(/[^\s?#]*)?\?([^#\s]*&amp;)?IPKSeF=[0-9]{3}[a-zA-Z0-9]{10}(&amp;[^#\s]*)?(#.*)?"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element name="IPKSeF" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Identyfikator płatności Krajowego Systemu e-Faktur</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="tns:TZnakowy20">
+													<xsd:maxLength value="13"/>
+													<xsd:pattern value="[0-9]{3}[a-zA-Z0-9]{10}"/>
+												</xsd:restriction>
+											</xsd:simpleType>
 										</xsd:element>
 									</xsd:sequence>
 								</xsd:complexType>
@@ -3314,7 +3447,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										<xsd:element name="Umowy" minOccurs="0" maxOccurs="100">
 											<xsd:complexType>
 												<xsd:sequence minOccurs="0">
-													<xsd:element name="DataUmowy" type="tns:TData" minOccurs="0">
+													<xsd:element name="DataUmowy" type="tns:TDataU" minOccurs="0">
 														<xsd:annotation>
 															<xsd:documentation>Data umowy</xsd:documentation>
 														</xsd:annotation>
@@ -3330,7 +3463,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										<xsd:element name="Zamowienia" minOccurs="0" maxOccurs="100">
 											<xsd:complexType>
 												<xsd:sequence minOccurs="0">
-													<xsd:element name="DataZamowienia" type="tns:TData" minOccurs="0">
+													<xsd:element name="DataZamowienia" type="tns:TDataU" minOccurs="0">
 														<xsd:annotation>
 															<xsd:documentation>Data zamówienia</xsd:documentation>
 														</xsd:annotation>
@@ -3356,12 +3489,12 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										<xsd:sequence minOccurs="0">
 											<xsd:element name="KursUmowny" type="tns:TIlosci">
 												<xsd:annotation>
-													<xsd:documentation>Kurs umowny - w przypadkach, gdy na fakturze znajduje się informacja o kursie, po którym zostały przeliczone kwoty wykazane na fakturze w złotych. Nie dotyczy przypadków, o których mowa w Dziale VI ustawy</xsd:documentation>
+													<xsd:documentation>Kurs umowny - w przypadkach, gdy na fakturze znajduje się informacja o kursie, po którym zostały przeliczone kwoty wykazane na fakturze w złotych. Nie dotyczy przypadków, o których mowa w dziale VI ustawy</xsd:documentation>
 												</xsd:annotation>
 											</xsd:element>
 											<xsd:element name="WalutaUmowna" type="tns:TKodWaluty">
 												<xsd:annotation>
-													<xsd:documentation>Waluta umowna - trzyliterowy kod waluty (ISO-4217) w przypadkach, gdy na fakturze znajduje się informacja o kursie, po którym zostały przeliczone kwoty wykazane na fakturze w złotych. Nie dotyczy przypadków, o których mowa w Dziale VI ustawy</xsd:documentation>
+													<xsd:documentation>Waluta umowna - kod waluty (ISO-4217) w przypadkach gdy na fakturze znajduje się informacja o kursie, po którym zostały przeliczone kwoty wykazane na fakturze w złotych. Nie dotyczy przypadków, o których mowa w dziale VI ustawy</xsd:documentation>
 												</xsd:annotation>
 											</xsd:element>
 										</xsd:sequence>
@@ -3474,7 +3607,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 							</xsd:element>
 							<xsd:element name="Zamowienie" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Zamówienie lub umowa, o których mowa w art. 106f ust. 1 pkt 4 ustawy (dla faktur zaliczkowych) w walucie, w której wystawiono fakturę zaliczkową. W przypadku faktury korygującej fakturę zaliczkową należy wykazać różnice wynikające z korekty poszczególnych pozycji zamówienia lub umowy lub dane pozycji korygowanych w stanie przed korektą i po korekcie jako osobne wiersze, jeśli korekta dotyczy wartości zamówienia lub umowy. W przypadku faktur korygujących faktury zaliczkowe, jeśli korekta nie dotyczy wartości zamówienia lub umowy i jednocześnie zmienia wysokość podstawy opodatkowania lub podatku, należy wprowadzić zapis wg stanu przed korektą i zapis w stanie po korekcie w celu potwierdzenia braku zmiany wartości danej pozycji</xsd:documentation>
+									<xsd:documentation>Zamówienie lub umowa, o których mowa w art. 106f ust. 1 pkt 4 ustawy (dla faktur zaliczkowych), w walucie, w której wystawiono fakturę zaliczkową. W przypadku faktury korygującej fakturę zaliczkową należy wykazać różnice wynikające z korekty poszczególnych pozycji zamówienia lub umowy lub dane pozycji korygowanych wg stanu przed korektą i po korekcie jako osobne wiersze, jeśli korekta dotyczy wartości zamówienia lub umowy. W przypadku faktur korygujących faktury zaliczkowe, jeśli korekta nie dotyczy wartości zamówienia lub umowy i jednocześnie zmienia wysokość podstawy opodatkowania lub podatku, należy wprowadzić zapis wg stanu przed korektą i zapis wg stanu po korekcie w celu potwierdzenia braku zmiany wartości danej pozycji</xsd:documentation>
 								</xsd:annotation>
 								<xsd:complexType>
 									<xsd:sequence>
@@ -3499,7 +3632,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 															<xsd:documentation>Uniwersalny unikalny numer wiersza zamówienia lub umowy</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
-													<xsd:element name="P_7Z" type="tns:TZnakowy" minOccurs="0">
+													<xsd:element name="P_7Z" type="tns:TZnakowy512" minOccurs="0">
 														<xsd:annotation>
 															<xsd:documentation>Nazwa (rodzaj) towaru lub usługi</xsd:documentation>
 														</xsd:annotation>
@@ -3586,7 +3719,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 													</xsd:element>
 													<xsd:element name="StanPrzedZ" type="etd:TWybor1" minOccurs="0">
 														<xsd:annotation>
-															<xsd:documentation>Znacznik stanu przed korektą w przypadku faktury korygującej fakturę dokumentującą otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz fakturę wystawioną w związku z art. 106f ust. 4 ustawy, w przypadku gdy korekta dotyczy danych wykazanych w pozycjach zamówienia i jest dokonywana w sposób polegający na wykazaniu danych przed korektą i po korekcie jako osobnych wierszy z odrębną numeracją oraz w przypadku potwierdzania braku zmiany wartości danej pozycji</xsd:documentation>
+															<xsd:documentation>Znacznik stanu przed korektą w przypadku faktury korygującej fakturę dokumentującą otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz fakturę wystawioną w związku z art. 106f ust. 4 ustawy (faktura korygująca fakturę zaliczkową), w przypadku gdy korekta dotyczy danych wykazanych w pozycjach zamówienia i jest dokonywana w sposób polegający na wykazaniu danych przed korektą i po korekcie jako osobnych wierszy z odrębną numeracją oraz w przypadku potwierdzania braku zmiany wartości danej pozycji</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
 												</xsd:sequence>
@@ -3631,7 +3764,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										</xsd:element>
 										<xsd:element name="KRS" type="etd:TNrKRS" minOccurs="0">
 											<xsd:annotation>
-												<xsd:documentation>Numer Krajowego Rejestru Sądowego</xsd:documentation>
+												<xsd:documentation>KRS</xsd:documentation>
 											</xsd:annotation>
 										</xsd:element>
 										<xsd:element name="REGON" type="etd:TNrREGON" minOccurs="0">
@@ -3641,7 +3774,7 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 										</xsd:element>
 										<xsd:element name="BDO" minOccurs="0">
 											<xsd:annotation>
-												<xsd:documentation>Numer w Bazie Danych o Odpadach</xsd:documentation>
+												<xsd:documentation>BDO</xsd:documentation>
 											</xsd:annotation>
 											<xsd:simpleType>
 												<xsd:restriction base="tns:TZnakowy">
@@ -3649,6 +3782,162 @@ dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o który
 												</xsd:restriction>
 											</xsd:simpleType>
 										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="Zalacznik" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Załącznik do faktury VAT</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="BlokDanych" maxOccurs="1000">
+								<xsd:annotation>
+									<xsd:documentation>Szczegółowe dane załącznika</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="ZNaglowek" type="tns:TZnakowy512" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Nagłówek bloku danych</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element name="MetaDane" maxOccurs="1000">
+											<xsd:annotation>
+												<xsd:documentation>Dane opisowe</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="ZKlucz" type="tns:TZnakowy">
+														<xsd:annotation>
+															<xsd:documentation>Klucz</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="ZWartosc" type="tns:TZnakowy">
+														<xsd:annotation>
+															<xsd:documentation>Wartość</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="Tekst" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Część tekstowa bloku danych</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="Akapit" type="tns:TZnakowy512" maxOccurs="10">
+														<xsd:annotation>
+															<xsd:documentation>Opis</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:sequence minOccurs="0">
+											<xsd:element name="Tabela" minOccurs="0" maxOccurs="1000">
+												<xsd:annotation>
+													<xsd:documentation>Tabele</xsd:documentation>
+												</xsd:annotation>
+												<xsd:complexType>
+													<xsd:sequence>
+														<xsd:element name="TMetaDane" minOccurs="0" maxOccurs="1000">
+															<xsd:annotation>
+																<xsd:documentation>Dane opisowe dotyczące tabeli</xsd:documentation>
+															</xsd:annotation>
+															<xsd:complexType>
+																<xsd:sequence>
+																	<xsd:element name="TKlucz" type="tns:TZnakowy">
+																		<xsd:annotation>
+																			<xsd:documentation>Klucz</xsd:documentation>
+																		</xsd:annotation>
+																	</xsd:element>
+																	<xsd:element name="TWartosc" type="tns:TZnakowy">
+																		<xsd:annotation>
+																			<xsd:documentation>Wartość</xsd:documentation>
+																		</xsd:annotation>
+																	</xsd:element>
+																</xsd:sequence>
+															</xsd:complexType>
+														</xsd:element>
+														<xsd:element name="Opis" type="tns:TZnakowy512" minOccurs="0">
+															<xsd:annotation>
+																<xsd:documentation>Opis</xsd:documentation>
+															</xsd:annotation>
+														</xsd:element>
+														<xsd:element name="TNaglowek">
+															<xsd:annotation>
+																<xsd:documentation>Nagłówek tabeli</xsd:documentation>
+															</xsd:annotation>
+															<xsd:complexType>
+																<xsd:sequence>
+																	<xsd:element name="Kol" maxOccurs="20">
+																		<xsd:complexType>
+																			<xsd:sequence>
+																				<xsd:element name="NKom">
+																					<xsd:annotation>
+																						<xsd:documentation>Zawartość pola</xsd:documentation>
+																					</xsd:annotation>
+																					<xsd:complexType>
+																						<xsd:simpleContent>
+																							<xsd:extension base="tns:TZnakowy2"/>
+																						</xsd:simpleContent>
+																					</xsd:complexType>
+																				</xsd:element>
+																			</xsd:sequence>
+																			<xsd:attribute name="Typ" use="required">
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:enumeration value="date"/>
+																						<xsd:enumeration value="datetime"/>
+																						<xsd:enumeration value="dec"/>
+																						<xsd:enumeration value="int"/>
+																						<xsd:enumeration value="time"/>
+																						<xsd:enumeration value="txt"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:attribute>
+																		</xsd:complexType>
+																	</xsd:element>
+																</xsd:sequence>
+															</xsd:complexType>
+														</xsd:element>
+														<xsd:element name="Wiersz" maxOccurs="1000">
+															<xsd:annotation>
+																<xsd:documentation>Wiersze tabeli</xsd:documentation>
+															</xsd:annotation>
+															<xsd:complexType>
+																<xsd:sequence>
+																	<xsd:element name="WKom" type="tns:TZnakowy2" maxOccurs="20">
+																		<xsd:annotation>
+																			<xsd:documentation>Zawartość pola</xsd:documentation>
+																		</xsd:annotation>
+																	</xsd:element>
+																</xsd:sequence>
+															</xsd:complexType>
+														</xsd:element>
+														<xsd:element name="Suma" minOccurs="0">
+															<xsd:annotation>
+																<xsd:documentation>Podsumowania tabeli</xsd:documentation>
+															</xsd:annotation>
+															<xsd:complexType>
+																<xsd:sequence>
+																	<xsd:element name="SKom" type="tns:TZnakowy2" maxOccurs="20">
+																		<xsd:annotation>
+																			<xsd:documentation>Zawartość pola</xsd:documentation>
+																		</xsd:annotation>
+																	</xsd:element>
+																</xsd:sequence>
+															</xsd:complexType>
+														</xsd:element>
+													</xsd:sequence>
+												</xsd:complexType>
+											</xsd:element>
+										</xsd:sequence>
 									</xsd:sequence>
 								</xsd:complexType>
 							</xsd:element>
