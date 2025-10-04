@@ -9,28 +9,19 @@ def main():
     with open(f'{cfg.prefix}-auth.json', 'rt') as fp:
         auth = json.loads(fp.read())
     data = {
-        'contextIdentifier': {
-            'type': 'nip',
+        'authorIdentifier': {
+            'type': 'Nip',
             'value': cfg.nip,
         },
-        'targetIdentifier': {
-            'type': 'pesel',
-            'value': cfg.pesel,
-        },
         'permissionTypes': [
-            "CredentialsManage",
-            "CredentialsRead",
-            "InvoiceWrite",
             "InvoiceRead",
-            "Introspection",
-            "SubunitManage",
-            "EnforcementOperations",
+            "InvoiceWrite",
         ],
         'permissionState': 'Active',
-        #'permissionState': 'Inactive',
+        "queryType":"PermissionsInCurrentContext",
     }
     resp = requests.post(
-        cfg.url+'/api/v2/testdata/permissions/query/personal/grants',
+        cfg.url+'/api/v2/permissions/query/persons/grants?pageOffset=0&pageSize=10',
         json=data,
         headers={
             "Authorization": "Bearer "+auth['accessToken']['token'],
