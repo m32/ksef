@@ -50,10 +50,23 @@ parametry:
 Co po autoryzacji ?
 - t-10-session-01-list.py
 - t-50-get-fa-list.py
+
+## Sesja online
 - t-10-session-online.py 1 f -o|-c|-s faktura.xml|-t|-u faktura.xml
-sesja online:
--o = otwarcie sesji
--c = zamknięcie sesji
+
+znaczenie parametrów:
+
+-o = otwarcie sesji (utworzenie pliku {cfg.prefix}-session.json)
+
+-c = zamknięcie sesji (usunięcie pliku {cfg.prefix}-session.json)
+
 -s = wysłanie faktury
--t = odebranie statusu faktur
+
+-t = odebranie statusu wysłanych faktur
+
 -u = odebranie dokumentu upo dla faktura.xml, musi istnieć plik faktura.xml.ref
+
+
+Skrypt można wołać wielokrotnie z parametrem -s lub -t lub -u,
+wtedy skrypt będzie wysyłał lub pobierał kolejne informacje,
+jeżeli token autoryzacyjny utraci ważność to należy go odnowić (t-03-auth-06-refresh.py 1 f).
