@@ -146,7 +146,9 @@ class Main(object):
 
     def main(self) -> None:
         print("Cenerating certificates")
-        import ksefconfig as cfg
+        import sys
+        from ksefconfig import Config
+        cfg = Config(int(sys.argv[1]))
         for (fn, ln, cn, nip, pesel) in (
             (None, None, cfg.nazwa, cfg.nip, None), # firma
             (cfg.imie, cfg.nazwisko, cfg.imie+' '+cfg.nazwisko, None, cfg.pesel), # osoba

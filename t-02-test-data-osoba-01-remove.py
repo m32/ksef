@@ -2,9 +2,11 @@
 import datetime
 import requests
 
-import ksefconfig as cfg
+import sys
+from ksefconfig import Config
 
 def main():
+    cfg = Config(int(sys.argv[1]))
     data = {
         'nip': cfg.nip,
     }

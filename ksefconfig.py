@@ -1,25 +1,22 @@
 import sys
 import configparser
 
-firma = sys.argv[1]
-del sys.argv[1]
+class Config(configparser.ConfigParser):
+    def __init__(self, firma:int=1, osoba:bool=False):
+        super().__init__()
+        self.read('ksef.ini')
 
-ini = configparser.ConfigParser()
-ini.read('ksef.ini')
+        self.firma = firma
+        self.osoba = osoba
+        self.version = self.get('ksef', 'version')
+        self.url = self.get(self.version, 'url')
 
-version = ini.get('ksef', 'version')
+        self.nip = self.get(f'firma{firma}', 'nip')
+        self.nazwa = self.get(f'firma{firma}', 'nazwa')
+        self.adres = self.get(f'firma{firma}', 'adres')
 
-url = ini.get(version, 'url')
+        self.pesel = self.get(f'firma{firma}', 'pesel')
+        self.imie = self.get(f'firma{firma}', 'imie')
+        self.nazwisko = self.get(f'firma{firma}', 'nazwisko')
 
-nip = ini.get(f'firma{firma}', 'nip')
-nazwa = ini.get(f'firma{firma}', 'nazwa')
-
-pesel = ini.get(f'firma{firma}', 'pesel')
-imie = ini.get(f'firma{firma}', 'imie')
-nazwisko = ini.get(f'firma{firma}', 'nazwisko')
-
-if len(sys.argv)>1 and sys.argv[1] == '--osoba':
-    del sys.argv[1]
-    prefix = pesel
-else:
-    prefix = nip
+        self.prefix = self.pesel if self.osoba else self.nip

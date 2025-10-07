@@ -1,9 +1,11 @@
 #!/usr/bin/env vpython3
 import requests
 
-import ksefconfig as cfg
+import sys
+from ksefconfig import Config
 
 def main():
+    cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
     resp = requests.post(
         cfg.url+'/api/v2/auth/challenge',
         timeout=5

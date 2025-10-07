@@ -15,18 +15,19 @@ vpvat = 23
 vvat = vnetto * vpvat / 100.0
 vbrutto = vnetto + vvat
 
-snip, snazwa, sadres = sys.argv[1], sys.argv[2], sys.argv[3]
-dnip, dnazwa, dadres = sys.argv[4], sys.argv[5], sys.argv[6]
+from ksefconfig import Config
+f1 = Config(int(sys.argv[1]))
+f2 = Config(int(sys.argv[2]))
 
 data = '''\
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Faktura
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/">
+    xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
   <Naglowek>
     <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
-    <WariantFormularza>2</WariantFormularza>
+    <WariantFormularza>3</WariantFormularza>
     <DataWytworzeniaFa>{datawytworzenia}</DataWytworzeniaFa>
     <SystemInfo>eRTa 11.10</SystemInfo>
   </Naglowek>
@@ -45,10 +46,9 @@ data = '''\
       <NIP>{dnip}</NIP>
       <Nazwa>{dnazwa}</Nazwa>
     </DaneIdentyfikacyjne>
-    <Adres>
-      <KodKraju>PL</KodKraju>
-      <AdresL1>{dadres}</AdresL1>
-    </Adres>
+    <NrKlienta>2</NrKlienta>
+    <JST>2</JST>
+    <GV>2</GV>
   </Podmiot2>
   <Fa>
     <KodWaluty>PLN</KodWaluty>
@@ -89,8 +89,8 @@ data = '''\
 '''
 data = data.format(
     datawytworzenia=now.isoformat(),
-    snip=snip, snazwa=snazwa, sadres=sadres,
-    dnip=dnip, dnazwa=dnazwa, dadres=dadres,
+    snip=f1.nip, snazwa=f1.nazwa, sadres=f1.adres,
+    dnip=f2.nip, dnazwa=f2.nazwa,
     rmd=now.strftime('%Y-%m-%d'),
     serial=serial,
     vnetto=vnetto,
@@ -100,4 +100,4 @@ data = data.format(
     vilosc=vilosc,
     vcnetto=vcnetto,
 )
-open(f'{snip}-{dnip}-{serial}.xml', 'wt').write(data)
+open(f'{f1.nip}-{f2.nip}-{serial}.xml', 'wt').write(data)

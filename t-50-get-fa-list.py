@@ -3,9 +3,11 @@ import json
 import datetime
 import requests
 
-import ksefconfig as cfg
+import sys
+from ksefconfig import Config
 
 def main():
+    cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
     with open(f'{cfg.prefix}-auth.json', 'rt') as fp:
         auth = json.loads(fp.read())
     dtnow = datetime.datetime.now(datetime.timezone.utc)

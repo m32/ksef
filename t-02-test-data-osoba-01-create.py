@@ -2,9 +2,11 @@
 import datetime
 import requests
 
-import ksefconfig as cfg
+import sys
+from ksefconfig import Config
 
 def main():
+    cfg = Config(int(sys.argv[1]))
     dtnow = datetime.datetime.now(datetime.timezone.utc)
     dtdiff = datetime.timedelta(hours=1)
     data = {

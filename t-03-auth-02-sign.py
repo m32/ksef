@@ -22,9 +22,11 @@ def load_pfx(file_path, password):
         )
 
 
-import ksefconfig as cfg
+import sys
+from ksefconfig import Config
 
 def main():
+    cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
     with open(f'{cfg.prefix}-auth.xml', 'rb') as fp:
         data = fp.read()
 

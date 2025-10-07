@@ -11,36 +11,40 @@ ksefconfig.py, plik ten jest importowany przez pozostałe pliki, a użyte parame
 - parametr wymagany to numer firmy
 - opcjonalny drugi paramatr --osoba = czy będziemy pracowali jako osoba obsługująca firmę z pierwszego parametru ?
 
-t-01-cert-make.py
-- wygenerować certyfikat (selfsigned) i wypełnić wymagane pola przez KSeF
+t-01-cert-make.py 1
+- wygenerować certyfikat (selfsigned) i wypełnić wymagane pola przez KSeF dla firmy numer 1
 
-t-02-test-data-firma-01-create.py
-- utworzyć firmę w KSef
+t-02-test-data-firma-01-create.py 1
+- utworzyć firmę numer 1 w KSef
 
-t-02-test-data-firma-02-remove.py
-- usunąć firmę
+t-02-test-data-firma-02-remove.py 1
+- usunąć firmę numer 1
 
-t-02-test-data-firma-03-perm-01-grant.py
-- zezwolić osobie na obsługę firmy
+t-02-test-data-firma-03-perm-01-grant.py 1
+- zezwolić osobie na obsługę firmy numer 1
 
 t-02-test-data-firma-03-perm-02-query.py
 - odpytać o udzielone zezwolenia
 
-t-02-test-data-osoba-01-create.py
-- utworzyć osobę w KSeF
+t-02-test-data-osoba-01-create.py 1
+- utworzyć osobę firmie numer 1 w KSeF
 
-t-02-test-data-osoba-01-remove.py
-- usuniąć osobę
+t-02-test-data-osoba-01-remove.py 1
+- usuniąć osobę z firmy numer 1
 
 kroki które należy wykonać by uzyskać tokeny zezwalające na pracę z KSeF:
-- t-03-auth-01-challenge.py
-- t-03-auth-02-sign.py
-- t-03-auth-03-xades.py
-- t-03-auth-04-reference.py
-- t-03-auth-05-redeem.py
+- t-03-auth-01-challenge.py 1 f
+- t-03-auth-02-sign.py 1 f
+- t-03-auth-03-xades.py 1 f
+- t-03-auth-04-reference.py 1 f
+- t-03-auth-05-redeem.py 1 f
 
 odnowić token autoryzacyjny po jego unieważnieniu?
-- t-03-auth-06-refresh.py
+- t-03-auth-06-refresh.py 1 f
+
+parametry:
+- 1 f = oznacza pracę z uprawnieniami firmy
+- 1 o = oznacza pracę z uprawnieniami osoby
 
 ##############
 Co po autoryzacji ?

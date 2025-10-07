@@ -2,9 +2,11 @@
 import json
 import requests
 
-import ksefconfig as cfg
+import sys
+from ksefconfig import Config
 
 def main():
+    cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
     with open(f'{cfg.prefix}-auth.temp.json', 'rt') as fp:
         auth = json.loads(fp.read())
     resp = requests.get(
