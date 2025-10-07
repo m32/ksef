@@ -50,3 +50,10 @@ parametry:
 Co po autoryzacji ?
 - t-10-session-01-list.py
 - t-50-get-fa-list.py
+- t-10-session-online.py 1 f -o|-c|-s faktura.xml|-t|-u faktura.xml
+sesja online:
+-o = otwarcie sesji
+-c = zamknięcie sesji
+-s = wysłanie faktury
+-t = odebranie statusu faktur
+-u = odebranie dokumentu upo dla faktura.xml, musi istnieć plik faktura.xml.ref
