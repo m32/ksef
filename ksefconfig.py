@@ -1,3 +1,6 @@
+#
+# http://generatory.it/
+#
 import sys
 import configparser
 
@@ -10,6 +13,9 @@ class Config(configparser.ConfigParser):
         self.osoba = osoba
         self.version = self.get('ksef', 'version')
         self.url = self.get(self.version, 'url')
+        self.ksefcert = self.get(self.version, 'cert', fallback=None)
+        self.ksefcertvalidfrom = self.get(self.version, 'validFrom', fallback=None)
+        self.ksefcertvalidto = self.get(self.version, 'validTo', fallback=None)
 
         self.nip = self.get(f'firma{firma}', 'nip')
         self.nazwa = self.get(f'firma{firma}', 'nazwa')
