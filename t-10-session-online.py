@@ -215,13 +215,17 @@ class KSeFInvoiceSender:
             with open(f'{invoice}.ref', 'wt') as fp:
                 fp.write(json.dumps(data))
             self.save_session()
-            if data['status']['code'] == 200:
-                response = requests.get(data['upoDownloadUrl'])
-                if response.status_code == 200:
-                    with open(f'{invoice}.upo', 'wt') as fp:
-                        fp.write(response.text)
+            #if data['status']['code'] == 200:
+            #    response = requests.get(data['upoDownloadUrl'])
+            #    if response.status_code == 200:
+            #        with open(f'{invoice}.upo', 'wt') as fp:
+            #            fp.write(response.text)
             return True
         return False
+
+    def status(self):
+        for invoice in [k for k in self.session['refs'].keys()]:
+            self.check_invoice_status(invoice)
 
     def upo(self, invoice):
         with open(f'{invoice}.ref', 'rt') as fp:
@@ -249,7 +253,7 @@ def main():
     cls = KSeFInvoiceSender(cfg)
 
     import getopt
-    opts, args = getopt.getopt(sys.argv[3:], 'ocs:t:u:')
+    opts, args = getopt.getopt(sys.argv[3:], 'ocs:tu:')
     for o, a in opts:
         if o == '-o':
             # open
@@ -262,7 +266,7 @@ def main():
             cls.send_invoice(a)
         elif o == '-t':
             # status
-            cls.check_invoice_status(a)
+            cls.status()
         elif o == '-u':
             # upo
             cls.upo(a)
