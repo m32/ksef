@@ -6,10 +6,7 @@ Na ten moment to zestaw plików pokazujących jak ...:
 ksef.ini:
 - skonfigurować wiele firm i osób autoryzowanych do ich obsługi
 
-ksefconfig.py, plik ten jest importowany przez pozostałe pliki, a użyte parametry kasuje z sys.argv
-- wczytać konfigurację z pliku ksef.ini
-- parametr wymagany to numer firmy
-- opcjonalny drugi paramatr --osoba = czy będziemy pracowali jako osoba obsługująca firmę z pierwszego parametru ?
+ksefconfig.py, plik ten jest importowany przez pozostałe pliki, a wczytuje konfigurację z pliku ksef.ini
 
 t-01-cert-make.py 1
 - wygenerować certyfikat (selfsigned) i wypełnić wymagane pola przez KSeF dla firmy numer 1
