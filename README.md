@@ -47,11 +47,15 @@ parametry:
 - 1 o = oznacza pracę z uprawnieniami osoby
 
 ## Co po autoryzacji ?
-- t-10-session-01-list.py
-- t-50-get-fa-list.py 1 f
-    wyświetlenie listy faktur wystawionych w ciągu ostatnich 30 dla firmy
-- t-50-get-fa-get.py 1 f ksef-number
-    pobranie faktury po numerze KSeF
+
+t-10-session-01-list.py 1 f
+- lista otwrtych sesji
+
+t-50-get-fa-list.py 1 f
+- wyświetlenie listy faktur wystawionych w ciągu ostatnich 30
+
+t-50-get-fa-get.py 1 f ksef-number
+- pobranie faktury po numerze KSeF
 
 ## Sesja online
 - t-10-session-online.py 1 f -o|-c|-s faktura.xml|-t|-u faktura.xml
