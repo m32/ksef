@@ -210,8 +210,11 @@ class KSeFInvoiceSender:
 
         print(f'INV Status: {response}')
         if response.status_code == 200:
-            del self.session['refs'][invoice]
             data = response.json()
+            if data['status']['code'] != 200:
+                print(data)
+                return False
+            del self.session['refs'][invoice]
             with open(f'{invoice}.ref', 'wt') as fp:
                 fp.write(json.dumps(data))
             self.save_session()
