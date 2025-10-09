@@ -10,6 +10,7 @@ generate \
 2>x-openapi-python-client-log-2
 }
 
+gen
 for a in ksef/api/**/__init__.py; do
     rm $a
     touch $a
