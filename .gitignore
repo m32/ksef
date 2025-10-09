@@ -1,5 +1,6 @@
 __pycache__/
 schematy-dokumentow/
+ksefproject/
 
 # certificates
 *.p12
@@ -13,5 +14,14 @@ schematy-dokumentow/
 *-auth.temp.json
 *-auth.xml.xades
 
+# ksef certificates
+*-enrollments.json
+*-cert.json
+
+# ksef tokens
+*-tokens.json
+
 # generated
 *-*-*.xml
+*-*-*.xml.ref
+*-*-*.xml.upo
