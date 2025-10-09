@@ -137,10 +137,9 @@ class Main(object):
                 ),
                 critical=True,
             ).sign(
-                # Sign our certificate with our private key
                 key,
                 hashes.SHA256(),
-                default_backend(),
+                #?default_backend(),
             )
         )
 
