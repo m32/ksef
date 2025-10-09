@@ -6,10 +6,7 @@ Na ten moment to zestaw plików pokazujących jak ...:
 ksef.ini:
 - skonfigurować wiele firm i osób autoryzowanych do ich obsługi
 
-ksefconfig.py, plik ten jest importowany przez pozostałe pliki, a użyte parametry kasuje z sys.argv
-- wczytać konfigurację z pliku ksef.ini
-- parametr wymagany to numer firmy
-- opcjonalny drugi paramatr --osoba = czy będziemy pracowali jako osoba obsługująca firmę z pierwszego parametru ?
+ksefconfig.py, plik ten jest importowany przez pozostałe pliki, a wczytuje konfigurację z pliku ksef.ini
 
 t-01-cert-make.py 1
 - wygenerować certyfikat (selfsigned) i wypełnić wymagane pola przez KSeF dla firmy numer 1
@@ -47,11 +44,15 @@ parametry:
 - 1 o = oznacza pracę z uprawnieniami osoby
 
 ## Co po autoryzacji ?
-- t-10-session-01-list.py
-- t-50-get-fa-list.py 1 f
-    wyświetlenie listy faktur wystawionych w ciągu ostatnich 30 dla firmy
-- t-50-get-fa-get.py 1 f ksef-number
-    pobranie faktury po numerze KSeF
+
+t-10-session-01-list.py 1 f
+- lista otwrtych sesji
+
+t-50-get-fa-list.py 1 f
+- wyświetlenie listy faktur wystawionych w ciągu ostatnich 30
+
+t-50-get-fa-get.py 1 f ksef-number
+- pobranie faktury po numerze KSeF
 
 ## Sesja online
 - t-10-session-online.py 1 f -o|-c|-s faktura.xml|-t|-u faktura.xml
