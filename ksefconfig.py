@@ -5,7 +5,7 @@ import sys
 import configparser
 
 class Config(configparser.ConfigParser):
-    def __init__(self, firma:int=1, osoba:bool=False):
+    def __init__(self, firma:int=1, osoba:bool=False, initialize:bool=False):
         super().__init__()
         self.read('ksef.ini')
 
@@ -26,3 +26,6 @@ class Config(configparser.ConfigParser):
         self.nazwisko = self.get(f'firma{firma}', 'nazwisko')
 
         self.prefix = self.pesel if self.osoba else self.nip
+
+        if not initialize:
+            assert self.nip and self.pesel
