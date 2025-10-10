@@ -14,9 +14,10 @@ def main():
 
     dtnow = datetime.datetime.now(datetime.timezone.utc)
     dtdiff = datetime.timedelta(hours=1)
-    dt = datetime.datetime.fromisoformat(cfg.ksefcertvalidto)
-    if dt < dtnow - dtdiff or cfg.ksefcert is not None:
-        return
+    if cfg.ksefcertvalidto is not None:
+        dt = datetime.datetime.fromisoformat(cfg.ksefcertvalidto)
+        if dt < dtnow - dtdiff or cfg.ksefcert is not None:
+            return
 
     response = requests.get(
         f"{cfg.url}/api/v2/security/public-key-certificates",

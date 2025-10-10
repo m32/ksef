@@ -1,0 +1,30 @@
+{
+    "actionButtons": {
+        "loadNpmCommands": true,
+        "reloadButton":"♻️", // Custom reload button text or icon (default ↻). null value enables automatic reload on configuration change
+        "commands": [
+            {
+                "name": "mypy",
+                "singleInstance": true,
+                "color": "#af565c",
+                "command": "vpy3-mypy .",
+            },
+        ]
+    },
+    "python.defaultInterpreterPath": "/devel/bin/python3/bin/python",
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.useLibraryCodeForTypes": true,
+    "python.analysis.indexing": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportInvalidTypeForm": "none"
+    },
+    "files.watcherExclude": {
+        "**/config/files/**": true
+    },
+    "python.linting.pylintArgs": [
+        "--rcfile=${workspaceFolder}/pylintrc"
+    ]
+}

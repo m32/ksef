@@ -4,7 +4,8 @@ from lxml import etree
 from cryptography import x509
 from cryptography.hazmat import backends
 from cryptography.hazmat.primitives import serialization, hashes
-from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.serialization import pkcs12
 from cryptography.x509.oid import NameOID
 
@@ -31,7 +32,9 @@ def main():
         data = fp.read()
 
     p12pk, p12pc, p12oc = load_pfx(cfg.prefix+'.p12', '1234')
-
+    assert isinstance(p12pk, rsa.RSAPrivateKey)
+    assert isinstance(p12pc, x509.Certificate)
+    
     def signproc(tosign, algosig):
         sig = p12pk.sign(
             tosign,

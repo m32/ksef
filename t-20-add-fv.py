@@ -22,7 +22,7 @@ import requests
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import hashes
 
 
@@ -144,6 +144,8 @@ class KSeFInvoiceSender:
 
         # Szyfruj klucz symetryczny kluczem publicznym RSA
         public_key = self.get_ksef_public_key()
+        assert isinstance(public_key, rsa.RSAPublicKey)
+
         encrypted_symmetric_key = public_key.encrypt(
             symmetric_key,
             padding.OAEP(
@@ -180,6 +182,7 @@ class KSeFInvoiceSender:
 
             # Pobierz klucz publiczny KSeF
             public_key = self.get_ksef_public_key()
+            assert isinstance(public_key, rsa.RSAPublicKey)
 
             # Zaszyfruj klucz symetryczny kluczem publicznym RSA
             encrypted_symmetric_key = public_key.encrypt(

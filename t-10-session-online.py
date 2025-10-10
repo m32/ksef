@@ -11,7 +11,7 @@ from cryptography import x509
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import hashes
 
 
@@ -65,6 +65,7 @@ class KSeFInvoiceSender:
 
     def open_session(self):
         public_key = self.get_ksef_public_key()
+        assert isinstance(public_key, rsa.RSAPublicKey)
 
         encrypted_symmetric_key = public_key.encrypt(
             base64.b64decode(self.session['symmetric_key']),
@@ -148,6 +149,8 @@ class KSeFInvoiceSender:
 
         # Szyfruj klucz symetryczny kluczem publicznym RSA
         public_key = self.get_ksef_public_key()
+        assert isinstance(public_key, rsa.RSAPublicKey)
+
         encrypted_symmetric_key = public_key.encrypt(
             base64.b64decode(self.session['symmetric_key']),
             padding.OAEP(
