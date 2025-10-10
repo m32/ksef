@@ -10,7 +10,7 @@ import sys
 from ksefconfig import Config
 
 def main():
-    cfg = Config(int(sys.argv[1]))
+    cfg = Config(1, False)
 
     dtnow = datetime.datetime.now(datetime.timezone.utc)
     dtdiff = datetime.timedelta(hours=1)

@@ -8,6 +8,9 @@ ksef.ini:
 
 ksefconfig.py, plik ten jest importowany przez pozostałe pliki, a wczytuje konfigurację z pliku ksef.ini
 
+t-01-cert-ksef-get.py
+- pobrać brakujące dane i wypełnić nimi plik ksef.ini
+
 t-01-cert-make.py 1
 - wygenerować certyfikat (selfsigned) i wypełnić wymagane pola przez KSeF dla firmy numer 1
 
