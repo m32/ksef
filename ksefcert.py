@@ -85,10 +85,6 @@ class Certificate(object):
             f.write(data.public_bytes(serialization.Encoding.PEM))
         with open(fname + ".cer", "wb") as f:
             f.write(data.public_bytes(serialization.Encoding.DER))
-        cwd = os.getcwd()
-        os.chdir("ca")
-        os.symlink(fname, str(data.serial_number))
-        os.chdir(cwd)
 
     def csr_load(self, fname: str) -> x509.CertificateSigningRequest:
         with open(fname, "rb") as f:
