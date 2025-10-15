@@ -59,11 +59,11 @@ class KSeFInvoiceSender:
             }
         self.session = session
 
-    def save_session(self):
+    def session_save(self):
         with open(f"{self.cfg.prefix}-session.json", "wt") as fp:
             fp.write(json.dumps(self.session))
 
-    def open_session(self):
+    def session_open(self):
         public_key = self.get_ksef_public_key()
         assert isinstance(public_key, rsa.RSAPublicKey)
 
@@ -104,9 +104,9 @@ class KSeFInvoiceSender:
         data = response.json()
         self.session["referenceNumber"] = data["referenceNumber"]
         self.session["validUntil"] = data["validUntil"]
-        self.save_session()
+        self.session_save()
 
-    def close_session(self):
+    def session_close(self):
         if not self.session["referenceNumber"]:
             return
 
@@ -199,7 +199,7 @@ class KSeFInvoiceSender:
         result = response.json()
         invoice_ref = result["referenceNumber"]
         self.session['refs'][invoice] = invoice_ref
-        self.save_session()
+        self.session_save()
 
     def check_invoice_status(self, invoice):
         invoice_ref = self.session['refs'][invoice]
@@ -220,7 +220,7 @@ class KSeFInvoiceSender:
             del self.session['refs'][invoice]
             with open(f'{invoice}.ref', 'wt') as fp:
                 fp.write(json.dumps(data))
-            self.save_session()
+            self.session_save()
             #if data['status']['code'] == 200:
             #    response = requests.get(data['upoDownloadUrl'])
             #    if response.status_code == 200:
@@ -263,10 +263,10 @@ def main():
     for o, a in opts:
         if o == '-o':
             # open
-            cls.open_session()
+            cls.session_open()
         elif o == '-c':
             # close
-            cls.close_session()
+            cls.session_close()
         elif o == '-s':
             # send
             cls.send_invoice(a)

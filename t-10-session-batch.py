@@ -8,8 +8,10 @@ import hashlib
 import base64
 import glob
 import zipfile
+import urllib.parse
 import pprint
 
+import rlogger
 import requests
 from cryptography import x509
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -77,101 +79,70 @@ class KSeFInvoiceSender:
         with zipfile.ZipFile(f"{self.cfg.prefix}-session.zip",'w', zipfile.ZIP_DEFLATED) as zip:
             for fname in fnames:
                 zip.write(fname)
+
         fileSize = os.path.getsize(f"{self.cfg.prefix}-session.zip")
         # max zip file size = 5GB
         if fileSize > 5*1024*self.MB:
             raise KSeFZipSizeError('total size of xml files is too big', None)
+
         crc = hashlib.sha256()
-        with open(f"{self.cfg.prefix}-session.zip", 'rb') as fi:
-            nb = 0
-            while nb < fileSize:
-                data = fi.read(self.MB)
-                crc.update(data)
-                nb += len(data)
-        self.session.update({
-            'batchFile': {
-                'fileName': 'dokumenty.zip',
-                'fileSize': fileSize,
-                'fileHash': base64.b64encode(crc.digest()).decode(),
-                'fileParts': [],
-            },
-            'encrypted': False,
-        })
-        self.session_save()
-
-    def zip_split(self):
-        if self.session["referenceNumber"]:
-            raise KSeFSessionError('session is already open', None)
-        if not self.session['batchFile']:
-            raise KSeFZipCreateError('batchFile not exists', None)
-        if self.session['batchFile']['fileParts']:
-            raise KSeFZipCreateError('batchFile already splitted', None)
-        maxpartsize = 100*self.MB # max  part size
-        maxpartsize = 4*1024
-        fileParts = []
-        with open(f"{self.cfg.prefix}-session.zip", 'rb') as fi:
-            n = 1
-            off = 0
-            fileSize = self.session['batchFile']['fileSize']
-            while off < fileSize:
-                with open(f"{self.cfg.prefix}-session.zip.{n}", 'wb') as fo:
-                    crc = hashlib.sha256()
-                    nb = 0
-                    while nb < maxpartsize:
-                        left = fileSize - (off + nb)
-                        if left <= 0:
-                            break
-                        data = fi.read(4096 if left > 4096 else left)
-                        fo.write(data)
-                        crc.update(data)
-                        nb += len(data)
-                fileParts.append({
-                    'ordinalNumber': n,
-                    'fileName': f'dokumenty.{n}',
-                    'fileSize': nb,
-                    'fileHash': base64.b64encode(crc.digest()).decode(),
-                })
-                off += nb
-                n += 1
-        self.session['batchFile']['fileParts'] = fileParts
-        self.session['encrypted'] = False
-        self.session_save()
-
-    def zip_encrypt(self):
-        if self.session["referenceNumber"]:
-            raise KSeFSessionError('session is already open', None)
-        if not self.session['batchFile']:
-            raise KSeFZipCreateError('batchFile not exists', None)
-        if not self.session['batchFile']['fileParts']:
-            raise KSeFZipCreateError('batch File already splitted', None)
-        if self.session['encrypted']:
-            raise KSeFZipCreateError('split Files already encrypted', None)
+        pad = fileSize % 16
+        if pad:
+            padding_length = 16 - pad
+            pad = bytes([padding_length] * padding_length)
         cipher = Cipher(
             algorithms.AES(base64.b64decode(self.session['symmetric_key'])),
             modes.CBC(base64.b64decode(self.session['iv'])),
             backend=default_backend()
         )
-        for filePart in self.session['batchFile']['fileParts']:
-            encryptor = cipher.encryptor()
-            fnamer = f"{self.cfg.prefix}-session.zip.{filePart['ordinalNumber']}"
-            pad = filePart['fileSize'] % 16
-            if pad:
-                padding_length = 16 - pad
-                pad = bytes([padding_length] * padding_length)
+        encryptor = cipher.encryptor()
 
-            with open(fnamer, 'rb') as fp:
-                fnamew = fnamer.replace('.zip.', '.aes.')
-                with open(fnamew, 'wb') as fo:
-                    while True:
-                        data = fp.read(4096)
-                        if not data:
-                            break
-                        if len(data) != 4096:
-                            data += pad
-                        edata = encryptor.update(data)
-                        fo.write(edata)
-                    fo.write(encryptor.finalize())
-        self.session['encrypted'] = True
+        maxblocksize = 100*self.MB # max block size for encryption
+        maxblocksize = 4*1024
+
+        with open(f"{self.cfg.prefix}-session.zip", 'rb') as fi:
+            with open(f"{self.cfg.prefix}-session.aes", 'wb') as fo:
+                while True:
+                    data = fi.read(maxblocksize)
+                    if not data:
+                        break
+                    if len(data) != maxblocksize:
+                        data += pad
+                    crc.update(data)
+                    edata = encryptor.update(data)
+                    fo.write(edata)
+                fo.write(encryptor.finalize())
+
+        maxpartsize = 100*self.MB # max part size
+        maxpartsize = 4*1024
+        fileParts = []
+        filePartNo = 0
+
+        with open(f"{self.cfg.prefix}-session.aes", 'rb') as fi:
+            while True:
+                data = fi.read(maxpartsize)
+                if not data:
+                    break
+
+                filePartNo += 1
+                with open(f"{self.cfg.prefix}-session.aes.{filePartNo}", 'wb') as fo:
+                    fo.write(data)
+
+                fileParts.append({
+                    'ordinalNumber': filePartNo,
+                    'fileName': f'dokumenty.{filePartNo}',
+                    'fileSize': len(data),
+                    'fileHash': base64.b64encode(hashlib.sha256(data).digest()).decode(),
+                })
+
+        self.session.update({
+            'batchFile': {
+                'fileName': 'dokumenty.zip',
+                'fileSize': fileSize,
+                'fileHash': base64.b64encode(crc.digest()).decode(),
+                'fileParts': fileParts,
+            },
+        })
         self.session_save()
 
     def session_close(self):
@@ -206,8 +177,6 @@ class KSeFInvoiceSender:
             raise KSeFZipCreateError('batchFile not exists', None)
         if not self.session['batchFile']['fileParts']:
             raise KSeFZipCreateError('batch File already splitted', None)
-        if not self.session['encrypted']:
-            raise KSeFZipCreateError('split Files are not encrypted', None)
 
         cert_bytes = base64.b64decode(self.cfg.ksefcert)
         certificate = x509.load_der_x509_certificate(cert_bytes)
@@ -223,7 +192,7 @@ class KSeFInvoiceSender:
             ),
         )
 
-        request_data = {
+        data = {
             "formCode": {
                 "systemCode": "FA (3)",
                 "schemaVersion": "1-0E",
@@ -239,7 +208,7 @@ class KSeFInvoiceSender:
 
         response = requests.post(
             f"{self.cfg.url}/api/v2/sessions/batch",
-            json=request_data,
+            json=data,
             headers={
                 "Authorization": f"Bearer {self.access_token}",
             },
@@ -266,6 +235,7 @@ class KSeFInvoiceSender:
             assert filePart['ordinalNumber'] == ordinalNumber
             with open(f"{self.cfg.prefix}-session.aes.{ordinalNumber}", 'rb') as fp:
                 data = fp.read()
+            print(len(data), part)
             if m == 'POST':
                 response = requests.post(
                     part['url'],
@@ -284,6 +254,30 @@ class KSeFInvoiceSender:
                 raise IOError(2, 'unsupported method')
             print('send part:', filePart, response)
 
+    def session_status(self):
+        params = {
+            'pageSize': 10,
+            'sessionType': 'Batch', # 'Online'
+            'referenceNumber': self.session['referenceNumber'],
+            #'dateCreatedFrom': '',
+            #'dateCreatedTo': '',
+            #'dateClosedFrom': '',
+            #'dateClosedTo': '',
+            #'dateModifiedFrom': '',
+            #'dateModifiedTo': '',
+            'statuses[]': ["InProgress" "Succeeded" "Failed" "Cancelled"],
+        }
+        params = urllib.parse.urlencode(params)
+        response = requests.get(
+            self.cfg.url+f'/api/v2/sessions?'+params,
+            headers={
+                "Authorization": f"Bearer {self.access_token}",
+            },
+            timeout=5
+        )
+        print('status:', response)
+        print(response.json())
+
 def main():
     from ksefconfig import Config
     cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
@@ -291,34 +285,25 @@ def main():
     cls = KSeFInvoiceSender(cfg)
 
     import getopt
-    opts, args = getopt.getopt(sys.argv[3:], '?z:s:')
+    opts, args = getopt.getopt(sys.argv[3:], '?zosct')
     for o, a in opts:
         if o == '-?':
-            print(sys.argv[0], '-z [c|s|e] -s [o|s|c]')
-            print('-z c = zip create')
-            print('-z s = zip split')
-            print('-z e = zip encrypt')
-            print('-s o = session open')
-            print('-s s = session send')
-            print('-s c = session close')
+            print(sys.argv[0], '-z|-o|-s|-c')
+            print('-z = zip create/encrypt/split')
+            print('-o = session open')
+            print('-s = session send')
+            print('-c = session close')
+            print('-r = session status')
         if o == '-z':
-            if a == 'c':
-                cls.zip_create()
-            elif a == 's':
-                cls.zip_split()
-            elif a == 'e':
-                cls.zip_encrypt()
-            else:
-                print('bad argument')
+            cls.zip_create()
+        elif o == '-o':
+            cls.session_open()
         elif o == '-s':
-            if a == 'o':
-                cls.session_open()
-            elif a == 's':
-                cls.session_send()
-            elif a == 'c':
-                cls.session_close()
-            else:
-                print('bad argument')
+            cls.session_send()
+        elif o == '-c':
+            cls.session_close()
+        elif o == '-t':
+            cls.session_status()
 
 if __name__ == "__main__":
     main()

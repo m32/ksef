@@ -13,7 +13,7 @@ def main():
     params = {
         'pageSize': 10,
         'sessionType': 'Batch', # 'Online'
-        'referenceNumber': '20251015-SB-2322BD6000-762A12DD32-22',
+        'referenceNumber': '20251015-SB-31007BD000-53922AEC9B-B8',
         #'dateCreatedFrom': '',
         #'dateCreatedTo': '',
         #'dateClosedFrom': '',
