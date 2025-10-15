@@ -107,3 +107,4 @@ znaczenie parametrów:
 
 Jeżeli token autoryzacyjny utraci ważność (status 401) to należy go odnowić (t-03-auth-06-refresh.py 1 f).
 Wielokrotnie można wołać tylko opcję -t, do momentu uzyskania statusu 200 sesji.
+Każdy z kroków uzupełnia plik <ksef.cfg.prefix>-session.json o kolejne dane.
