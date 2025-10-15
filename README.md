@@ -49,7 +49,7 @@ parametry:
 ## Co po autoryzacji ?
 
 fv.py 1 2 5
-- wygenerować przykładowe 5 faktur wystawionych przez firmę 1 dla firmy 2
+- generacja przykładowych faktur wystawionych przez firmę 1 dla firmy 2 - 5 sztuk
 
 t-10-session-01-list.py 1 f
 - lista otwrtych sesji
@@ -63,6 +63,7 @@ t-50-get-fa-get.py 1 f ksef-number
 ## Sesja online
 
 - t-10-session-online.py 1 f -o|-c|-s faktura.xml|-t|-u faktura.xml
+
 
 znaczenie parametrów:
 
@@ -82,7 +83,10 @@ wtedy skrypt będzie wysyłał lub pobierał kolejne informacje,
 jeżeli token autoryzacyjny utraci ważność to należy go odnowić (t-03-auth-06-refresh.py 1 f).
 
 
+## Sesja batch
+
 - t-10-session-batch.py 1 f -z|-o|-s|-c|-t
+
 
 znaczenie parametrów:
 
@@ -101,4 +105,5 @@ znaczenie parametrów:
 
 -t = pobierz status sesji
 
-Jeżeli w którymś momencie jest status 401, wtedy odśwież token autoryzujący (t-03-auth-06-refresh.py 1 f)
+Jeżeli token autoryzacyjny utraci ważność (status 401) to należy go odnowić (t-03-auth-06-refresh.py 1 f).
+Wielokrotnie można wołać tylko opcję -t, do momentu uzyskania statusu 200 sesji.
