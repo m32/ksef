@@ -1,6 +1,7 @@
 #!/usr/bin/env vpython3
 import json
 import requests
+import urllib.parse
 
 import sys
 from ksefconfig import Config
@@ -9,8 +10,21 @@ def main():
     cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
     with open(f'{cfg.prefix}-auth.json', 'rt') as fp:
         auth = json.loads(fp.read())
+    params = {
+        'pageSize': 10,
+        'sessionType': 'Batch', # 'Online'
+        'referenceNumber': '20251015-SB-2322BD6000-762A12DD32-22',
+        #'dateCreatedFrom': '',
+        #'dateCreatedTo': '',
+        #'dateClosedFrom': '',
+        #'dateClosedTo': '',
+        #'dateModifiedFrom': '',
+        #'dateModifiedTo': '',
+        'statuses[]': ["InProgress" "Succeeded" "Failed" "Cancelled"],
+    }
+    params = urllib.parse.urlencode(params)
     resp = requests.get(
-        cfg.url+f'/api/v2/auth/sessions',
+        cfg.url+f'/api/v2/sessions?'+params,
         headers={
             "Authorization": "Bearer "+auth['accessToken']['token'],
         },
