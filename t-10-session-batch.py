@@ -8,7 +8,6 @@ import hashlib
 import base64
 import glob
 import zipfile
-import urllib.parse
 import pprint
 
 #import rlogger
@@ -239,22 +238,9 @@ class KSeFInvoiceSender:
 
     def session_status(self):
         if self.session["status"]:
-            raise KSeFSessionError('status already downloaded', None)
-        params = {
-            'pageSize': 10,
-            'sessionType': 'Batch', # 'Online'
-            'referenceNumber': self.session['referenceNumber'],
-            #'dateCreatedFrom': '',
-            #'dateCreatedTo': '',
-            #'dateClosedFrom': '',
-            #'dateClosedTo': '',
-            #'dateModifiedFrom': '',
-            #'dateModifiedTo': '',
-            'statuses[]': ["InProgress" "Succeeded" "Failed" "Cancelled"],
-        }
-        params = urllib.parse.urlencode(params)
+            raise KSeFSessionError('session status already downloaded', None)
         response = requests.get(
-            self.cfg.url+f'/api/v2/sessions?'+params,
+            self.cfg.url+f'/api/v2/sessions/{self.session["referenceNumber"]}',
             headers={
                 "Authorization": f"Bearer {self.access_token}",
             },
@@ -265,11 +251,58 @@ class KSeFInvoiceSender:
             print(response.text)
             return
         data = response.json()
-        if data['sessions'][0]['status']['code'] < 200:
+        if data['status']['code'] < 200:
             pprint.pprint(data)
             return
-        self.session["status"] = data['sessions'][0]
+        self.session["status"] = data
         self.session_save()
+
+    def session_upo(self):
+        if not self.session["status"]:
+            raise KSeFSessionError('session status not downloaded', None)
+        response = requests.get(
+            self.session["status"]["upo"]["pages"][0]["downloadUrl"],
+            timeout=5,
+        )
+        print('status:', response)
+        if response.status_code != 200:
+            print(response.text)
+            return
+        with open(f"{self.cfg.prefix}-session-upo.xml", 'wt') as fp:
+            fp.write(response.text)
+
+    def session_invoices(self):
+        if not self.session["status"]:
+            raise KSeFSessionError('session status not downloaded', None)
+        response = requests.get(
+            self.cfg.url+f'/api/v2/sessions/{self.session["referenceNumber"]}/invoices',
+            headers={
+                "Authorization": f"Bearer {self.access_token}",
+            },
+            timeout=5
+        )
+        print('status:', response)
+        if response.status_code != 200:
+            print(response.text)
+            return
+        data = response.json()
+        self.session["invoices"] = data
+        self.session_save()
+
+        for inv in data["invoices"]:
+            response = requests.get(
+                self.cfg.url+f'/api/v2/sessions/{self.session["referenceNumber"]}/invoices/{inv["referenceNumber"]}/upo',
+                headers={
+                    "Authorization": f"Bearer {self.access_token}",
+                },
+                timeout=5
+            )
+            print('status:', response)
+            if response.status_code != 200:
+                print(inv["referenceNumber"], response.text)
+                return
+            with open(inv["invoiceFileName"]+'.upo.xml', 'wt') as fp:
+                fp.write(response.text)
 
 def main():
     from ksefconfig import Config
@@ -278,15 +311,17 @@ def main():
     cls = KSeFInvoiceSender(cfg)
 
     import getopt
-    opts, args = getopt.getopt(sys.argv[3:], '?zosct')
+    opts, args = getopt.getopt(sys.argv[3:], '?zosctui')
     for o, a in opts:
         if o == '-?':
-            print(sys.argv[0], '-z|-o|-s|-c')
+            print(sys.argv[0], '-z|-o|-s|-c|-u')
             print('-z = zip create/encrypt/split')
             print('-o = session open')
             print('-s = session send')
             print('-c = session close')
-            print('-r = session status')
+            print('-t = session status')
+            print('-u = session upo')
+            print('-i = session invoices metadata')
         if o == '-z':
             cls.zip_create()
         elif o == '-o':
@@ -297,6 +332,10 @@ def main():
             cls.session_close()
         elif o == '-t':
             cls.session_status()
+        elif o == '-u':
+            cls.session_upo()
+        elif o == '-i':
+            cls.session_invoices()
 
 if __name__ == "__main__":
     main()
