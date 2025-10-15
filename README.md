@@ -48,6 +48,9 @@ parametry:
 
 ## Co po autoryzacji ?
 
+fv.py 1 2 5
+- wygenerować przykładowe 5 faktur wystawionych przez firmę 1 dla firmy 2
+
 t-10-session-01-list.py 1 f
 - lista otwrtych sesji
 
@@ -58,6 +61,7 @@ t-50-get-fa-get.py 1 f ksef-number
 - pobranie faktury po numerze KSeF
 
 ## Sesja online
+
 - t-10-session-online.py 1 f -o|-c|-s faktura.xml|-t|-u faktura.xml
 
 znaczenie parametrów:
@@ -76,3 +80,25 @@ znaczenie parametrów:
 Skrypt można wołać wielokrotnie z parametrem -s lub -t lub -u,
 wtedy skrypt będzie wysyłał lub pobierał kolejne informacje,
 jeżeli token autoryzacyjny utraci ważność to należy go odnowić (t-03-auth-06-refresh.py 1 f).
+
+
+- t-10-session-batch.py 1 f -z|-o|-s|-c|-t
+
+znaczenie parametrów:
+
+-z = przygouj dane do transmisji, czyli:
+    * spakuj pliki wysyłane z firmy numer 1 do jednego pliku zip
+    * usun składowe pliku zip
+    * podziel plik zip na mniejsze części i zaszyfruj je
+    * usuń plik zip
+
+-o = otwórz sesję wsadową
+
+-s = wyślij podzielone części pliku do KSeF
+    * usuń każdą poprawnie wysłaną część (status 201)
+
+-c = zakończ sesję wsadową
+
+-t = pobierz status sesji
+
+Jeżeli w którymś momencie jest status 401, wtedy odśwież token autoryzujący (t-03-auth-06-refresh.py 1 f)

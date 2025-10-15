@@ -11,13 +11,13 @@ import zipfile
 import urllib.parse
 import pprint
 
-import rlogger
+#import rlogger
 import requests
 from cryptography import x509
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives import serialization, padding
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives.asymmetric import rsa, padding as apadding
 from cryptography.hazmat.primitives import hashes
 
 
@@ -63,6 +63,7 @@ class KSeFInvoiceSender:
                 'iv': base64.b64encode(os.urandom(16)).decode(),
                 'referenceNumber': None,
                 'batchFile': None,
+                'status': None,
             }
             self.session_save()
 
@@ -79,63 +80,50 @@ class KSeFInvoiceSender:
         with zipfile.ZipFile(f"{self.cfg.prefix}-session.zip",'w', zipfile.ZIP_DEFLATED) as zip:
             for fname in fnames:
                 zip.write(fname)
+                os.unlink(fname)
 
+        crc = hashlib.sha256()
         fileSize = os.path.getsize(f"{self.cfg.prefix}-session.zip")
         # max zip file size = 5GB
         if fileSize > 5*1024*self.MB:
             raise KSeFZipSizeError('total size of xml files is too big', None)
 
-        crc = hashlib.sha256()
-        pad = fileSize % 16
-        if pad:
-            padding_length = 16 - pad
-            pad = bytes([padding_length] * padding_length)
         cipher = Cipher(
             algorithms.AES(base64.b64decode(self.session['symmetric_key'])),
             modes.CBC(base64.b64decode(self.session['iv'])),
             backend=default_backend()
         )
-        encryptor = cipher.encryptor()
-
-        maxblocksize = 100*self.MB # max block size for encryption
-        maxblocksize = 4*1024
-
-        with open(f"{self.cfg.prefix}-session.zip", 'rb') as fi:
-            with open(f"{self.cfg.prefix}-session.aes", 'wb') as fo:
-                while True:
-                    data = fi.read(maxblocksize)
-                    if not data:
-                        break
-                    if len(data) != maxblocksize:
-                        data += pad
-                    crc.update(data)
-                    edata = encryptor.update(data)
-                    fo.write(edata)
-                fo.write(encryptor.finalize())
 
         maxpartsize = 100*self.MB # max part size
         maxpartsize = 4*1024
-        fileParts = []
-        filePartNo = 0
 
-        with open(f"{self.cfg.prefix}-session.aes", 'rb') as fi:
-            while True:
-                data = fi.read(maxpartsize)
-                if not data:
-                    break
-
+        with open(f"{self.cfg.prefix}-session.zip", 'rb') as fi:
+            fileParts = []
+            filePartNo = 0
+            size = 0
+            while size < fileSize:
                 filePartNo += 1
                 with open(f"{self.cfg.prefix}-session.aes.{filePartNo}", 'wb') as fo:
-                    fo.write(data)
+                    data = fi.read(maxpartsize)
+                    crc.update(data)
+                    size += len(data)
 
-                fileParts.append({
-                    'ordinalNumber': filePartNo,
-                    'fileName': f'dokumenty.{filePartNo}',
-                    'fileSize': len(data),
-                    'fileHash': base64.b64encode(hashlib.sha256(data).digest()).decode(),
-                })
+                    padder = padding.PKCS7(algorithms.AES(base64.b64decode(self.session['symmetric_key'])).block_size).padder()
+                    padded_data = padder.update(data) + padder.finalize()
+                    encryptor = cipher.encryptor()
+                    edata = encryptor.update(padded_data)
+                    fo.write(edata)
+                    fo.write(encryptor.finalize())
+
+                    fileParts.append({
+                        'ordinalNumber': filePartNo,
+                        'fileName': f'dokumenty.{filePartNo}',
+                        'fileSize': len(edata),
+                        'fileHash': base64.b64encode(hashlib.sha256(edata).digest()).decode(),
+                    })
 
         self.session.update({
+            'files': fnames,
             'batchFile': {
                 'fileName': 'dokumenty.zip',
                 'fileSize': fileSize,
@@ -144,31 +132,7 @@ class KSeFInvoiceSender:
             },
         })
         self.session_save()
-
-    def session_close(self):
-        if not self.session["referenceNumber"]:
-            raise KSeFSessionError('session is closed', None)
-
-        response = requests.post(
-            f'{self.cfg.url}/api/v2/sessions/batch/{self.session["referenceNumber"]}/close',
-            headers={
-                "Authorization": f"Bearer {self.access_token}",
-            },
-            timeout=15,
-        )
-        print('close:', response)
-        print(response.text)
-        return
-        
-        for filePart in self.session['batchFile']['fileParts']:
-            fname = f"{self.cfg.prefix}-session.zip.{filePart['ordinalNumber']}"
-            os.unlink(fname)
-            fname = fname.replace('.zip.', '.aes.')
-            os.unlink(fname)
-        fname = f"{self.cfg.prefix}-session.zip"
-        os.unlink(fname)
-        fname = f"{self.cfg.prefix}-session.json"
-        os.unlink(fname)
+        os.unlink(f"{self.cfg.prefix}-session.zip")
 
     def session_open(self):
         if self.session["referenceNumber"]:
@@ -185,8 +149,8 @@ class KSeFInvoiceSender:
 
         encrypted_symmetric_key = public_key.encrypt(
             base64.b64decode(self.session['symmetric_key']),
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            apadding.OAEP(
+                mgf=apadding.MGF1(algorithm=hashes.SHA256()),
                 algorithm=hashes.SHA256(),
                 label=None,
             ),
@@ -233,9 +197,10 @@ class KSeFInvoiceSender:
             ordinalNumber = part['ordinalNumber']
             filePart = self.session['batchFile']['fileParts'][ordinalNumber-1]
             assert filePart['ordinalNumber'] == ordinalNumber
+            if not os.path.exists(f"{self.cfg.prefix}-session.aes.{ordinalNumber}"):
+                continue
             with open(f"{self.cfg.prefix}-session.aes.{ordinalNumber}", 'rb') as fp:
                 data = fp.read()
-            print(len(data), part)
             if m == 'POST':
                 response = requests.post(
                     part['url'],
@@ -252,9 +217,29 @@ class KSeFInvoiceSender:
                 )
             else:
                 raise IOError(2, 'unsupported method')
-            print('send part:', filePart, response)
+            print('send:', filePart, response)
+            if response.status_code != 201:
+                print(response.text)
+            else:
+                os.unlink(f"{self.cfg.prefix}-session.aes.{ordinalNumber}")
+
+    def session_close(self):
+        if not self.session["referenceNumber"]:
+            raise KSeFSessionError('session is closed', None)
+
+        response = requests.post(
+            f'{self.cfg.url}/api/v2/sessions/batch/{self.session["referenceNumber"]}/close',
+            headers={
+                "Authorization": f"Bearer {self.access_token}",
+            },
+            timeout=15,
+        )
+        print('close:', response)
+        print(response.text)
 
     def session_status(self):
+        if self.session["status"]:
+            raise KSeFSessionError('status already downloaded', None)
         params = {
             'pageSize': 10,
             'sessionType': 'Batch', # 'Online'
@@ -276,7 +261,15 @@ class KSeFInvoiceSender:
             timeout=5
         )
         print('status:', response)
-        print(response.json())
+        if response.status_code != 200:
+            print(response.text)
+            return
+        data = response.json()
+        if data['sessions'][0]['status']['code'] < 200:
+            pprint.pprint(data)
+            return
+        self.session["status"] = data['sessions'][0]
+        self.session_save()
 
 def main():
     from ksefconfig import Config
