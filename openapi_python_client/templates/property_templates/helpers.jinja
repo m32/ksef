@@ -1,0 +1,10 @@
+{% macro guarded_statement(property, source, statement) %}
+{# If the property can be UNSET or None, this macro returns the provided statement guarded by an if which will check
+ for those invalid values. Otherwise, it returns the statement unmodified. #}
+{% if property.required %}
+{{ statement }}
+{% else %}
+if not isinstance({{ source }}, Unset):
+    {{ statement }}
+{% endif %}
+{% endmacro %}

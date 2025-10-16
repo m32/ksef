@@ -1,0 +1,37 @@
+{% macro construct_function(property, source) %}
+{{ property.class_info.name }}.from_dict({{ source }})
+{% endmacro %}
+
+{% from "property_templates/property_macros.py.jinja" import construct_template %}
+
+{% macro construct(property, source) %}
+{{ construct_template(construct_function, property, source) }}
+{% endmacro %}
+
+{% macro check_type_for_construct(property, source) %}isinstance({{ source }}, dict){% endmacro %}
+
+{% macro transform(property, source, destination, declare_type=True) %}
+{% set transformed = source + ".to_dict()" %}
+{% set type_string = property.get_type_string(json=True) %}
+{% if property.required %}
+{{ destination }} = {{ transformed }}
+{%- else %}
+{{ destination }}{% if declare_type %}: {{ type_string }}{% endif %} = UNSET
+if not isinstance({{ source }}, Unset):
+    {{ destination }} = {{ transformed }}
+{%- endif %}
+{% endmacro %}
+
+{% macro transform_multipart_body(property) %}
+{% set transformed = property.python_name + ".to_multipart()" %}
+{% if property.required %}
+_kwargs["files"] = {{ transformed }}
+{%- else %}
+if not isinstance({{ property.python_name }}, Unset):
+    _kwargs["files"] = {{ transformed }}
+{%- endif %}
+{% endmacro %}
+
+{% macro multipart(property, source, name) %}
+files.append(({{ name }}, (None, json.dumps( {{source}}.to_dict()).encode(), "application/json")))
+{% endmacro %}

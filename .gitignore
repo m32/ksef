@@ -1,6 +1,6 @@
 __pycache__/
 schematy-dokumentow/
-ksefproject/
+openapi_python_client_old/
 
 # certificates
 *.p12
