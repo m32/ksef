@@ -10,7 +10,7 @@ import glob
 import zipfile
 import pprint
 
-#import rlogger
+import rlogger
 import requests
 from cryptography import x509
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -94,7 +94,7 @@ class KSeFInvoiceSender:
         )
 
         maxpartsize = 100*self.MB # max part size
-        maxpartsize = 4*1024
+        #maxpartsize = 4*1024
 
         with open(f"{self.cfg.prefix}-session.zip", 'rb') as fi:
             fileParts = []
