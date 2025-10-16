@@ -3,4 +3,4 @@ rm -rf ksefproject
 vpython3 x-openapi-python-client-git.py \
 generate \
 --path openapi.json \
---config ksef.yaml 2>errors-ksef
+--config ksef.yaml
