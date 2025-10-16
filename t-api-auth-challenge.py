@@ -7,14 +7,11 @@ from ksefconfig import Config
 
 def main():
     cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
-    clt = Client()
-    resp = post_api_v2_auth_challenge
-    resp = requests.post(
-        cfg.url+'/api/v2/auth/challenge',
-        timeout=5
-    )
+    clt = Client(cfg.url)
+    resp = post_api_v2_auth_challenge.sync(client=clt)
     print('post_api_v2_auth_challenge:', resp)
-    data = resp.json()
+
+    data = resp.to_dict()
     print('challenge', data['challenge'])
     policy = '''\
   <AuthorizationPolicy>
