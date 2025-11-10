@@ -2,4 +2,5 @@ cryptography
 requests
 lxml
 signxml
+asn1crypto
 python-dateutil
