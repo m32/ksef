@@ -16,7 +16,8 @@ def main():
     clt = AuthenticatedClient(cfg.url, token=auth['refreshToken']['token'])
     resp = post_api_v2_auth_token_refresh.sync(client=clt)
 
-    with open(f'{cfg.prefix}-auth.xml', 'wt') as fp:
-        fp.write(json.dumps(resp.to_dict(), indent=4))
+    with open(f'{cfg.prefix}-auth.json', 'wt') as fp:
+        auth.update(resp.to_dict())
+        fp.write(json.dumps(auth, indent=4))
 
 main()
