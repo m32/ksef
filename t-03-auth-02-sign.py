@@ -51,6 +51,12 @@ def main():
                     tosign,
                     ec.ECDSA(getattr(hashes, algosig.upper())())
                 )
+                from asn1crypto import core
+                length = 32 #=256/8 czyli aes-256 TODO zamienić na zmienną zależną od długości klucza
+                d = core.load(sig)
+                dr = d[0].native.to_bytes(length, byteorder="big")
+                ds = d[1].native.to_bytes(length, byteorder="big")
+                sig = dr+ds
             return sig
 
         cert = p12pc
