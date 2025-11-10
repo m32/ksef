@@ -42,6 +42,9 @@ kroki które należy wykonać by uzyskać tokeny zezwalające na pracę z KSeF:
 odnowić token autoryzacyjny po jego unieważnieniu?
 - t-03-auth-06-refresh.py 1 f
 
+alternatywne uwierzytelnienie za pomocą tokenu  (ważne do końca 2026)
+- t-api-auth-token.py 1 f
+
 parametry:
 - 1 f = oznacza pracę z uprawnieniami firmy
 - 1 o = oznacza pracę z uprawnieniami osoby

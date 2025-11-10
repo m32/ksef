@@ -13,6 +13,7 @@ class Config(configparser.ConfigParser):
         self.osoba = osoba
         self.version = self.get('ksef', 'version')
         self.url = self.get(self.version, 'url')
+        self.kseftoken = self.get(f'firma{firma}', 'token', fallback=None)
         self.ksefcert = self.get(self.version, 'cert', fallback=None)
         self.ksefcertvalidfrom = self.get(self.version, 'validFrom', fallback=None)
         self.ksefcertvalidto = self.get(self.version, 'validTo', fallback=None)
