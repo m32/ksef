@@ -1,5 +1,5 @@
 cryptography
 requests
 lxml
-endesive
+signxml
 python-dateutil
