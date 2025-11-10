@@ -29,8 +29,9 @@ def main():
         data = fp.read()
 
     p12pk, p12pc, p12oc = load_pfx(cfg.prefix+'.p12', '1234')
-
-    if 1:
+    useenveloped = False
+    useendesive = True
+    if useendesive:
         assert isinstance(p12pk, rsa.RSAPrivateKey) or isinstance(p12pk, ec.EllipticCurvePrivateKey)
         assert isinstance(p12pc, x509.Certificate)
         if isinstance(p12pk, rsa.RSAPrivateKey):
@@ -56,17 +57,28 @@ def main():
         certcontent = cert.public_bytes(serialization.Encoding.DER)
 
         cls = xades.BES()
-        doc = cls.enveloping(
-            "dokument.xml",
-            data,
-            "application/xml",
-            cert,
-            certcontent,
-            signproc,
-            False,
-            True,
-            signaturemethod=signaturemethod
-        )
+        if useenveloped:
+            doc = cls.enveloped(
+                data,
+                cert,
+                certcontent,
+                signproc,
+                None,
+                None,
+                signaturemethod=signaturemethod
+            )
+        else:
+            doc = cls.enveloping(
+                "dokument.xml",
+                data,
+                "application/xml",
+                cert,
+                certcontent,
+                signproc,
+                False,
+                True,
+                signaturemethod=signaturemethod
+            )
         data = etree.tostring(doc, encoding="UTF-8", xml_declaration=True, standalone=False)
     else:
         if isinstance(p12pk, rsa.RSAPrivateKey):
@@ -79,7 +91,7 @@ def main():
         root = etree.fromstring(data)
         signed_root = XMLSigner(
             signature_algorithm=signature_algorithm,
-            method=SignatureConstructionMethod.enveloping
+            method=SignatureConstructionMethod.enveloped if useenveloped else SignatureConstructionMethod.enveloping
         ).sign(
             root, key=p12pk, cert=[p12pc]
         )
