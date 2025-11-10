@@ -61,7 +61,7 @@ def main():
         signproc,
         False,
         True,
-        signaturemethod='http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256'
+        signaturemethod=signaturemethod
     )
     data = etree.tostring(doc, encoding="UTF-8", xml_declaration=True, standalone=False)
 
