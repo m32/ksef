@@ -1,4 +1,4 @@
-    # ksef
+# ksef
 Jak dobrać się do KSeF 2.0 ?
 
 Na ten moment to zestaw plików pokazujących jak ...:
