@@ -30,7 +30,7 @@ def main():
     with open(f'{cfg.prefix}-auth.xml', 'rb') as fp:
         data = fp.read()
 
-    p12pk, p12pc, p12oc = load_pfx(fnamekey+'.p12', '12345678')
+    p12pk, p12pc, p12oc = load_pfx(cfg.prefix+'.p12', '12345678')
 
     assert isinstance(p12pk, rsa.RSAPrivateKey) or isinstance(p12pk, ec.EllipticCurvePrivateKey)
     assert isinstance(p12pc, x509.Certificate)
