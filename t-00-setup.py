@@ -4,6 +4,7 @@ import random
 import datetime
 import base64
 import requests
+import dateutil
 
 import sys
 from ksefconfig import Config
@@ -74,7 +75,7 @@ def main():
     dtnow = datetime.datetime.now(datetime.timezone.utc)
     dtdiff = datetime.timedelta(hours=1)
     if cfg.ksefcertvalidto is not None:
-        dt = datetime.datetime.fromisoformat(cfg.ksefcertvalidto)
+        dt = dateutil.parser.isoparse(cfg.ksefcertvalidto)
         if dt < dtnow - dtdiff or cfg.ksefcert is not None:
             return
 

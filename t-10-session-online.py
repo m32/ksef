@@ -7,6 +7,7 @@ import datetime
 import hashlib
 import base64
 import requests
+import dateutil
 from cryptography import x509
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import serialization
@@ -44,7 +45,7 @@ class KSeFInvoiceSender:
                 session = json.loads(fp.read())
             dtnow = datetime.datetime.now(datetime.timezone.utc)
             dtdiff = datetime.timedelta(minutes=15)
-            dt = datetime.datetime.fromisoformat(session['validUntil'])
+            dt = dateutil.parser.isoparse(session['validUntil'])
             if dt < dtnow - dtdiff:
                 session = None
         else:
