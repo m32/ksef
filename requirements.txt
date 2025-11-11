@@ -3,4 +3,5 @@ requests
 lxml
 signxml
 asn1crypto
+endesive
 python-dateutil
