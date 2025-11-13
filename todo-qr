@@ -1,0 +1,23 @@
+https://4programmers.net/Forum/Nietuzinkowe_tematy/355933-krajowy_system_e_faktur?p=2009162#id2009162
+
+W kodzie QR2 ma być m.in. NIP sprzedawcy oraz typ kontekstu i kontekst... ale czego?
+certyfikatu? wysyłki faktury, jaką wykonam (a przecież fakturę mogę wysłać i jako
+jednostka i jako główny NIP)? Czegoś nie widzę, czy to jest faktycznie niejasne?
+
+(piszę osobno ze względu na objętość)
+
+Ja rozumiem to tak (po nitce do kłębka):
+Kod II (https://github.com/CIRFMF/ksef-docs/blob/main/kody-qr.md)
+"(...) składa się z" (min.) :
+a) typu identyfikatora kontekstu: "Nip", "InternalId", "NipVatUe", "PeppolId"
+b) wartości identyfikatora kontekstu,
+c) NIP-u sprzedawcy,
+d) numeru seryjnego certyfikatu KSeF.
+Tutaj (https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md) czytam:
+
+"Kontekst logowania – określa podmiot, w imieniu którego wykonywane będą operacje w systemie(...)"
+wydaje mi się więc, że:
+a), b) i c) wynikać powinny z danych związanych z challange, gdzie:
+a) i b) z authSubjectIdentifierType i authContextIdentifier
+c) z contextIdentifierValue
+d) może wynikać tylko z certyfikatu wystawcy (contextIdentifierValue) bo "pełni funkcję potwierdzenia autentyczności wystawcy" (z opisu dla Kod II).
