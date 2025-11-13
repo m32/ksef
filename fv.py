@@ -1,5 +1,6 @@
 #!/usr/bin/env vpython3
 import sys
+import time
 from random import randint
 import datetime
 from dateutil.tz import tzlocal, tzutc
@@ -107,6 +108,7 @@ class Main:
         n = int(sys.argv[3])
         for i in range(n):
             self.faktura(f1, f2)
+            time.sleep(2)
 
 def main():
     cls = Main()
