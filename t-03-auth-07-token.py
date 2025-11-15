@@ -26,7 +26,7 @@ def timegm(tuple):
     return seconds
 
 def main():
-    cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
+    cfg = Config(int(sys.argv[1]))
 
     if not os.path.exists('certificates.json'):
         # 1. certificate
