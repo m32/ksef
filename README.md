@@ -44,6 +44,7 @@ odnowić token autoryzacyjny po jego unieważnieniu?
 
 alternatywne uwierzytelnienie za pomocą tokenu  (ważne do końca 2026)
 - t-api-auth-token.py 1 f
+- t-03-auth-07-token.py 1
 
 parametry:
 - 1 f = oznacza pracę z uprawnieniami firmy
