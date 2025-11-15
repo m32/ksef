@@ -21,7 +21,7 @@ def main():
     fnamekey = sys.argv[1]
     fnamexml = sys.argv[2]
 
-    p12pk, p12pc, p12oc = load_pfx(fnamekey+'.p12', '12345678')
+    p12pk, p12pc, p12oc = load_pfx(fnamekey+'.p12', '1234')
 
     if isinstance(p12pk, rsa.RSAPrivateKey):
         signature_algorithm = SignatureMethod.RSA_SHA256
@@ -31,12 +31,12 @@ def main():
     with open(fnamexml, 'rb') as fp:
         root = etree.fromstring(fp.read())
     signed_root = XMLSigner(
-        signature_algorithm=SignatureMethod.ECDSA_SHA256,
+        #signature_algorithm=SignatureMethod.ECDSA_SHA256,
         method=SignatureConstructionMethod.enveloping
     ).sign(
         root, key=p12pk, cert=[p12pc]
     )
-    with open('demo.xml.xades', 'wb') as fp:
+    with open(fnamexml+'.xades', 'wb') as fp:
         data = etree.tostring(signed_root, encoding="UTF-8", xml_declaration=True, standalone=False)
         fp.write(data)
     verified_data = XMLVerifier().verify(signed_root).signed_xml

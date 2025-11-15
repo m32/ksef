@@ -22,7 +22,7 @@ def main():
     fnamekey = sys.argv[1]
     fnamexml = sys.argv[2]
 
-    p12pk, p12pc, p12oc = load_pfx(fnamekey+'.p12', '12345678')
+    p12pk, p12pc, p12oc = load_pfx(fnamekey+'.p12', '1234')
 
     assert isinstance(p12pk, rsa.RSAPrivateKey) or isinstance(p12pk, ec.EllipticCurvePrivateKey)
     assert isinstance(p12pc, x509.Certificate)
