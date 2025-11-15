@@ -3,6 +3,8 @@ schematy-dokumentow/
 openapi_python_client_old/
 
 # certificates
+certificates.json
+
 *.p12
 *.pem
 *.key.pem

@@ -1,4 +1,7 @@
 #!/usr/bin/env vpython3
+import os
+import sys
+#import rlogger
 import base64
 import calendar
 import datetime
@@ -23,7 +26,6 @@ from ksef.models import (
     authorization_policy,
 )
 
-import sys
 from ksefconfig import Config
 
 def main():
@@ -32,12 +34,26 @@ def main():
     if not cfg.kseftoken:
         raise AssertionError('Cannot authenticate without a Ksef token')
 
-    # 1. certificate
-    resp = get_api_v2_security_public_key_certificates.sync(client=clt)
-    print('*' * 20, 'get_api_v2_security_public_key_certificates')
-    print(resp)
-    data_crt = [r.to_dict() for r in resp]
-    crt = next(e['certificate'] for e in data_crt if 'KsefTokenEncryption' in e['usage'])
+    if not os.path.exists('certificates.json'):
+        # 1. certificate
+        url = cfg.url+"/api/v2/security/public-key-certificates"
+        resp = requests.get(
+            url,
+            timeout=15
+        )
+        print('*' * 20, url)
+        print(resp)
+        if resp.status_code != 200:
+            print(f'unhandled response: {response}')
+            return
+        data = resp.json()
+        with open('certificates.json', 'wt') as fp:
+            fp.write(json.dumps(data))
+    else:
+        with open('certificates.json', 'rt') as fp:
+            data = json.loads(fp.read())
+
+    crt = next(e['certificate'] for e in data if 'KsefTokenEncryption' in e['usage'])
     crt = f'-----BEGIN CERTIFICATE-----\n{crt}\n-----END CERTIFICATE-----'
     certificate = x509.load_pem_x509_certificate(crt.encode('utf-8'))
     public_key = certificate.public_key()
@@ -46,11 +62,12 @@ def main():
     resp = post_api_v2_auth_challenge.sync(client=clt)
     print('*'*20, 'post_api_v2_auth_challenge')
     print(resp)
-    data1 = resp.to_dict()
+    datachallenge = resp.to_dict()
 
     # 3. token
-    t = datetime.datetime.fromisoformat(data1['timestamp'])
-    t = int((calendar.timegm(t.timetuple()) * 1000) + (t.microsecond / 1000))
+    dt = datetime.datetime.fromisoformat(datachallenge['timestamp'])
+    t = int((calendar.timegm(dt.timetuple()) * 1000) + (dt.microsecond / 1000))
+    print('*'*5, datachallenge['timestamp'], dt, dt.microsecond, t)
     token = f"{cfg.kseftoken}|{t}".encode('utf-8')
 
     encrypted_token = public_key.encrypt(
@@ -61,16 +78,19 @@ def main():
             label=None,
         ),
     )
+    body=init_token_authentication_request.InitTokenAuthenticationRequest(
+        challenge=datachallenge['challenge'],
+        context_identifier=authentication_context_identifier.AuthenticationContextIdentifier(
+            type_=authentication_context_identifier_type.AuthenticationContextIdentifierType.NIP,
+            value=cfg.nip
+        ),
+        encrypted_token=base64.b64encode(encrypted_token).decode(),
+        #authorization_policy=,
+    )
+    print('*'*20, 'body')
+    print(body)
     resp = post_api_v2_auth_ksef_token.sync(client=clt,
-        body=init_token_authentication_request.InitTokenAuthenticationRequest(
-            challenge=data1['challenge'],
-            context_identifier=authentication_context_identifier.AuthenticationContextIdentifier(
-                type_=authentication_context_identifier_type.AuthenticationContextIdentifierType.NIP,
-                value=cfg.nip
-            ),
-            encrypted_token=base64.b64encode(encrypted_token).decode(),
-            #authorization_policy=,
-        )
+        body=body
     )
     print('*'*20, 'post_api_v2_auth_ksef_token')
     print(resp)
@@ -92,7 +112,7 @@ def main():
         status = data3['status']['code']
 
     if status != 200:  # Not Authenticated
-        raise AssertionError(f'Authentication failed, status: {status} description: {data3["status"]['description']}')
+        raise AssertionError(f'Authentication failed, status: {status} description: {data3["status"]["description"]}')
 
     # 4. Authenticated
     resp = post_api_v2_auth_token_redeem.sync(client=clt)
