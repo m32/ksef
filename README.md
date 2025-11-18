@@ -64,7 +64,7 @@ t-50-get-fa-list.py 1 f
 t-50-get-fa-get.py 1 f ksef-number
 - pobranie faktury po numerze KSeF
 
-t-00-setup.py 1 f
+t-50-get-fa-package.py 1 f
 - pobranie paczki faktur z ostatnich 30 dni jako archiwum zip
 
 ## Sesja online
