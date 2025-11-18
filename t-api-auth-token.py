@@ -3,7 +3,7 @@ import os
 import sys
 #import rlogger
 import base64
-import calendar
+#import calendar
 import datetime
 import json
 
@@ -34,29 +34,7 @@ def main():
     if not cfg.kseftoken:
         raise AssertionError('Cannot authenticate without a Ksef token')
 
-    if not os.path.exists('certificates.json'):
-        # 1. certificate
-        url = cfg.url+"/api/v2/security/public-key-certificates"
-        resp = requests.get(
-            url,
-            timeout=15
-        )
-        print('*' * 20, url)
-        print(resp)
-        if resp.status_code != 200:
-            print(f'unhandled response: {response}')
-            return
-        data = resp.json()
-        with open('certificates.json', 'wt') as fp:
-            fp.write(json.dumps(data))
-    else:
-        with open('certificates.json', 'rt') as fp:
-            data = json.loads(fp.read())
-
-    crt = next(e['certificate'] for e in data if 'KsefTokenEncryption' in e['usage'])
-    crt = f'-----BEGIN CERTIFICATE-----\n{crt}\n-----END CERTIFICATE-----'
-    certificate = x509.load_pem_x509_certificate(crt.encode('utf-8'))
-    public_key = certificate.public_key()
+    certificate, public_key = cfg.getcertificte(True)
 
     # 2. challenge
     resp = post_api_v2_auth_challenge.sync(client=clt)
@@ -65,9 +43,10 @@ def main():
     datachallenge = resp.to_dict()
 
     # 3. token
-    dt = datetime.datetime.fromisoformat(datachallenge['timestamp'])
-    t = int((calendar.timegm(dt.timetuple()) * 1000) + (dt.microsecond / 1000))
-    print('*'*5, datachallenge['timestamp'], dt, dt.microsecond, t)
+    dt = dateutil.parser.isoparse(datachallenge['timestamp'])
+    t = int(dt.timestamp()*1000)
+    #dt = datetime.datetime.fromisoformat(datachallenge['timestamp'])
+    #t = int((calendar.timegm(dt.timetuple()) * 1000) + (dt.microsecond / 1000))
     token = f"{cfg.kseftoken}|{t}".encode('utf-8')
 
     encrypted_token = public_key.encrypt(

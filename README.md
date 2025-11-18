@@ -9,10 +9,13 @@ ksef.ini:
 ksefconfig.py, plik ten jest importowany przez pozostałe pliki, a wczytuje konfigurację z pliku ksef.ini
 
 t-00-setup.py
-- pobrać brakujące dane i wypełnić nimi plik ksef.ini
+- uzupełnić plik ksef.ini (nip/pesel)
+- pobrać certyfikaty ksef używane w innych plikach
+- zapisać certyfikaty w pliku zależnym od testowanej wersji  demo/test/prod
 
 t-01-cert-make.py 1
 - wygenerować certyfikat (selfsigned) i wypełnić wymagane pola przez KSeF dla firmy numer 1
+- zapisać w pl
 
 t-02-test-data-firma-01-create.py 1
 - utworzyć firmę numer 1 w KSef

@@ -1,3 +1,4 @@
+#!/usr/bin/env vpython3
 import base64
 import datetime
 from datetime import time, timedelta
@@ -18,12 +19,6 @@ from cryptography.hazmat.primitives.ciphers.base import CipherContext
 import zipfile
 from pathlib import Path
 import io
-
-def get_ksef_public_key(cfg):
-    cert_bytes = base64.b64decode(cfg.ksefcert)
-    certificate = x509.load_der_x509_certificate(cert_bytes)
-    public_key = certificate.public_key()
-    return public_key
 
 def ensure_output_dir(path: Path) -> Path:
     path.mkdir(parents=True, exist_ok=True)
@@ -58,7 +53,7 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     #symmetric_encryption_key = api_security.get_ksef_public_key_from_file(filename=os.path.join(script_dir,'ksef','ksef_public_key_certificates.json'), usage="SymmetricKeyEncryption")
-    symmetric_encryption_key = get_ksef_public_key(cfg)
+    symmetric_encryption_key = cfg.getcertificte(False)[1]
 
     #tutaj pobierz token dostępu
     #token_manager_instance = token_manager.TokenManager(ksef_config_file='ksef_conf.json')
@@ -69,7 +64,7 @@ def main():
 
     headers = {
         #"Authorization": f"Bearer {access_token.token}"
-        "Authorization": f"Bearer {auth["accessToken"]["token"]}",
+        "Authorization": f"Bearer {auth['accessToken']['token']}",
     }
 
     data_od = datetime.datetime.now() - timedelta(days=30)

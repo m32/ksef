@@ -28,28 +28,7 @@ def timegm(tuple):
 def main():
     cfg = Config(int(sys.argv[1]))
 
-    if not os.path.exists('certificates.json'):
-        # 1. certificate
-        url = cfg.url+"/api/v2/security/public-key-certificates"
-        resp = requests.get(
-            url,
-            timeout=15
-        )
-        print('*' * 20, url)
-        print(resp)
-        if resp.status_code != 200:
-            print(f'unhandled response: {response}')
-            return
-        data = resp.json()
-    else:
-        with open('certificates.json', 'rt') as fp:
-            data = json.loads(fp.read())
-    with open('certificates.json', 'wt') as fp:
-        fp.write(json.dumps(data))
-    crt = next(e['certificate'] for e in data if 'KsefTokenEncryption' in e['usage'])
-    crt = f'-----BEGIN CERTIFICATE-----\n{crt}\n-----END CERTIFICATE-----'
-    certificate = x509.load_pem_x509_certificate(crt.encode('utf-8'))
-    public_key = certificate.public_key()
+    certificate, public_key = cfg.getcertificte(True)
 
     url = cfg.url+'/api/v2/auth/challenge'
     resp = requests.post(

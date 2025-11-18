@@ -2,8 +2,10 @@ __pycache__/
 schematy-dokumentow/
 openapi_python_client_old/
 
+endesive
+
 # certificates
-certificates.json
+certificates-*.json
 
 *.p12
 *.pem

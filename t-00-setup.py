@@ -1,5 +1,6 @@
 #!/usr/bin/env vpython3
 # -*- coding: utf-8 -*-
+import json
 import random
 import datetime
 import base64
@@ -72,37 +73,29 @@ def pesel(dt=None, sex=0, rnd=0):
 def main():
     cfg = Config(1, False, True)
 
-    dtnow = datetime.datetime.now(datetime.timezone.utc)
-    dtdiff = datetime.timedelta(hours=1)
-    if cfg.ksefcertvalidto is not None:
-        dt = dateutil.parser.isoparse(cfg.ksefcertvalidto)
-        if dt < dtnow - dtdiff or cfg.ksefcert is not None:
+    if not cfg.certificates:
+        resp = requests.get(
+            f"{cfg.url}/api/v2/security/public-key-certificates",
+            timeout=10
+        )
+        if resp.status_code != 200:
+            print(f'unhandled response: {response}')
             return
 
-    response = requests.get(
-        f"{cfg.url}/api/v2/security/public-key-certificates",
-        timeout=10
-    )
-    if response.status_code != 200:
-        print(f'unhandled response: {response}')
-        return
+        with open(f'certificates-{cfg.version}.json', 'wt') as fp:
+            fp.write(json.dumps(resp.json()))
 
-    certificates = response.json()
-    for cert in certificates:
-        if "SymmetricKeyEncryption" not in cert["usage"]:
-            continue
-        cfg.set(cfg.version, 'cert', cert["certificate"])
-        cfg.set(cfg.version, 'validFrom', cert["validFrom"])
-        cfg.set(cfg.version, 'validTo', cert["validTo"])
-        break
-
-    if not cfg.nip:
+    if not cfg.get(f'firma1', 'nip'):
         cfg.set('firma1', 'nip', nip())
+    if not cfg.get(f'firma1', 'pesel'):
         cfg.set('firma1', 'pesel', pesel(datetime.datetime(1950, 1, 12), 1))
 
+    if not cfg.get(f'firma2', 'nip'):
         cfg.set('firma2', 'nip', nip())
+    if not cfg.get(f'firma1', 'pesel'):
         cfg.set('firma2', 'pesel', pesel(datetime.datetime(2001, 2, 1), 1))
 
     with open('ksef.ini', 'wt') as fp:
         cfg.write(fp)
+
 main()
