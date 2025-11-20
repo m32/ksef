@@ -9,31 +9,31 @@ def main():
     cfg = Config(int(sys.argv[1]))
     perms = [
         {
-            "description": "ok",
+            "description": "InvoiceRead",
             "premissionType": "InvoiceRead",
         },
         {
-            "description": "ok",
+            "description": "InvoiceWrite",
             "premissionType": "InvoiceWrite",
         },
         {
-            "description": "ok",
+            "description": "Introspection",
             "premissionType": "Introspection",
         },
         {
-            "description": "ok",
+            "description": "CredentialsRead",
             "premissionType": "CredentialsRead",
         },
         {
-            "description": "ok",
+            "description": "CredentialsManage",
             "premissionType": "CredentialsManage",
         },
         {
-            "description": "ok",
+            "description": "EnforcementOperations",
             "premissionType": "EnforcementOperations",
         },
         {
-            "description": "ok",
+            "description": "SubunitManage",
             "premissionType": "SubunitManage",
         },
     ]

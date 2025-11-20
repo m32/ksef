@@ -123,9 +123,7 @@ class KSeFInvoiceSender:
             os.unlink(f"{self.cfg.prefix}-session.json")
 
     def get_ksef_public_key(self):
-        cert_bytes = base64.b64decode(self.cfg.ksefcert)
-        certificate = x509.load_der_x509_certificate(cert_bytes)
-        public_key = certificate.public_key()
+        certificate, public_key = self.cfg.getcertificte(False)
         return public_key
 
     def calculate_hash(self, data):
