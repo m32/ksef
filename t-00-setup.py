@@ -71,6 +71,7 @@ def pesel(dt=None, sex=0, rnd=0):
 
 
 def main():
+    firma = int(sys.argv[1], 10)
     cfg = Config(1, False, True)
 
     if not cfg.certificates:
@@ -85,15 +86,10 @@ def main():
         with open(f'certificates-{cfg.version}.json', 'wt') as fp:
             fp.write(json.dumps(resp.json()))
 
-    if not cfg.get(f'firma1', 'nip'):
-        cfg.set('firma1', 'nip', nip())
-    if not cfg.get(f'firma1', 'pesel'):
-        cfg.set('firma1', 'pesel', pesel(datetime.datetime(1950, 1, 12), 1))
-
-    if not cfg.get(f'firma2', 'nip'):
-        cfg.set('firma2', 'nip', nip())
-    if not cfg.get(f'firma1', 'pesel'):
-        cfg.set('firma2', 'pesel', pesel(datetime.datetime(2001, 2, 1), 1))
+    if not cfg.get(f'firma{firma}', 'nip'):
+        cfg.set('firma{firma}', 'nip', nip())
+    if not cfg.get(f'firma{firma}', 'pesel'):
+        cfg.set('firma{firma}', 'pesel', pesel(datetime.datetime(1950, 1, 12), 1))
 
     with open('ksef.ini', 'wt') as fp:
         cfg.write(fp)
