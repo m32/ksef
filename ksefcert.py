@@ -83,8 +83,8 @@ class Certificate(object):
     def cert_save(self, fname: str, data: x509.Certificate) -> None:
         with open(fname, "wb") as f:
             f.write(data.public_bytes(serialization.Encoding.PEM))
-        with open(fname + ".cer", "wb") as f:
-            f.write(data.public_bytes(serialization.Encoding.DER))
+        #with open(fname + ".cer", "wb") as f:
+        #    f.write(data.public_bytes(serialization.Encoding.DER))
 
     def csr_load(self, fname: str) -> x509.CertificateSigningRequest:
         with open(fname, "rb") as f:
