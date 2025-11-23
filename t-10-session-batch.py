@@ -116,7 +116,7 @@ class KSeFInvoiceSender:
 
                     fileParts.append({
                         'ordinalNumber': filePartNo,
-                        'fileName': f'dokumenty.{filePartNo}',
+                        #'fileName': f'dokumenty.{filePartNo}', # w dokumentacji oznaczony jako deprecated
                         'fileSize': len(edata),
                         'fileHash': base64.b64encode(hashlib.sha256(edata).digest()).decode(),
                     })
@@ -124,7 +124,7 @@ class KSeFInvoiceSender:
         self.session.update({
             'files': fnames,
             'batchFile': {
-                'fileName': 'dokumenty.zip',
+                #'fileName': 'dokumenty.zip', # nie ma takiego pola w dokumentacji
                 'fileSize': fileSize,
                 'fileHash': base64.b64encode(crc.digest()).decode(),
                 'fileParts': fileParts,
