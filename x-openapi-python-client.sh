@@ -6,7 +6,7 @@ rm -rf ksefproject
 openapi-python-client \
 generate \
 --config ksef.yaml \
---path openapi.json \
+--path open-api.json \
 2>x-openapi-python-client-log-2
 }
 
