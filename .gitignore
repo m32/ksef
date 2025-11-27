@@ -4,6 +4,10 @@ openapi_python_client_old/
 
 endesive
 
+api/
+config/
+a-*.py
+
 # certificates
 certificates-*.json
 
