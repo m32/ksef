@@ -31,7 +31,7 @@ class PersonPermissionsGrantRequest:
                 | Pesel | 11 cyfrowy numer PESEL |
                 | Fingerprint | Odcisk palca certyfikatu |
             permissions (list[PersonPermissionType]): Lista nadawanych uprawnień. Każda wartość może wystąpić tylko raz.
-            description (str): Opis nadawanych uprawnień.
+            description (str): Opis uprawnienia
      """
 
     subject_identifier: 'PersonPermissionsSubjectIdentifier'

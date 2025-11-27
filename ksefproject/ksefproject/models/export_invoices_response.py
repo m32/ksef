@@ -20,23 +20,23 @@ T = TypeVar("T", bound="ExportInvoicesResponse")
 class ExportInvoicesResponse:
     """ 
         Attributes:
-            operation_reference_number (str): Numer referencyjny operacji.
+            reference_number (str): Numer referencyjny.
      """
 
-    operation_reference_number: str
+    reference_number: str
 
 
 
 
 
     def to_dict(self) -> dict[str, Any]:
-        operation_reference_number = self.operation_reference_number
+        reference_number = self.reference_number
 
 
         field_dict: dict[str, Any] = {}
 
         field_dict.update({
-            "operationReferenceNumber": operation_reference_number,
+            "referenceNumber": reference_number,
         })
 
         return field_dict
@@ -46,10 +46,10 @@ class ExportInvoicesResponse:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        operation_reference_number = d.pop("operationReferenceNumber")
+        reference_number = d.pop("referenceNumber")
 
         export_invoices_response = cls(
-            operation_reference_number=operation_reference_number,
+            reference_number=reference_number,
         )
 
         return export_invoices_response

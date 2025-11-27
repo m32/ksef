@@ -23,7 +23,7 @@ T = TypeVar("T", bound="AuthenticationInitResponse")
 class AuthenticationInitResponse:
     """ 
         Attributes:
-            reference_number (str): Numer referencyjny operacji uwierzytelnienia.
+            reference_number (str): Numer referencyjny.
             authentication_token (TokenInfo):
      """
 

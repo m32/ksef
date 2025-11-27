@@ -89,10 +89,31 @@ def sync_detailed(
 
      Rozpoczyna asynchroniczny proces wyszukiwania faktur w systemie KSeF na podstawie przekazanych
     filtrów oraz przygotowania ich w formie zaszyfrowanej paczki.
-    Wymagane jest przekazanie informacji o szyfrowaniu w polu `Encryption`, które służą do
+    Wymagane jest przekazanie informacji o szyfrowaniu w polu <b>Encryption</b>, które służą do
     zabezpieczenia przygotowanej paczki z fakturami.
+    Maksymalnie można uruchomić 10 równoczesnych eksportów w zalogowanym kontekście.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    System pobiera faktury rosnąco według daty określonej w filtrze (Invoicing, Issue, PermanentStorage)
+    i dodaje je do paczki aż do osiągnięcia jednego z poniższych limitów:
+    * Limit liczby faktur: 10 000 sztuk
+    * Limit rozmiaru danych(skompresowanych): 1GB
+
+    Paczka eksportu zawiera dodatkowy plik z metadanymi faktur w formacie JSON (`_metadata.json`).
+    Zawartość pliku to
+    obiekt z tablicą <b>invoices</b>, gdzie każdy element jest obiektem typu <b>InvoiceMetadata</b>
+    (taki jak zwracany przez endpoint `POST /invoices/query/metadata`).
+
+    <b>Plik z metadanymi(_metadata.json) nie jest wliczany do limitów algorytmu budowania paczki</b>.
+
+    `Do realizacji pobierania przyrostowego należy stosować filtrowanie po dacie PermanentStorage`.
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc) - pole wybierane na podstawie filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
         body (InvoiceExportRequest):
@@ -127,10 +148,31 @@ def sync(
 
      Rozpoczyna asynchroniczny proces wyszukiwania faktur w systemie KSeF na podstawie przekazanych
     filtrów oraz przygotowania ich w formie zaszyfrowanej paczki.
-    Wymagane jest przekazanie informacji o szyfrowaniu w polu `Encryption`, które służą do
+    Wymagane jest przekazanie informacji o szyfrowaniu w polu <b>Encryption</b>, które służą do
     zabezpieczenia przygotowanej paczki z fakturami.
+    Maksymalnie można uruchomić 10 równoczesnych eksportów w zalogowanym kontekście.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    System pobiera faktury rosnąco według daty określonej w filtrze (Invoicing, Issue, PermanentStorage)
+    i dodaje je do paczki aż do osiągnięcia jednego z poniższych limitów:
+    * Limit liczby faktur: 10 000 sztuk
+    * Limit rozmiaru danych(skompresowanych): 1GB
+
+    Paczka eksportu zawiera dodatkowy plik z metadanymi faktur w formacie JSON (`_metadata.json`).
+    Zawartość pliku to
+    obiekt z tablicą <b>invoices</b>, gdzie każdy element jest obiektem typu <b>InvoiceMetadata</b>
+    (taki jak zwracany przez endpoint `POST /invoices/query/metadata`).
+
+    <b>Plik z metadanymi(_metadata.json) nie jest wliczany do limitów algorytmu budowania paczki</b>.
+
+    `Do realizacji pobierania przyrostowego należy stosować filtrowanie po dacie PermanentStorage`.
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc) - pole wybierane na podstawie filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
         body (InvoiceExportRequest):
@@ -160,10 +202,31 @@ async def asyncio_detailed(
 
      Rozpoczyna asynchroniczny proces wyszukiwania faktur w systemie KSeF na podstawie przekazanych
     filtrów oraz przygotowania ich w formie zaszyfrowanej paczki.
-    Wymagane jest przekazanie informacji o szyfrowaniu w polu `Encryption`, które służą do
+    Wymagane jest przekazanie informacji o szyfrowaniu w polu <b>Encryption</b>, które służą do
     zabezpieczenia przygotowanej paczki z fakturami.
+    Maksymalnie można uruchomić 10 równoczesnych eksportów w zalogowanym kontekście.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    System pobiera faktury rosnąco według daty określonej w filtrze (Invoicing, Issue, PermanentStorage)
+    i dodaje je do paczki aż do osiągnięcia jednego z poniższych limitów:
+    * Limit liczby faktur: 10 000 sztuk
+    * Limit rozmiaru danych(skompresowanych): 1GB
+
+    Paczka eksportu zawiera dodatkowy plik z metadanymi faktur w formacie JSON (`_metadata.json`).
+    Zawartość pliku to
+    obiekt z tablicą <b>invoices</b>, gdzie każdy element jest obiektem typu <b>InvoiceMetadata</b>
+    (taki jak zwracany przez endpoint `POST /invoices/query/metadata`).
+
+    <b>Plik z metadanymi(_metadata.json) nie jest wliczany do limitów algorytmu budowania paczki</b>.
+
+    `Do realizacji pobierania przyrostowego należy stosować filtrowanie po dacie PermanentStorage`.
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc) - pole wybierane na podstawie filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
         body (InvoiceExportRequest):
@@ -198,10 +261,31 @@ async def asyncio(
 
      Rozpoczyna asynchroniczny proces wyszukiwania faktur w systemie KSeF na podstawie przekazanych
     filtrów oraz przygotowania ich w formie zaszyfrowanej paczki.
-    Wymagane jest przekazanie informacji o szyfrowaniu w polu `Encryption`, które służą do
+    Wymagane jest przekazanie informacji o szyfrowaniu w polu <b>Encryption</b>, które służą do
     zabezpieczenia przygotowanej paczki z fakturami.
+    Maksymalnie można uruchomić 10 równoczesnych eksportów w zalogowanym kontekście.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    System pobiera faktury rosnąco według daty określonej w filtrze (Invoicing, Issue, PermanentStorage)
+    i dodaje je do paczki aż do osiągnięcia jednego z poniższych limitów:
+    * Limit liczby faktur: 10 000 sztuk
+    * Limit rozmiaru danych(skompresowanych): 1GB
+
+    Paczka eksportu zawiera dodatkowy plik z metadanymi faktur w formacie JSON (`_metadata.json`).
+    Zawartość pliku to
+    obiekt z tablicą <b>invoices</b>, gdzie każdy element jest obiektem typu <b>InvoiceMetadata</b>
+    (taki jak zwracany przez endpoint `POST /invoices/query/metadata`).
+
+    <b>Plik z metadanymi(_metadata.json) nie jest wliczany do limitów algorytmu budowania paczki</b>.
+
+    `Do realizacji pobierania przyrostowego należy stosować filtrowanie po dacie PermanentStorage`.
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc) - pole wybierane na podstawie filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
         body (InvoiceExportRequest):

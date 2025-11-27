@@ -24,12 +24,13 @@ T = TypeVar("T", bound="EntityAuthorizationPermissionsGrantRequest")
 class EntityAuthorizationPermissionsGrantRequest:
     """ 
         Attributes:
-            subject_identifier (EntityAuthorizationPermissionsSubjectIdentifier): Identyfikator podmiotu.
+            subject_identifier (EntityAuthorizationPermissionsSubjectIdentifier): Identyfikator podmiotu uprawnianego.
                 | Type | Value |
                 | --- | --- |
                 | Nip | 10 cyfrowy numer NIP |
+                | PeppolId | Identyfikator dostawcy usług Peppol |
             permission (EntityAuthorizationPermissionType):
-            description (str): Opis nadawanego uprawnienia.
+            description (str): Opis uprawnienia
      """
 
     subject_identifier: 'EntityAuthorizationPermissionsSubjectIdentifier'

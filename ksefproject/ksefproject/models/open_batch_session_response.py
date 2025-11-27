@@ -23,9 +23,27 @@ T = TypeVar("T", bound="OpenBatchSessionResponse")
 class OpenBatchSessionResponse:
     """ 
         Attributes:
-            reference_number (str): Numer referencyjny sesji.
+            reference_number (str): Numer referencyjny.
             part_upload_requests (list['PartUploadRequest']): Dane wymagane do poprawnego przesłania poszczególnych części
                 pliku paczki faktur.
+
+                Każdą część pliku paczki zadeklarowaną w <b>fileParts</b> należy przesłać zgodnie z odpowiadającym jej obiektem
+                w <b>partUploadRequests</b>.
+                Łącznikiem pomiędzy deklaracją a instrukcją wysyłki jest pole <b>ordinalNumber</b>.
+
+                Dla każdej części należy:
+                * zastosować metodę HTTP wskazaną w <b>method</b>,
+                * ustawić adres z <b>url</b>,
+                * dołączyć nagłówki z <b>headers</b>,
+                * dołączyć treść części pliku w korpusie żądania.
+
+                `Uwaga: nie należy dodawać do nagłówków token dostępu (accessToken).`
+
+                Każdą część przesyła się oddzielnym żądaniem HTTP.Zwracane kody odpowiedzi:
+                 * <b>201</b> – poprawne przyjęcie pliku,
+                 * <b>400</b> – błędne dane,
+                 * <b>401</b> – nieprawidłowe uwierzytelnienie,
+                 * <b>403</b> – brak uprawnień do zapisu (np.upłynął czas na zapis).
      """
 
     reference_number: str

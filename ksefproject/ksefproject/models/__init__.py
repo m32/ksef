@@ -2,6 +2,8 @@
 
 from .allowed_ips import AllowedIps
 from .amount_type import AmountType
+from .api_rate_limit_values_override import ApiRateLimitValuesOverride
+from .api_rate_limits_override import ApiRateLimitsOverride
 from .attachment_permission_grant_request import AttachmentPermissionGrantRequest
 from .attachment_permission_revoke_request import AttachmentPermissionRevokeRequest
 from .authentication_challenge_response import AuthenticationChallengeResponse
@@ -18,7 +20,10 @@ from .authentication_tokens_response import AuthenticationTokensResponse
 from .authorization_policy import AuthorizationPolicy
 from .batch_file_info import BatchFileInfo
 from .batch_file_part_info import BatchFilePartInfo
+from .batch_session_context_limits_override import BatchSessionContextLimitsOverride
+from .batch_session_effective_context_limits import BatchSessionEffectiveContextLimits
 from .buyer_identifier_type import BuyerIdentifierType
+from .certificate_effective_subject_limits import CertificateEffectiveSubjectLimits
 from .certificate_enrollment_data_response import CertificateEnrollmentDataResponse
 from .certificate_enrollment_status_response import CertificateEnrollmentStatusResponse
 from .certificate_limit import CertificateLimit
@@ -28,12 +33,19 @@ from .certificate_list_item_status import CertificateListItemStatus
 from .certificate_revocation_reason import CertificateRevocationReason
 from .certificate_subject_identifier import CertificateSubjectIdentifier
 from .certificate_subject_identifier_type import CertificateSubjectIdentifierType
+from .certificate_subject_limits_override import CertificateSubjectLimitsOverride
 from .check_attachment_permission_status_response import CheckAttachmentPermissionStatusResponse
 from .common_session_status import CommonSessionStatus
 from .currency_code import CurrencyCode
+from .effective_api_rate_limit_values import EffectiveApiRateLimitValues
+from .effective_api_rate_limits import EffectiveApiRateLimits
+from .effective_context_limits import EffectiveContextLimits
+from .effective_subject_limits import EffectiveSubjectLimits
 from .encryption_info import EncryptionInfo
 from .enroll_certificate_request import EnrollCertificateRequest
 from .enroll_certificate_response import EnrollCertificateResponse
+from .enrollment_effective_subject_limits import EnrollmentEffectiveSubjectLimits
+from .enrollment_subject_limits_override import EnrollmentSubjectLimitsOverride
 from .entity_authorization_grant import EntityAuthorizationGrant
 from .entity_authorization_permission_type import EntityAuthorizationPermissionType
 from .entity_authorization_permissions_grant_request import EntityAuthorizationPermissionsGrantRequest
@@ -107,12 +119,14 @@ from .invoice_query_subject_type import InvoiceQuerySubjectType
 from .invoice_type import InvoiceType
 from .invoicing_mode import InvoicingMode
 from .ksef_certificate_type import KsefCertificateType
+from .online_session_context_limits_override import OnlineSessionContextLimitsOverride
+from .online_session_effective_context_limits import OnlineSessionEffectiveContextLimits
 from .open_batch_session_request import OpenBatchSessionRequest
 from .open_batch_session_response import OpenBatchSessionResponse
 from .open_online_session_request import OpenOnlineSessionRequest
 from .open_online_session_response import OpenOnlineSessionResponse
 from .part_upload_request import PartUploadRequest
-from .part_upload_request_headers_type_0 import PartUploadRequestHeadersType0
+from .part_upload_request_headers import PartUploadRequestHeaders
 from .peppol_provider import PeppolProvider
 from .permission_state import PermissionState
 from .permissions_operation_response import PermissionsOperationResponse
@@ -173,8 +187,13 @@ from .session_status_response import SessionStatusResponse
 from .session_type import SessionType
 from .sessions_query_response import SessionsQueryResponse
 from .sessions_query_response_item import SessionsQueryResponseItem
+from .set_rate_limits_request import SetRateLimitsRequest
+from .set_session_limits_request import SetSessionLimitsRequest
+from .set_subject_limits_request import SetSubjectLimitsRequest
+from .sort_order import SortOrder
 from .status_info import StatusInfo
 from .subject_create_request import SubjectCreateRequest
+from .subject_identifier_type import SubjectIdentifierType
 from .subject_remove_request import SubjectRemoveRequest
 from .subject_type import SubjectType
 from .subordinate_entity_role import SubordinateEntityRole
@@ -218,6 +237,8 @@ from .upo_response import UpoResponse
 __all__ = (
     "AllowedIps",
     "AmountType",
+    "ApiRateLimitsOverride",
+    "ApiRateLimitValuesOverride",
     "AttachmentPermissionGrantRequest",
     "AttachmentPermissionRevokeRequest",
     "AuthenticationChallengeResponse",
@@ -234,7 +255,10 @@ __all__ = (
     "AuthorizationPolicy",
     "BatchFileInfo",
     "BatchFilePartInfo",
+    "BatchSessionContextLimitsOverride",
+    "BatchSessionEffectiveContextLimits",
     "BuyerIdentifierType",
+    "CertificateEffectiveSubjectLimits",
     "CertificateEnrollmentDataResponse",
     "CertificateEnrollmentStatusResponse",
     "CertificateLimit",
@@ -244,12 +268,19 @@ __all__ = (
     "CertificateRevocationReason",
     "CertificateSubjectIdentifier",
     "CertificateSubjectIdentifierType",
+    "CertificateSubjectLimitsOverride",
     "CheckAttachmentPermissionStatusResponse",
     "CommonSessionStatus",
     "CurrencyCode",
+    "EffectiveApiRateLimits",
+    "EffectiveApiRateLimitValues",
+    "EffectiveContextLimits",
+    "EffectiveSubjectLimits",
     "EncryptionInfo",
     "EnrollCertificateRequest",
     "EnrollCertificateResponse",
+    "EnrollmentEffectiveSubjectLimits",
+    "EnrollmentSubjectLimitsOverride",
     "EntityAuthorizationGrant",
     "EntityAuthorizationPermissionsGrantRequest",
     "EntityAuthorizationPermissionsQueryRequest",
@@ -323,12 +354,14 @@ __all__ = (
     "InvoiceType",
     "InvoicingMode",
     "KsefCertificateType",
+    "OnlineSessionContextLimitsOverride",
+    "OnlineSessionEffectiveContextLimits",
     "OpenBatchSessionRequest",
     "OpenBatchSessionResponse",
     "OpenOnlineSessionRequest",
     "OpenOnlineSessionResponse",
     "PartUploadRequest",
-    "PartUploadRequestHeadersType0",
+    "PartUploadRequestHeaders",
     "PeppolProvider",
     "PermissionsOperationResponse",
     "PermissionsOperationStatusResponse",
@@ -389,8 +422,13 @@ __all__ = (
     "SessionsQueryResponseItem",
     "SessionStatusResponse",
     "SessionType",
+    "SetRateLimitsRequest",
+    "SetSessionLimitsRequest",
+    "SetSubjectLimitsRequest",
+    "SortOrder",
     "StatusInfo",
     "SubjectCreateRequest",
+    "SubjectIdentifierType",
     "SubjectRemoveRequest",
     "SubjectType",
     "SubordinateEntityRole",

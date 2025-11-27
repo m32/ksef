@@ -87,13 +87,24 @@ def sync_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień reprezentanta podmiotu unijnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień reprezentanta podmiotu unijnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień do
+    wystawiania i/lub przeglądania faktur w kontekście złożonym kontekstu bieżącego.
+
+    Jedynym sposobem identyfikacji uprawnianego jest odcisk palca certyfikatu kwalifikowanego:
+    - certyfikat podpisu elektronicznego dla osób fizycznych
+    - certyfikat pieczęci elektronicznej dla podmiotów
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-reprezentanta-podmiotu-unijnego)
 
-    Wymagane uprawnienia: `VatUeManage`.
+    **Wymagane uprawnienia**: `VatUeManage`.
 
     Args:
         body (EuEntityPermissionsGrantRequest):
@@ -126,13 +137,24 @@ def sync(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień reprezentanta podmiotu unijnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień reprezentanta podmiotu unijnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień do
+    wystawiania i/lub przeglądania faktur w kontekście złożonym kontekstu bieżącego.
+
+    Jedynym sposobem identyfikacji uprawnianego jest odcisk palca certyfikatu kwalifikowanego:
+    - certyfikat podpisu elektronicznego dla osób fizycznych
+    - certyfikat pieczęci elektronicznej dla podmiotów
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-reprezentanta-podmiotu-unijnego)
 
-    Wymagane uprawnienia: `VatUeManage`.
+    **Wymagane uprawnienia**: `VatUeManage`.
 
     Args:
         body (EuEntityPermissionsGrantRequest):
@@ -160,13 +182,24 @@ async def asyncio_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień reprezentanta podmiotu unijnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień reprezentanta podmiotu unijnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień do
+    wystawiania i/lub przeglądania faktur w kontekście złożonym kontekstu bieżącego.
+
+    Jedynym sposobem identyfikacji uprawnianego jest odcisk palca certyfikatu kwalifikowanego:
+    - certyfikat podpisu elektronicznego dla osób fizycznych
+    - certyfikat pieczęci elektronicznej dla podmiotów
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-reprezentanta-podmiotu-unijnego)
 
-    Wymagane uprawnienia: `VatUeManage`.
+    **Wymagane uprawnienia**: `VatUeManage`.
 
     Args:
         body (EuEntityPermissionsGrantRequest):
@@ -199,13 +232,24 @@ async def asyncio(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień reprezentanta podmiotu unijnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień reprezentanta podmiotu unijnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień do
+    wystawiania i/lub przeglądania faktur w kontekście złożonym kontekstu bieżącego.
+
+    Jedynym sposobem identyfikacji uprawnianego jest odcisk palca certyfikatu kwalifikowanego:
+    - certyfikat podpisu elektronicznego dla osób fizycznych
+    - certyfikat pieczęci elektronicznej dla podmiotów
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-reprezentanta-podmiotu-unijnego)
 
-    Wymagane uprawnienia: `VatUeManage`.
+    **Wymagane uprawnienia**: `VatUeManage`.
 
     Args:
         body (EuEntityPermissionsGrantRequest):

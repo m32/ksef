@@ -7,7 +7,6 @@ class PersonPermissionScope(str, Enum):
     INTROSPECTION = "Introspection"
     INVOICEREAD = "InvoiceRead"
     INVOICEWRITE = "InvoiceWrite"
-    OWNER = "Owner"
     SUBUNITMANAGE = "SubunitManage"
 
     def __str__(self) -> str:

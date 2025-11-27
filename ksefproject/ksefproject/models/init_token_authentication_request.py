@@ -27,7 +27,7 @@ T = TypeVar("T", bound="InitTokenAuthenticationRequest")
 class InitTokenAuthenticationRequest:
     """ 
         Attributes:
-            challenge (str): Wygenerowany wcześniej challenge.
+            challenge (str): Unikalny challenge.
             context_identifier (AuthenticationContextIdentifier):
             encrypted_token (str): Zaszyfrowany token wraz z timestampem z challenge'a, w formacie `token|timestamp`.
             authorization_policy (Union['AuthorizationPolicy', None, Unset]): Polityka autoryzacji żądań przy każdym użyciu

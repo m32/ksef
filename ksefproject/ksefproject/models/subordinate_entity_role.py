@@ -31,7 +31,7 @@ class SubordinateEntityRole:
                 | --- | --- |
                 | Nip | 10 cyfrowy numer NIP |
             role (SubordinateEntityRoleType):
-            description (str): Opis.
+            description (str): Opis powiązania.
             start_date (datetime.datetime): Data rozpoczęcia obowiązywania powiązania.
      """
 

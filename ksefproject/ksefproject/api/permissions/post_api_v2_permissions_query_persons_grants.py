@@ -19,8 +19,8 @@ from typing import Union
 def _get_kwargs(
     *,
     body: PersonPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
@@ -96,24 +96,69 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: PersonPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryPersonPermissionsResponse]]:
     """ Pobranie listy uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom
 
-     Zwraca listę uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom.
+      Metoda pozwala na odczytanie uprawnień nadanych osobie fizycznej lub podmiotowi.
+     Lista pobranych uprawnień może być dwóch rodzajów:
+     - Lista wszystkich uprawnień obowiązujących w bieżącym kontekście logowania (używana, gdy
+    administrator chce przejrzeć uprawnienia wszystkich użytkowników w bieżącym kontekście)
+     - Lista wszystkich uprawnień nadanych w bieżącym kontekście przez uwierzytelnionego klienta API
+    (używana, gdy administrator chce przejrzeć listę nadanych przez siebie uprawnień w bieżącym
+    kontekście)
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Dla pierwszej listy (obowiązujących uprawnień) w odpowiedzi przekazywane są:
+     - osoby i podmioty mogące pracować w bieżącym kontekście z wyjątkiem osób uprawnionych w sposób
+    pośredni
+     - osoby uprawnione w sposób pośredni przez podmiot bieżącego kontekstu
+
+     Dla drugiej listy (nadanych uprawnień) w odpowiedzi przekazywane są:
+     - uprawnienia nadane w sposób bezpośredni do pracy w bieżącym kontekście lub w kontekście jednostek
+    podrzędnych
+     - uprawnienia nadane w sposób pośredni do obsługi klientów podmiotu bieżącego kontekstu
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **CredentialsManage** – zarządzanie uprawnieniami
+     - **CredentialsRead** – przeglądanie uprawnień
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+     - **SubunitManage** – zarządzanie podmiotami podrzędnymi
+     - **EnforcementOperations** – wykonywanie operacji egzekucyjnych
+
+     Odpowiedź może być filtrowana na podstawie parametrów:
+     - **authorIdentifier** – identyfikator osoby, która nadała uprawnienie
+     - **authorizedIdentifier** – identyfikator osoby lub podmiotu uprawnionego
+     - **targetIdentifier** – identyfikator podmiotu docelowego dla uprawnień nadanych pośrednio
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+     - **permissionState** – status uprawnienia
+     - **queryType** – typ zapytania określający, która z dwóch list ma zostać zwrócona
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-do-pracy-w-ksef-nadanych-osobom-
     fizycznym-lub-podmiotom)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (PersonPermissionsQueryRequest):
 
     Raises:
@@ -142,24 +187,69 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: PersonPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryPersonPermissionsResponse]]:
     """ Pobranie listy uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom
 
-     Zwraca listę uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom.
+      Metoda pozwala na odczytanie uprawnień nadanych osobie fizycznej lub podmiotowi.
+     Lista pobranych uprawnień może być dwóch rodzajów:
+     - Lista wszystkich uprawnień obowiązujących w bieżącym kontekście logowania (używana, gdy
+    administrator chce przejrzeć uprawnienia wszystkich użytkowników w bieżącym kontekście)
+     - Lista wszystkich uprawnień nadanych w bieżącym kontekście przez uwierzytelnionego klienta API
+    (używana, gdy administrator chce przejrzeć listę nadanych przez siebie uprawnień w bieżącym
+    kontekście)
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Dla pierwszej listy (obowiązujących uprawnień) w odpowiedzi przekazywane są:
+     - osoby i podmioty mogące pracować w bieżącym kontekście z wyjątkiem osób uprawnionych w sposób
+    pośredni
+     - osoby uprawnione w sposób pośredni przez podmiot bieżącego kontekstu
+
+     Dla drugiej listy (nadanych uprawnień) w odpowiedzi przekazywane są:
+     - uprawnienia nadane w sposób bezpośredni do pracy w bieżącym kontekście lub w kontekście jednostek
+    podrzędnych
+     - uprawnienia nadane w sposób pośredni do obsługi klientów podmiotu bieżącego kontekstu
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **CredentialsManage** – zarządzanie uprawnieniami
+     - **CredentialsRead** – przeglądanie uprawnień
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+     - **SubunitManage** – zarządzanie podmiotami podrzędnymi
+     - **EnforcementOperations** – wykonywanie operacji egzekucyjnych
+
+     Odpowiedź może być filtrowana na podstawie parametrów:
+     - **authorIdentifier** – identyfikator osoby, która nadała uprawnienie
+     - **authorizedIdentifier** – identyfikator osoby lub podmiotu uprawnionego
+     - **targetIdentifier** – identyfikator podmiotu docelowego dla uprawnień nadanych pośrednio
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+     - **permissionState** – status uprawnienia
+     - **queryType** – typ zapytania określający, która z dwóch list ma zostać zwrócona
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-do-pracy-w-ksef-nadanych-osobom-
     fizycznym-lub-podmiotom)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (PersonPermissionsQueryRequest):
 
     Raises:
@@ -183,24 +273,69 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: PersonPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryPersonPermissionsResponse]]:
     """ Pobranie listy uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom
 
-     Zwraca listę uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom.
+      Metoda pozwala na odczytanie uprawnień nadanych osobie fizycznej lub podmiotowi.
+     Lista pobranych uprawnień może być dwóch rodzajów:
+     - Lista wszystkich uprawnień obowiązujących w bieżącym kontekście logowania (używana, gdy
+    administrator chce przejrzeć uprawnienia wszystkich użytkowników w bieżącym kontekście)
+     - Lista wszystkich uprawnień nadanych w bieżącym kontekście przez uwierzytelnionego klienta API
+    (używana, gdy administrator chce przejrzeć listę nadanych przez siebie uprawnień w bieżącym
+    kontekście)
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Dla pierwszej listy (obowiązujących uprawnień) w odpowiedzi przekazywane są:
+     - osoby i podmioty mogące pracować w bieżącym kontekście z wyjątkiem osób uprawnionych w sposób
+    pośredni
+     - osoby uprawnione w sposób pośredni przez podmiot bieżącego kontekstu
+
+     Dla drugiej listy (nadanych uprawnień) w odpowiedzi przekazywane są:
+     - uprawnienia nadane w sposób bezpośredni do pracy w bieżącym kontekście lub w kontekście jednostek
+    podrzędnych
+     - uprawnienia nadane w sposób pośredni do obsługi klientów podmiotu bieżącego kontekstu
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **CredentialsManage** – zarządzanie uprawnieniami
+     - **CredentialsRead** – przeglądanie uprawnień
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+     - **SubunitManage** – zarządzanie podmiotami podrzędnymi
+     - **EnforcementOperations** – wykonywanie operacji egzekucyjnych
+
+     Odpowiedź może być filtrowana na podstawie parametrów:
+     - **authorIdentifier** – identyfikator osoby, która nadała uprawnienie
+     - **authorizedIdentifier** – identyfikator osoby lub podmiotu uprawnionego
+     - **targetIdentifier** – identyfikator podmiotu docelowego dla uprawnień nadanych pośrednio
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+     - **permissionState** – status uprawnienia
+     - **queryType** – typ zapytania określający, która z dwóch list ma zostać zwrócona
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-do-pracy-w-ksef-nadanych-osobom-
     fizycznym-lub-podmiotom)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (PersonPermissionsQueryRequest):
 
     Raises:
@@ -229,24 +364,69 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: PersonPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryPersonPermissionsResponse]]:
     """ Pobranie listy uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom
 
-     Zwraca listę uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom.
+      Metoda pozwala na odczytanie uprawnień nadanych osobie fizycznej lub podmiotowi.
+     Lista pobranych uprawnień może być dwóch rodzajów:
+     - Lista wszystkich uprawnień obowiązujących w bieżącym kontekście logowania (używana, gdy
+    administrator chce przejrzeć uprawnienia wszystkich użytkowników w bieżącym kontekście)
+     - Lista wszystkich uprawnień nadanych w bieżącym kontekście przez uwierzytelnionego klienta API
+    (używana, gdy administrator chce przejrzeć listę nadanych przez siebie uprawnień w bieżącym
+    kontekście)
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Dla pierwszej listy (obowiązujących uprawnień) w odpowiedzi przekazywane są:
+     - osoby i podmioty mogące pracować w bieżącym kontekście z wyjątkiem osób uprawnionych w sposób
+    pośredni
+     - osoby uprawnione w sposób pośredni przez podmiot bieżącego kontekstu
+
+     Dla drugiej listy (nadanych uprawnień) w odpowiedzi przekazywane są:
+     - uprawnienia nadane w sposób bezpośredni do pracy w bieżącym kontekście lub w kontekście jednostek
+    podrzędnych
+     - uprawnienia nadane w sposób pośredni do obsługi klientów podmiotu bieżącego kontekstu
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **CredentialsManage** – zarządzanie uprawnieniami
+     - **CredentialsRead** – przeglądanie uprawnień
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+     - **SubunitManage** – zarządzanie podmiotami podrzędnymi
+     - **EnforcementOperations** – wykonywanie operacji egzekucyjnych
+
+     Odpowiedź może być filtrowana na podstawie parametrów:
+     - **authorIdentifier** – identyfikator osoby, która nadała uprawnienie
+     - **authorizedIdentifier** – identyfikator osoby lub podmiotu uprawnionego
+     - **targetIdentifier** – identyfikator podmiotu docelowego dla uprawnień nadanych pośrednio
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+     - **permissionState** – status uprawnienia
+     - **queryType** – typ zapytania określający, która z dwóch list ma zostać zwrócona
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-do-pracy-w-ksef-nadanych-osobom-
     fizycznym-lub-podmiotom)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (PersonPermissionsQueryRequest):
 
     Raises:

@@ -23,7 +23,7 @@ T = TypeVar("T", bound="InvoiceMetadataSeller")
 class InvoiceMetadataSeller:
     """ 
         Attributes:
-            nip (str): Nip sprzedawcy.
+            nip (str): 10 cyfrowy numer NIP.
             name (Union[None, Unset, str]): Nazwa sprzedawcy.
      """
 

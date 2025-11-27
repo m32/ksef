@@ -23,7 +23,7 @@ T = TypeVar("T", bound="QuerySubordinateEntityRolesResponse")
 class QuerySubordinateEntityRolesResponse:
     """ 
         Attributes:
-            roles (list['SubordinateEntityRole']): Lista ról.
+            roles (list['SubordinateEntityRole']): Lista odczytanych podmiotów podrzędnych i ich ról.
             has_more (bool): Flaga informująca o dostępności kolejnej strony wyników.
      """
 

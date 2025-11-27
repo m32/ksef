@@ -19,7 +19,7 @@ T = TypeVar("T", bound="EuEntityPermissionsSubjectIdentifier")
 
 @_attrs_define
 class EuEntityPermissionsSubjectIdentifier:
-    """ Identyfikator podmiotu.
+    """ Identyfikator podmiotu uprawnianego.
     | Type | Value |
     | --- | --- |
     | Fingerprint | Odcisk palca certyfikatu |

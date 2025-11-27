@@ -14,8 +14,8 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
   from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
+  from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
 
 
 
@@ -30,22 +30,24 @@ class PersonalPermissionsQueryRequest:
     """ 
         Attributes:
             context_identifier (Union['PersonalPermissionsContextIdentifier', None, Unset]): Identyfikator kontekstu
-                uprawnienia (dla uprawnień nadanych podmiotom do obsługi faktur).
+                podmiotu, który nadał uprawnienia do obsługi faktur.
                 | Type | Value |
                 | --- | --- |
                 | Nip | 10 cyfrowy numer NIP |
             target_identifier (Union['PersonalPermissionsTargetIdentifier', None, Unset]): Identyfikator podmiotu docelowego
-                (dla uprawnień pośrednich).
+                dla uprawnień selektywnych nadanych pośrednio.
                 | Type | Value |
                 | --- | --- |
                 | Nip | 10 cyfrowy numer NIP |
-                | AllPartners | Identyfikator oznaczający, że uprawnienie nadane w sposób pośredni jest typu generalnego |
-            permission_types (Union[None, Unset, list[PersonalPermissionType]]): Możliwe uprawnienia do filtrowania.
+                | AllPartners | Identyfikator oznaczający, że wyszukiwanie dotyczy uprawnień generalnych nadanych w sposób
+                pośredni |
+                | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
+            permission_types (Union[None, Unset, list[PersonalPermissionType]]): Lista rodzajów wyszukiwanych uprawnień.
             permission_state (Union[None, PermissionState, Unset]): Stan uprawnienia.
                 | Type | Value |
                 | --- | --- |
                 | Active | Uprawnienia aktywne |
-                | Inactive | Uprawnienia nieaktywne, nadane w sposób pośredni |
+                | Inactive | Uprawnienia nieaktywne |
      """
 
     context_identifier: Union['PersonalPermissionsContextIdentifier', None, Unset] = UNSET
@@ -58,8 +60,8 @@ class PersonalPermissionsQueryRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
         from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
+        from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
         context_identifier: Union[None, Unset, dict[str, Any]]
         if isinstance(self.context_identifier, Unset):
             context_identifier = UNSET
@@ -117,8 +119,8 @@ class PersonalPermissionsQueryRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
         from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
+        from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
         d = dict(src_dict)
         def _parse_context_identifier(data: object) -> Union['PersonalPermissionsContextIdentifier', None, Unset]:
             if data is None:

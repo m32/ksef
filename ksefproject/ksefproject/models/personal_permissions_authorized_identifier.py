@@ -19,7 +19,7 @@ T = TypeVar("T", bound="PersonalPermissionsAuthorizedIdentifier")
 
 @_attrs_define
 class PersonalPermissionsAuthorizedIdentifier:
-    """ Identyfikator podmiotu uprawnionego, jeśli inny niż podmiot uwierzytelnienia.
+    """ Identyfikator podmiotu uprawnionego, jeżeli jest inny niż identyfikator uwierzytelnionego klienta API.
     | Type | Value |
     | --- | --- |
     | Nip | 10 cyfrowy numer NIP |

@@ -80,10 +80,10 @@ def sync_detailed(
 
 
     > Więcej informacji:
-    > - [Pobranie danych do wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-client-
-    docs/blob/main/certyfikaty-wewn%C4%99trzne-KSeF.md#2-pobranie-danych-do-wniosku-certyfikacyjnego)
-    > - [Przygotowanie wniosku](https://github.com/CIRFMF/ksef-client-docs/blob/main/certyfikaty-
-    wewn%C4%99trzne-KSeF.md#3-przygotowanie-csr-certificate-signing-request)
+    > - [Pobranie danych do wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-
+    docs/blob/main/certyfikaty-KSeF.md#2-pobranie-danych-do-wniosku-certyfikacyjnego)
+    > - [Przygotowanie wniosku](https://github.com/CIRFMF/ksef-docs/blob/main/certyfikaty-
+    KSeF.md#3-przygotowanie-csr-certificate-signing-request)
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -118,10 +118,10 @@ def sync(
 
 
     > Więcej informacji:
-    > - [Pobranie danych do wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-client-
-    docs/blob/main/certyfikaty-wewn%C4%99trzne-KSeF.md#2-pobranie-danych-do-wniosku-certyfikacyjnego)
-    > - [Przygotowanie wniosku](https://github.com/CIRFMF/ksef-client-docs/blob/main/certyfikaty-
-    wewn%C4%99trzne-KSeF.md#3-przygotowanie-csr-certificate-signing-request)
+    > - [Pobranie danych do wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-
+    docs/blob/main/certyfikaty-KSeF.md#2-pobranie-danych-do-wniosku-certyfikacyjnego)
+    > - [Przygotowanie wniosku](https://github.com/CIRFMF/ksef-docs/blob/main/certyfikaty-
+    KSeF.md#3-przygotowanie-csr-certificate-signing-request)
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -151,10 +151,10 @@ async def asyncio_detailed(
 
 
     > Więcej informacji:
-    > - [Pobranie danych do wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-client-
-    docs/blob/main/certyfikaty-wewn%C4%99trzne-KSeF.md#2-pobranie-danych-do-wniosku-certyfikacyjnego)
-    > - [Przygotowanie wniosku](https://github.com/CIRFMF/ksef-client-docs/blob/main/certyfikaty-
-    wewn%C4%99trzne-KSeF.md#3-przygotowanie-csr-certificate-signing-request)
+    > - [Pobranie danych do wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-
+    docs/blob/main/certyfikaty-KSeF.md#2-pobranie-danych-do-wniosku-certyfikacyjnego)
+    > - [Przygotowanie wniosku](https://github.com/CIRFMF/ksef-docs/blob/main/certyfikaty-
+    KSeF.md#3-przygotowanie-csr-certificate-signing-request)
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -189,10 +189,10 @@ async def asyncio(
 
 
     > Więcej informacji:
-    > - [Pobranie danych do wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-client-
-    docs/blob/main/certyfikaty-wewn%C4%99trzne-KSeF.md#2-pobranie-danych-do-wniosku-certyfikacyjnego)
-    > - [Przygotowanie wniosku](https://github.com/CIRFMF/ksef-client-docs/blob/main/certyfikaty-
-    wewn%C4%99trzne-KSeF.md#3-przygotowanie-csr-certificate-signing-request)
+    > - [Pobranie danych do wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-
+    docs/blob/main/certyfikaty-KSeF.md#2-pobranie-danych-do-wniosku-certyfikacyjnego)
+    > - [Przygotowanie wniosku](https://github.com/CIRFMF/ksef-docs/blob/main/certyfikaty-
+    KSeF.md#3-przygotowanie-csr-certificate-signing-request)
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

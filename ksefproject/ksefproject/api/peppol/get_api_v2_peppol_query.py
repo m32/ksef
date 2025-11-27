@@ -17,8 +17,8 @@ from typing import Union
 
 def _get_kwargs(
     *,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> dict[str, Any]:
     
@@ -79,17 +79,22 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[ExceptionResponse, QueryPeppolProvidersResponse]]:
     """ Pobranie listy dostawców usług Peppol
 
      Zwraca listę dostawców usług Peppol zarejestrowanych w systemie.
 
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
+
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -115,17 +120,22 @@ page_size=page_size,
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[ExceptionResponse, QueryPeppolProvidersResponse]]:
     """ Pobranie listy dostawców usług Peppol
 
      Zwraca listę dostawców usług Peppol zarejestrowanych w systemie.
 
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
+
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -146,17 +156,22 @@ page_size=page_size,
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[ExceptionResponse, QueryPeppolProvidersResponse]]:
     """ Pobranie listy dostawców usług Peppol
 
      Zwraca listę dostawców usług Peppol zarejestrowanych w systemie.
 
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
+
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -182,17 +197,22 @@ page_size=page_size,
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[ExceptionResponse, QueryPeppolProvidersResponse]]:
     """ Pobranie listy dostawców usług Peppol
 
      Zwraca listę dostawców usług Peppol zarejestrowanych w systemie.
 
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
+
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

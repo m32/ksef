@@ -87,13 +87,14 @@ def sync_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień podmiotowych
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień podmiotowych.
+     Metoda pozwala na nadanie jednego z uprawnień podmiotowych do obsługi podmiotu kontekstu  podmiotowi
+    wskazanemu w żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-podmiotowych)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EntityAuthorizationPermissionsGrantRequest):
@@ -126,13 +127,14 @@ def sync(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień podmiotowych
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień podmiotowych.
+     Metoda pozwala na nadanie jednego z uprawnień podmiotowych do obsługi podmiotu kontekstu  podmiotowi
+    wskazanemu w żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-podmiotowych)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EntityAuthorizationPermissionsGrantRequest):
@@ -160,13 +162,14 @@ async def asyncio_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień podmiotowych
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień podmiotowych.
+     Metoda pozwala na nadanie jednego z uprawnień podmiotowych do obsługi podmiotu kontekstu  podmiotowi
+    wskazanemu w żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-podmiotowych)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EntityAuthorizationPermissionsGrantRequest):
@@ -199,13 +202,14 @@ async def asyncio(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień podmiotowych
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień podmiotowych.
+     Metoda pozwala na nadanie jednego z uprawnień podmiotowych do obsługi podmiotu kontekstu  podmiotowi
+    wskazanemu w żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-podmiotowych)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EntityAuthorizationPermissionsGrantRequest):

@@ -25,10 +25,12 @@ T = TypeVar("T", bound="EuEntityPermissionsQueryRequest")
 class EuEntityPermissionsQueryRequest:
     """ 
         Attributes:
-            vat_ue_identifier (Union[None, Unset, str]): Identyfikator podmiotu unijnego.
-            authorized_fingerprint_identifier (Union[None, Unset, str]): Uprawniony odcisk palca certyfikatu.
-            permission_types (Union[None, Unset, list[EuEntityPermissionsQueryPermissionType]]): Możliwe uprawnienia do
-                filtrowania.
+            vat_ue_identifier (Union[None, Unset, str]): Wartość identyfikatora (numeru identyfikacyjnego VAT) podmiotu
+                unijnego.
+            authorized_fingerprint_identifier (Union[None, Unset, str]): Odcisk palca certyfikatu kwalifikowanego
+                uprawnionego.
+            permission_types (Union[None, Unset, list[EuEntityPermissionsQueryPermissionType]]): Lista rodzajów
+                wyszukiwanych uprawnień.
      """
 
     vat_ue_identifier: Union[None, Unset, str] = UNSET

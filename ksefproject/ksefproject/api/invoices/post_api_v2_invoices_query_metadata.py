@@ -10,6 +10,7 @@ from ... import errors
 from ...models.exception_response import ExceptionResponse
 from ...models.invoice_query_filters import InvoiceQueryFilters
 from ...models.query_invoices_metadata_response import QueryInvoicesMetadataResponse
+from ...models.sort_order import SortOrder
 from ...types import UNSET, Unset
 from typing import cast
 from typing import Union
@@ -19,6 +20,7 @@ from typing import Union
 def _get_kwargs(
     *,
     body: InvoiceQueryFilters,
+    sort_order: Union[Unset, SortOrder] = SortOrder.ASC,
     page_offset: Union[Unset, int] = 0,
     page_size: Union[Unset, int] = 10,
 
@@ -29,6 +31,12 @@ def _get_kwargs(
     
 
     params: dict[str, Any] = {}
+
+    json_sort_order: Union[Unset, str] = UNSET
+    if not isinstance(sort_order, Unset):
+        json_sort_order = sort_order.value
+
+    params["sortOrder"] = json_sort_order
 
     params["pageOffset"] = page_offset
 
@@ -96,19 +104,43 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: InvoiceQueryFilters,
+    sort_order: Union[Unset, SortOrder] = SortOrder.ASC,
     page_offset: Union[Unset, int] = 0,
     page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryInvoicesMetadataResponse]]:
     """ Pobranie listy metadanych faktur
 
-     Zwraca listę metadanych faktur spełniające podane kryteria wyszukiwania. Wyniki sortowane są rosnąco
-    według typu daty przekazanej w `DateRange`. Do realizacji pobierania przyrostowego należy stosować
-    typ `PermanentStorage`. Maksymalnie można pobrać faktury w zakresie do 10 000 rekordów
+     Zwraca metadane faktur spełniających filtry.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    Limit techniczny: ≤ 10 000 rekordów na zestaw filtrów, po jego osiągnięciu <b>isTruncated = true</b>
+    i należy ponownie ustawić <b>dateRange</b>, używając ostatniej daty z wyników (tj. ustawić from/to -
+    w zależności od kierunku sortowania, od daty ostatniego zwróconego rekordu) oraz wyzerować
+    <b>pageOffset</b>.
+
+    `Do scenariusza przyrostowego należy używać daty PermanentStorage oraz kolejność sortowania Asc`.
+
+    <b>Scenariusz pobierania przyrostowego (skrót):</b>
+    * Gdy <b>hasMore = false</b>, należy zakończyć,
+    * Gdy <b>hasMore = true</b> i <b>isTruncated = false</b>, należy zwiększyć <b>pageOffset</b>,
+    * Gdy <b>hasMore = true</b> i <b>isTruncated = true</b>, należy zawęzić <b>dateRange</b> (ustawić
+    from od daty ostatniego rekordu), wyzerować <b>pageOffset</b> i kontynuować
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc | Desc) - pole wybierane na podstawie
+    filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
+        sort_order (Union[Unset, SortOrder]): | Wartość | Opis |
+            | --- | --- |
+            | Asc | Sortowanie rosnąco. |
+            | Desc | Sortowanie malejąco. |
+             Default: SortOrder.ASC.
         page_offset (Union[Unset, int]):  Default: 0.
         page_size (Union[Unset, int]):  Default: 10.
         body (InvoiceQueryFilters):
@@ -124,6 +156,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+sort_order=sort_order,
 page_offset=page_offset,
 page_size=page_size,
 
@@ -139,19 +172,43 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: InvoiceQueryFilters,
+    sort_order: Union[Unset, SortOrder] = SortOrder.ASC,
     page_offset: Union[Unset, int] = 0,
     page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryInvoicesMetadataResponse]]:
     """ Pobranie listy metadanych faktur
 
-     Zwraca listę metadanych faktur spełniające podane kryteria wyszukiwania. Wyniki sortowane są rosnąco
-    według typu daty przekazanej w `DateRange`. Do realizacji pobierania przyrostowego należy stosować
-    typ `PermanentStorage`. Maksymalnie można pobrać faktury w zakresie do 10 000 rekordów
+     Zwraca metadane faktur spełniających filtry.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    Limit techniczny: ≤ 10 000 rekordów na zestaw filtrów, po jego osiągnięciu <b>isTruncated = true</b>
+    i należy ponownie ustawić <b>dateRange</b>, używając ostatniej daty z wyników (tj. ustawić from/to -
+    w zależności od kierunku sortowania, od daty ostatniego zwróconego rekordu) oraz wyzerować
+    <b>pageOffset</b>.
+
+    `Do scenariusza przyrostowego należy używać daty PermanentStorage oraz kolejność sortowania Asc`.
+
+    <b>Scenariusz pobierania przyrostowego (skrót):</b>
+    * Gdy <b>hasMore = false</b>, należy zakończyć,
+    * Gdy <b>hasMore = true</b> i <b>isTruncated = false</b>, należy zwiększyć <b>pageOffset</b>,
+    * Gdy <b>hasMore = true</b> i <b>isTruncated = true</b>, należy zawęzić <b>dateRange</b> (ustawić
+    from od daty ostatniego rekordu), wyzerować <b>pageOffset</b> i kontynuować
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc | Desc) - pole wybierane na podstawie
+    filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
+        sort_order (Union[Unset, SortOrder]): | Wartość | Opis |
+            | --- | --- |
+            | Asc | Sortowanie rosnąco. |
+            | Desc | Sortowanie malejąco. |
+             Default: SortOrder.ASC.
         page_offset (Union[Unset, int]):  Default: 0.
         page_size (Union[Unset, int]):  Default: 10.
         body (InvoiceQueryFilters):
@@ -168,6 +225,7 @@ def sync(
     return sync_detailed(
         client=client,
 body=body,
+sort_order=sort_order,
 page_offset=page_offset,
 page_size=page_size,
 
@@ -177,19 +235,43 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: InvoiceQueryFilters,
+    sort_order: Union[Unset, SortOrder] = SortOrder.ASC,
     page_offset: Union[Unset, int] = 0,
     page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryInvoicesMetadataResponse]]:
     """ Pobranie listy metadanych faktur
 
-     Zwraca listę metadanych faktur spełniające podane kryteria wyszukiwania. Wyniki sortowane są rosnąco
-    według typu daty przekazanej w `DateRange`. Do realizacji pobierania przyrostowego należy stosować
-    typ `PermanentStorage`. Maksymalnie można pobrać faktury w zakresie do 10 000 rekordów
+     Zwraca metadane faktur spełniających filtry.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    Limit techniczny: ≤ 10 000 rekordów na zestaw filtrów, po jego osiągnięciu <b>isTruncated = true</b>
+    i należy ponownie ustawić <b>dateRange</b>, używając ostatniej daty z wyników (tj. ustawić from/to -
+    w zależności od kierunku sortowania, od daty ostatniego zwróconego rekordu) oraz wyzerować
+    <b>pageOffset</b>.
+
+    `Do scenariusza przyrostowego należy używać daty PermanentStorage oraz kolejność sortowania Asc`.
+
+    <b>Scenariusz pobierania przyrostowego (skrót):</b>
+    * Gdy <b>hasMore = false</b>, należy zakończyć,
+    * Gdy <b>hasMore = true</b> i <b>isTruncated = false</b>, należy zwiększyć <b>pageOffset</b>,
+    * Gdy <b>hasMore = true</b> i <b>isTruncated = true</b>, należy zawęzić <b>dateRange</b> (ustawić
+    from od daty ostatniego rekordu), wyzerować <b>pageOffset</b> i kontynuować
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc | Desc) - pole wybierane na podstawie
+    filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
+        sort_order (Union[Unset, SortOrder]): | Wartość | Opis |
+            | --- | --- |
+            | Asc | Sortowanie rosnąco. |
+            | Desc | Sortowanie malejąco. |
+             Default: SortOrder.ASC.
         page_offset (Union[Unset, int]):  Default: 0.
         page_size (Union[Unset, int]):  Default: 10.
         body (InvoiceQueryFilters):
@@ -205,6 +287,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+sort_order=sort_order,
 page_offset=page_offset,
 page_size=page_size,
 
@@ -220,19 +303,43 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: InvoiceQueryFilters,
+    sort_order: Union[Unset, SortOrder] = SortOrder.ASC,
     page_offset: Union[Unset, int] = 0,
     page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryInvoicesMetadataResponse]]:
     """ Pobranie listy metadanych faktur
 
-     Zwraca listę metadanych faktur spełniające podane kryteria wyszukiwania. Wyniki sortowane są rosnąco
-    według typu daty przekazanej w `DateRange`. Do realizacji pobierania przyrostowego należy stosować
-    typ `PermanentStorage`. Maksymalnie można pobrać faktury w zakresie do 10 000 rekordów
+     Zwraca metadane faktur spełniających filtry.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    Limit techniczny: ≤ 10 000 rekordów na zestaw filtrów, po jego osiągnięciu <b>isTruncated = true</b>
+    i należy ponownie ustawić <b>dateRange</b>, używając ostatniej daty z wyników (tj. ustawić from/to -
+    w zależności od kierunku sortowania, od daty ostatniego zwróconego rekordu) oraz wyzerować
+    <b>pageOffset</b>.
+
+    `Do scenariusza przyrostowego należy używać daty PermanentStorage oraz kolejność sortowania Asc`.
+
+    <b>Scenariusz pobierania przyrostowego (skrót):</b>
+    * Gdy <b>hasMore = false</b>, należy zakończyć,
+    * Gdy <b>hasMore = true</b> i <b>isTruncated = false</b>, należy zwiększyć <b>pageOffset</b>,
+    * Gdy <b>hasMore = true</b> i <b>isTruncated = true</b>, należy zawęzić <b>dateRange</b> (ustawić
+    from od daty ostatniego rekordu), wyzerować <b>pageOffset</b> i kontynuować
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc | Desc) - pole wybierane na podstawie
+    filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
+        sort_order (Union[Unset, SortOrder]): | Wartość | Opis |
+            | --- | --- |
+            | Asc | Sortowanie rosnąco. |
+            | Desc | Sortowanie malejąco. |
+             Default: SortOrder.ASC.
         page_offset (Union[Unset, int]):  Default: 0.
         page_size (Union[Unset, int]):  Default: 10.
         body (InvoiceQueryFilters):
@@ -249,6 +356,7 @@ async def asyncio(
     return (await asyncio_detailed(
         client=client,
 body=body,
+sort_order=sort_order,
 page_offset=page_offset,
 page_size=page_size,
 

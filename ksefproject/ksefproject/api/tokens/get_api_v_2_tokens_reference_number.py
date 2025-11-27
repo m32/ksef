@@ -76,7 +76,7 @@ def sync_detailed(
     """ Pobranie statusu tokena
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -107,7 +107,7 @@ def sync(
     """ Pobranie statusu tokena
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -133,7 +133,7 @@ async def asyncio_detailed(
     """ Pobranie statusu tokena
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -164,7 +164,7 @@ async def asyncio(
     """ Pobranie statusu tokena
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

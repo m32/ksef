@@ -30,7 +30,7 @@ class EntityRole:
     """ 
         Attributes:
             role (EntityRoleType):
-            description (str): Opis.
+            description (str): Opis roli.
             start_date (datetime.datetime): Data rozpoczęcia obowiązywania roli.
             parent_entity_identifier (Union['EntityRolesParentEntityIdentifier', None, Unset]): Identyfikator podmiotu
                 nadrzędnego.

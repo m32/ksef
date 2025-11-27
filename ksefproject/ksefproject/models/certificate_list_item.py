@@ -56,6 +56,7 @@ class CertificateListItem:
                 | Fingerprint | Odcisk palca certyfikatu |
             valid_from (datetime.datetime): Data rozpoczęcia ważności certyfikatu.
             valid_to (datetime.datetime): Data wygaśnięcia certyfikatu.
+            request_date (datetime.datetime): Data złożenia wniosku certyfikacyjnego.
             last_use_date (Union[None, Unset, datetime.datetime]): Data ostatniego użycia certyfikatu.
      """
 
@@ -67,6 +68,7 @@ class CertificateListItem:
     subject_identifier: 'CertificateSubjectIdentifier'
     valid_from: datetime.datetime
     valid_to: datetime.datetime
+    request_date: datetime.datetime
     last_use_date: Union[None, Unset, datetime.datetime] = UNSET
 
 
@@ -91,6 +93,8 @@ class CertificateListItem:
 
         valid_to = self.valid_to.isoformat()
 
+        request_date = self.request_date.isoformat()
+
         last_use_date: Union[None, Unset, str]
         if isinstance(self.last_use_date, Unset):
             last_use_date = UNSET
@@ -111,6 +115,7 @@ class CertificateListItem:
             "subjectIdentifier": subject_identifier,
             "validFrom": valid_from,
             "validTo": valid_to,
+            "requestDate": request_date,
         })
         if last_use_date is not UNSET:
             field_dict["lastUseDate"] = last_use_date
@@ -154,6 +159,11 @@ class CertificateListItem:
 
 
 
+        request_date = isoparse(d.pop("requestDate"))
+
+
+
+
         def _parse_last_use_date(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
                 return data
@@ -183,6 +193,7 @@ class CertificateListItem:
             subject_identifier=subject_identifier,
             valid_from=valid_from,
             valid_to=valid_to,
+            request_date=request_date,
             last_use_date=last_use_date,
         )
 

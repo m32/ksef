@@ -20,7 +20,7 @@ T = TypeVar("T", bound="SendInvoiceResponse")
 class SendInvoiceResponse:
     """ 
         Attributes:
-            reference_number (str): Numer referencyjny faktury.
+            reference_number (str): Numer referencyjny.
      """
 
     reference_number: str

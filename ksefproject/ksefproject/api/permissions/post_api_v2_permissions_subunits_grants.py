@@ -87,13 +87,29 @@ def sync_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień administratora podmiotu podrzędnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu podrzędnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień
+    administratora w kontekście:
+    - wskazanego NIP podmiotu podrzędnego – wyłącznie jeżeli podmiot bieżącego kontekstu logowania ma
+    rolę podmiotu nadrzędnego:
+      - **LocalGovernmentUnit**
+      - **VatGroupUnit**
+    - wskazanego lub utworzonego identyfikatora wewnętrznego
+
+    Wraz z utworzeniem administratora jednostki podrzędnej tworzony jest identyfikator wewnętrzny
+    składający się z numeru NIP podmiotu kontekstu logowania oraz 5 cyfr unikalnie identyfikujących
+    jednostkę wewnętrzną.
+    W żądaniu podaje się również nazwę tej jednostki.
+
+    Uprawnienia administratora jednostki podrzędnej obejmują:
+    - **CredentialsManage** – zarządzanie uprawnieniami
+
+    Metoda automatycznie nadaje powyższe uprawnienie, bez konieczności podawania go w żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-administratora-podmiotu-podrz%C4%99dnego)
 
-    Wymagane uprawnienia: `SubunitManage`.
+    **Wymagane uprawnienia**: `SubunitManage`.
 
     Args:
         body (SubunitPermissionsGrantRequest):
@@ -126,13 +142,29 @@ def sync(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień administratora podmiotu podrzędnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu podrzędnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień
+    administratora w kontekście:
+    - wskazanego NIP podmiotu podrzędnego – wyłącznie jeżeli podmiot bieżącego kontekstu logowania ma
+    rolę podmiotu nadrzędnego:
+      - **LocalGovernmentUnit**
+      - **VatGroupUnit**
+    - wskazanego lub utworzonego identyfikatora wewnętrznego
+
+    Wraz z utworzeniem administratora jednostki podrzędnej tworzony jest identyfikator wewnętrzny
+    składający się z numeru NIP podmiotu kontekstu logowania oraz 5 cyfr unikalnie identyfikujących
+    jednostkę wewnętrzną.
+    W żądaniu podaje się również nazwę tej jednostki.
+
+    Uprawnienia administratora jednostki podrzędnej obejmują:
+    - **CredentialsManage** – zarządzanie uprawnieniami
+
+    Metoda automatycznie nadaje powyższe uprawnienie, bez konieczności podawania go w żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-administratora-podmiotu-podrz%C4%99dnego)
 
-    Wymagane uprawnienia: `SubunitManage`.
+    **Wymagane uprawnienia**: `SubunitManage`.
 
     Args:
         body (SubunitPermissionsGrantRequest):
@@ -160,13 +192,29 @@ async def asyncio_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień administratora podmiotu podrzędnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu podrzędnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień
+    administratora w kontekście:
+    - wskazanego NIP podmiotu podrzędnego – wyłącznie jeżeli podmiot bieżącego kontekstu logowania ma
+    rolę podmiotu nadrzędnego:
+      - **LocalGovernmentUnit**
+      - **VatGroupUnit**
+    - wskazanego lub utworzonego identyfikatora wewnętrznego
+
+    Wraz z utworzeniem administratora jednostki podrzędnej tworzony jest identyfikator wewnętrzny
+    składający się z numeru NIP podmiotu kontekstu logowania oraz 5 cyfr unikalnie identyfikujących
+    jednostkę wewnętrzną.
+    W żądaniu podaje się również nazwę tej jednostki.
+
+    Uprawnienia administratora jednostki podrzędnej obejmują:
+    - **CredentialsManage** – zarządzanie uprawnieniami
+
+    Metoda automatycznie nadaje powyższe uprawnienie, bez konieczności podawania go w żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-administratora-podmiotu-podrz%C4%99dnego)
 
-    Wymagane uprawnienia: `SubunitManage`.
+    **Wymagane uprawnienia**: `SubunitManage`.
 
     Args:
         body (SubunitPermissionsGrantRequest):
@@ -199,13 +247,29 @@ async def asyncio(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień administratora podmiotu podrzędnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu podrzędnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień
+    administratora w kontekście:
+    - wskazanego NIP podmiotu podrzędnego – wyłącznie jeżeli podmiot bieżącego kontekstu logowania ma
+    rolę podmiotu nadrzędnego:
+      - **LocalGovernmentUnit**
+      - **VatGroupUnit**
+    - wskazanego lub utworzonego identyfikatora wewnętrznego
+
+    Wraz z utworzeniem administratora jednostki podrzędnej tworzony jest identyfikator wewnętrzny
+    składający się z numeru NIP podmiotu kontekstu logowania oraz 5 cyfr unikalnie identyfikujących
+    jednostkę wewnętrzną.
+    W żądaniu podaje się również nazwę tej jednostki.
+
+    Uprawnienia administratora jednostki podrzędnej obejmują:
+    - **CredentialsManage** – zarządzanie uprawnieniami
+
+    Metoda automatycznie nadaje powyższe uprawnienie, bez konieczności podawania go w żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-administratora-podmiotu-podrz%C4%99dnego)
 
-    Wymagane uprawnienia: `SubunitManage`.
+    **Wymagane uprawnienia**: `SubunitManage`.
 
     Args:
         body (SubunitPermissionsGrantRequest):

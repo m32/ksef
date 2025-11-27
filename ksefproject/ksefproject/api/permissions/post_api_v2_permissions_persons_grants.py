@@ -87,13 +87,28 @@ def sync_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie osobom fizycznym uprawnień do pracy w KSeF
 
-     Rozpoczyna asynchroniczną operację nadawania osobom fizycznym uprawnień do pracy w KSeF.
+     Metoda pozwala na nadanie osobie wskazanej w żądaniu uprawnień do pracy w KSeF
+    w kontekście bieżącym.
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur,
+    - **InvoiceRead** – przeglądanie faktur,
+    - **CredentialsManage** – zarządzanie uprawnieniami,
+    - **CredentialsRead** – przeglądanie uprawnień,
+    - **Introspection** – przeglądanie historii sesji i generowanie UPO,
+    - **SubunitManage** – zarządzanie jednostkami podrzędnymi,
+    - **EnforcementOperations** – wykonywanie operacji egzekucyjnych.
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
+    Uprawnienie **EnforcementOperations** może być nadane wyłącznie wtedy,
+    gdy podmiot kontekstu ma rolę **EnforcementAuthority** (organ egzekucyjny)
+    lub **CourtBailiff** (komornik sądowy).
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadawanie-
     uprawnie%C5%84-osobom-fizycznym-do-pracy-w-ksef)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (PersonPermissionsGrantRequest):
@@ -126,13 +141,28 @@ def sync(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie osobom fizycznym uprawnień do pracy w KSeF
 
-     Rozpoczyna asynchroniczną operację nadawania osobom fizycznym uprawnień do pracy w KSeF.
+     Metoda pozwala na nadanie osobie wskazanej w żądaniu uprawnień do pracy w KSeF
+    w kontekście bieżącym.
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur,
+    - **InvoiceRead** – przeglądanie faktur,
+    - **CredentialsManage** – zarządzanie uprawnieniami,
+    - **CredentialsRead** – przeglądanie uprawnień,
+    - **Introspection** – przeglądanie historii sesji i generowanie UPO,
+    - **SubunitManage** – zarządzanie jednostkami podrzędnymi,
+    - **EnforcementOperations** – wykonywanie operacji egzekucyjnych.
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
+    Uprawnienie **EnforcementOperations** może być nadane wyłącznie wtedy,
+    gdy podmiot kontekstu ma rolę **EnforcementAuthority** (organ egzekucyjny)
+    lub **CourtBailiff** (komornik sądowy).
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadawanie-
     uprawnie%C5%84-osobom-fizycznym-do-pracy-w-ksef)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (PersonPermissionsGrantRequest):
@@ -160,13 +190,28 @@ async def asyncio_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie osobom fizycznym uprawnień do pracy w KSeF
 
-     Rozpoczyna asynchroniczną operację nadawania osobom fizycznym uprawnień do pracy w KSeF.
+     Metoda pozwala na nadanie osobie wskazanej w żądaniu uprawnień do pracy w KSeF
+    w kontekście bieżącym.
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur,
+    - **InvoiceRead** – przeglądanie faktur,
+    - **CredentialsManage** – zarządzanie uprawnieniami,
+    - **CredentialsRead** – przeglądanie uprawnień,
+    - **Introspection** – przeglądanie historii sesji i generowanie UPO,
+    - **SubunitManage** – zarządzanie jednostkami podrzędnymi,
+    - **EnforcementOperations** – wykonywanie operacji egzekucyjnych.
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
+    Uprawnienie **EnforcementOperations** może być nadane wyłącznie wtedy,
+    gdy podmiot kontekstu ma rolę **EnforcementAuthority** (organ egzekucyjny)
+    lub **CourtBailiff** (komornik sądowy).
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadawanie-
     uprawnie%C5%84-osobom-fizycznym-do-pracy-w-ksef)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (PersonPermissionsGrantRequest):
@@ -199,13 +244,28 @@ async def asyncio(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie osobom fizycznym uprawnień do pracy w KSeF
 
-     Rozpoczyna asynchroniczną operację nadawania osobom fizycznym uprawnień do pracy w KSeF.
+     Metoda pozwala na nadanie osobie wskazanej w żądaniu uprawnień do pracy w KSeF
+    w kontekście bieżącym.
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur,
+    - **InvoiceRead** – przeglądanie faktur,
+    - **CredentialsManage** – zarządzanie uprawnieniami,
+    - **CredentialsRead** – przeglądanie uprawnień,
+    - **Introspection** – przeglądanie historii sesji i generowanie UPO,
+    - **SubunitManage** – zarządzanie jednostkami podrzędnymi,
+    - **EnforcementOperations** – wykonywanie operacji egzekucyjnych.
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
+    Uprawnienie **EnforcementOperations** może być nadane wyłącznie wtedy,
+    gdy podmiot kontekstu ma rolę **EnforcementAuthority** (organ egzekucyjny)
+    lub **CourtBailiff** (komornik sądowy).
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadawanie-
     uprawnie%C5%84-osobom-fizycznym-do-pracy-w-ksef)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (PersonPermissionsGrantRequest):

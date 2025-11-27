@@ -23,9 +23,10 @@ T = TypeVar("T", bound="SendInvoiceRequest")
 class SendInvoiceRequest:
     """ 
         Attributes:
-            invoice_hash (str): Skrót SHA256 oryginalnej faktury, zakodowany w formacie Base64.
-            invoice_size (int): Rozmiar oryginalnej faktury w bajtach.
-            encrypted_invoice_hash (str): Skrót SHA256 zaszyfrowanej faktury, zakodowany w formacie Base64.
+            invoice_hash (str): SHA-256 w Base64.
+            invoice_size (int): Rozmiar oryginalnej faktury w bajtach. Maksymalny rozmiar zależy od limitów ustawionych dla
+                uwierzytelnionego kontekstu.
+            encrypted_invoice_hash (str): SHA-256 w Base64.
             encrypted_invoice_size (int): Rozmiar zaszyfrowanej faktury w bajtach.
             encrypted_invoice_content (str): Faktura zaszyfrowana algorytmem AES-256-CBC z dopełnianiem PKCS#7 (kluczem
                 przekazanym przy otwarciu sesji), zakodowana w formacie Base64.

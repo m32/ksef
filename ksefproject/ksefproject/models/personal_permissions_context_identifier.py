@@ -19,7 +19,7 @@ T = TypeVar("T", bound="PersonalPermissionsContextIdentifier")
 
 @_attrs_define
 class PersonalPermissionsContextIdentifier:
-    """ Identyfikator kontekstu uprawnienia (dla uprawnień nadanych podmiotom do obsługi faktur).
+    """ Identyfikator kontekstu podmiotu, który nadał uprawnienia do obsługi faktur.
     | Type | Value |
     | --- | --- |
     | Nip | 10 cyfrowy numer NIP |

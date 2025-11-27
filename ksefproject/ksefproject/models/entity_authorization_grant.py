@@ -31,7 +31,7 @@ T = TypeVar("T", bound="EntityAuthorizationGrant")
 class EntityAuthorizationGrant:
     """ 
         Attributes:
-            id (str): Identyfikator uprawnienia.
+            id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy operacjach odbierania.
             authorized_entity_identifier (EntityAuthorizationsAuthorizedEntityIdentifier): Identyfikator podmiotu
                 uprawnionego.
                 | Type | Value |

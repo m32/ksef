@@ -26,17 +26,20 @@ T = TypeVar("T", bound="PersonCreateRequest")
 class PersonCreateRequest:
     """ 
         Attributes:
-            nip (Union[None, Unset, str]):
-            pesel (Union[None, Unset, str]):
-            is_bailiff (Union[Unset, bool]):
-            description (Union[None, Unset, str]):
-            created_date (Union[None, Unset, datetime.datetime]):
+            nip (str): 10 cyfrowy numer NIP.
+            pesel (str): 11 cyfrowy numer PESEL.
+            is_bailiff (bool):
+            description (str):
+            is_deceased (Union[Unset, bool]):
+            created_date (Union[None, Unset, datetime.datetime]): W przypadku wielokrotnego tworzenia danych testowych z tym
+                samym identyfikatorem nie można podawać daty wcześniejszej ani takiej samej jak poprzednia.
      """
 
-    nip: Union[None, Unset, str] = UNSET
-    pesel: Union[None, Unset, str] = UNSET
-    is_bailiff: Union[Unset, bool] = UNSET
-    description: Union[None, Unset, str] = UNSET
+    nip: str
+    pesel: str
+    is_bailiff: bool
+    description: str
+    is_deceased: Union[Unset, bool] = UNSET
     created_date: Union[None, Unset, datetime.datetime] = UNSET
 
 
@@ -44,25 +47,15 @@ class PersonCreateRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        nip: Union[None, Unset, str]
-        if isinstance(self.nip, Unset):
-            nip = UNSET
-        else:
-            nip = self.nip
+        nip = self.nip
 
-        pesel: Union[None, Unset, str]
-        if isinstance(self.pesel, Unset):
-            pesel = UNSET
-        else:
-            pesel = self.pesel
+        pesel = self.pesel
 
         is_bailiff = self.is_bailiff
 
-        description: Union[None, Unset, str]
-        if isinstance(self.description, Unset):
-            description = UNSET
-        else:
-            description = self.description
+        description = self.description
+
+        is_deceased = self.is_deceased
 
         created_date: Union[None, Unset, str]
         if isinstance(self.created_date, Unset):
@@ -76,15 +69,13 @@ class PersonCreateRequest:
         field_dict: dict[str, Any] = {}
 
         field_dict.update({
+            "nip": nip,
+            "pesel": pesel,
+            "isBailiff": is_bailiff,
+            "description": description,
         })
-        if nip is not UNSET:
-            field_dict["nip"] = nip
-        if pesel is not UNSET:
-            field_dict["pesel"] = pesel
-        if is_bailiff is not UNSET:
-            field_dict["isBailiff"] = is_bailiff
-        if description is not UNSET:
-            field_dict["description"] = description
+        if is_deceased is not UNSET:
+            field_dict["isDeceased"] = is_deceased
         if created_date is not UNSET:
             field_dict["createdDate"] = created_date
 
@@ -95,37 +86,15 @@ class PersonCreateRequest:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        def _parse_nip(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
+        nip = d.pop("nip")
 
-        nip = _parse_nip(d.pop("nip", UNSET))
+        pesel = d.pop("pesel")
 
+        is_bailiff = d.pop("isBailiff")
 
-        def _parse_pesel(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
+        description = d.pop("description")
 
-        pesel = _parse_pesel(d.pop("pesel", UNSET))
-
-
-        is_bailiff = d.pop("isBailiff", UNSET)
-
-        def _parse_description(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        description = _parse_description(d.pop("description", UNSET))
-
+        is_deceased = d.pop("isDeceased", UNSET)
 
         def _parse_created_date(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
@@ -152,6 +121,7 @@ class PersonCreateRequest:
             pesel=pesel,
             is_bailiff=is_bailiff,
             description=description,
+            is_deceased=is_deceased,
             created_date=created_date,
         )
 

@@ -16,9 +16,9 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
+  from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
   from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
   from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
-  from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
   from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
 
 
@@ -33,7 +33,7 @@ T = TypeVar("T", bound="PersonPermission")
 class PersonPermission:
     """ 
         Attributes:
-            id (str): Identyfikator uprawnienia.
+            id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy operacjach odbierania.
             authorized_identifier (PersonPermissionsAuthorizedIdentifier): Identyfikator osoby lub podmiotu uprawnionego.
                 | Type | Value |
                 | --- | --- |
@@ -51,7 +51,7 @@ class PersonPermission:
             description (str): Opis uprawnienia.
             permission_state (PermissionState):
             start_date (datetime.datetime): Data rozpoczęcia obowiązywania uprawnienia.
-            can_delegate (bool): Informacja o możliwości dalszego nadawania uprawnienia w sposób pośredni.
+            can_delegate (bool): Flaga określająca, czy uprawnienie ma być możliwe do dalszego przekazywania.
             context_identifier (Union['PersonPermissionsContextIdentifier', None, Unset]): Identyfikator kontekstu
                 uprawnienia (dla uprawnień nadanych administratorom jednostek podrzędnych).
                 | Type | Value |
@@ -59,11 +59,12 @@ class PersonPermission:
                 | Nip | 10 cyfrowy numer NIP |
                 | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
             target_identifier (Union['PersonPermissionsTargetIdentifier', None, Unset]): Identyfikator podmiotu docelowego
-                (dla uprawnień pośrednich).
+                dla uprawnień nadanych pośrednio.
                 | Type | Value |
                 | --- | --- |
                 | Nip | 10 cyfrowy numer NIP |
                 | AllPartners | Identyfikator oznaczający, że uprawnienie nadane w sposób pośredni jest typu generalnego |
+                | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
      """
 
     id: str
@@ -82,9 +83,9 @@ class PersonPermission:
 
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
         from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
-        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
         id = self.id
 
@@ -142,9 +143,9 @@ class PersonPermission:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
         from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
-        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
         d = dict(src_dict)
         id = d.pop("id")

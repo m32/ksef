@@ -101,10 +101,10 @@ def sync_detailed(
      Zwraca listę faktur przesłanych w sesji wraz z ich statusami, oraz informacje na temat ilości
     poprawnie i niepoprawnie przetworzonych faktur.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
         page_size (Union[Unset, int]):  Default: 10.
         x_continuation_token (Union[Unset, str]):
 
@@ -143,10 +143,10 @@ def sync(
      Zwraca listę faktur przesłanych w sesji wraz z ich statusami, oraz informacje na temat ilości
     poprawnie i niepoprawnie przetworzonych faktur.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
         page_size (Union[Unset, int]):  Default: 10.
         x_continuation_token (Union[Unset, str]):
 
@@ -180,10 +180,10 @@ async def asyncio_detailed(
      Zwraca listę faktur przesłanych w sesji wraz z ich statusami, oraz informacje na temat ilości
     poprawnie i niepoprawnie przetworzonych faktur.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
         page_size (Union[Unset, int]):  Default: 10.
         x_continuation_token (Union[Unset, str]):
 
@@ -222,10 +222,10 @@ async def asyncio(
      Zwraca listę faktur przesłanych w sesji wraz z ich statusami, oraz informacje na temat ilości
     poprawnie i niepoprawnie przetworzonych faktur.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
         page_size (Union[Unset, int]):  Default: 10.
         x_continuation_token (Union[Unset, str]):
 

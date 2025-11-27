@@ -79,11 +79,11 @@ def sync_detailed(
 
      Zwraca XML zawierający zbiorcze UPO dla sesji.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
-        upo_reference_number (str):
+        reference_number (str): Numer referencyjny.
+        upo_reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -117,11 +117,11 @@ def sync(
 
      Zwraca XML zawierający zbiorcze UPO dla sesji.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
-        upo_reference_number (str):
+        reference_number (str): Numer referencyjny.
+        upo_reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -150,11 +150,11 @@ async def asyncio_detailed(
 
      Zwraca XML zawierający zbiorcze UPO dla sesji.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
-        upo_reference_number (str):
+        reference_number (str): Numer referencyjny.
+        upo_reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -188,11 +188,11 @@ async def asyncio(
 
      Zwraca XML zawierający zbiorcze UPO dla sesji.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
-        upo_reference_number (str):
+        reference_number (str): Numer referencyjny.
+        upo_reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

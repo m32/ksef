@@ -14,7 +14,7 @@ from typing import cast
 
 
 def _get_kwargs(
-    operation_reference_number: str,
+    reference_number: str,
 
 ) -> dict[str, Any]:
     
@@ -25,7 +25,7 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/api/v2/invoices/exports/{operation_reference_number}".format(operation_reference_number=operation_reference_number,),
+        "url": "/api/v2/invoices/exports/{reference_number}".format(reference_number=reference_number,),
     }
 
 
@@ -72,19 +72,31 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 
 def sync_detailed(
-    operation_reference_number: str,
+    reference_number: str,
     *,
     client: AuthenticatedClient,
 
 ) -> Response[Union[Any, ExceptionResponse, InvoiceExportStatusResponse]]:
     """ Pobranie statusu eksportu paczki faktur
 
-     
+     Paczka faktur jest dzielona na części o maksymalnym rozmiarze 50 MB. Każda część jest zaszyfrowana
+    algorytmem AES-256-CBC z dopełnieniem PKCS#7, przy użyciu klucza symetrycznego przekazanego podczas
+    inicjowania eksportu.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    W przypadku ucięcia wyniku eksportu z powodu przekroczenia limitów, zwracana jest flaga
+    <b>IsTruncated = true</b> oraz odpowiednia data, którą należy wykorzystać do wykonania kolejnego
+    eksportu, aż do momentu, gdy flaga <b>IsTruncated = false</b>.
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc) - pole wybierane na podstawie filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
-        operation_reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -96,7 +108,7 @@ def sync_detailed(
 
 
     kwargs = _get_kwargs(
-        operation_reference_number=operation_reference_number,
+        reference_number=reference_number,
 
     )
 
@@ -107,19 +119,31 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 def sync(
-    operation_reference_number: str,
+    reference_number: str,
     *,
     client: AuthenticatedClient,
 
 ) -> Optional[Union[Any, ExceptionResponse, InvoiceExportStatusResponse]]:
     """ Pobranie statusu eksportu paczki faktur
 
-     
+     Paczka faktur jest dzielona na części o maksymalnym rozmiarze 50 MB. Każda część jest zaszyfrowana
+    algorytmem AES-256-CBC z dopełnieniem PKCS#7, przy użyciu klucza symetrycznego przekazanego podczas
+    inicjowania eksportu.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    W przypadku ucięcia wyniku eksportu z powodu przekroczenia limitów, zwracana jest flaga
+    <b>IsTruncated = true</b> oraz odpowiednia data, którą należy wykorzystać do wykonania kolejnego
+    eksportu, aż do momentu, gdy flaga <b>IsTruncated = false</b>.
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc) - pole wybierane na podstawie filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
-        operation_reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -131,25 +155,37 @@ def sync(
 
 
     return sync_detailed(
-        operation_reference_number=operation_reference_number,
+        reference_number=reference_number,
 client=client,
 
     ).parsed
 
 async def asyncio_detailed(
-    operation_reference_number: str,
+    reference_number: str,
     *,
     client: AuthenticatedClient,
 
 ) -> Response[Union[Any, ExceptionResponse, InvoiceExportStatusResponse]]:
     """ Pobranie statusu eksportu paczki faktur
 
-     
+     Paczka faktur jest dzielona na części o maksymalnym rozmiarze 50 MB. Każda część jest zaszyfrowana
+    algorytmem AES-256-CBC z dopełnieniem PKCS#7, przy użyciu klucza symetrycznego przekazanego podczas
+    inicjowania eksportu.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    W przypadku ucięcia wyniku eksportu z powodu przekroczenia limitów, zwracana jest flaga
+    <b>IsTruncated = true</b> oraz odpowiednia data, którą należy wykorzystać do wykonania kolejnego
+    eksportu, aż do momentu, gdy flaga <b>IsTruncated = false</b>.
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc) - pole wybierane na podstawie filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
-        operation_reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -161,7 +197,7 @@ async def asyncio_detailed(
 
 
     kwargs = _get_kwargs(
-        operation_reference_number=operation_reference_number,
+        reference_number=reference_number,
 
     )
 
@@ -172,19 +208,31 @@ async def asyncio_detailed(
     return _build_response(client=client, response=response)
 
 async def asyncio(
-    operation_reference_number: str,
+    reference_number: str,
     *,
     client: AuthenticatedClient,
 
 ) -> Optional[Union[Any, ExceptionResponse, InvoiceExportStatusResponse]]:
     """ Pobranie statusu eksportu paczki faktur
 
-     
+     Paczka faktur jest dzielona na części o maksymalnym rozmiarze 50 MB. Każda część jest zaszyfrowana
+    algorytmem AES-256-CBC z dopełnieniem PKCS#7, przy użyciu klucza symetrycznego przekazanego podczas
+    inicjowania eksportu.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    W przypadku ucięcia wyniku eksportu z powodu przekroczenia limitów, zwracana jest flaga
+    <b>IsTruncated = true</b> oraz odpowiednia data, którą należy wykorzystać do wykonania kolejnego
+    eksportu, aż do momentu, gdy flaga <b>IsTruncated = false</b>.
+
+    **Sortowanie:**
+
+    - permanentStorageDate | invoicingDate | issueDate (Asc) - pole wybierane na podstawie filtrów
+
+
+
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
-        operation_reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -196,7 +244,7 @@ async def asyncio(
 
 
     return (await asyncio_detailed(
-        operation_reference_number=operation_reference_number,
+        reference_number=reference_number,
 client=client,
 
     )).parsed

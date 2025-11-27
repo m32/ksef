@@ -87,13 +87,32 @@ def sync_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień administratora podmiotu unijnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu unijnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień
+    administratora w kontekście złożonym z identyfikatora NIP podmiotu kontekstu bieżącego oraz numeru
+    VAT UE podmiotu unijnego wskazanego w żądaniu.
+    Wraz z utworzeniem administratora podmiotu unijnego tworzony jest kontekst złożony składający się z
+    numeru NIP podmiotu kontekstu logowania oraz wskazanego numeru identyfikacyjnego VAT UE podmiotu
+    unijnego.
+    W żądaniu podaje się również nazwę i adres podmiotu unijnego.
+
+    Jedynym sposobem identyfikacji uprawnianego jest odcisk palca certyfikatu kwalifikowanego:
+    - certyfikat podpisu elektronicznego dla osób fizycznych
+    - certyfikat pieczęci elektronicznej dla podmiotów
+
+    Uprawnienia administratora podmiotu unijnego obejmują:
+    - **VatEuManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+    - **Introspection** – przeglądanie historii sesji
+
+    Metoda automatycznie nadaje wszystkie powyższe uprawnienia, bez konieczności ich wskazywania w
+    żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-administratora-podmiotu-unijnego)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EuEntityAdministrationPermissionsGrantRequest):
@@ -126,13 +145,32 @@ def sync(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień administratora podmiotu unijnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu unijnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień
+    administratora w kontekście złożonym z identyfikatora NIP podmiotu kontekstu bieżącego oraz numeru
+    VAT UE podmiotu unijnego wskazanego w żądaniu.
+    Wraz z utworzeniem administratora podmiotu unijnego tworzony jest kontekst złożony składający się z
+    numeru NIP podmiotu kontekstu logowania oraz wskazanego numeru identyfikacyjnego VAT UE podmiotu
+    unijnego.
+    W żądaniu podaje się również nazwę i adres podmiotu unijnego.
+
+    Jedynym sposobem identyfikacji uprawnianego jest odcisk palca certyfikatu kwalifikowanego:
+    - certyfikat podpisu elektronicznego dla osób fizycznych
+    - certyfikat pieczęci elektronicznej dla podmiotów
+
+    Uprawnienia administratora podmiotu unijnego obejmują:
+    - **VatEuManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+    - **Introspection** – przeglądanie historii sesji
+
+    Metoda automatycznie nadaje wszystkie powyższe uprawnienia, bez konieczności ich wskazywania w
+    żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-administratora-podmiotu-unijnego)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EuEntityAdministrationPermissionsGrantRequest):
@@ -160,13 +198,32 @@ async def asyncio_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień administratora podmiotu unijnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu unijnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień
+    administratora w kontekście złożonym z identyfikatora NIP podmiotu kontekstu bieżącego oraz numeru
+    VAT UE podmiotu unijnego wskazanego w żądaniu.
+    Wraz z utworzeniem administratora podmiotu unijnego tworzony jest kontekst złożony składający się z
+    numeru NIP podmiotu kontekstu logowania oraz wskazanego numeru identyfikacyjnego VAT UE podmiotu
+    unijnego.
+    W żądaniu podaje się również nazwę i adres podmiotu unijnego.
+
+    Jedynym sposobem identyfikacji uprawnianego jest odcisk palca certyfikatu kwalifikowanego:
+    - certyfikat podpisu elektronicznego dla osób fizycznych
+    - certyfikat pieczęci elektronicznej dla podmiotów
+
+    Uprawnienia administratora podmiotu unijnego obejmują:
+    - **VatEuManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+    - **Introspection** – przeglądanie historii sesji
+
+    Metoda automatycznie nadaje wszystkie powyższe uprawnienia, bez konieczności ich wskazywania w
+    żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-administratora-podmiotu-unijnego)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EuEntityAdministrationPermissionsGrantRequest):
@@ -199,13 +256,32 @@ async def asyncio(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień administratora podmiotu unijnego
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu unijnego.
+     Metoda pozwala na nadanie wskazanemu w żądaniu podmiotowi lub osobie fizycznej uprawnień
+    administratora w kontekście złożonym z identyfikatora NIP podmiotu kontekstu bieżącego oraz numeru
+    VAT UE podmiotu unijnego wskazanego w żądaniu.
+    Wraz z utworzeniem administratora podmiotu unijnego tworzony jest kontekst złożony składający się z
+    numeru NIP podmiotu kontekstu logowania oraz wskazanego numeru identyfikacyjnego VAT UE podmiotu
+    unijnego.
+    W żądaniu podaje się również nazwę i adres podmiotu unijnego.
+
+    Jedynym sposobem identyfikacji uprawnianego jest odcisk palca certyfikatu kwalifikowanego:
+    - certyfikat podpisu elektronicznego dla osób fizycznych
+    - certyfikat pieczęci elektronicznej dla podmiotów
+
+    Uprawnienia administratora podmiotu unijnego obejmują:
+    - **VatEuManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+    - **Introspection** – przeglądanie historii sesji
+
+    Metoda automatycznie nadaje wszystkie powyższe uprawnienia, bez konieczności ich wskazywania w
+    żądaniu.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-administratora-podmiotu-unijnego)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EuEntityAdministrationPermissionsGrantRequest):

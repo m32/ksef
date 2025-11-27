@@ -17,8 +17,8 @@ from typing import Union
 
 def _get_kwargs(
     *,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> dict[str, Any]:
     
@@ -87,23 +87,43 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryEntityRolesResponse]]:
     """ Pobranie listy ról podmiotu
 
-     Zwraca listę ról podmiotu.
+      Metoda pozwala na **odczytanie listy ról podmiotu bieżącego kontekstu logowania**.
 
-    > Więcej informacji:
-    > - [Pobieranie listy ról](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-
+    #### Role podmiotów zwracane przez operację:
+    - **CourtBailiff** – komornik sądowy
+    - **EnforcementAuthority** – organ egzekucyjny
+    - **LocalGovernmentUnit** – nadrzędna JST
+    - **LocalGovernmentSubUnit** – podrzędne JST
+    - **VatGroupUnit** – grupa VAT
+    - **VatGroupSubUnit** – członek grupy VAT
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy ról](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-
     listy-r%C3%B3l-podmiotu)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -129,23 +149,43 @@ page_size=page_size,
 def sync(
     *,
     client: AuthenticatedClient,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryEntityRolesResponse]]:
     """ Pobranie listy ról podmiotu
 
-     Zwraca listę ról podmiotu.
+      Metoda pozwala na **odczytanie listy ról podmiotu bieżącego kontekstu logowania**.
 
-    > Więcej informacji:
-    > - [Pobieranie listy ról](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-
+    #### Role podmiotów zwracane przez operację:
+    - **CourtBailiff** – komornik sądowy
+    - **EnforcementAuthority** – organ egzekucyjny
+    - **LocalGovernmentUnit** – nadrzędna JST
+    - **LocalGovernmentSubUnit** – podrzędne JST
+    - **VatGroupUnit** – grupa VAT
+    - **VatGroupSubUnit** – członek grupy VAT
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy ról](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-
     listy-r%C3%B3l-podmiotu)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -166,23 +206,43 @@ page_size=page_size,
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryEntityRolesResponse]]:
     """ Pobranie listy ról podmiotu
 
-     Zwraca listę ról podmiotu.
+      Metoda pozwala na **odczytanie listy ról podmiotu bieżącego kontekstu logowania**.
 
-    > Więcej informacji:
-    > - [Pobieranie listy ról](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-
+    #### Role podmiotów zwracane przez operację:
+    - **CourtBailiff** – komornik sądowy
+    - **EnforcementAuthority** – organ egzekucyjny
+    - **LocalGovernmentUnit** – nadrzędna JST
+    - **LocalGovernmentSubUnit** – podrzędne JST
+    - **VatGroupUnit** – grupa VAT
+    - **VatGroupSubUnit** – członek grupy VAT
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy ról](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-
     listy-r%C3%B3l-podmiotu)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -208,23 +268,43 @@ page_size=page_size,
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryEntityRolesResponse]]:
     """ Pobranie listy ról podmiotu
 
-     Zwraca listę ról podmiotu.
+      Metoda pozwala na **odczytanie listy ról podmiotu bieżącego kontekstu logowania**.
 
-    > Więcej informacji:
-    > - [Pobieranie listy ról](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-
+    #### Role podmiotów zwracane przez operację:
+    - **CourtBailiff** – komornik sądowy
+    - **EnforcementAuthority** – organ egzekucyjny
+    - **LocalGovernmentUnit** – nadrzędna JST
+    - **LocalGovernmentSubUnit** – podrzędne JST
+    - **VatGroupUnit** – grupa VAT
+    - **VatGroupSubUnit** – członek grupy VAT
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy ról](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-
     listy-r%C3%B3l-podmiotu)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

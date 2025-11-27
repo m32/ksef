@@ -7,9 +7,6 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 from ..models.test_data_context_identifier_type import TestDataContextIdentifierType
-from ..types import UNSET, Unset
-from typing import cast, Union
-from typing import Union
 
 
 
@@ -24,38 +21,29 @@ T = TypeVar("T", bound="TestDataContextIdentifier")
 class TestDataContextIdentifier:
     """ 
         Attributes:
-            type_ (Union[Unset, TestDataContextIdentifierType]):
-            value (Union[None, Unset, str]):
+            type_ (TestDataContextIdentifierType):
+            value (str):
      """
 
-    type_: Union[Unset, TestDataContextIdentifierType] = UNSET
-    value: Union[None, Unset, str] = UNSET
+    type_: TestDataContextIdentifierType
+    value: str
 
 
 
 
 
     def to_dict(self) -> dict[str, Any]:
-        type_: Union[Unset, str] = UNSET
-        if not isinstance(self.type_, Unset):
-            type_ = self.type_.value
+        type_ = self.type_.value
 
-
-        value: Union[None, Unset, str]
-        if isinstance(self.value, Unset):
-            value = UNSET
-        else:
-            value = self.value
+        value = self.value
 
 
         field_dict: dict[str, Any] = {}
 
         field_dict.update({
+            "type": type_,
+            "value": value,
         })
-        if type_ is not UNSET:
-            field_dict["type"] = type_
-        if value is not UNSET:
-            field_dict["value"] = value
 
         return field_dict
 
@@ -64,25 +52,12 @@ class TestDataContextIdentifier:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        _type_ = d.pop("type", UNSET)
-        type_: Union[Unset, TestDataContextIdentifierType]
-        if isinstance(_type_,  Unset):
-            type_ = UNSET
-        else:
-            type_ = TestDataContextIdentifierType(_type_)
+        type_ = TestDataContextIdentifierType(d.pop("type"))
 
 
 
 
-        def _parse_value(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        value = _parse_value(d.pop("value", UNSET))
-
+        value = d.pop("value")
 
         test_data_context_identifier = cls(
             type_=type_,

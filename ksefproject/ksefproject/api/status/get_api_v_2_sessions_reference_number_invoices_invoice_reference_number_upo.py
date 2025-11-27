@@ -79,11 +79,11 @@ def sync_detailed(
 
      Zwraca UPO faktury przesłanego w sesji na podstawie jego numeru KSeF.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
-        invoice_reference_number (str):
+        reference_number (str): Numer referencyjny.
+        invoice_reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -117,11 +117,11 @@ def sync(
 
      Zwraca UPO faktury przesłanego w sesji na podstawie jego numeru KSeF.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
-        invoice_reference_number (str):
+        reference_number (str): Numer referencyjny.
+        invoice_reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -150,11 +150,11 @@ async def asyncio_detailed(
 
      Zwraca UPO faktury przesłanego w sesji na podstawie jego numeru KSeF.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
-        invoice_reference_number (str):
+        reference_number (str): Numer referencyjny.
+        invoice_reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -188,11 +188,11 @@ async def asyncio(
 
      Zwraca UPO faktury przesłanego w sesji na podstawie jego numeru KSeF.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `Introspection`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
-        invoice_reference_number (str):
+        reference_number (str): Numer referencyjny.
+        invoice_reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

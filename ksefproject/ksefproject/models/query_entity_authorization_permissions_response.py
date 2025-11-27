@@ -23,7 +23,7 @@ T = TypeVar("T", bound="QueryEntityAuthorizationPermissionsResponse")
 class QueryEntityAuthorizationPermissionsResponse:
     """ 
         Attributes:
-            authorization_grants (list['EntityAuthorizationGrant']): Lista uprawnień.
+            authorization_grants (list['EntityAuthorizationGrant']): Lista odczytanych uprawnień.
             has_more (bool): Flaga informująca o dostępności kolejnej strony wyników.
      """
 

@@ -23,7 +23,7 @@ T = TypeVar("T", bound="EnrollCertificateResponse")
 class EnrollCertificateResponse:
     """ 
         Attributes:
-            reference_number (str): Numer referencyjny operacji przetwarzania wniosku certyfikacyjnego.
+            reference_number (str): Numer referencyjny.
             timestamp (datetime.datetime): Data złożenia wniosku certyfikacyjnego.
      """
 

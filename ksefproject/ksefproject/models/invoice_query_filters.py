@@ -35,16 +35,22 @@ class InvoiceQueryFilters:
         Attributes:
             subject_type (InvoiceQuerySubjectType): | Wartość | Opis |
                 | --- | --- |
-                | Subject1 | Podmiot 1 |
-                | Subject2 | Podmiot 2 |
+                | Subject1 | Podmiot 1 - sprzedawca |
+                | Subject2 | Podmiot 2 - nabywca |
                 | Subject3 | Podmiot 3 |
                 | SubjectAuthorized | Podmiot upoważniony |
             date_range (InvoiceQueryDateRange):
-            ksef_number (Union[None, Unset, str]): Numer KSeF faktury.
-            invoice_number (Union[None, Unset, str]): Numer faktury nadany przez wystawcę.
+            ksef_number (Union[None, Unset, str]): Numer KSeF faktury (exact match).
+            invoice_number (Union[None, Unset, str]): Numer faktury nadany przez wystawcę (exact match).
             amount (Union['InvoiceQueryAmount', None, Unset]): Filtr kwotowy – brutto, netto lub VAT (z wartością).
-            seller_nip (Union[None, Unset, str]): Nip sprzedawcy.
+            seller_nip (Union[None, Unset, str]): Nip sprzedawcy (exact match).
             buyer_identifier (Union['InvoiceQueryBuyerIdentifier', None, Unset]): Identyfikator nabywcy.
+                | Type | Value |
+                | --- | --- |
+                | Nip | 10 cyfrowy numer NIP |
+                | VatUe | Identyfikator VAT UE podmiotu unijnego. |
+                | Other | Inny identyfikator|
+                | None  | Brak identyfikatora nabywcy |
             currency_codes (Union[None, Unset, list[CurrencyCode]]): Kody walut.
             invoicing_mode (Union[InvoicingMode, None, Unset]): Tryb wystawienia faktury: online lub offline.
             is_self_invoicing (Union[None, Unset, bool]): Czy faktura została wystawiona w trybie samofakturowania.

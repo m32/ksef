@@ -103,8 +103,8 @@ def sync_detailed(
     - SHA512
 
     > Więcej informacji:
-    > - [Wysłanie wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-client-
-    docs/blob/main/certyfikaty-wewn%C4%99trzne-KSeF.md#4-wys%C5%82anie-wniosku-certyfikacyjnego)
+    > - [Wysłanie wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-docs/blob/main/certyfikaty-
+    KSeF.md#4-wys%C5%82anie-wniosku-certyfikacyjnego)
 
     Args:
         body (EnrollCertificateRequest):
@@ -157,8 +157,8 @@ def sync(
     - SHA512
 
     > Więcej informacji:
-    > - [Wysłanie wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-client-
-    docs/blob/main/certyfikaty-wewn%C4%99trzne-KSeF.md#4-wys%C5%82anie-wniosku-certyfikacyjnego)
+    > - [Wysłanie wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-docs/blob/main/certyfikaty-
+    KSeF.md#4-wys%C5%82anie-wniosku-certyfikacyjnego)
 
     Args:
         body (EnrollCertificateRequest):
@@ -206,8 +206,8 @@ async def asyncio_detailed(
     - SHA512
 
     > Więcej informacji:
-    > - [Wysłanie wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-client-
-    docs/blob/main/certyfikaty-wewn%C4%99trzne-KSeF.md#4-wys%C5%82anie-wniosku-certyfikacyjnego)
+    > - [Wysłanie wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-docs/blob/main/certyfikaty-
+    KSeF.md#4-wys%C5%82anie-wniosku-certyfikacyjnego)
 
     Args:
         body (EnrollCertificateRequest):
@@ -260,8 +260,8 @@ async def asyncio(
     - SHA512
 
     > Więcej informacji:
-    > - [Wysłanie wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-client-
-    docs/blob/main/certyfikaty-wewn%C4%99trzne-KSeF.md#4-wys%C5%82anie-wniosku-certyfikacyjnego)
+    > - [Wysłanie wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-docs/blob/main/certyfikaty-
+    KSeF.md#4-wys%C5%82anie-wniosku-certyfikacyjnego)
 
     Args:
         body (EnrollCertificateRequest):

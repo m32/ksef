@@ -14,8 +14,8 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.status_info import StatusInfo
   from ..models.upo_response import UpoResponse
+  from ..models.status_info import StatusInfo
 
 
 
@@ -51,8 +51,8 @@ class SessionStatusResponse:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.status_info import StatusInfo
         from ..models.upo_response import UpoResponse
+        from ..models.status_info import StatusInfo
         status = self.status.to_dict()
 
         valid_until: Union[None, Unset, str]
@@ -112,8 +112,8 @@ class SessionStatusResponse:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.status_info import StatusInfo
         from ..models.upo_response import UpoResponse
+        from ..models.status_info import StatusInfo
         d = dict(src_dict)
         status = StatusInfo.from_dict(d.pop("status"))
 

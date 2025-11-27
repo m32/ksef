@@ -29,17 +29,18 @@ T = TypeVar("T", bound="SubjectCreateRequest")
 class SubjectCreateRequest:
     """ 
         Attributes:
-            subject_nip (Union[None, Unset, str]):
-            subject_type (Union[Unset, SubjectType]):
+            subject_nip (str): 10 cyfrowy numer NIP.
+            subject_type (SubjectType):
+            description (str):
             subunits (Union[None, Unset, list['Subunit']]):
-            description (Union[None, Unset, str]):
-            created_date (Union[None, Unset, datetime.datetime]):
+            created_date (Union[None, Unset, datetime.datetime]): W przypadku wielokrotnego tworzenia danych testowych z tym
+                samym identyfikatorem nie można podawać daty wcześniejszej ani takiej samej jak poprzednia.
      """
 
-    subject_nip: Union[None, Unset, str] = UNSET
-    subject_type: Union[Unset, SubjectType] = UNSET
+    subject_nip: str
+    subject_type: SubjectType
+    description: str
     subunits: Union[None, Unset, list['Subunit']] = UNSET
-    description: Union[None, Unset, str] = UNSET
     created_date: Union[None, Unset, datetime.datetime] = UNSET
 
 
@@ -48,16 +49,11 @@ class SubjectCreateRequest:
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.subunit import Subunit
-        subject_nip: Union[None, Unset, str]
-        if isinstance(self.subject_nip, Unset):
-            subject_nip = UNSET
-        else:
-            subject_nip = self.subject_nip
+        subject_nip = self.subject_nip
 
-        subject_type: Union[Unset, str] = UNSET
-        if not isinstance(self.subject_type, Unset):
-            subject_type = self.subject_type.value
+        subject_type = self.subject_type.value
 
+        description = self.description
 
         subunits: Union[None, Unset, list[dict[str, Any]]]
         if isinstance(self.subunits, Unset):
@@ -72,12 +68,6 @@ class SubjectCreateRequest:
         else:
             subunits = self.subunits
 
-        description: Union[None, Unset, str]
-        if isinstance(self.description, Unset):
-            description = UNSET
-        else:
-            description = self.description
-
         created_date: Union[None, Unset, str]
         if isinstance(self.created_date, Unset):
             created_date = UNSET
@@ -90,15 +80,12 @@ class SubjectCreateRequest:
         field_dict: dict[str, Any] = {}
 
         field_dict.update({
+            "subjectNip": subject_nip,
+            "subjectType": subject_type,
+            "description": description,
         })
-        if subject_nip is not UNSET:
-            field_dict["subjectNip"] = subject_nip
-        if subject_type is not UNSET:
-            field_dict["subjectType"] = subject_type
         if subunits is not UNSET:
             field_dict["subunits"] = subunits
-        if description is not UNSET:
-            field_dict["description"] = description
         if created_date is not UNSET:
             field_dict["createdDate"] = created_date
 
@@ -110,25 +97,14 @@ class SubjectCreateRequest:
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.subunit import Subunit
         d = dict(src_dict)
-        def _parse_subject_nip(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
+        subject_nip = d.pop("subjectNip")
 
-        subject_nip = _parse_subject_nip(d.pop("subjectNip", UNSET))
-
-
-        _subject_type = d.pop("subjectType", UNSET)
-        subject_type: Union[Unset, SubjectType]
-        if isinstance(_subject_type,  Unset):
-            subject_type = UNSET
-        else:
-            subject_type = SubjectType(_subject_type)
+        subject_type = SubjectType(d.pop("subjectType"))
 
 
 
+
+        description = d.pop("description")
 
         def _parse_subunits(data: object) -> Union[None, Unset, list['Subunit']]:
             if data is None:
@@ -155,16 +131,6 @@ class SubjectCreateRequest:
         subunits = _parse_subunits(d.pop("subunits", UNSET))
 
 
-        def _parse_description(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        description = _parse_description(d.pop("description", UNSET))
-
-
         def _parse_created_date(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
                 return data
@@ -188,8 +154,8 @@ class SubjectCreateRequest:
         subject_create_request = cls(
             subject_nip=subject_nip,
             subject_type=subject_type,
-            subunits=subunits,
             description=description,
+            subunits=subunits,
             created_date=created_date,
         )
 

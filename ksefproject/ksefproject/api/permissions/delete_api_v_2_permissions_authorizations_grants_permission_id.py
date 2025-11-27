@@ -79,17 +79,19 @@ def sync_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Odebranie uprawnień podmiotowych
 
-     Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.
-    Ta metoda służy do odbierania uprawnień podmiotowych.
+     Metoda pozwala na odebranie uprawnienia podmiotowego o wskazanym identyfikatorze.
+    Wymagane jest wcześniejsze odczytanie uprawnień w celu uzyskania
+    identyfikatora uprawnienia, które ma zostać odebrane.
 
     > Więcej informacji:
     > - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-
     uprawnie%C5%84-podmiotowych)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
-        permission_id (str):
+        permission_id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy
+            operacjach odbierania.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -119,17 +121,19 @@ def sync(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Odebranie uprawnień podmiotowych
 
-     Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.
-    Ta metoda służy do odbierania uprawnień podmiotowych.
+     Metoda pozwala na odebranie uprawnienia podmiotowego o wskazanym identyfikatorze.
+    Wymagane jest wcześniejsze odczytanie uprawnień w celu uzyskania
+    identyfikatora uprawnienia, które ma zostać odebrane.
 
     > Więcej informacji:
     > - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-
     uprawnie%C5%84-podmiotowych)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
-        permission_id (str):
+        permission_id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy
+            operacjach odbierania.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -154,17 +158,19 @@ async def asyncio_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Odebranie uprawnień podmiotowych
 
-     Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.
-    Ta metoda służy do odbierania uprawnień podmiotowych.
+     Metoda pozwala na odebranie uprawnienia podmiotowego o wskazanym identyfikatorze.
+    Wymagane jest wcześniejsze odczytanie uprawnień w celu uzyskania
+    identyfikatora uprawnienia, które ma zostać odebrane.
 
     > Więcej informacji:
     > - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-
     uprawnie%C5%84-podmiotowych)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
-        permission_id (str):
+        permission_id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy
+            operacjach odbierania.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -194,17 +200,19 @@ async def asyncio(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Odebranie uprawnień podmiotowych
 
-     Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.
-    Ta metoda służy do odbierania uprawnień podmiotowych.
+     Metoda pozwala na odebranie uprawnienia podmiotowego o wskazanym identyfikatorze.
+    Wymagane jest wcześniejsze odczytanie uprawnień w celu uzyskania
+    identyfikatora uprawnienia, które ma zostać odebrane.
 
     > Więcej informacji:
     > - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-
     uprawnie%C5%84-podmiotowych)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
-        permission_id (str):
+        permission_id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy
+            operacjach odbierania.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

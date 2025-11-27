@@ -23,7 +23,7 @@ T = TypeVar("T", bound="QueryEntityRolesResponse")
 class QueryEntityRolesResponse:
     """ 
         Attributes:
-            roles (list['EntityRole']): Lista ról.
+            roles (list['EntityRole']): Lista odczytanych ról podmiotu.
             has_more (bool): Flaga informująca o dostępności kolejnej strony wyników.
      """
 

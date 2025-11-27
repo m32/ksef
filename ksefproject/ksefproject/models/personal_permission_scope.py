@@ -7,7 +7,6 @@ class PersonalPermissionScope(str, Enum):
     INTROSPECTION = "Introspection"
     INVOICEREAD = "InvoiceRead"
     INVOICEWRITE = "InvoiceWrite"
-    OWNER = "Owner"
     SUBUNITMANAGE = "SubunitManage"
     VATUEMANAGE = "VatUeManage"
 

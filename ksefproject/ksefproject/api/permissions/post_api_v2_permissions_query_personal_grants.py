@@ -19,8 +19,8 @@ from typing import Union
 def _get_kwargs(
     *,
     body: PersonalPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
@@ -92,21 +92,57 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: PersonalPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryPersonalPermissionsResponse]]:
     """ Pobranie listy własnych uprawnień
 
-     Zwraca listę uprawnień przysługujących uwierzytelnionemu podmiotowi.
+      Metoda pozwala na odczytanie własnych uprawnień uwierzytelnionego klienta API w bieżącym kontekście
+    logowania.
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     W odpowiedzi przekazywane są następujące uprawnienia:
+     - nadane w sposób bezpośredni w bieżącym kontekście
+     - nadane przez podmiot nadrzędny
+     - nadane w sposób pośredni, jeżeli podmiot kontekstu logowania jest w uprawnieniu pośrednikiem lub
+    podmiotem docelowym
+     - nadane podmiotowi do obsługi faktur przez inny podmiot, jeśli podmiot uwierzytelniony ma w
+    bieżącym kontekście uprawnienia właścicielskie
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **CredentialsManage** – zarządzanie uprawnieniami
+     - **CredentialsRead** – przeglądanie uprawnień
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+     - **SubunitManage** – zarządzanie podmiotami podrzędnymi
+     - **EnforcementOperations** – wykonywanie operacji egzekucyjnych
+     - **VatEuManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **contextIdentifier** – identyfikator podmiotu, który nadał uprawnienie do obsługi faktur
+     - **targetIdentifier** – identyfikator podmiotu docelowego dla uprawnień nadanych pośrednio
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+     - **permissionState** – status uprawnienia
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-w%C5%82asnych-uprawnie%C5%84)
 
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (PersonalPermissionsQueryRequest):
 
     Raises:
@@ -135,21 +171,57 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: PersonalPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryPersonalPermissionsResponse]]:
     """ Pobranie listy własnych uprawnień
 
-     Zwraca listę uprawnień przysługujących uwierzytelnionemu podmiotowi.
+      Metoda pozwala na odczytanie własnych uprawnień uwierzytelnionego klienta API w bieżącym kontekście
+    logowania.
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     W odpowiedzi przekazywane są następujące uprawnienia:
+     - nadane w sposób bezpośredni w bieżącym kontekście
+     - nadane przez podmiot nadrzędny
+     - nadane w sposób pośredni, jeżeli podmiot kontekstu logowania jest w uprawnieniu pośrednikiem lub
+    podmiotem docelowym
+     - nadane podmiotowi do obsługi faktur przez inny podmiot, jeśli podmiot uwierzytelniony ma w
+    bieżącym kontekście uprawnienia właścicielskie
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **CredentialsManage** – zarządzanie uprawnieniami
+     - **CredentialsRead** – przeglądanie uprawnień
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+     - **SubunitManage** – zarządzanie podmiotami podrzędnymi
+     - **EnforcementOperations** – wykonywanie operacji egzekucyjnych
+     - **VatEuManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **contextIdentifier** – identyfikator podmiotu, który nadał uprawnienie do obsługi faktur
+     - **targetIdentifier** – identyfikator podmiotu docelowego dla uprawnień nadanych pośrednio
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+     - **permissionState** – status uprawnienia
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-w%C5%82asnych-uprawnie%C5%84)
 
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (PersonalPermissionsQueryRequest):
 
     Raises:
@@ -173,21 +245,57 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: PersonalPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryPersonalPermissionsResponse]]:
     """ Pobranie listy własnych uprawnień
 
-     Zwraca listę uprawnień przysługujących uwierzytelnionemu podmiotowi.
+      Metoda pozwala na odczytanie własnych uprawnień uwierzytelnionego klienta API w bieżącym kontekście
+    logowania.
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     W odpowiedzi przekazywane są następujące uprawnienia:
+     - nadane w sposób bezpośredni w bieżącym kontekście
+     - nadane przez podmiot nadrzędny
+     - nadane w sposób pośredni, jeżeli podmiot kontekstu logowania jest w uprawnieniu pośrednikiem lub
+    podmiotem docelowym
+     - nadane podmiotowi do obsługi faktur przez inny podmiot, jeśli podmiot uwierzytelniony ma w
+    bieżącym kontekście uprawnienia właścicielskie
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **CredentialsManage** – zarządzanie uprawnieniami
+     - **CredentialsRead** – przeglądanie uprawnień
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+     - **SubunitManage** – zarządzanie podmiotami podrzędnymi
+     - **EnforcementOperations** – wykonywanie operacji egzekucyjnych
+     - **VatEuManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **contextIdentifier** – identyfikator podmiotu, który nadał uprawnienie do obsługi faktur
+     - **targetIdentifier** – identyfikator podmiotu docelowego dla uprawnień nadanych pośrednio
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+     - **permissionState** – status uprawnienia
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-w%C5%82asnych-uprawnie%C5%84)
 
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (PersonalPermissionsQueryRequest):
 
     Raises:
@@ -216,21 +324,57 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: PersonalPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryPersonalPermissionsResponse]]:
     """ Pobranie listy własnych uprawnień
 
-     Zwraca listę uprawnień przysługujących uwierzytelnionemu podmiotowi.
+      Metoda pozwala na odczytanie własnych uprawnień uwierzytelnionego klienta API w bieżącym kontekście
+    logowania.
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     W odpowiedzi przekazywane są następujące uprawnienia:
+     - nadane w sposób bezpośredni w bieżącym kontekście
+     - nadane przez podmiot nadrzędny
+     - nadane w sposób pośredni, jeżeli podmiot kontekstu logowania jest w uprawnieniu pośrednikiem lub
+    podmiotem docelowym
+     - nadane podmiotowi do obsługi faktur przez inny podmiot, jeśli podmiot uwierzytelniony ma w
+    bieżącym kontekście uprawnienia właścicielskie
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **CredentialsManage** – zarządzanie uprawnieniami
+     - **CredentialsRead** – przeglądanie uprawnień
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+     - **SubunitManage** – zarządzanie podmiotami podrzędnymi
+     - **EnforcementOperations** – wykonywanie operacji egzekucyjnych
+     - **VatEuManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **contextIdentifier** – identyfikator podmiotu, który nadał uprawnienie do obsługi faktur
+     - **targetIdentifier** – identyfikator podmiotu docelowego dla uprawnień nadanych pośrednio
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+     - **permissionState** – status uprawnienia
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-w%C5%82asnych-uprawnie%C5%84)
 
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (PersonalPermissionsQueryRequest):
 
     Raises:

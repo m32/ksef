@@ -101,6 +101,11 @@ def sync_detailed(
      Zwraca listę certyfikatów spełniających podane kryteria wyszukiwania.
     W przypadku braku podania kryteriów wyszukiwania zwrócona zostanie nieprzefiltrowana lista.
 
+    **Sortowanie:**
+
+    - requestDate (Desc)
+
+
     Args:
         page_size (Union[Unset, int]):  Default: 10.
         page_offset (Union[Unset, int]):  Default: 0.
@@ -141,6 +146,11 @@ def sync(
      Zwraca listę certyfikatów spełniających podane kryteria wyszukiwania.
     W przypadku braku podania kryteriów wyszukiwania zwrócona zostanie nieprzefiltrowana lista.
 
+    **Sortowanie:**
+
+    - requestDate (Desc)
+
+
     Args:
         page_size (Union[Unset, int]):  Default: 10.
         page_offset (Union[Unset, int]):  Default: 0.
@@ -175,6 +185,11 @@ async def asyncio_detailed(
 
      Zwraca listę certyfikatów spełniających podane kryteria wyszukiwania.
     W przypadku braku podania kryteriów wyszukiwania zwrócona zostanie nieprzefiltrowana lista.
+
+    **Sortowanie:**
+
+    - requestDate (Desc)
+
 
     Args:
         page_size (Union[Unset, int]):  Default: 10.
@@ -215,6 +230,11 @@ async def asyncio(
 
      Zwraca listę certyfikatów spełniających podane kryteria wyszukiwania.
     W przypadku braku podania kryteriów wyszukiwania zwrócona zostanie nieprzefiltrowana lista.
+
+    **Sortowanie:**
+
+    - requestDate (Desc)
+
 
     Args:
         page_size (Union[Unset, int]):  Default: 10.

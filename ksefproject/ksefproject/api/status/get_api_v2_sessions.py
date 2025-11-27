@@ -21,7 +21,7 @@ import datetime
 
 def _get_kwargs(
     *,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = 10,
     session_type: SessionType,
     reference_number: Union[Unset, str] = UNSET,
     date_created_from: Union[Unset, datetime.datetime] = UNSET,
@@ -148,7 +148,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = 10,
     session_type: SessionType,
     reference_number: Union[Unset, str] = UNSET,
     date_created_from: Union[Unset, datetime.datetime] = UNSET,
@@ -165,19 +165,26 @@ def sync_detailed(
 
      Zwraca listę sesji spełniających podane kryteria wyszukiwania.
 
-    Wymagane uprawnienia:
+
+
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
+
+    **Wymagane uprawnienia**:
     - `Introspection` – pozwala pobrać wszystkie sesje w bieżącym kontekście uwierzytelnienia
     `(ContextIdentifier)`.
     - `InvoiceWrite` – pozwala pobrać wyłącznie sesje utworzone przez podmiot uwierzytelniający, czyli
     podmiot inicjujący uwierzytelnienie.
 
     Args:
-        page_size (Union[Unset, int]):
+        page_size (Union[Unset, int]):  Default: 10.
         session_type (SessionType): | Wartość | Opis |
             | --- | --- |
             | Online | Wysyłka interaktywna (pojedyncze faktury). |
             | Batch | Wysyłka wsadowa (paczka faktur). |
-        reference_number (Union[Unset, str]):
+        reference_number (Union[Unset, str]): Numer referencyjny.
         date_created_from (Union[Unset, datetime.datetime]):
         date_created_to (Union[Unset, datetime.datetime]):
         date_closed_from (Union[Unset, datetime.datetime]):
@@ -220,7 +227,7 @@ x_continuation_token=x_continuation_token,
 def sync(
     *,
     client: AuthenticatedClient,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = 10,
     session_type: SessionType,
     reference_number: Union[Unset, str] = UNSET,
     date_created_from: Union[Unset, datetime.datetime] = UNSET,
@@ -237,19 +244,26 @@ def sync(
 
      Zwraca listę sesji spełniających podane kryteria wyszukiwania.
 
-    Wymagane uprawnienia:
+
+
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
+
+    **Wymagane uprawnienia**:
     - `Introspection` – pozwala pobrać wszystkie sesje w bieżącym kontekście uwierzytelnienia
     `(ContextIdentifier)`.
     - `InvoiceWrite` – pozwala pobrać wyłącznie sesje utworzone przez podmiot uwierzytelniający, czyli
     podmiot inicjujący uwierzytelnienie.
 
     Args:
-        page_size (Union[Unset, int]):
+        page_size (Union[Unset, int]):  Default: 10.
         session_type (SessionType): | Wartość | Opis |
             | --- | --- |
             | Online | Wysyłka interaktywna (pojedyncze faktury). |
             | Batch | Wysyłka wsadowa (paczka faktur). |
-        reference_number (Union[Unset, str]):
+        reference_number (Union[Unset, str]): Numer referencyjny.
         date_created_from (Union[Unset, datetime.datetime]):
         date_created_to (Union[Unset, datetime.datetime]):
         date_closed_from (Union[Unset, datetime.datetime]):
@@ -287,7 +301,7 @@ x_continuation_token=x_continuation_token,
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = 10,
     session_type: SessionType,
     reference_number: Union[Unset, str] = UNSET,
     date_created_from: Union[Unset, datetime.datetime] = UNSET,
@@ -304,19 +318,26 @@ async def asyncio_detailed(
 
      Zwraca listę sesji spełniających podane kryteria wyszukiwania.
 
-    Wymagane uprawnienia:
+
+
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
+
+    **Wymagane uprawnienia**:
     - `Introspection` – pozwala pobrać wszystkie sesje w bieżącym kontekście uwierzytelnienia
     `(ContextIdentifier)`.
     - `InvoiceWrite` – pozwala pobrać wyłącznie sesje utworzone przez podmiot uwierzytelniający, czyli
     podmiot inicjujący uwierzytelnienie.
 
     Args:
-        page_size (Union[Unset, int]):
+        page_size (Union[Unset, int]):  Default: 10.
         session_type (SessionType): | Wartość | Opis |
             | --- | --- |
             | Online | Wysyłka interaktywna (pojedyncze faktury). |
             | Batch | Wysyłka wsadowa (paczka faktur). |
-        reference_number (Union[Unset, str]):
+        reference_number (Union[Unset, str]): Numer referencyjny.
         date_created_from (Union[Unset, datetime.datetime]):
         date_created_to (Union[Unset, datetime.datetime]):
         date_closed_from (Union[Unset, datetime.datetime]):
@@ -359,7 +380,7 @@ x_continuation_token=x_continuation_token,
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = 10,
     session_type: SessionType,
     reference_number: Union[Unset, str] = UNSET,
     date_created_from: Union[Unset, datetime.datetime] = UNSET,
@@ -376,19 +397,26 @@ async def asyncio(
 
      Zwraca listę sesji spełniających podane kryteria wyszukiwania.
 
-    Wymagane uprawnienia:
+
+
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
+
+    **Wymagane uprawnienia**:
     - `Introspection` – pozwala pobrać wszystkie sesje w bieżącym kontekście uwierzytelnienia
     `(ContextIdentifier)`.
     - `InvoiceWrite` – pozwala pobrać wyłącznie sesje utworzone przez podmiot uwierzytelniający, czyli
     podmiot inicjujący uwierzytelnienie.
 
     Args:
-        page_size (Union[Unset, int]):
+        page_size (Union[Unset, int]):  Default: 10.
         session_type (SessionType): | Wartość | Opis |
             | --- | --- |
             | Online | Wysyłka interaktywna (pojedyncze faktury). |
             | Batch | Wysyłka wsadowa (paczka faktur). |
-        reference_number (Union[Unset, str]):
+        reference_number (Union[Unset, str]): Numer referencyjny.
         date_created_from (Union[Unset, datetime.datetime]):
         date_created_to (Union[Unset, datetime.datetime]):
         date_closed_from (Union[Unset, datetime.datetime]):

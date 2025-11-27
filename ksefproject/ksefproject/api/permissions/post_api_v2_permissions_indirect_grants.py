@@ -87,13 +87,28 @@ def sync_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień w sposób pośredni
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień w sposób pośredni.
+     Metoda pozwala na nadanie w sposób pośredni osobie wskazanej w żądaniu uprawnień do obsługi faktur
+    innego podmiotu – klienta.
+    Może to być jedna z możliwości:
+    - nadanie uprawnień generalnych – do obsługi wszystkich klientów
+    - nadanie uprawnień selektywnych – do obsługi wskazanego klienta
+
+    Uprawnienie selektywne może być nadane wyłącznie wtedy, gdy klient nadał wcześniej podmiotowi
+    bieżącego kontekstu dowolne uprawnienie z prawem do jego dalszego przekazywania (patrz [POST
+    /api/v2/permissions/entities/grants](/docs/v2/index.html#tag/Nadawanie-
+    uprawnien/paths/~1api~1v2~1permissions~1entities~1grants/post)).
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-w-spos%C3%B3b-po%C5%9Bredni)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (IndirectPermissionsGrantRequest):
@@ -126,13 +141,28 @@ def sync(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień w sposób pośredni
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień w sposób pośredni.
+     Metoda pozwala na nadanie w sposób pośredni osobie wskazanej w żądaniu uprawnień do obsługi faktur
+    innego podmiotu – klienta.
+    Może to być jedna z możliwości:
+    - nadanie uprawnień generalnych – do obsługi wszystkich klientów
+    - nadanie uprawnień selektywnych – do obsługi wskazanego klienta
+
+    Uprawnienie selektywne może być nadane wyłącznie wtedy, gdy klient nadał wcześniej podmiotowi
+    bieżącego kontekstu dowolne uprawnienie z prawem do jego dalszego przekazywania (patrz [POST
+    /api/v2/permissions/entities/grants](/docs/v2/index.html#tag/Nadawanie-
+    uprawnien/paths/~1api~1v2~1permissions~1entities~1grants/post)).
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-w-spos%C3%B3b-po%C5%9Bredni)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (IndirectPermissionsGrantRequest):
@@ -160,13 +190,28 @@ async def asyncio_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień w sposób pośredni
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień w sposób pośredni.
+     Metoda pozwala na nadanie w sposób pośredni osobie wskazanej w żądaniu uprawnień do obsługi faktur
+    innego podmiotu – klienta.
+    Może to być jedna z możliwości:
+    - nadanie uprawnień generalnych – do obsługi wszystkich klientów
+    - nadanie uprawnień selektywnych – do obsługi wskazanego klienta
+
+    Uprawnienie selektywne może być nadane wyłącznie wtedy, gdy klient nadał wcześniej podmiotowi
+    bieżącego kontekstu dowolne uprawnienie z prawem do jego dalszego przekazywania (patrz [POST
+    /api/v2/permissions/entities/grants](/docs/v2/index.html#tag/Nadawanie-
+    uprawnien/paths/~1api~1v2~1permissions~1entities~1grants/post)).
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-w-spos%C3%B3b-po%C5%9Bredni)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (IndirectPermissionsGrantRequest):
@@ -199,13 +244,28 @@ async def asyncio(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie uprawnień w sposób pośredni
 
-     Rozpoczyna asynchroniczną operację nadawania uprawnień w sposób pośredni.
+     Metoda pozwala na nadanie w sposób pośredni osobie wskazanej w żądaniu uprawnień do obsługi faktur
+    innego podmiotu – klienta.
+    Może to być jedna z możliwości:
+    - nadanie uprawnień generalnych – do obsługi wszystkich klientów
+    - nadanie uprawnień selektywnych – do obsługi wskazanego klienta
+
+    Uprawnienie selektywne może być nadane wyłącznie wtedy, gdy klient nadał wcześniej podmiotowi
+    bieżącego kontekstu dowolne uprawnienie z prawem do jego dalszego przekazywania (patrz [POST
+    /api/v2/permissions/entities/grants](/docs/v2/index.html#tag/Nadawanie-
+    uprawnien/paths/~1api~1v2~1permissions~1entities~1grants/post)).
+
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     uprawnie%C5%84-w-spos%C3%B3b-po%C5%9Bredni)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (IndirectPermissionsGrantRequest):

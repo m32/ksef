@@ -23,7 +23,7 @@ T = TypeVar("T", bound="OpenOnlineSessionResponse")
 class OpenOnlineSessionResponse:
     """ 
         Attributes:
-            reference_number (str): Numer referencyjny sesji.
+            reference_number (str): Numer referencyjny.
             valid_until (datetime.datetime): Termin ważności sesji. Po jego upływie sesja zostanie automatycznie zamknięta.
      """
 

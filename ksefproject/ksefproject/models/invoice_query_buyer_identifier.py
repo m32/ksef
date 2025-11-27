@@ -30,7 +30,7 @@ class InvoiceQueryBuyerIdentifier:
                 | Other | Inny |
                 | Nip | NIP |
                 | VatUe | VAT UE |
-            value (Union[None, Unset, str]): Wartość identyfikatora nabywcy.
+            value (Union[None, Unset, str]): Wartość identyfikatora nabywcy (exact match).
      """
 
     type_: BuyerIdentifierType

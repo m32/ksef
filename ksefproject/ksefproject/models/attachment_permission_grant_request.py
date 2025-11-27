@@ -6,9 +6,6 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
-from typing import cast, Union
-from typing import Union
 
 
 
@@ -23,29 +20,24 @@ T = TypeVar("T", bound="AttachmentPermissionGrantRequest")
 class AttachmentPermissionGrantRequest:
     """ 
         Attributes:
-            nip (Union[None, Unset, str]):
+            nip (str): 10 cyfrowy numer NIP.
      """
 
-    nip: Union[None, Unset, str] = UNSET
+    nip: str
 
 
 
 
 
     def to_dict(self) -> dict[str, Any]:
-        nip: Union[None, Unset, str]
-        if isinstance(self.nip, Unset):
-            nip = UNSET
-        else:
-            nip = self.nip
+        nip = self.nip
 
 
         field_dict: dict[str, Any] = {}
 
         field_dict.update({
+            "nip": nip,
         })
-        if nip is not UNSET:
-            field_dict["nip"] = nip
 
         return field_dict
 
@@ -54,15 +46,7 @@ class AttachmentPermissionGrantRequest:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        def _parse_nip(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        nip = _parse_nip(d.pop("nip", UNSET))
-
+        nip = d.pop("nip")
 
         attachment_permission_grant_request = cls(
             nip=nip,

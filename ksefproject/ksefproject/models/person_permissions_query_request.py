@@ -15,10 +15,10 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
-  from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
   from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
+  from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
   from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+  from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
 
 
 
@@ -55,12 +55,13 @@ class PersonPermissionsQueryRequest:
                 | Nip | 10 cyfrowy numer NIP |
                 | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
             target_identifier (Union['PersonPermissionsTargetIdentifier', None, Unset]): Identyfikator podmiotu docelowego
-                (dla uprawnień pośrednich).
+                dla uprawnień nadanych pośrednio.
                 | Type | Value |
                 | --- | --- |
                 | Nip | 10 cyfrowy numer NIP |
                 | AllPartners | Identyfikator oznaczający, że uprawnienie nadane w sposób pośredni jest typu generalnego |
-            permission_types (Union[None, Unset, list[PersonPermissionType]]): Możliwe uprawnienia do filtrowania.
+                | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
+            permission_types (Union[None, Unset, list[PersonPermissionType]]): Lista rodzajów wyszukiwanych uprawnień.
             permission_state (Union[None, PermissionState, Unset]): Stan uprawnienia.
                 | Type | Value |
                 | --- | --- |
@@ -81,10 +82,10 @@ class PersonPermissionsQueryRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
-        from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
         from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
+        from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
         from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+        from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
         query_type = self.query_type.value
 
         author_identifier: Union[None, Unset, dict[str, Any]]
@@ -165,10 +166,10 @@ class PersonPermissionsQueryRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
-        from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
         from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
+        from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
         from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+        from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
         d = dict(src_dict)
         query_type = PersonPermissionsQueryType(d.pop("queryType"))
 

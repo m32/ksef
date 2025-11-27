@@ -95,7 +95,7 @@ def sync_detailed(
     interaktywna.md#1-otwarcie-sesji)
     > - [Klucz publiczny Ministersta Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
         body (OpenOnlineSessionRequest):
@@ -136,7 +136,7 @@ def sync(
     interaktywna.md#1-otwarcie-sesji)
     > - [Klucz publiczny Ministersta Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
         body (OpenOnlineSessionRequest):
@@ -172,7 +172,7 @@ async def asyncio_detailed(
     interaktywna.md#1-otwarcie-sesji)
     > - [Klucz publiczny Ministersta Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
         body (OpenOnlineSessionRequest):
@@ -213,7 +213,7 @@ async def asyncio(
     interaktywna.md#1-otwarcie-sesji)
     > - [Klucz publiczny Ministersta Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
         body (OpenOnlineSessionRequest):

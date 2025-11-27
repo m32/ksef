@@ -94,6 +94,11 @@ def sync_detailed(
 
      Zwraca listę aktywnych sesji uwierzytelnienia.
 
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
     Args:
         page_size (Union[Unset, int]):  Default: 10.
         x_continuation_token (Union[Unset, str]):
@@ -130,6 +135,11 @@ def sync(
 
      Zwraca listę aktywnych sesji uwierzytelnienia.
 
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
     Args:
         page_size (Union[Unset, int]):  Default: 10.
         x_continuation_token (Union[Unset, str]):
@@ -160,6 +170,11 @@ async def asyncio_detailed(
     """ Pobranie listy aktywnych sesji
 
      Zwraca listę aktywnych sesji uwierzytelnienia.
+
+    **Sortowanie:**
+
+    - startDate (Desc)
+
 
     Args:
         page_size (Union[Unset, int]):  Default: 10.
@@ -196,6 +211,11 @@ async def asyncio(
     """ Pobranie listy aktywnych sesji
 
      Zwraca listę aktywnych sesji uwierzytelnienia.
+
+    **Sortowanie:**
+
+    - startDate (Desc)
+
 
     Args:
         page_size (Union[Unset, int]):  Default: 10.

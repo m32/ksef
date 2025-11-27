@@ -7,15 +7,14 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 from ... import errors
 
+from ...models.effective_api_rate_limits import EffectiveApiRateLimits
 from ...models.exception_response import ExceptionResponse
-from ...models.permissions_operation_status_response import PermissionsOperationStatusResponse
 from typing import cast
 
 
 
 def _get_kwargs(
-    operation_reference_number: str,
-
+    
 ) -> dict[str, Any]:
     
 
@@ -25,7 +24,7 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/api/v2/permissions/operations/{operation_reference_number}".format(operation_reference_number=operation_reference_number,),
+        "url": "/api/v2/rate-limits",
     }
 
 
@@ -33,9 +32,9 @@ def _get_kwargs(
 
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationStatusResponse]]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Union[Any, EffectiveApiRateLimits, ExceptionResponse]]:
     if response.status_code == 200:
-        response_200 = PermissionsOperationStatusResponse.from_dict(response.json())
+        response_200 = EffectiveApiRateLimits.from_dict(response.json())
 
 
 
@@ -58,7 +57,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Union[Any, ExceptionResponse, PermissionsOperationStatusResponse]]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Union[Any, EffectiveApiRateLimits, ExceptionResponse]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -68,30 +67,25 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 
 def sync_detailed(
-    operation_reference_number: str,
     *,
     client: AuthenticatedClient,
 
-) -> Response[Union[Any, ExceptionResponse, PermissionsOperationStatusResponse]]:
-    """ Pobranie statusu operacji
+) -> Response[Union[Any, EffectiveApiRateLimits, ExceptionResponse]]:
+    """ Pobranie aktualnie obowiązujących limitów API
 
-     Zwraca status operacji asynchronicznej związanej z nadaniem lub odebraniem uprawnień.
-
-    Args:
-        operation_reference_number (str):
+     Zwraca wartości aktualnie obowiązujących limitów ilości żądań przesyłanych do API.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, ExceptionResponse, PermissionsOperationStatusResponse]]
+        Response[Union[Any, EffectiveApiRateLimits, ExceptionResponse]]
      """
 
 
     kwargs = _get_kwargs(
-        operation_reference_number=operation_reference_number,
-
+        
     )
 
     response = client.get_httpx_client().request(
@@ -101,58 +95,48 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 def sync(
-    operation_reference_number: str,
     *,
     client: AuthenticatedClient,
 
-) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationStatusResponse]]:
-    """ Pobranie statusu operacji
+) -> Optional[Union[Any, EffectiveApiRateLimits, ExceptionResponse]]:
+    """ Pobranie aktualnie obowiązujących limitów API
 
-     Zwraca status operacji asynchronicznej związanej z nadaniem lub odebraniem uprawnień.
-
-    Args:
-        operation_reference_number (str):
+     Zwraca wartości aktualnie obowiązujących limitów ilości żądań przesyłanych do API.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, ExceptionResponse, PermissionsOperationStatusResponse]
+        Union[Any, EffectiveApiRateLimits, ExceptionResponse]
      """
 
 
     return sync_detailed(
-        operation_reference_number=operation_reference_number,
-client=client,
+        client=client,
 
     ).parsed
 
 async def asyncio_detailed(
-    operation_reference_number: str,
     *,
     client: AuthenticatedClient,
 
-) -> Response[Union[Any, ExceptionResponse, PermissionsOperationStatusResponse]]:
-    """ Pobranie statusu operacji
+) -> Response[Union[Any, EffectiveApiRateLimits, ExceptionResponse]]:
+    """ Pobranie aktualnie obowiązujących limitów API
 
-     Zwraca status operacji asynchronicznej związanej z nadaniem lub odebraniem uprawnień.
-
-    Args:
-        operation_reference_number (str):
+     Zwraca wartości aktualnie obowiązujących limitów ilości żądań przesyłanych do API.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, ExceptionResponse, PermissionsOperationStatusResponse]]
+        Response[Union[Any, EffectiveApiRateLimits, ExceptionResponse]]
      """
 
 
     kwargs = _get_kwargs(
-        operation_reference_number=operation_reference_number,
-
+        
     )
 
     response = await client.get_async_httpx_client().request(
@@ -162,29 +146,24 @@ async def asyncio_detailed(
     return _build_response(client=client, response=response)
 
 async def asyncio(
-    operation_reference_number: str,
     *,
     client: AuthenticatedClient,
 
-) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationStatusResponse]]:
-    """ Pobranie statusu operacji
+) -> Optional[Union[Any, EffectiveApiRateLimits, ExceptionResponse]]:
+    """ Pobranie aktualnie obowiązujących limitów API
 
-     Zwraca status operacji asynchronicznej związanej z nadaniem lub odebraniem uprawnień.
-
-    Args:
-        operation_reference_number (str):
+     Zwraca wartości aktualnie obowiązujących limitów ilości żądań przesyłanych do API.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, ExceptionResponse, PermissionsOperationStatusResponse]
+        Union[Any, EffectiveApiRateLimits, ExceptionResponse]
      """
 
 
     return (await asyncio_detailed(
-        operation_reference_number=operation_reference_number,
-client=client,
+        client=client,
 
     )).parsed

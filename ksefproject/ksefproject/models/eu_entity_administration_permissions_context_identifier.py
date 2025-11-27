@@ -19,7 +19,7 @@ T = TypeVar("T", bound="EuEntityAdministrationPermissionsContextIdentifier")
 
 @_attrs_define
 class EuEntityAdministrationPermissionsContextIdentifier:
-    """ Identyfikator zlożony z podmiotu polskiego i podmiotu unijnego.
+    """ Identyfikator kontekstu złożonego.
     | Type | Value |
     | --- | --- |
     | NipVatUe | Dwuczłonowy identyfikator składający się z numeru NIP i numeru VAT-UE: `{nip}-{vat_ue}` |

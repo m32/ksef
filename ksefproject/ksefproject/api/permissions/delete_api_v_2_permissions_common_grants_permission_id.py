@@ -79,24 +79,19 @@ def sync_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Odebranie uprawnień
 
-     Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.
-
-    Ta metoda służy do odbierania uprawnień takich jak:
-    - nadanych nadanych osobom fizycznym lub podmiotom do pracy w KSeF
-    - nadanych podmiotom do obsługi faktur
-    - nadanych w sposób pośredni
-    - administratorów jednostek i podmiotów podrzędnych
-    - administratorów podmiotów unijnych uprawnionych do samofakturowania
-    - reprezentantów podmiotów unijnych
+     Metoda pozwala na odebranie uprawnienia o wskazanym identyfikatorze.
+    Wymagane jest wcześniejsze odczytanie uprawnień w celu uzyskania
+    identyfikatora uprawnienia, które ma zostać odebrane.
 
     > Więcej informacji:
     > - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-
     uprawnie%C5%84)
 
-    Wymagane uprawnienia: `CredentialsManage`, `VatUeManage`, `SubunitManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`, `VatUeManage`, `SubunitManage`.
 
     Args:
-        permission_id (str):
+        permission_id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy
+            operacjach odbierania.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -126,24 +121,19 @@ def sync(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Odebranie uprawnień
 
-     Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.
-
-    Ta metoda służy do odbierania uprawnień takich jak:
-    - nadanych nadanych osobom fizycznym lub podmiotom do pracy w KSeF
-    - nadanych podmiotom do obsługi faktur
-    - nadanych w sposób pośredni
-    - administratorów jednostek i podmiotów podrzędnych
-    - administratorów podmiotów unijnych uprawnionych do samofakturowania
-    - reprezentantów podmiotów unijnych
+     Metoda pozwala na odebranie uprawnienia o wskazanym identyfikatorze.
+    Wymagane jest wcześniejsze odczytanie uprawnień w celu uzyskania
+    identyfikatora uprawnienia, które ma zostać odebrane.
 
     > Więcej informacji:
     > - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-
     uprawnie%C5%84)
 
-    Wymagane uprawnienia: `CredentialsManage`, `VatUeManage`, `SubunitManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`, `VatUeManage`, `SubunitManage`.
 
     Args:
-        permission_id (str):
+        permission_id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy
+            operacjach odbierania.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -168,24 +158,19 @@ async def asyncio_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Odebranie uprawnień
 
-     Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.
-
-    Ta metoda służy do odbierania uprawnień takich jak:
-    - nadanych nadanych osobom fizycznym lub podmiotom do pracy w KSeF
-    - nadanych podmiotom do obsługi faktur
-    - nadanych w sposób pośredni
-    - administratorów jednostek i podmiotów podrzędnych
-    - administratorów podmiotów unijnych uprawnionych do samofakturowania
-    - reprezentantów podmiotów unijnych
+     Metoda pozwala na odebranie uprawnienia o wskazanym identyfikatorze.
+    Wymagane jest wcześniejsze odczytanie uprawnień w celu uzyskania
+    identyfikatora uprawnienia, które ma zostać odebrane.
 
     > Więcej informacji:
     > - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-
     uprawnie%C5%84)
 
-    Wymagane uprawnienia: `CredentialsManage`, `VatUeManage`, `SubunitManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`, `VatUeManage`, `SubunitManage`.
 
     Args:
-        permission_id (str):
+        permission_id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy
+            operacjach odbierania.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -215,24 +200,19 @@ async def asyncio(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Odebranie uprawnień
 
-     Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.
-
-    Ta metoda służy do odbierania uprawnień takich jak:
-    - nadanych nadanych osobom fizycznym lub podmiotom do pracy w KSeF
-    - nadanych podmiotom do obsługi faktur
-    - nadanych w sposób pośredni
-    - administratorów jednostek i podmiotów podrzędnych
-    - administratorów podmiotów unijnych uprawnionych do samofakturowania
-    - reprezentantów podmiotów unijnych
+     Metoda pozwala na odebranie uprawnienia o wskazanym identyfikatorze.
+    Wymagane jest wcześniejsze odczytanie uprawnień w celu uzyskania
+    identyfikatora uprawnienia, które ma zostać odebrane.
 
     > Więcej informacji:
     > - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-
     uprawnie%C5%84)
 
-    Wymagane uprawnienia: `CredentialsManage`, `VatUeManage`, `SubunitManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`, `VatUeManage`, `SubunitManage`.
 
     Args:
-        permission_id (str):
+        permission_id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy
+            operacjach odbierania.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

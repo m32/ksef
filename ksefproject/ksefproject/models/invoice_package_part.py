@@ -26,12 +26,15 @@ class InvoicePackagePart:
             ordinal_number (int): Numer sekwencyjny pliku części paczki.
             part_name (str): Nazwa pliku części paczki.
             method (str): Metoda HTTP, której należy użyć przy pobieraniu pliku.
-            url (str): Adres URL, pod który należy wysłać żądanie pobrania.
-            part_size (int): Rozmiar części paczki w bajtach. Maksymalny rozmiar części to 50MiB (52 428 800 bajtów).
-            part_hash (str): Skrót SHA256 pliku części paczki, zakodowany w formacie Base64.
+            url (str): Adres URL, pod który należy wysłać żądanie pobrania części paczki.
+                Link jest generowany dynamicznie w momencie odpytania o status operacji eksportu.
+                Nie podlega limitom API i nie wymaga przesyłania tokenu dostępowego przy pobraniu.
+            part_size (int): Rozmiar części paczki w bajtach.
+            part_hash (str): SHA-256 w Base64.
             encrypted_part_size (int): Rozmiar zaszyfrowanej części paczki w bajtach.
-            encrypted_part_hash (str): Skrót SHA256 zaszyfrowanej części paczki, zakodowany w formacie Base64.
-            expiration_date (datetime.datetime): Moment wygaśnięcia linku do pobrania części.
+            encrypted_part_hash (str): SHA-256 w Base64.
+            expiration_date (datetime.datetime): Data i godzina wygaśnięcia linku umożliwiającego pobranie części paczki.
+                Po upływie tego momentu link przestaje być aktywny.
      """
 
     ordinal_number: int

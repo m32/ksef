@@ -23,9 +23,10 @@ T = TypeVar("T", bound="BatchFileInfo")
 class BatchFileInfo:
     """ 
         Attributes:
-            file_size (int): Rozmiar pliku paczki w bajtach. Maksymalny rozmiar paczki to 5GiB (5 368 709 120 bajtów).
-            file_hash (str): Skrót SHA256 pliku paczki, zakodowany w formacie Base64.
+            file_size (int): Rozmiar pliku paczki w bajtach. Maksymalny rozmiar paczki to 5GB.
+            file_hash (str): SHA-256 w Base64.
             file_parts (list['BatchFilePartInfo']): Informacje o częściach pliku paczki. Maksymalna liczba części to 50.
+                Maksymalny dozwolony rozmiar części przed zaszyfrowaniem to 100MB.
      """
 
     file_size: int

@@ -41,7 +41,7 @@ class AuthenticationListItem:
                 | PersonalSignature | Podpis osobisty. |
                 | PeppolSignature | Podpis dostawcy uslug Peppol. |
             status (StatusInfo):
-            reference_number (str): Numer referencyjny operacji uwierzytelnienia.
+            reference_number (str): Numer referencyjny.
             is_token_redeemed (Union[None, Unset, bool]): Czy został już wydany refresh token powiązany z danym
                 uwierzytelnieniem.
             last_token_refresh_date (Union[None, Unset, datetime.datetime]): Data ostatniego odświeżenia tokena.

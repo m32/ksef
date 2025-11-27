@@ -19,8 +19,8 @@ from typing import Union
 def _get_kwargs(
     *,
     body: SubordinateEntityRolesQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
@@ -96,23 +96,45 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: SubordinateEntityRolesQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QuerySubordinateEntityRolesResponse]]:
     """ Pobranie listy podmiotów podrzędnych
 
-     Zwraca liste podmiotów podrzędnych.
+      Metoda pozwala na odczytanie listy podmiotów podrzędnych,
+     jeżeli podmiot bieżącego kontekstu ma rolę podmiotu nadrzędnego:
+     - **nadrzędna JST** – odczytywane są podrzędne JST,
+     - **grupa VAT** – odczytywane są podmioty będące członkami grupy VAT.
 
-    > Więcej informacji:
-    > - [Pobieranie listy podmiotów podrzędnych](https://github.com/CIRFMF/ksef-
+     Role podmiotów zwracane przez operację obejmują:
+     - **LocalGovernmentSubUnit** – podrzędne JST,
+     - **VatGroupSubUnit** – członek grupy VAT.
+
+     Odpowiedź może być filtrowana według parametru:
+     - **subordinateEntityIdentifier** – identyfikator podmiotu podrzędnego.
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy podmiotów podrzędnych](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-podmiot%C3%B3w-podrz%C4%99dnych)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (SubordinateEntityRolesQueryRequest):
 
     Raises:
@@ -141,23 +163,45 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: SubordinateEntityRolesQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QuerySubordinateEntityRolesResponse]]:
     """ Pobranie listy podmiotów podrzędnych
 
-     Zwraca liste podmiotów podrzędnych.
+      Metoda pozwala na odczytanie listy podmiotów podrzędnych,
+     jeżeli podmiot bieżącego kontekstu ma rolę podmiotu nadrzędnego:
+     - **nadrzędna JST** – odczytywane są podrzędne JST,
+     - **grupa VAT** – odczytywane są podmioty będące członkami grupy VAT.
 
-    > Więcej informacji:
-    > - [Pobieranie listy podmiotów podrzędnych](https://github.com/CIRFMF/ksef-
+     Role podmiotów zwracane przez operację obejmują:
+     - **LocalGovernmentSubUnit** – podrzędne JST,
+     - **VatGroupSubUnit** – członek grupy VAT.
+
+     Odpowiedź może być filtrowana według parametru:
+     - **subordinateEntityIdentifier** – identyfikator podmiotu podrzędnego.
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy podmiotów podrzędnych](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-podmiot%C3%B3w-podrz%C4%99dnych)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (SubordinateEntityRolesQueryRequest):
 
     Raises:
@@ -181,23 +225,45 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: SubordinateEntityRolesQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QuerySubordinateEntityRolesResponse]]:
     """ Pobranie listy podmiotów podrzędnych
 
-     Zwraca liste podmiotów podrzędnych.
+      Metoda pozwala na odczytanie listy podmiotów podrzędnych,
+     jeżeli podmiot bieżącego kontekstu ma rolę podmiotu nadrzędnego:
+     - **nadrzędna JST** – odczytywane są podrzędne JST,
+     - **grupa VAT** – odczytywane są podmioty będące członkami grupy VAT.
 
-    > Więcej informacji:
-    > - [Pobieranie listy podmiotów podrzędnych](https://github.com/CIRFMF/ksef-
+     Role podmiotów zwracane przez operację obejmują:
+     - **LocalGovernmentSubUnit** – podrzędne JST,
+     - **VatGroupSubUnit** – członek grupy VAT.
+
+     Odpowiedź może być filtrowana według parametru:
+     - **subordinateEntityIdentifier** – identyfikator podmiotu podrzędnego.
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy podmiotów podrzędnych](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-podmiot%C3%B3w-podrz%C4%99dnych)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (SubordinateEntityRolesQueryRequest):
 
     Raises:
@@ -226,23 +292,45 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: SubordinateEntityRolesQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QuerySubordinateEntityRolesResponse]]:
     """ Pobranie listy podmiotów podrzędnych
 
-     Zwraca liste podmiotów podrzędnych.
+      Metoda pozwala na odczytanie listy podmiotów podrzędnych,
+     jeżeli podmiot bieżącego kontekstu ma rolę podmiotu nadrzędnego:
+     - **nadrzędna JST** – odczytywane są podrzędne JST,
+     - **grupa VAT** – odczytywane są podmioty będące członkami grupy VAT.
 
-    > Więcej informacji:
-    > - [Pobieranie listy podmiotów podrzędnych](https://github.com/CIRFMF/ksef-
+     Role podmiotów zwracane przez operację obejmują:
+     - **LocalGovernmentSubUnit** – podrzędne JST,
+     - **VatGroupSubUnit** – członek grupy VAT.
+
+     Odpowiedź może być filtrowana według parametru:
+     - **subordinateEntityIdentifier** – identyfikator podmiotu podrzędnego.
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy podmiotów podrzędnych](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-podmiot%C3%B3w-podrz%C4%99dnych)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (SubordinateEntityRolesQueryRequest):
 
     Raises:

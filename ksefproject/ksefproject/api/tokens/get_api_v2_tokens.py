@@ -23,7 +23,7 @@ def _get_kwargs(
     description: Union[Unset, str] = UNSET,
     author_identifier: Union[Unset, str] = UNSET,
     author_identifier_type: Union[Unset, TokenAuthorIdentifierType] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = 10,
     x_continuation_token: Union[Unset, str] = UNSET,
 
 ) -> dict[str, Any]:
@@ -116,11 +116,18 @@ def sync_detailed(
     description: Union[Unset, str] = UNSET,
     author_identifier: Union[Unset, str] = UNSET,
     author_identifier_type: Union[Unset, TokenAuthorIdentifierType] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = 10,
     x_continuation_token: Union[Unset, str] = UNSET,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryTokensResponse]]:
     """ Pobranie listy wygenerowanych tokenów
+
+     
+
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
 
     Args:
         status (Union[Unset, list[AuthenticationTokenStatus]]):
@@ -131,7 +138,7 @@ def sync_detailed(
             | Nip | NIP. |
             | Pesel | PESEL. |
             | Fingerprint | Odcisk palca certyfikatu. |
-        page_size (Union[Unset, int]):
+        page_size (Union[Unset, int]):  Default: 10.
         x_continuation_token (Union[Unset, str]):
 
     Raises:
@@ -166,11 +173,18 @@ def sync(
     description: Union[Unset, str] = UNSET,
     author_identifier: Union[Unset, str] = UNSET,
     author_identifier_type: Union[Unset, TokenAuthorIdentifierType] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = 10,
     x_continuation_token: Union[Unset, str] = UNSET,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryTokensResponse]]:
     """ Pobranie listy wygenerowanych tokenów
+
+     
+
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
 
     Args:
         status (Union[Unset, list[AuthenticationTokenStatus]]):
@@ -181,7 +195,7 @@ def sync(
             | Nip | NIP. |
             | Pesel | PESEL. |
             | Fingerprint | Odcisk palca certyfikatu. |
-        page_size (Union[Unset, int]):
+        page_size (Union[Unset, int]):  Default: 10.
         x_continuation_token (Union[Unset, str]):
 
     Raises:
@@ -211,11 +225,18 @@ async def asyncio_detailed(
     description: Union[Unset, str] = UNSET,
     author_identifier: Union[Unset, str] = UNSET,
     author_identifier_type: Union[Unset, TokenAuthorIdentifierType] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = 10,
     x_continuation_token: Union[Unset, str] = UNSET,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryTokensResponse]]:
     """ Pobranie listy wygenerowanych tokenów
+
+     
+
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
 
     Args:
         status (Union[Unset, list[AuthenticationTokenStatus]]):
@@ -226,7 +247,7 @@ async def asyncio_detailed(
             | Nip | NIP. |
             | Pesel | PESEL. |
             | Fingerprint | Odcisk palca certyfikatu. |
-        page_size (Union[Unset, int]):
+        page_size (Union[Unset, int]):  Default: 10.
         x_continuation_token (Union[Unset, str]):
 
     Raises:
@@ -261,11 +282,18 @@ async def asyncio(
     description: Union[Unset, str] = UNSET,
     author_identifier: Union[Unset, str] = UNSET,
     author_identifier_type: Union[Unset, TokenAuthorIdentifierType] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = 10,
     x_continuation_token: Union[Unset, str] = UNSET,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryTokensResponse]]:
     """ Pobranie listy wygenerowanych tokenów
+
+     
+
+    **Sortowanie:**
+
+    - dateCreated (Desc)
+
 
     Args:
         status (Union[Unset, list[AuthenticationTokenStatus]]):
@@ -276,7 +304,7 @@ async def asyncio(
             | Nip | NIP. |
             | Pesel | PESEL. |
             | Fingerprint | Odcisk palca certyfikatu. |
-        page_size (Union[Unset, int]):
+        page_size (Union[Unset, int]):  Default: 10.
         x_continuation_token (Union[Unset, str]):
 
     Raises:

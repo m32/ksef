@@ -8,6 +8,7 @@ class PersonalPermissionType(str, Enum):
     INVOICEREAD = "InvoiceRead"
     INVOICEWRITE = "InvoiceWrite"
     SUBUNITMANAGE = "SubunitManage"
+    VATUEMANAGE = "VatUeManage"
 
     def __str__(self) -> str:
         return str(self.value)

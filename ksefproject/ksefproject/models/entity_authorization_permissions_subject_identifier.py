@@ -19,10 +19,11 @@ T = TypeVar("T", bound="EntityAuthorizationPermissionsSubjectIdentifier")
 
 @_attrs_define
 class EntityAuthorizationPermissionsSubjectIdentifier:
-    """ Identyfikator podmiotu.
+    """ Identyfikator podmiotu uprawnianego.
     | Type | Value |
     | --- | --- |
     | Nip | 10 cyfrowy numer NIP |
+    | PeppolId | Identyfikator dostawcy usług Peppol |
 
         Attributes:
             type_ (EntityAuthorizationPermissionsSubjectIdentifierType):

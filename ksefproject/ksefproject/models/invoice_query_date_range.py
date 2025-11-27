@@ -32,9 +32,9 @@ class InvoiceQueryDateRange:
                 | Issue | Data wystawienia faktury. |
                 | Invoicing | Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania). |
                 | PermanentStorage | Data trwałego zapisu faktury w repozytorium systemu KSeF. |
-            from_ (datetime.datetime): Data początkowa zakresu.
-            to (Union[None, Unset, datetime.datetime]): Data końcowa zakresu. Jeśli nie zostanie podana, przyjmowana jest
-                bieżąca data i czas w UTC.
+            from_ (datetime.datetime): Data początkowa zakresu(UTC).
+            to (Union[None, Unset, datetime.datetime]): Data końcowa zakresu(UTC). Jeśli nie zostanie podana, przyjmowana
+                jest bieżąca data i czas w UTC.
      """
 
     date_type: InvoiceQueryDateType

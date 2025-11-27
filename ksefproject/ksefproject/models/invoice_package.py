@@ -28,11 +28,9 @@ T = TypeVar("T", bound="InvoicePackage")
 class InvoicePackage:
     """ 
         Attributes:
-            invoice_count (int): Łączna liczba faktur w paczce. Maksymalna liczba faktur w paczce to 10 000.
-            size (int): Rozmiar paczki w bajtach. Maksymalny rozmiar paczki to 1 GiB (1 073 741 824 bajtów).
-            parts (list['InvoicePackagePart']): Lista dostępnych części paczki do pobrania. Każda część jest zaszyfrowana
-                algorytmem AES-256-CBC z dopełnieniem PKCS#7, przy użyciu klucza symetrycznego przekazanego podczas inicjowania
-                eksportu. Wyniki sortowane są rosnąco według typu daty przekazanej w `DateRange` przy inicjalizacji.
+            invoice_count (int): Łączna liczba faktur w paczce.
+            size (int): Rozmiar paczki w bajtach.
+            parts (list['InvoicePackagePart']): Lista dostępnych części paczki do pobrania.
             is_truncated (bool): Określa, czy wynik eksportu został ucięty z powodu przekroczenia limitu liczby faktur lub
                 wielkości paczki.
             last_issue_date (Union[None, Unset, datetime.date]): Data wystawienia ostatniej faktury ujętej w paczce.

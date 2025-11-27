@@ -9,8 +9,8 @@ from ..types import UNSET, Unset
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
   from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
+  from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
 
 
 
@@ -28,13 +28,13 @@ class EuEntityAdministrationPermissionsGrantRequest:
                 | Type | Value |
                 | --- | --- |
                 | Fingerprint | Odcisk palca certyfikatu |
-            context_identifier (EuEntityAdministrationPermissionsContextIdentifier): Identyfikator zlożony z podmiotu
-                polskiego i podmiotu unijnego.
+            context_identifier (EuEntityAdministrationPermissionsContextIdentifier): Identyfikator kontekstu złożonego.
                 | Type | Value |
                 | --- | --- |
                 | NipVatUe | Dwuczłonowy identyfikator składający się z numeru NIP i numeru VAT-UE: `{nip}-{vat_ue}` |
-            description (str): Opis nadawanych uprawnień.
-            eu_entity_name (str): Nazwa podmiotu unijnego.
+            description (str): Opis uprawnienia
+            eu_entity_name (str): Nazwa i adres podmiotu unijnego w formacie:
+                `{euSubjectName}, {euSubjectAddress}`
      """
 
     subject_identifier: 'EuEntityAdministrationPermissionsSubjectIdentifier'
@@ -47,8 +47,8 @@ class EuEntityAdministrationPermissionsGrantRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
         from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
+        from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
         subject_identifier = self.subject_identifier.to_dict()
 
         context_identifier = self.context_identifier.to_dict()
@@ -73,8 +73,8 @@ class EuEntityAdministrationPermissionsGrantRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
         from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
+        from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
         d = dict(src_dict)
         subject_identifier = EuEntityAdministrationPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
 

@@ -23,7 +23,7 @@ T = TypeVar("T", bound="QueryPersonPermissionsResponse")
 class QueryPersonPermissionsResponse:
     """ 
         Attributes:
-            permissions (list['PersonPermission']): Lista uprawnień.
+            permissions (list['PersonPermission']): Lista odczytanych uprawnień.
             has_more (bool): Flaga informująca o dostępności kolejnej strony wyników.
      """
 

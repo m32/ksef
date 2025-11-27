@@ -23,8 +23,14 @@ T = TypeVar("T", bound="InvoiceMetadataAuthorizedSubject")
 class InvoiceMetadataAuthorizedSubject:
     """ 
         Attributes:
-            nip (str): Nip podmiotu upoważnionego
+            nip (str): 10 cyfrowy numer NIP.
             role (int): Rola podmiotu upoważnionego.
+                | Wartość | Opis |
+                | ---- | --- |
+                | 1 | Organ egzekucyjny - w przypadku, o którym mowa w art. 106c pkt 1 ustawy |
+                | 2 | Komornik sądowy - w przypadku, o którym mowa w art. 106c pkt 2 ustawy |
+                | 3 | Przedstawiciel podatkowy - w przypadku gdy na fakturze występują dane przedstawiciela podatkowego, o
+                którym mowa w art. 18a - 18d ustawy |
             name (Union[None, Unset, str]): Nazwa podmiotu upoważnionego.
      """
 

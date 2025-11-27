@@ -13,12 +13,12 @@ from typing import cast, Union
 
 
 
-T = TypeVar("T", bound="PartUploadRequestHeadersType0")
+T = TypeVar("T", bound="PartUploadRequestHeaders")
 
 
 
 @_attrs_define
-class PartUploadRequestHeadersType0:
+class PartUploadRequestHeaders:
     """ Nagłówki, których należy użyć przy wysyłce części pliku paczki.
 
      """
@@ -44,7 +44,7 @@ class PartUploadRequestHeadersType0:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        part_upload_request_headers_type_0 = cls(
+        part_upload_request_headers = cls(
         )
 
 
@@ -59,8 +59,8 @@ class PartUploadRequestHeadersType0:
 
             additional_properties[prop_name] = additional_property
 
-        part_upload_request_headers_type_0.additional_properties = additional_properties
-        return part_upload_request_headers_type_0
+        part_upload_request_headers.additional_properties = additional_properties
+        return part_upload_request_headers
 
     @property
     def additional_keys(self) -> list[str]:

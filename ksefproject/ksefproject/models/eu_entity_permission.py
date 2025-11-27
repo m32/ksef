@@ -26,7 +26,7 @@ T = TypeVar("T", bound="EuEntityPermission")
 class EuEntityPermission:
     """ 
         Attributes:
-            id (str): Identyfikator uprawnienia.
+            id (str): Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy operacjach odbierania.
             author_identifier (EuEntityPermissionsAuthorIdentifier): Identyfikator uprawniającego.
                 | Type | Value |
                 | --- | --- |

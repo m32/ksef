@@ -19,8 +19,8 @@ from typing import Union
 def _get_kwargs(
     *,
     body: SubunitPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
@@ -96,24 +96,46 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: SubunitPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QuerySubunitPermissionsResponse]]:
     """ Pobranie listy uprawnień administratorów jednostek i podmiotów podrzędnych
 
-     Zwraca listę uprawnień administratorów jednostek i podmiotów podrzędnych.
+      Metoda pozwala na odczytanie uprawnień do zarządzania uprawnieniami nadanych administratorom:
+     - jednostek podrzędnych identyfikowanych identyfikatorem wewnętrznym
+     - podmiotów podrzędnych (podrzędnych JST lub członków grupy VAT) identyfikowanych przez NIP
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Lista zwraca wyłącznie uprawnienia do zarządzania uprawnieniami nadane z kontekstu bieżącego (z
+    podmiotu nadrzędnego).
+     Nie są odczytywane uprawnienia nadane przez administratorów jednostek podrzędnych wewnątrz tych
+    jednostek.
+
+     Odpowiedź może być filtrowana na podstawie parametru:
+     - **subunitIdentifier** – identyfikator jednostki lub podmiotu podrzędnego
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-jednostek-i-
     podmiot%C3%B3w-podrz%C4%99dnych)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (SubunitPermissionsQueryRequest):
 
     Raises:
@@ -142,24 +164,46 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: SubunitPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QuerySubunitPermissionsResponse]]:
     """ Pobranie listy uprawnień administratorów jednostek i podmiotów podrzędnych
 
-     Zwraca listę uprawnień administratorów jednostek i podmiotów podrzędnych.
+      Metoda pozwala na odczytanie uprawnień do zarządzania uprawnieniami nadanych administratorom:
+     - jednostek podrzędnych identyfikowanych identyfikatorem wewnętrznym
+     - podmiotów podrzędnych (podrzędnych JST lub członków grupy VAT) identyfikowanych przez NIP
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Lista zwraca wyłącznie uprawnienia do zarządzania uprawnieniami nadane z kontekstu bieżącego (z
+    podmiotu nadrzędnego).
+     Nie są odczytywane uprawnienia nadane przez administratorów jednostek podrzędnych wewnątrz tych
+    jednostek.
+
+     Odpowiedź może być filtrowana na podstawie parametru:
+     - **subunitIdentifier** – identyfikator jednostki lub podmiotu podrzędnego
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-jednostek-i-
     podmiot%C3%B3w-podrz%C4%99dnych)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (SubunitPermissionsQueryRequest):
 
     Raises:
@@ -183,24 +227,46 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: SubunitPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QuerySubunitPermissionsResponse]]:
     """ Pobranie listy uprawnień administratorów jednostek i podmiotów podrzędnych
 
-     Zwraca listę uprawnień administratorów jednostek i podmiotów podrzędnych.
+      Metoda pozwala na odczytanie uprawnień do zarządzania uprawnieniami nadanych administratorom:
+     - jednostek podrzędnych identyfikowanych identyfikatorem wewnętrznym
+     - podmiotów podrzędnych (podrzędnych JST lub członków grupy VAT) identyfikowanych przez NIP
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Lista zwraca wyłącznie uprawnienia do zarządzania uprawnieniami nadane z kontekstu bieżącego (z
+    podmiotu nadrzędnego).
+     Nie są odczytywane uprawnienia nadane przez administratorów jednostek podrzędnych wewnątrz tych
+    jednostek.
+
+     Odpowiedź może być filtrowana na podstawie parametru:
+     - **subunitIdentifier** – identyfikator jednostki lub podmiotu podrzędnego
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-jednostek-i-
     podmiot%C3%B3w-podrz%C4%99dnych)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (SubunitPermissionsQueryRequest):
 
     Raises:
@@ -229,24 +295,46 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: SubunitPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QuerySubunitPermissionsResponse]]:
     """ Pobranie listy uprawnień administratorów jednostek i podmiotów podrzędnych
 
-     Zwraca listę uprawnień administratorów jednostek i podmiotów podrzędnych.
+      Metoda pozwala na odczytanie uprawnień do zarządzania uprawnieniami nadanych administratorom:
+     - jednostek podrzędnych identyfikowanych identyfikatorem wewnętrznym
+     - podmiotów podrzędnych (podrzędnych JST lub członków grupy VAT) identyfikowanych przez NIP
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Lista zwraca wyłącznie uprawnienia do zarządzania uprawnieniami nadane z kontekstu bieżącego (z
+    podmiotu nadrzędnego).
+     Nie są odczytywane uprawnienia nadane przez administratorów jednostek podrzędnych wewnątrz tych
+    jednostek.
+
+     Odpowiedź może być filtrowana na podstawie parametru:
+     - **subunitIdentifier** – identyfikator jednostki lub podmiotu podrzędnego
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-jednostek-i-
     podmiot%C3%B3w-podrz%C4%99dnych)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (SubunitPermissionsQueryRequest):
 
     Raises:

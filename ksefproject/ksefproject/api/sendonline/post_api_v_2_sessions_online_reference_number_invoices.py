@@ -95,10 +95,10 @@ def sync_detailed(
     > - [Wysłanie faktury](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-
     interaktywna.md#2-wys%C5%82anie-faktury)
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
         body (SendInvoiceRequest):
 
     Raises:
@@ -137,10 +137,10 @@ def sync(
     > - [Wysłanie faktury](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-
     interaktywna.md#2-wys%C5%82anie-faktury)
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
         body (SendInvoiceRequest):
 
     Raises:
@@ -174,10 +174,10 @@ async def asyncio_detailed(
     > - [Wysłanie faktury](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-
     interaktywna.md#2-wys%C5%82anie-faktury)
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
         body (SendInvoiceRequest):
 
     Raises:
@@ -216,10 +216,10 @@ async def asyncio(
     > - [Wysłanie faktury](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-
     interaktywna.md#2-wys%C5%82anie-faktury)
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
         body (SendInvoiceRequest):
 
     Raises:

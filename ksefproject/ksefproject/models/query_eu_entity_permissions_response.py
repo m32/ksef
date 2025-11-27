@@ -23,7 +23,7 @@ T = TypeVar("T", bound="QueryEuEntityPermissionsResponse")
 class QueryEuEntityPermissionsResponse:
     """ 
         Attributes:
-            permissions (list['EuEntityPermission']): Lista uprawnień.
+            permissions (list['EuEntityPermission']): Lista odczytanych uprawnień.
             has_more (bool): Flaga informująca o dostępności kolejnej strony wyników.
      """
 

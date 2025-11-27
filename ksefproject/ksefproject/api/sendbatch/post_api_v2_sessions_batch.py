@@ -94,7 +94,7 @@ def sync_detailed(
     > - [Przygotwanie paczki faktur](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-wsadowa.md)
     > - [Klucz publiczny Ministersta Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)
 
-    Wymagane uprawnienia: `InvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`.
 
     Args:
         body (OpenBatchSessionRequest):
@@ -134,7 +134,7 @@ def sync(
     > - [Przygotwanie paczki faktur](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-wsadowa.md)
     > - [Klucz publiczny Ministersta Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)
 
-    Wymagane uprawnienia: `InvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`.
 
     Args:
         body (OpenBatchSessionRequest):
@@ -169,7 +169,7 @@ async def asyncio_detailed(
     > - [Przygotwanie paczki faktur](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-wsadowa.md)
     > - [Klucz publiczny Ministersta Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)
 
-    Wymagane uprawnienia: `InvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`.
 
     Args:
         body (OpenBatchSessionRequest):
@@ -209,7 +209,7 @@ async def asyncio(
     > - [Przygotwanie paczki faktur](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-wsadowa.md)
     > - [Klucz publiczny Ministersta Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)
 
-    Wymagane uprawnienia: `InvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`.
 
     Args:
         body (OpenBatchSessionRequest):

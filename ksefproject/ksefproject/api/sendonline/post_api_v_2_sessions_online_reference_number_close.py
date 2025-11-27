@@ -77,10 +77,10 @@ def sync_detailed(
 
      Zamyka sesję interaktywną i rozpoczyna generowanie zbiorczego UPO dla sesji.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -112,10 +112,10 @@ def sync(
 
      Zamyka sesję interaktywną i rozpoczyna generowanie zbiorczego UPO dla sesji.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -142,10 +142,10 @@ async def asyncio_detailed(
 
      Zamyka sesję interaktywną i rozpoczyna generowanie zbiorczego UPO dla sesji.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -177,10 +177,10 @@ async def asyncio(
 
      Zamyka sesję interaktywną i rozpoczyna generowanie zbiorczego UPO dla sesji.
 
-    Wymagane uprawnienia: `InvoiceWrite`, `PefInvoiceWrite`.
+    **Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

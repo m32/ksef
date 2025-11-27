@@ -23,8 +23,8 @@ T = TypeVar("T", bound="QueryInvoicesMetadataResponse")
 class QueryInvoicesMetadataResponse:
     """ 
         Attributes:
-            has_more (bool): Określa, czy dostępna jest kolejna strona wyników.
-            is_truncated (bool): Określa, czy wynik został obcięty z powodu przekroczenia limitu liczby faktur (10 000).
+            has_more (bool): Określa, czy istnieją kolejne wyniki zapytania.
+            is_truncated (bool): Określa, czy osiągnięto maksymalny dopuszczalny zakres wyników zapytania (10 000).
             invoices (list['InvoiceMetadata']): Lista faktur spełniających kryteria.
      """
 

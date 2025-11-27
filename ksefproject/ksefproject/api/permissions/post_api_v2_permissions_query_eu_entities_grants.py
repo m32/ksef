@@ -19,8 +19,8 @@ from typing import Union
 def _get_kwargs(
     *,
     body: EuEntityPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
@@ -96,26 +96,53 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: EuEntityPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryEuEntityPermissionsResponse]]:
     """ Pobranie listy uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do
     samofakturowania
 
-     Zwraca listę uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do
-    samofakturowania.
+      Metoda pozwala na odczytanie uprawnień administratorów lub reprezentantów podmiotów unijnych:
+     - Jeżeli kontekstem logowania jest NIP, możliwe jest odczytanie uprawnień administratorów podmiotów
+    unijnych powiązanych z podmiotem bieżącego kontekstu, czyli takich, dla których pierwszy człon
+    kontekstu złożonego jest równy NIP-owi kontekstu logowania.
+     - Jeżeli kontekst logowania jest złożony (NIP-VAT UE), możliwe jest pobranie wszystkich uprawnień
+    administratorów i reprezentantów podmiotu w bieżącym kontekście złożonym.
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Uprawnienia zwracane przez operację obejmują:
+     - **VatUeManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **vatUeIdentifier** – identyfikator podmiotu unijnego
+     - **authorizedFingerprintIdentifier** – odcisk palca certyfikatu uprawnionej osoby lub podmiotu
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-lub-
     reprezentant%C3%B3w-podmiot%C3%B3w-unijnych-uprawnionych-do-samofakturowania)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `VatUeManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `VatUeManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (EuEntityPermissionsQueryRequest):
 
     Raises:
@@ -144,26 +171,53 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: EuEntityPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryEuEntityPermissionsResponse]]:
     """ Pobranie listy uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do
     samofakturowania
 
-     Zwraca listę uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do
-    samofakturowania.
+      Metoda pozwala na odczytanie uprawnień administratorów lub reprezentantów podmiotów unijnych:
+     - Jeżeli kontekstem logowania jest NIP, możliwe jest odczytanie uprawnień administratorów podmiotów
+    unijnych powiązanych z podmiotem bieżącego kontekstu, czyli takich, dla których pierwszy człon
+    kontekstu złożonego jest równy NIP-owi kontekstu logowania.
+     - Jeżeli kontekst logowania jest złożony (NIP-VAT UE), możliwe jest pobranie wszystkich uprawnień
+    administratorów i reprezentantów podmiotu w bieżącym kontekście złożonym.
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Uprawnienia zwracane przez operację obejmują:
+     - **VatUeManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **vatUeIdentifier** – identyfikator podmiotu unijnego
+     - **authorizedFingerprintIdentifier** – odcisk palca certyfikatu uprawnionej osoby lub podmiotu
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-lub-
     reprezentant%C3%B3w-podmiot%C3%B3w-unijnych-uprawnionych-do-samofakturowania)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `VatUeManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `VatUeManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (EuEntityPermissionsQueryRequest):
 
     Raises:
@@ -187,26 +241,53 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: EuEntityPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryEuEntityPermissionsResponse]]:
     """ Pobranie listy uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do
     samofakturowania
 
-     Zwraca listę uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do
-    samofakturowania.
+      Metoda pozwala na odczytanie uprawnień administratorów lub reprezentantów podmiotów unijnych:
+     - Jeżeli kontekstem logowania jest NIP, możliwe jest odczytanie uprawnień administratorów podmiotów
+    unijnych powiązanych z podmiotem bieżącego kontekstu, czyli takich, dla których pierwszy człon
+    kontekstu złożonego jest równy NIP-owi kontekstu logowania.
+     - Jeżeli kontekst logowania jest złożony (NIP-VAT UE), możliwe jest pobranie wszystkich uprawnień
+    administratorów i reprezentantów podmiotu w bieżącym kontekście złożonym.
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Uprawnienia zwracane przez operację obejmują:
+     - **VatUeManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **vatUeIdentifier** – identyfikator podmiotu unijnego
+     - **authorizedFingerprintIdentifier** – odcisk palca certyfikatu uprawnionej osoby lub podmiotu
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-lub-
     reprezentant%C3%B3w-podmiot%C3%B3w-unijnych-uprawnionych-do-samofakturowania)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `VatUeManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `VatUeManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (EuEntityPermissionsQueryRequest):
 
     Raises:
@@ -235,26 +316,53 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: EuEntityPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryEuEntityPermissionsResponse]]:
     """ Pobranie listy uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do
     samofakturowania
 
-     Zwraca listę uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do
-    samofakturowania.
+      Metoda pozwala na odczytanie uprawnień administratorów lub reprezentantów podmiotów unijnych:
+     - Jeżeli kontekstem logowania jest NIP, możliwe jest odczytanie uprawnień administratorów podmiotów
+    unijnych powiązanych z podmiotem bieżącego kontekstu, czyli takich, dla których pierwszy człon
+    kontekstu złożonego jest równy NIP-owi kontekstu logowania.
+     - Jeżeli kontekst logowania jest złożony (NIP-VAT UE), możliwe jest pobranie wszystkich uprawnień
+    administratorów i reprezentantów podmiotu w bieżącym kontekście złożonym.
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Uprawnienia zwracane przez operację obejmują:
+     - **VatUeManage** – zarządzanie uprawnieniami w ramach podmiotu unijnego
+     - **InvoiceWrite** – wystawianie faktur
+     - **InvoiceRead** – przeglądanie faktur
+     - **Introspection** – przeglądanie historii sesji
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **vatUeIdentifier** – identyfikator podmiotu unijnego
+     - **authorizedFingerprintIdentifier** – odcisk palca certyfikatu uprawnionej osoby lub podmiotu
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-lub-
     reprezentant%C3%B3w-podmiot%C3%B3w-unijnych-uprawnionych-do-samofakturowania)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `VatUeManage`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`, `VatUeManage`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (EuEntityPermissionsQueryRequest):
 
     Raises:

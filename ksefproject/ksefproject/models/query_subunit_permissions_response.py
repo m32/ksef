@@ -23,7 +23,7 @@ T = TypeVar("T", bound="QuerySubunitPermissionsResponse")
 class QuerySubunitPermissionsResponse:
     """ 
         Attributes:
-            permissions (list['SubunitPermission']): Lista uprawnień.
+            permissions (list['SubunitPermission']): Lista odczytanych uprawnień.
             has_more (bool): Flaga informująca o dostępności kolejnej strony wyników.
      """
 

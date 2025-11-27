@@ -28,7 +28,7 @@ T = TypeVar("T", bound="SessionsQueryResponseItem")
 class SessionsQueryResponseItem:
     """ 
         Attributes:
-            reference_number (str): Numer referencyjny sesji.
+            reference_number (str): Numer referencyjny.
             status (StatusInfo):
             date_created (datetime.datetime): Data utworzenia sesji.
             date_updated (datetime.datetime): Data ostatniej aktywności w ramach sesji.

@@ -24,12 +24,12 @@ T = TypeVar("T", bound="EuEntityPermissionsGrantRequest")
 class EuEntityPermissionsGrantRequest:
     """ 
         Attributes:
-            subject_identifier (EuEntityPermissionsSubjectIdentifier): Identyfikator podmiotu.
+            subject_identifier (EuEntityPermissionsSubjectIdentifier): Identyfikator podmiotu uprawnianego.
                 | Type | Value |
                 | --- | --- |
                 | Fingerprint | Odcisk palca certyfikatu |
             permissions (list[EuEntityPermissionType]): Lista nadawanych uprawnień. Każda wartość może wystąpić tylko raz.
-            description (str): Opis nadawanych uprawnień.
+            description (str): Opis uprawnienia
      """
 
     subject_identifier: 'EuEntityPermissionsSubjectIdentifier'

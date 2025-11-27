@@ -78,7 +78,7 @@ def sync_detailed(
      Zwraca informacje o statusie wniosku certyfikacyjnego.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -111,7 +111,7 @@ def sync(
      Zwraca informacje o statusie wniosku certyfikacyjnego.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -139,7 +139,7 @@ async def asyncio_detailed(
      Zwraca informacje o statusie wniosku certyfikacyjnego.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -172,7 +172,7 @@ async def asyncio(
      Zwraca informacje o statusie wniosku certyfikacyjnego.
 
     Args:
-        reference_number (str):
+        reference_number (str): Numer referencyjny.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

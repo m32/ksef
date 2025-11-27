@@ -41,7 +41,7 @@ class EntityAuthorizationPermissionsQueryRequest:
                 | --- | --- |
                 | Nip | 10 cyfrowy numer NIP |
                 | PeppolId | Identyfikator dostawcy usług Peppol |
-            permission_types (Union[None, Unset, list[InvoicePermissionType]]): Możliwe uprawnienia do filtrowania.
+            permission_types (Union[None, Unset, list[InvoicePermissionType]]): Lista rodzajów wyszukiwanych uprawnień.
      """
 
     query_type: QueryType

@@ -13,8 +13,8 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
   from ..models.indirect_permissions_target_identifier import IndirectPermissionsTargetIdentifier
+  from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
 
 
 
@@ -35,14 +35,14 @@ class IndirectPermissionsGrantRequest:
                 | Pesel | 11 cyfrowy numer PESEL |
                 | Fingerprint | Odcisk palca certyfikatu |
             permissions (list[IndirectPermissionType]): Lista nadawanych uprawnień. Każda wartość może wystąpić tylko raz.
-            description (str): Opis nadawanych uprawnień.
-            target_identifier (Union['IndirectPermissionsTargetIdentifier', None, Unset]): Identyfikator podmiotu, w którego
-                kontekście chcemy pośrednio nadać uprawnienia. W przypadku nadawania uprawnienia generalnego, pole to powinno
-                mieć wartość null.
+            description (str): Opis uprawnienia
+            target_identifier (Union['IndirectPermissionsTargetIdentifier', None, Unset]): Identyfikator kontekstu klienta.
+                Nie przekazanie identyfikatora oznacza, że uprawnienie nadane w sposób pośredni jest typu generalnego.
                 | Type | Value |
                 | --- | --- |
                 | Nip | 10 cyfrowy numer NIP |
                 | AllPartners | Identyfikator oznaczający, że uprawnienie nadane w sposób pośredni jest typu generalnego |
+                | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
      """
 
     subject_identifier: 'IndirectPermissionsSubjectIdentifier'
@@ -55,8 +55,8 @@ class IndirectPermissionsGrantRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
         from ..models.indirect_permissions_target_identifier import IndirectPermissionsTargetIdentifier
+        from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
         subject_identifier = self.subject_identifier.to_dict()
 
         permissions = []
@@ -93,8 +93,8 @@ class IndirectPermissionsGrantRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
         from ..models.indirect_permissions_target_identifier import IndirectPermissionsTargetIdentifier
+        from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
         d = dict(src_dict)
         subject_identifier = IndirectPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
 

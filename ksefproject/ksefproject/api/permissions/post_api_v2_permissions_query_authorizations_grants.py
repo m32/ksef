@@ -19,8 +19,8 @@ from typing import Union
 def _get_kwargs(
     *,
     body: EntityAuthorizationPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
@@ -96,23 +96,52 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: EntityAuthorizationPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryEntityAuthorizationPermissionsResponse]]:
     """ Pobranie listy uprawnień podmiotowych do obsługi faktur
 
-     Zwraca listę uprawnień podmiotowych do obsługi faktur.
+      Metoda pozwala na odczytanie uprawnień podmiotowych:
+     - otrzymanych przez podmiot bieżącego kontekstu
+     - nadanych przez podmiot bieżącego kontekstu
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Wybór listy nadanych lub otrzymanych uprawnień odbywa się przy użyciu parametru **queryType**.
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **SelfInvoicing** – wystawianie faktur w trybie samofakturowania
+     - **TaxRepresentative** – wykonywanie operacji przedstawiciela podatkowego
+     - **RRInvoicing** – wystawianie faktur VAT RR
+     - **PefInvoicing** – wystawianie faktur PEF
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **authorizingIdentifier** – identyfikator podmiotu uprawniającego (stosowane przy queryType =
+    Received)
+     - **authorizedIdentifier** – identyfikator podmiotu uprawnionego (stosowane przy queryType =
+    Granted)
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-podmiotowych-do-obs%C5%82ugi-faktur)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (EntityAuthorizationPermissionsQueryRequest):
 
     Raises:
@@ -141,23 +170,52 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: EntityAuthorizationPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryEntityAuthorizationPermissionsResponse]]:
     """ Pobranie listy uprawnień podmiotowych do obsługi faktur
 
-     Zwraca listę uprawnień podmiotowych do obsługi faktur.
+      Metoda pozwala na odczytanie uprawnień podmiotowych:
+     - otrzymanych przez podmiot bieżącego kontekstu
+     - nadanych przez podmiot bieżącego kontekstu
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Wybór listy nadanych lub otrzymanych uprawnień odbywa się przy użyciu parametru **queryType**.
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **SelfInvoicing** – wystawianie faktur w trybie samofakturowania
+     - **TaxRepresentative** – wykonywanie operacji przedstawiciela podatkowego
+     - **RRInvoicing** – wystawianie faktur VAT RR
+     - **PefInvoicing** – wystawianie faktur PEF
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **authorizingIdentifier** – identyfikator podmiotu uprawniającego (stosowane przy queryType =
+    Received)
+     - **authorizedIdentifier** – identyfikator podmiotu uprawnionego (stosowane przy queryType =
+    Granted)
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-podmiotowych-do-obs%C5%82ugi-faktur)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (EntityAuthorizationPermissionsQueryRequest):
 
     Raises:
@@ -181,23 +239,52 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: EntityAuthorizationPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Response[Union[Any, ExceptionResponse, QueryEntityAuthorizationPermissionsResponse]]:
     """ Pobranie listy uprawnień podmiotowych do obsługi faktur
 
-     Zwraca listę uprawnień podmiotowych do obsługi faktur.
+      Metoda pozwala na odczytanie uprawnień podmiotowych:
+     - otrzymanych przez podmiot bieżącego kontekstu
+     - nadanych przez podmiot bieżącego kontekstu
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Wybór listy nadanych lub otrzymanych uprawnień odbywa się przy użyciu parametru **queryType**.
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **SelfInvoicing** – wystawianie faktur w trybie samofakturowania
+     - **TaxRepresentative** – wykonywanie operacji przedstawiciela podatkowego
+     - **RRInvoicing** – wystawianie faktur VAT RR
+     - **PefInvoicing** – wystawianie faktur PEF
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **authorizingIdentifier** – identyfikator podmiotu uprawniającego (stosowane przy queryType =
+    Received)
+     - **authorizedIdentifier** – identyfikator podmiotu uprawnionego (stosowane przy queryType =
+    Granted)
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-podmiotowych-do-obs%C5%82ugi-faktur)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (EntityAuthorizationPermissionsQueryRequest):
 
     Raises:
@@ -226,23 +313,52 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: EntityAuthorizationPermissionsQueryRequest,
-    page_offset: Union[Unset, int] = UNSET,
-    page_size: Union[Unset, int] = UNSET,
+    page_offset: Union[Unset, int] = 0,
+    page_size: Union[Unset, int] = 10,
 
 ) -> Optional[Union[Any, ExceptionResponse, QueryEntityAuthorizationPermissionsResponse]]:
     """ Pobranie listy uprawnień podmiotowych do obsługi faktur
 
-     Zwraca listę uprawnień podmiotowych do obsługi faktur.
+      Metoda pozwala na odczytanie uprawnień podmiotowych:
+     - otrzymanych przez podmiot bieżącego kontekstu
+     - nadanych przez podmiot bieżącego kontekstu
 
-    > Więcej informacji:
-    > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
+     Wybór listy nadanych lub otrzymanych uprawnień odbywa się przy użyciu parametru **queryType**.
+
+     Uprawnienia zwracane przez operację obejmują:
+     - **SelfInvoicing** – wystawianie faktur w trybie samofakturowania
+     - **TaxRepresentative** – wykonywanie operacji przedstawiciela podatkowego
+     - **RRInvoicing** – wystawianie faktur VAT RR
+     - **PefInvoicing** – wystawianie faktur PEF
+
+     Odpowiedź może być filtrowana na podstawie następujących parametrów:
+     - **authorizingIdentifier** – identyfikator podmiotu uprawniającego (stosowane przy queryType =
+    Received)
+     - **authorizedIdentifier** – identyfikator podmiotu uprawnionego (stosowane przy queryType =
+    Granted)
+     - **permissionTypes** – lista rodzajów wyszukiwanych uprawnień
+
+    #### Stronicowanie wyników
+    Zapytanie zwraca **jedną stronę wyników** o numerze i rozmiarze podanym w ścieżce.
+    - Przy pierwszym wywołaniu należy ustawić parametr `pageOffset = 0`.
+    - Jeżeli dostępna jest kolejna strona wyników, w odpowiedzi pojawi się flaga **`hasMore`**.
+    - W takim przypadku można wywołać zapytanie ponownie z kolejnym numerem strony.
+
+     > Więcej informacji:
+     > - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-
     docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-podmiotowych-do-obs%C5%82ugi-faktur)
 
-    Wymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.
+    **Sortowanie:**
+
+    - startDate (Desc)
+
+
+
+    **Wymagane uprawnienia**: `CredentialsManage`, `CredentialsRead`.
 
     Args:
-        page_offset (Union[Unset, int]):
-        page_size (Union[Unset, int]):
+        page_offset (Union[Unset, int]):  Default: 0.
+        page_size (Union[Unset, int]):  Default: 10.
         body (EntityAuthorizationPermissionsQueryRequest):
 
     Raises:

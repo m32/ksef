@@ -17,10 +17,10 @@ import datetime
 
 if TYPE_CHECKING:
   from ..models.invoice_metadata_third_subject import InvoiceMetadataThirdSubject
+  from ..models.form_code import FormCode
+  from ..models.invoice_metadata_seller import InvoiceMetadataSeller
   from ..models.invoice_metadata_buyer import InvoiceMetadataBuyer
   from ..models.invoice_metadata_authorized_subject import InvoiceMetadataAuthorizedSubject
-  from ..models.invoice_metadata_seller import InvoiceMetadataSeller
-  from ..models.form_code import FormCode
 
 
 
@@ -34,7 +34,8 @@ T = TypeVar("T", bound="InvoiceMetadata")
 class InvoiceMetadata:
     """ 
         Attributes:
-            ksef_number (str): Numer KSeF faktury.
+            ksef_number (str): Numer KSeF o długości 35 znaków jest akceptowany, by zachować kompatybilność wsteczna z KSeF
+                1.0. W KSeF 2.0 numery są generowane wyłącznie w formacie 36-znakowym.
             invoice_number (str): Numer faktury nadany przez wystawcę.
             issue_date (datetime.date): Data wystawienia faktury.
             invoicing_date (datetime.datetime): Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania).
@@ -64,7 +65,7 @@ class InvoiceMetadata:
             form_code (FormCode):
             is_self_invoicing (bool): Czy faktura została wystawiona w trybie samofakturowania.
             has_attachment (bool): Określa, czy faktura posiada załącznik.
-            invoice_hash (str): Skrót SHA256 faktury.
+            invoice_hash (str): SHA-256 w Base64.
             hash_of_corrected_invoice (Union[None, Unset, str]): Skrót SHA256 korygowanej faktury.
             third_subjects (Union[None, Unset, list['InvoiceMetadataThirdSubject']]): Lista podmiotów trzecich.
             authorized_subject (Union['InvoiceMetadataAuthorizedSubject', None, Unset]): Podmiot upoważniony.
@@ -98,10 +99,10 @@ class InvoiceMetadata:
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.invoice_metadata_third_subject import InvoiceMetadataThirdSubject
+        from ..models.form_code import FormCode
+        from ..models.invoice_metadata_seller import InvoiceMetadataSeller
         from ..models.invoice_metadata_buyer import InvoiceMetadataBuyer
         from ..models.invoice_metadata_authorized_subject import InvoiceMetadataAuthorizedSubject
-        from ..models.invoice_metadata_seller import InvoiceMetadataSeller
-        from ..models.form_code import FormCode
         ksef_number = self.ksef_number
 
         invoice_number = self.invoice_number
@@ -202,10 +203,10 @@ class InvoiceMetadata:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.invoice_metadata_third_subject import InvoiceMetadataThirdSubject
+        from ..models.form_code import FormCode
+        from ..models.invoice_metadata_seller import InvoiceMetadataSeller
         from ..models.invoice_metadata_buyer import InvoiceMetadataBuyer
         from ..models.invoice_metadata_authorized_subject import InvoiceMetadataAuthorizedSubject
-        from ..models.invoice_metadata_seller import InvoiceMetadataSeller
-        from ..models.form_code import FormCode
         d = dict(src_dict)
         ksef_number = d.pop("ksefNumber")
 

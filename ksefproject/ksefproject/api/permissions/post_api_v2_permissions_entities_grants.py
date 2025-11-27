@@ -87,13 +87,21 @@ def sync_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie podmiotom uprawnień do obsługi faktur
 
-     Rozpoczyna asynchroniczną operację nadawania podmiotom uprawnień do obsługi faktur.
+     Metoda pozwala na nadanie podmiotowi wskazanemu w żądaniu uprawnień do obsługi faktur podmiotu
+    kontekstu.
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
+    Dla każdego uprawnienia może być ustawiona flaga **canDelegate**, mówiąca o możliwości jego dalszego
+    przekazywania poprzez nadawanie w sposób pośredni.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     podmiotom-uprawnie%C5%84-do-obs%C5%82ugi-faktur)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EntityPermissionsGrantRequest):
@@ -126,13 +134,21 @@ def sync(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie podmiotom uprawnień do obsługi faktur
 
-     Rozpoczyna asynchroniczną operację nadawania podmiotom uprawnień do obsługi faktur.
+     Metoda pozwala na nadanie podmiotowi wskazanemu w żądaniu uprawnień do obsługi faktur podmiotu
+    kontekstu.
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
+    Dla każdego uprawnienia może być ustawiona flaga **canDelegate**, mówiąca o możliwości jego dalszego
+    przekazywania poprzez nadawanie w sposób pośredni.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     podmiotom-uprawnie%C5%84-do-obs%C5%82ugi-faktur)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EntityPermissionsGrantRequest):
@@ -160,13 +176,21 @@ async def asyncio_detailed(
 ) -> Response[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie podmiotom uprawnień do obsługi faktur
 
-     Rozpoczyna asynchroniczną operację nadawania podmiotom uprawnień do obsługi faktur.
+     Metoda pozwala na nadanie podmiotowi wskazanemu w żądaniu uprawnień do obsługi faktur podmiotu
+    kontekstu.
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
+    Dla każdego uprawnienia może być ustawiona flaga **canDelegate**, mówiąca o możliwości jego dalszego
+    przekazywania poprzez nadawanie w sposób pośredni.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     podmiotom-uprawnie%C5%84-do-obs%C5%82ugi-faktur)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EntityPermissionsGrantRequest):
@@ -199,13 +223,21 @@ async def asyncio(
 ) -> Optional[Union[Any, ExceptionResponse, PermissionsOperationResponse]]:
     """ Nadanie podmiotom uprawnień do obsługi faktur
 
-     Rozpoczyna asynchroniczną operację nadawania podmiotom uprawnień do obsługi faktur.
+     Metoda pozwala na nadanie podmiotowi wskazanemu w żądaniu uprawnień do obsługi faktur podmiotu
+    kontekstu.
+    W żądaniu określane są nadawane uprawnienia ze zbioru:
+    - **InvoiceWrite** – wystawianie faktur
+    - **InvoiceRead** – przeglądanie faktur
+
+    Metoda pozwala na wybór dowolnej kombinacji powyższych uprawnień.
+    Dla każdego uprawnienia może być ustawiona flaga **canDelegate**, mówiąca o możliwości jego dalszego
+    przekazywania poprzez nadawanie w sposób pośredni.
 
     > Więcej informacji:
     > - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-
     podmiotom-uprawnie%C5%84-do-obs%C5%82ugi-faktur)
 
-    Wymagane uprawnienia: `CredentialsManage`.
+    **Wymagane uprawnienia**: `CredentialsManage`.
 
     Args:
         body (EntityPermissionsGrantRequest):

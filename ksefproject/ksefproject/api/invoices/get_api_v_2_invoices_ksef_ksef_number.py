@@ -77,10 +77,12 @@ def sync_detailed(
 
      Zwraca fakturę o podanym numerze KSeF.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
-        ksef_number (str):
+        ksef_number (str): Numer KSeF o długości 35 znaków jest akceptowany, by zachować
+            kompatybilność wsteczna z KSeF 1.0. W KSeF 2.0 numery są generowane wyłącznie w formacie
+            36-znakowym.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -112,10 +114,12 @@ def sync(
 
      Zwraca fakturę o podanym numerze KSeF.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
-        ksef_number (str):
+        ksef_number (str): Numer KSeF o długości 35 znaków jest akceptowany, by zachować
+            kompatybilność wsteczna z KSeF 1.0. W KSeF 2.0 numery są generowane wyłącznie w formacie
+            36-znakowym.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -142,10 +146,12 @@ async def asyncio_detailed(
 
      Zwraca fakturę o podanym numerze KSeF.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
-        ksef_number (str):
+        ksef_number (str): Numer KSeF o długości 35 znaków jest akceptowany, by zachować
+            kompatybilność wsteczna z KSeF 1.0. W KSeF 2.0 numery są generowane wyłącznie w formacie
+            36-znakowym.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -177,10 +183,12 @@ async def asyncio(
 
      Zwraca fakturę o podanym numerze KSeF.
 
-    Wymagane uprawnienia: `InvoiceRead`.
+    **Wymagane uprawnienia**: `InvoiceRead`.
 
     Args:
-        ksef_number (str):
+        ksef_number (str): Numer KSeF o długości 35 znaków jest akceptowany, by zachować
+            kompatybilność wsteczna z KSeF 1.0. W KSeF 2.0 numery są generowane wyłącznie w formacie
+            36-znakowym.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
