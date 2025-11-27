@@ -10,6 +10,7 @@ tag_override:
     Certyfikaty: certificates
     Certyfikaty klucza publicznego: publickey
     Dane testowe: testdata
+    Limity i ograniczenia: limits
     Nadawanie uprawnień: permissions
     Odbieranie uprawnień: permissions
     Operacje: operations
@@ -19,5 +20,5 @@ tag_override:
     Usługi Peppol: peppol
     Uzyskiwanie dostępu: auth
     Wysyłka interaktywna: sendonline
-    Wysyłka wsadowa: sendoffline
+    Wysyłka wsadowa: sendbatch
     Wyszukiwanie nadanych uprawnień: permissions
