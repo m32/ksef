@@ -204,7 +204,7 @@ def get_offline_cert_path_sign_proc(private_key, ecdsa_sign_format: Literal['iee
 
 def build_certificate_verification_url(
     seller_nip: str,
-    context_identifier_type: Literal['Nip', 'Pesel', 'Other'],
+    context_identifier_type: Literal['Nip', 'InternalId', 'NipVatUe', 'PeppolId'],
     context_identifier_value: str,
     certificate_serial: str,
     invoice_hash_base64url: str,
@@ -222,11 +222,11 @@ def build_certificate_verification_url(
     
     Args:
         seller_nip: NIP sprzedawcy (10 cyfr)
-        context_identifier_type: Typ identyfikatora kontekstu ('Nip', 'Pesel', 'Other')
-        context_identifier_value: Wartość identyfikatora kontekstu - kto wystawia w imieniu sprzedawcy, czyj jest certyfikat offline
-        certificate_serial: Numer seryjny certyfikatu KSeF (hex uppercase, parzysta liczba znaków)
+        context_identifier_type: Typ identyfikatora kontekstu logowania ('Nip', 'InternalId', 'NipVatUe', 'PeppolId')
+        context_identifier_value: Wartość identyfikatora kontekstu logowania - kto (jaka firma/Nip) wystawia w imieniu sprzedawcy, w ramach jakiego kontekstu (firmy / na "koncie" której firmy) jest wystawiony certyfikat offline, nawet jeśli wystawiony jest na PESEL, może być inny niż sprzedawca jeśli np. firma tutaj wskazana ma prawo wystawiać faktury w imieniu sprzedawcy
+        certificate_serial: Numer seryjny certyfikatu KSeF (hex uppercase, parzysta liczba znaków) - certyfikat offline (do podpisywania linku weryfikacyjnego wystawcę), nie ważne czy wystawiony na NIP czy PESEL, ważne aby był w ramach (w kontekście/ na koncie) firmy/NIPu context_identifier_value 
         invoice_hash_base64: Hash SHA-256 faktury w formacie Base64 (standardowy)
-        private_key: Klucz prywatny RSA lub ECDSA
+        private_key: Klucz prywatny RSA lub ECDSA związany z certyfikatem offline
         base_url: Bazowy URL KSeF (domyślnie środowisko testowe)
         ecdsa_signature_format: Format podpisu ECDSA ('ieee_p1363' lub 'der')
         
@@ -243,6 +243,29 @@ def build_certificate_verification_url(
         ...     invoice_hash_base64="UtQp9Gpc51y+u3xApZjIjgkpZ01js+J8KflSPW8WzIE=",
         ...     private_key=rsa_private_key
         ... )
+
+    Dodatkowe objaśnienia dla seller_nip, context_identifier_type, context_identifier_value:
+        - seller_nip: NIP sprzedawcy, na którego wystawiana jest faktura.
+        - context_identifier_type: Typ identyfikatora kontekstu logowania, określa jakiego typu identyfikator jest używany do określenia "konta" lub "firmy", w ramach której wygenerowany jest certyfikat offline.
+        - context_identifier_value: Wartość identyfikatora kontekstu logowania, określa konkretną firmę lub konto (np. NIP firmy), w ramach którego certyfikat offline jest ważny. Może to być inny NIP niż seller_nip, jeśli sam certyfikat offline jest wygenerowany w kontekście (w ramach konta) innej firmy wystawiającej faktury w imieniu sprzedawcy (nie ważne czy certyfikat jest na PESEL czy NIP).
+
+        Przykład 1 - certyfikat wygenerowany w kontekście (na koncie) NIP "1111111111" będąc zalogowanym NIPem "1111111111" (certyfikat "zawierający" NIP), wystawca faktury to też NIP "1111111111"):
+        - seller_nip: "1111111111" (NIP sprzedawcy)
+        - context_identifier_type: "Nip"
+        - context_identifier_value: "1111111111" (NIP konta/firmy, w ramach którego wygenerowano certyfikat offline)
+
+        Przykład 2 - certyfikat wygenerowany w kontekście (na koncie) NIP "1111111111" będąc zalogowanym PESELem "22222222222" (certyfikat "zawierający" PESEL), wystawca faktury to też NIP "1111111111"):
+        - seller_nip: "1111111111" (NIP sprzedawcy)
+        - context_identifier_type: "Nip"
+        - context_identifier_value: "1111111111" (NIP konta/firmy, w ramach którego wygenerowano certyfikat offline)
+
+        Przykład 3 - certyfikat wygenerowany w kontekście (na koncie) NIP "3333333333" (firma trzecia, która ma prawo wystawiać faktury w imieniu firmy "1111111111") będąc zalogowanym PESELem lub NIPem (bez znaczenia), wystawca faktury to NIP "1111111111"):
+        - seller_nip: "1111111111" (NIP sprzedawcy)
+        - context_identifier_type: "Nip"
+        - context_identifier_value: "3333333333" (NIP konta/firmy, w ramach którego wygenerowano certyfikat offline)
+
+        Czyli nie ma znaczenia czy certyfikat został wygenerowany na PESEL czy NIP (czy w momencie generowania byliśmy zalogowani PESELem czy NIPem), ważne jest aby context_identifier_value wskazywał na firmę/NIP, w ramach której wygenerowano certyfikat offline, a ta firma/NIP jest wystawcą faktury lub ma prawo wystawiać faktury w imieniu sprzedawcy (seller_nip).
+        W przypadku certyfikatów na PESEL w ramach konta sprzedawcy (przypadek bez trzeciej firmy) ważne są uprawnienia nadane temu PESELowi.
     """
     # # Konwertuj hash z Base64 do Base64URL
     # hash_bytes = base64.b64decode(invoice_hash_base64)
