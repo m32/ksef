@@ -139,10 +139,8 @@ class KSeFInvoiceSender:
         )
         encryptor = cipher.encryptor()
 
-        pad = len(invoice_bytes) % 16
-        if pad:
-            padding_length = 16 - pad
-            invoice_bytes += bytes([padding_length] * padding_length)
+        padding_length = 16 - (len(invoice_bytes) % 16)
+        invoice_bytes += bytes([padding_length] * padding_length)
 
         encrypted_invoice = encryptor.update(invoice_bytes) + encryptor.finalize()
 
