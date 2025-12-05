@@ -271,6 +271,23 @@ class KSeFInvoiceSender:
         with open(f"{self.cfg.prefix}-session-upo.xml", 'wt') as fp:
             fp.write(response.text)
 
+    def session_failed_invoices(self):
+        if not self.session["status"]:
+            raise KSeFSessionError('session status not downloaded', None)
+        response = requests.get(
+            self.cfg.url+f'/api/v2/sessions/{self.session["referenceNumber"]}/invoices/failed',
+            headers={
+                "Authorization": f"Bearer {self.access_token}",
+            },
+            timeout=5
+        )
+        print('status:', response)
+        if response.status_code != 200:
+            print(response.text)
+            return
+        data = response.json()
+        print(json.dumps(data, indent=4))
+
     def session_invoices(self):
         if not self.session["status"]:
             raise KSeFSessionError('session status not downloaded', None)
@@ -311,7 +328,7 @@ def main():
     cls = KSeFInvoiceSender(cfg)
 
     import getopt
-    opts, args = getopt.getopt(sys.argv[3:], '?zosctui')
+    opts, args = getopt.getopt(sys.argv[3:], '?zosctuei')
     for o, a in opts:
         if o == '-?':
             print(sys.argv[0], '-z|-o|-s|-c|-u')
@@ -321,6 +338,7 @@ def main():
             print('-c = session close')
             print('-t = session status')
             print('-u = session upo')
+            print('-e = session failed invoices')
             print('-i = session invoices metadata')
         if o == '-z':
             cls.zip_create()
@@ -334,6 +352,8 @@ def main():
             cls.session_status()
         elif o == '-u':
             cls.session_upo()
+        elif o == '-e':
+            cls.session_failed_invoices()
         elif o == '-i':
             cls.session_invoices()
 
