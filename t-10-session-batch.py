@@ -286,7 +286,8 @@ class KSeFInvoiceSender:
             print(response.text)
             return
         data = response.json()
-        print(json.dumps(data, indent=4))
+        with open(f"{self.cfg.prefix}-session-failed.xml", 'wt') as fp:
+            fp.write(json.dumps(data))
 
     def session_invoices(self):
         if not self.session["status"]:
