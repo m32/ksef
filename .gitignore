@@ -22,6 +22,9 @@ certificates-*.json
 *-auth.temp.json
 *-auth.xml.xades
 
+# session
+*-session.json
+
 # ksef certificates
 *-enrollments.json
 *-cert.json
