@@ -13,14 +13,14 @@ def main():
     params = {
         'pageSize': 10,
         'sessionType': 'Batch', # 'Online'
-        'referenceNumber': '20251015-SB-31007BD000-53922AEC9B-B8',
+        #'referenceNumber': '20251015-SB-31007BD000-53922AEC9B-B8',
         #'dateCreatedFrom': '',
         #'dateCreatedTo': '',
         #'dateClosedFrom': '',
         #'dateClosedTo': '',
         #'dateModifiedFrom': '',
         #'dateModifiedTo': '',
-        'statuses[]': ["InProgress" "Succeeded" "Failed" "Cancelled"],
+        #'statuses[]': ["InProgress" "Succeeded" "Failed" "Cancelled"],
     }
     params = urllib.parse.urlencode(params)
     resp = requests.get(
