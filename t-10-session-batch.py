@@ -141,9 +141,7 @@ class KSeFInvoiceSender:
         if not self.session['batchFile']['fileParts']:
             raise KSeFZipCreateError('batch File already splitted', None)
 
-        cert_bytes = base64.b64decode(self.cfg.ksefcert)
-        certificate = x509.load_der_x509_certificate(cert_bytes)
-        public_key = certificate.public_key()
+        certificate, public_key = self.cfg.getcertificte(False)
         assert isinstance(public_key, rsa.RSAPublicKey)
 
         encrypted_symmetric_key = public_key.encrypt(
