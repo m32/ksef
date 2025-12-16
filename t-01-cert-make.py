@@ -13,7 +13,7 @@ def main():
         (None, None, cfg.nazwa, cfg.nip, None), # firma
         (cfg.imie, cfg.nazwisko, cfg.imie+' '+cfg.nazwisko, None, cfg.pesel), # osoba
     ):
-        name = cfg.nazwa + ('-user' if not nip else '')
+        name = cfg.nip if nip else cfg.pesel
         if os.path.exists(f'config/{name}.key.pem'):
             continue
         pk = cls.key_create()
