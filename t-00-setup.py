@@ -87,9 +87,9 @@ def main():
             fp.write(json.dumps(resp.json()))
 
     if not cfg.get(f'firma{firma}', 'nip'):
-        cfg.set('firma{firma}', 'nip', nip())
+        cfg.set(f'firma{firma}', 'nip', nip())
     if not cfg.get(f'firma{firma}', 'pesel'):
-        cfg.set('firma{firma}', 'pesel', pesel(datetime.datetime(1950, 1, 12), 1))
+        cfg.set(f'firma{firma}', 'pesel', pesel(datetime.datetime(1950, 1, 12), 1))
 
     with open('ksef.ini', 'wt') as fp:
         cfg.write(fp)
