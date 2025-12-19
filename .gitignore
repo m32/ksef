@@ -36,3 +36,8 @@ certificates-*.json
 *-*-*.xml
 *-*-*.xml.ref
 *-*-*.xml.upo
+
+# venv
+venv-*/
+venv_*/
+venv*/

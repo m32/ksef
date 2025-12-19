@@ -11,16 +11,16 @@ def main():
     with open(f'{cfg.prefix}-auth.json', 'rt') as fp:
         auth = json.loads(fp.read())
     params = {
-        'pageSize': 10,
-        'sessionType': 'Batch', # 'Online'
-        #'referenceNumber': '20251015-SB-31007BD000-53922AEC9B-B8',
-        #'dateCreatedFrom': '',
-        #'dateCreatedTo': '',
-        #'dateClosedFrom': '',
-        #'dateClosedTo': '',
-        #'dateModifiedFrom': '',
-        #'dateModifiedTo': '',
-        #'statuses[]': ["InProgress" "Succeeded" "Failed" "Cancelled"],
+        'pageSize': 10,          # must be between 10 and 1000
+        'sessionType': 'Online', # 'Online' albo 'Batch'
+        'referenceNumber': '',   # Przykład 20251218-SO-2082369000-ADB23AFB6A-42
+        'dateCreatedFrom': '',   # Przykład 2025-12-19
+        'dateCreatedTo': '',     # Przykład 2025-12-19
+        'dateClosedFrom': '',    # Przykład 2025-12-19
+        'dateClosedTo': '',      # Przykład 2025-12-19
+        'dateModifiedFrom': '',  # Przykład 2025-12-19
+        'dateModifiedTo': '',    # Przykład 2025-12-19
+        'statuses': "InProgress" # Lista pozycji do wyboru ["InProgress", "Succeeded", "Failed", "Cancelled"]
     }
     params = urllib.parse.urlencode(params)
     resp = requests.get(
