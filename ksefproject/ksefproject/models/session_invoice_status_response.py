@@ -15,7 +15,7 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.status_info import StatusInfo
+  from ..models.invoice_status_info import InvoiceStatusInfo
 
 
 
@@ -33,7 +33,7 @@ class SessionInvoiceStatusResponse:
             reference_number (str): Numer referencyjny.
             invoice_hash (str): SHA-256 w Base64.
             invoicing_date (datetime.datetime): Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania).
-            status (StatusInfo):
+            status (InvoiceStatusInfo):
             invoice_number (Union[None, Unset, str]): Numer faktury.
             ksef_number (Union[None, Unset, str]): Numer KSeF.
             invoice_file_name (Union[None, Unset, str]): Nazwa pliku faktury (zwracana dla faktur wysyłanych wsadowo).
@@ -45,6 +45,9 @@ class SessionInvoiceStatusResponse:
                 status.
                 Dostęp odbywa się metodą `HTTP GET` i <b>nie należy</b> wysyłać tokenu dostępowego.
                 Link nie podlega limitom API i wygasa po określonym czasie w `UpoDownloadUrlExpirationDate`.
+
+                Odpowiedź HTTP zawiera dodatkowe nagłówki:
+                - `x-ms-meta-hash` – skrót SHA-256 dokumentu UPO, zakodowany w formacie Base64.
             upo_download_url_expiration_date (Union[None, Unset, datetime.datetime]): Data i godzina wygaśnięcia adresu. Po
                 tej dacie link `UpoDownloadUrl` nie będzie już aktywny.
             invoicing_mode (Union[InvoicingMode, None, Unset]): Tryb fakturowania (online/offline).
@@ -54,7 +57,7 @@ class SessionInvoiceStatusResponse:
     reference_number: str
     invoice_hash: str
     invoicing_date: datetime.datetime
-    status: 'StatusInfo'
+    status: 'InvoiceStatusInfo'
     invoice_number: Union[None, Unset, str] = UNSET
     ksef_number: Union[None, Unset, str] = UNSET
     invoice_file_name: Union[None, Unset, str] = UNSET
@@ -69,7 +72,7 @@ class SessionInvoiceStatusResponse:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.status_info import StatusInfo
+        from ..models.invoice_status_info import InvoiceStatusInfo
         ordinal_number = self.ordinal_number
 
         reference_number = self.reference_number
@@ -169,7 +172,7 @@ class SessionInvoiceStatusResponse:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.status_info import StatusInfo
+        from ..models.invoice_status_info import InvoiceStatusInfo
         d = dict(src_dict)
         ordinal_number = d.pop("ordinalNumber")
 
@@ -182,7 +185,7 @@ class SessionInvoiceStatusResponse:
 
 
 
-        status = StatusInfo.from_dict(d.pop("status"))
+        status = InvoiceStatusInfo.from_dict(d.pop("status"))
 
 
 

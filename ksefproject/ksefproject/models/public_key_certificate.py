@@ -24,7 +24,7 @@ T = TypeVar("T", bound="PublicKeyCertificate")
 class PublicKeyCertificate:
     """ 
         Attributes:
-            certificate (str): Certyfikat klucza publicznego w formacie DER zakodowany w Base64.
+            certificate (str): Certyfikat klucza publicznego w formacie DER, zakodowany w formacie Base64.
             valid_from (datetime.datetime): Data początku obowiązywania certyfikatu.
             valid_to (datetime.datetime): Data końca obowiązywania certyfikatu.
             usage (list[PublicKeyCertificateUsage]): Operacje do których może być używany certyfikat.

@@ -15,9 +15,10 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.subunit_permissions_subunit_identifier import SubunitPermissionsSubunitIdentifier
-  from ..models.subunit_permissions_authorized_identifier import SubunitPermissionsAuthorizedIdentifier
   from ..models.subunit_permissions_author_identifier import SubunitPermissionsAuthorIdentifier
+  from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
+  from ..models.subunit_permissions_authorized_identifier import SubunitPermissionsAuthorizedIdentifier
+  from ..models.subunit_permissions_subunit_identifier import SubunitPermissionsSubunitIdentifier
 
 
 
@@ -52,6 +53,7 @@ class SubunitPermission:
             permission_scope (SubunitPermissionScope):
             description (str): Opis uprawnienia.
             start_date (datetime.datetime): Data rozpoczęcia obowiązywania uprawnienia.
+            subject_person_details (Union['PermissionsSubjectPersonDetails', None, Unset]): Dane osoby uprawnionej.
             subunit_name (Union[None, Unset, str]): Nazwa jednostki podrzędnej.
      """
 
@@ -62,6 +64,7 @@ class SubunitPermission:
     permission_scope: SubunitPermissionScope
     description: str
     start_date: datetime.datetime
+    subject_person_details: Union['PermissionsSubjectPersonDetails', None, Unset] = UNSET
     subunit_name: Union[None, Unset, str] = UNSET
 
 
@@ -69,9 +72,10 @@ class SubunitPermission:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.subunit_permissions_subunit_identifier import SubunitPermissionsSubunitIdentifier
-        from ..models.subunit_permissions_authorized_identifier import SubunitPermissionsAuthorizedIdentifier
         from ..models.subunit_permissions_author_identifier import SubunitPermissionsAuthorIdentifier
+        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
+        from ..models.subunit_permissions_authorized_identifier import SubunitPermissionsAuthorizedIdentifier
+        from ..models.subunit_permissions_subunit_identifier import SubunitPermissionsSubunitIdentifier
         id = self.id
 
         authorized_identifier = self.authorized_identifier.to_dict()
@@ -85,6 +89,14 @@ class SubunitPermission:
         description = self.description
 
         start_date = self.start_date.isoformat()
+
+        subject_person_details: Union[None, Unset, dict[str, Any]]
+        if isinstance(self.subject_person_details, Unset):
+            subject_person_details = UNSET
+        elif isinstance(self.subject_person_details, PermissionsSubjectPersonDetails):
+            subject_person_details = self.subject_person_details.to_dict()
+        else:
+            subject_person_details = self.subject_person_details
 
         subunit_name: Union[None, Unset, str]
         if isinstance(self.subunit_name, Unset):
@@ -104,6 +116,8 @@ class SubunitPermission:
             "description": description,
             "startDate": start_date,
         })
+        if subject_person_details is not UNSET:
+            field_dict["subjectPersonDetails"] = subject_person_details
         if subunit_name is not UNSET:
             field_dict["subunitName"] = subunit_name
 
@@ -113,9 +127,10 @@ class SubunitPermission:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.subunit_permissions_subunit_identifier import SubunitPermissionsSubunitIdentifier
-        from ..models.subunit_permissions_authorized_identifier import SubunitPermissionsAuthorizedIdentifier
         from ..models.subunit_permissions_author_identifier import SubunitPermissionsAuthorIdentifier
+        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
+        from ..models.subunit_permissions_authorized_identifier import SubunitPermissionsAuthorizedIdentifier
+        from ..models.subunit_permissions_subunit_identifier import SubunitPermissionsSubunitIdentifier
         d = dict(src_dict)
         id = d.pop("id")
 
@@ -146,6 +161,26 @@ class SubunitPermission:
 
 
 
+        def _parse_subject_person_details(data: object) -> Union['PermissionsSubjectPersonDetails', None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                subject_person_details_type_1 = PermissionsSubjectPersonDetails.from_dict(data)
+
+
+
+                return subject_person_details_type_1
+            except: # noqa: E722
+                pass
+            return cast(Union['PermissionsSubjectPersonDetails', None, Unset], data)
+
+        subject_person_details = _parse_subject_person_details(d.pop("subjectPersonDetails", UNSET))
+
+
         def _parse_subunit_name(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -164,6 +199,7 @@ class SubunitPermission:
             permission_scope=permission_scope,
             description=description,
             start_date=start_date,
+            subject_person_details=subject_person_details,
             subunit_name=subunit_name,
         )
 

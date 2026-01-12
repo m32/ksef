@@ -26,10 +26,10 @@ class InvoiceQueryBuyerIdentifier:
         Attributes:
             type_ (BuyerIdentifierType): | Wartość | Opis |
                 | --- | --- |
+                | Nip | 10 cyfrowy numer NIP |
+                | VatUe | Identyfikator VAT UE podmiotu unijnego |
+                | Other | Inny identyfikator |
                 | None | Brak identyfikatora nabywcy |
-                | Other | Inny |
-                | Nip | NIP |
-                | VatUe | VAT UE |
             value (Union[None, Unset, str]): Wartość identyfikatora nabywcy (exact match).
      """
 

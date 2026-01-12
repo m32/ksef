@@ -39,7 +39,7 @@ class AuthenticationListItem:
                 | QualifiedSignature | Podpis kwalifikowany. |
                 | QualifiedSeal | Pieczęć kwalifikowana. |
                 | PersonalSignature | Podpis osobisty. |
-                | PeppolSignature | Podpis dostawcy uslug Peppol. |
+                | PeppolSignature | Podpis dostawcy usług Peppol. |
             status (StatusInfo):
             reference_number (str): Numer referencyjny.
             is_token_redeemed (Union[None, Unset, bool]): Czy został już wydany refresh token powiązany z danym

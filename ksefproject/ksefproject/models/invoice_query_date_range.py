@@ -35,11 +35,19 @@ class InvoiceQueryDateRange:
             from_ (datetime.datetime): Data początkowa zakresu(UTC).
             to (Union[None, Unset, datetime.datetime]): Data końcowa zakresu(UTC). Jeśli nie zostanie podana, przyjmowana
                 jest bieżąca data i czas w UTC.
+            restrict_to_permanent_storage_hwm_date (Union[None, Unset, bool]): Określa, czy system ma ograniczyć filtrowanie
+                (zakres dateRange.to) do wartości `PermanentStorageHwmDate`.
+
+                * Dotyczy wyłącznie zapytań z `dateType = PermanentStorage`,
+                * Gdy `true`, system ogranicza filtrowanie tak, aby wartość `dateRange.to` nie przekraczała wartości
+                `PermanentStorageHwmDate`,
+                * Gdy `null` lub `false`, filtrowanie może wykraczać poza `PermanentStorageHwmDate`.
      """
 
     date_type: InvoiceQueryDateType
     from_: datetime.datetime
     to: Union[None, Unset, datetime.datetime] = UNSET
+    restrict_to_permanent_storage_hwm_date: Union[None, Unset, bool] = UNSET
 
 
 
@@ -58,6 +66,12 @@ class InvoiceQueryDateRange:
         else:
             to = self.to
 
+        restrict_to_permanent_storage_hwm_date: Union[None, Unset, bool]
+        if isinstance(self.restrict_to_permanent_storage_hwm_date, Unset):
+            restrict_to_permanent_storage_hwm_date = UNSET
+        else:
+            restrict_to_permanent_storage_hwm_date = self.restrict_to_permanent_storage_hwm_date
+
 
         field_dict: dict[str, Any] = {}
 
@@ -67,6 +81,8 @@ class InvoiceQueryDateRange:
         })
         if to is not UNSET:
             field_dict["to"] = to
+        if restrict_to_permanent_storage_hwm_date is not UNSET:
+            field_dict["restrictToPermanentStorageHwmDate"] = restrict_to_permanent_storage_hwm_date
 
         return field_dict
 
@@ -105,10 +121,21 @@ class InvoiceQueryDateRange:
         to = _parse_to(d.pop("to", UNSET))
 
 
+        def _parse_restrict_to_permanent_storage_hwm_date(data: object) -> Union[None, Unset, bool]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, bool], data)
+
+        restrict_to_permanent_storage_hwm_date = _parse_restrict_to_permanent_storage_hwm_date(d.pop("restrictToPermanentStorageHwmDate", UNSET))
+
+
         invoice_query_date_range = cls(
             date_type=date_type,
             from_=from_,
             to=to,
+            restrict_to_permanent_storage_hwm_date=restrict_to_permanent_storage_hwm_date,
         )
 
         return invoice_query_date_range

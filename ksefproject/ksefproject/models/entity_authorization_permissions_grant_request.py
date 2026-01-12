@@ -11,6 +11,7 @@ from typing import cast
 
 if TYPE_CHECKING:
   from ..models.entity_authorization_permissions_subject_identifier import EntityAuthorizationPermissionsSubjectIdentifier
+  from ..models.entity_details import EntityDetails
 
 
 
@@ -31,11 +32,13 @@ class EntityAuthorizationPermissionsGrantRequest:
                 | PeppolId | Identyfikator dostawcy usług Peppol |
             permission (EntityAuthorizationPermissionType):
             description (str): Opis uprawnienia
+            subject_details (EntityDetails):
      """
 
     subject_identifier: 'EntityAuthorizationPermissionsSubjectIdentifier'
     permission: EntityAuthorizationPermissionType
     description: str
+    subject_details: 'EntityDetails'
 
 
 
@@ -43,11 +46,14 @@ class EntityAuthorizationPermissionsGrantRequest:
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.entity_authorization_permissions_subject_identifier import EntityAuthorizationPermissionsSubjectIdentifier
+        from ..models.entity_details import EntityDetails
         subject_identifier = self.subject_identifier.to_dict()
 
         permission = self.permission.value
 
         description = self.description
+
+        subject_details = self.subject_details.to_dict()
 
 
         field_dict: dict[str, Any] = {}
@@ -56,6 +62,7 @@ class EntityAuthorizationPermissionsGrantRequest:
             "subjectIdentifier": subject_identifier,
             "permission": permission,
             "description": description,
+            "subjectDetails": subject_details,
         })
 
         return field_dict
@@ -65,6 +72,7 @@ class EntityAuthorizationPermissionsGrantRequest:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.entity_authorization_permissions_subject_identifier import EntityAuthorizationPermissionsSubjectIdentifier
+        from ..models.entity_details import EntityDetails
         d = dict(src_dict)
         subject_identifier = EntityAuthorizationPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
 
@@ -78,10 +86,16 @@ class EntityAuthorizationPermissionsGrantRequest:
 
         description = d.pop("description")
 
+        subject_details = EntityDetails.from_dict(d.pop("subjectDetails"))
+
+
+
+
         entity_authorization_permissions_grant_request = cls(
             subject_identifier=subject_identifier,
             permission=permission,
             description=description,
+            subject_details=subject_details,
         )
 
         return entity_authorization_permissions_grant_request

@@ -27,6 +27,9 @@ class UpoPageResponse:
             download_url (str): Adres do pobrania strony UPO. Link generowany jest przy każdym odpytaniu o status.
                 Dostęp odbywa się metodą `HTTP GET` i <b>nie należy</b> wysyłać tokenu dostępowego.
                 Link nie podlega limitom API i wygasa po określonym czasie w `DownloadUrlExpirationDate`.
+
+                Odpowiedź HTTP zawiera dodatkowe nagłówki:
+                - `x-ms-meta-hash` – skrót SHA-256 dokumentu UPO, zakodowany w formacie Base64.
             download_url_expiration_date (datetime.datetime): Data i godzina wygaśnięcia adresu. Po tej dacie link
                 `DownloadUrl` nie będzie już aktywny.
      """

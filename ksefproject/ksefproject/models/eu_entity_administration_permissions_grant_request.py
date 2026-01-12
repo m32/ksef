@@ -9,8 +9,10 @@ from ..types import UNSET, Unset
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
+  from ..models.eu_entity_details import EuEntityDetails
   from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
+  from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
+  from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
 
 
 
@@ -35,20 +37,26 @@ class EuEntityAdministrationPermissionsGrantRequest:
             description (str): Opis uprawnienia
             eu_entity_name (str): Nazwa i adres podmiotu unijnego w formacie:
                 `{euSubjectName}, {euSubjectAddress}`
+            subject_details (EuEntityPermissionSubjectDetails):
+            eu_entity_details (EuEntityDetails):
      """
 
     subject_identifier: 'EuEntityAdministrationPermissionsSubjectIdentifier'
     context_identifier: 'EuEntityAdministrationPermissionsContextIdentifier'
     description: str
     eu_entity_name: str
+    subject_details: 'EuEntityPermissionSubjectDetails'
+    eu_entity_details: 'EuEntityDetails'
 
 
 
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
+        from ..models.eu_entity_details import EuEntityDetails
         from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
+        from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
+        from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
         subject_identifier = self.subject_identifier.to_dict()
 
         context_identifier = self.context_identifier.to_dict()
@@ -56,6 +64,10 @@ class EuEntityAdministrationPermissionsGrantRequest:
         description = self.description
 
         eu_entity_name = self.eu_entity_name
+
+        subject_details = self.subject_details.to_dict()
+
+        eu_entity_details = self.eu_entity_details.to_dict()
 
 
         field_dict: dict[str, Any] = {}
@@ -65,6 +77,8 @@ class EuEntityAdministrationPermissionsGrantRequest:
             "contextIdentifier": context_identifier,
             "description": description,
             "euEntityName": eu_entity_name,
+            "subjectDetails": subject_details,
+            "euEntityDetails": eu_entity_details,
         })
 
         return field_dict
@@ -73,8 +87,10 @@ class EuEntityAdministrationPermissionsGrantRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
+        from ..models.eu_entity_details import EuEntityDetails
         from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
+        from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
+        from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
         d = dict(src_dict)
         subject_identifier = EuEntityAdministrationPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
 
@@ -90,11 +106,23 @@ class EuEntityAdministrationPermissionsGrantRequest:
 
         eu_entity_name = d.pop("euEntityName")
 
+        subject_details = EuEntityPermissionSubjectDetails.from_dict(d.pop("subjectDetails"))
+
+
+
+
+        eu_entity_details = EuEntityDetails.from_dict(d.pop("euEntityDetails"))
+
+
+
+
         eu_entity_administration_permissions_grant_request = cls(
             subject_identifier=subject_identifier,
             context_identifier=context_identifier,
             description=description,
             eu_entity_name=eu_entity_name,
+            subject_details=subject_details,
+            eu_entity_details=eu_entity_details,
         )
 
         return eu_entity_administration_permissions_grant_request

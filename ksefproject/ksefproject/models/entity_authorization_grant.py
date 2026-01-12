@@ -15,8 +15,9 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
   from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
+  from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
+  from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
   from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
 
 
@@ -53,6 +54,8 @@ class EntityAuthorizationGrant:
                 | Nip | 10 cyfrowy numer NIP |
                 | Pesel | 11 cyfrowy numer PESEL |
                 | Fingerprint | Odcisk palca certyfikatu |
+            subject_entity_details (Union['PermissionsSubjectEntityByIdentifierDetails', None, Unset]): Dane podmiotu
+                uprawnionego.
      """
 
     id: str
@@ -62,14 +65,16 @@ class EntityAuthorizationGrant:
     description: str
     start_date: datetime.datetime
     author_identifier: Union['EntityAuthorizationsAuthorIdentifier', None, Unset] = UNSET
+    subject_entity_details: Union['PermissionsSubjectEntityByIdentifierDetails', None, Unset] = UNSET
 
 
 
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
         from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
+        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
+        from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
         from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
         id = self.id
 
@@ -91,6 +96,14 @@ class EntityAuthorizationGrant:
         else:
             author_identifier = self.author_identifier
 
+        subject_entity_details: Union[None, Unset, dict[str, Any]]
+        if isinstance(self.subject_entity_details, Unset):
+            subject_entity_details = UNSET
+        elif isinstance(self.subject_entity_details, PermissionsSubjectEntityByIdentifierDetails):
+            subject_entity_details = self.subject_entity_details.to_dict()
+        else:
+            subject_entity_details = self.subject_entity_details
+
 
         field_dict: dict[str, Any] = {}
 
@@ -104,6 +117,8 @@ class EntityAuthorizationGrant:
         })
         if author_identifier is not UNSET:
             field_dict["authorIdentifier"] = author_identifier
+        if subject_entity_details is not UNSET:
+            field_dict["subjectEntityDetails"] = subject_entity_details
 
         return field_dict
 
@@ -111,8 +126,9 @@ class EntityAuthorizationGrant:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
         from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
+        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
+        from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
         from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
         d = dict(src_dict)
         id = d.pop("id")
@@ -159,6 +175,26 @@ class EntityAuthorizationGrant:
         author_identifier = _parse_author_identifier(d.pop("authorIdentifier", UNSET))
 
 
+        def _parse_subject_entity_details(data: object) -> Union['PermissionsSubjectEntityByIdentifierDetails', None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                subject_entity_details_type_1 = PermissionsSubjectEntityByIdentifierDetails.from_dict(data)
+
+
+
+                return subject_entity_details_type_1
+            except: # noqa: E722
+                pass
+            return cast(Union['PermissionsSubjectEntityByIdentifierDetails', None, Unset], data)
+
+        subject_entity_details = _parse_subject_entity_details(d.pop("subjectEntityDetails", UNSET))
+
+
         entity_authorization_grant = cls(
             id=id,
             authorized_entity_identifier=authorized_entity_identifier,
@@ -167,6 +203,7 @@ class EntityAuthorizationGrant:
             description=description,
             start_date=start_date,
             author_identifier=author_identifier,
+            subject_entity_details=subject_entity_details,
         )
 
         return entity_authorization_grant

@@ -14,8 +14,8 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.upo_response import UpoResponse
   from ..models.status_info import StatusInfo
+  from ..models.upo_response import UpoResponse
 
 
 
@@ -30,6 +30,8 @@ class SessionStatusResponse:
     """ 
         Attributes:
             status (StatusInfo):
+            date_created (datetime.datetime): Data utworzenia sesji.
+            date_updated (datetime.datetime): Data ostatniej aktywności w ramach sesji.
             valid_until (Union[None, Unset, datetime.datetime]): Termin ważności sesji. Po jego upływie sesja zostanie
                 automatycznie zamknięta.
             upo (Union['UpoResponse', None, Unset]): Informacja o UPO sesyjnym, zwracana gdy sesja została zamknięta i UPO
@@ -40,6 +42,8 @@ class SessionStatusResponse:
      """
 
     status: 'StatusInfo'
+    date_created: datetime.datetime
+    date_updated: datetime.datetime
     valid_until: Union[None, Unset, datetime.datetime] = UNSET
     upo: Union['UpoResponse', None, Unset] = UNSET
     invoice_count: Union[None, Unset, int] = UNSET
@@ -51,9 +55,13 @@ class SessionStatusResponse:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.upo_response import UpoResponse
         from ..models.status_info import StatusInfo
+        from ..models.upo_response import UpoResponse
         status = self.status.to_dict()
+
+        date_created = self.date_created.isoformat()
+
+        date_updated = self.date_updated.isoformat()
 
         valid_until: Union[None, Unset, str]
         if isinstance(self.valid_until, Unset):
@@ -94,6 +102,8 @@ class SessionStatusResponse:
 
         field_dict.update({
             "status": status,
+            "dateCreated": date_created,
+            "dateUpdated": date_updated,
         })
         if valid_until is not UNSET:
             field_dict["validUntil"] = valid_until
@@ -112,10 +122,20 @@ class SessionStatusResponse:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.upo_response import UpoResponse
         from ..models.status_info import StatusInfo
+        from ..models.upo_response import UpoResponse
         d = dict(src_dict)
         status = StatusInfo.from_dict(d.pop("status"))
+
+
+
+
+        date_created = isoparse(d.pop("dateCreated"))
+
+
+
+
+        date_updated = isoparse(d.pop("dateUpdated"))
 
 
 
@@ -192,6 +212,8 @@ class SessionStatusResponse:
 
         session_status_response = cls(
             status=status,
+            date_created=date_created,
+            date_updated=date_updated,
             valid_until=valid_until,
             upo=upo,
             invoice_count=invoice_count,

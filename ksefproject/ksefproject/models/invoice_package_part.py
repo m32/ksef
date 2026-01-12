@@ -29,6 +29,9 @@ class InvoicePackagePart:
             url (str): Adres URL, pod który należy wysłać żądanie pobrania części paczki.
                 Link jest generowany dynamicznie w momencie odpytania o status operacji eksportu.
                 Nie podlega limitom API i nie wymaga przesyłania tokenu dostępowego przy pobraniu.
+
+                Odpowiedź HTTP zawiera dodatkowe nagłówki:
+                - `x-ms-meta-hash` – zaszyfrowanej części paczki, zakodowany w formacie Base64.
             part_size (int): Rozmiar części paczki w bajtach.
             part_hash (str): SHA-256 w Base64.
             encrypted_part_size (int): Rozmiar zaszyfrowanej części paczki w bajtach.

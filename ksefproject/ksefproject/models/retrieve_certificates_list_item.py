@@ -21,7 +21,7 @@ T = TypeVar("T", bound="RetrieveCertificatesListItem")
 class RetrieveCertificatesListItem:
     """ 
         Attributes:
-            certificate (str): Certyfikat w formacie DER zakodowany w Base64.
+            certificate (str): Certyfikat w formacie DER, zakodowany w formacie Base64.
             certificate_name (str): Nazwa własna certyfikatu.
             certificate_serial_number (str): Numer seryjny certyfikatu.
             certificate_type (KsefCertificateType): | Wartość | Opis |

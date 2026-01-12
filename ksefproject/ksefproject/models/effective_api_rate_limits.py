@@ -32,6 +32,7 @@ class EffectiveApiRateLimits:
             session_misc (EffectiveApiRateLimitValues):
             invoice_metadata (EffectiveApiRateLimitValues):
             invoice_export (EffectiveApiRateLimitValues):
+            invoice_export_status (EffectiveApiRateLimitValues):
             invoice_download (EffectiveApiRateLimitValues):
             other (EffectiveApiRateLimitValues):
      """
@@ -45,6 +46,7 @@ class EffectiveApiRateLimits:
     session_misc: 'EffectiveApiRateLimitValues'
     invoice_metadata: 'EffectiveApiRateLimitValues'
     invoice_export: 'EffectiveApiRateLimitValues'
+    invoice_export_status: 'EffectiveApiRateLimitValues'
     invoice_download: 'EffectiveApiRateLimitValues'
     other: 'EffectiveApiRateLimitValues'
 
@@ -72,6 +74,8 @@ class EffectiveApiRateLimits:
 
         invoice_export = self.invoice_export.to_dict()
 
+        invoice_export_status = self.invoice_export_status.to_dict()
+
         invoice_download = self.invoice_download.to_dict()
 
         other = self.other.to_dict()
@@ -89,6 +93,7 @@ class EffectiveApiRateLimits:
             "sessionMisc": session_misc,
             "invoiceMetadata": invoice_metadata,
             "invoiceExport": invoice_export,
+            "invoiceExportStatus": invoice_export_status,
             "invoiceDownload": invoice_download,
             "other": other,
         })
@@ -146,6 +151,11 @@ class EffectiveApiRateLimits:
 
 
 
+        invoice_export_status = EffectiveApiRateLimitValues.from_dict(d.pop("invoiceExportStatus"))
+
+
+
+
         invoice_download = EffectiveApiRateLimitValues.from_dict(d.pop("invoiceDownload"))
 
 
@@ -166,6 +176,7 @@ class EffectiveApiRateLimits:
             session_misc=session_misc,
             invoice_metadata=invoice_metadata,
             invoice_export=invoice_export,
+            invoice_export_status=invoice_export_status,
             invoice_download=invoice_download,
             other=other,
         )

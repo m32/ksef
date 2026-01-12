@@ -26,11 +26,11 @@ T = TypeVar("T", bound="ExceptionResponse")
 class ExceptionResponse:
     """ 
         Example:
-            {'Exception': {'ExceptionDetailList': [{'ExceptionCode': 12345, 'ExceptionDescription': 'Opis błędu.',
-                'Details': ['Opcjonalne dodatkowe szczegóły błędu.']}], 'ReferenceNumber':
-                'a1b2c3d4-e5f6-4789-ab12-cd34ef567890', 'ServiceCode':
-                '00-c02cc3747020c605be02159bf3324f0e-eee7647dc67aa74a-00', 'ServiceCtx': 'srvABCDA', 'ServiceName': 'Undefined',
-                'Timestamp': '2025-10-11T12:23:56.0154302'}}
+            {'exception': {'exceptionDetailList': [{'exceptionCode': 12345, 'exceptionDescription': 'Opis błędu.',
+                'details': ['Opcjonalne dodatkowe szczegóły błędu.']}], 'referenceNumber':
+                'a1b2c3d4-e5f6-4789-ab12-cd34ef567890', 'serviceCode':
+                '00-c02cc3747020c605be02159bf3324f0e-eee7647dc67aa74a-00', 'serviceCtx': 'srvABCDA', 'serviceName': 'Undefined',
+                'timestamp': '2025-10-11T12:23:56.0154302'}}
 
         Attributes:
             exception (Union['ExceptionInfo', None, Unset]):

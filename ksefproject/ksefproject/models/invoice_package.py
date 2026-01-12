@@ -41,6 +41,17 @@ class InvoicePackage:
                 ujętej w paczce.
                 Pole występuje wyłącznie wtedy, gdy paczka została ucięta i eksport był filtrowany po typie daty
                 `PermanentStorage`.
+            permanent_storage_hwm_date (Union[None, Unset, datetime.datetime]): Dotyczy wyłącznie zapytań filtrowanych po
+                typie daty <b>PermanentStorage</b>.
+                Jeśli zapytanie dotyczyło najnowszego okresu, wartość ta może być wartością nieznacznie skorygowaną względem
+                górnej granicy podanej w warunkach zapytania.
+                Dla okresów starszych, będzie to zgodne z warunkami zapytania.
+
+                System gwarantuje, że dane poniżej tej wartości są spójne i kompletne.
+                Ponowne zapytania obejmujące zakresem dane poniżej tego kroczącego znacznika czasu nie zwrócą w przyszłości
+                innych wyników (np.dodatkowych faktur).
+
+                Dla dateType = Issue lub Invoicing – null.
      """
 
     invoice_count: int
@@ -50,6 +61,7 @@ class InvoicePackage:
     last_issue_date: Union[None, Unset, datetime.date] = UNSET
     last_invoicing_date: Union[None, Unset, datetime.datetime] = UNSET
     last_permanent_storage_date: Union[None, Unset, datetime.datetime] = UNSET
+    permanent_storage_hwm_date: Union[None, Unset, datetime.datetime] = UNSET
 
 
 
@@ -94,6 +106,14 @@ class InvoicePackage:
         else:
             last_permanent_storage_date = self.last_permanent_storage_date
 
+        permanent_storage_hwm_date: Union[None, Unset, str]
+        if isinstance(self.permanent_storage_hwm_date, Unset):
+            permanent_storage_hwm_date = UNSET
+        elif isinstance(self.permanent_storage_hwm_date, datetime.datetime):
+            permanent_storage_hwm_date = self.permanent_storage_hwm_date.isoformat()
+        else:
+            permanent_storage_hwm_date = self.permanent_storage_hwm_date
+
 
         field_dict: dict[str, Any] = {}
 
@@ -109,6 +129,8 @@ class InvoicePackage:
             field_dict["lastInvoicingDate"] = last_invoicing_date
         if last_permanent_storage_date is not UNSET:
             field_dict["lastPermanentStorageDate"] = last_permanent_storage_date
+        if permanent_storage_hwm_date is not UNSET:
+            field_dict["permanentStorageHwmDate"] = permanent_storage_hwm_date
 
         return field_dict
 
@@ -194,6 +216,26 @@ class InvoicePackage:
         last_permanent_storage_date = _parse_last_permanent_storage_date(d.pop("lastPermanentStorageDate", UNSET))
 
 
+        def _parse_permanent_storage_hwm_date(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                permanent_storage_hwm_date_type_0 = isoparse(data)
+
+
+
+                return permanent_storage_hwm_date_type_0
+            except: # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        permanent_storage_hwm_date = _parse_permanent_storage_hwm_date(d.pop("permanentStorageHwmDate", UNSET))
+
+
         invoice_package = cls(
             invoice_count=invoice_count,
             size=size,
@@ -202,6 +244,7 @@ class InvoicePackage:
             last_issue_date=last_issue_date,
             last_invoicing_date=last_invoicing_date,
             last_permanent_storage_date=last_permanent_storage_date,
+            permanent_storage_hwm_date=permanent_storage_hwm_date,
         )
 
         return invoice_package

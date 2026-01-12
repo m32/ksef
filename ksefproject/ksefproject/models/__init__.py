@@ -58,6 +58,8 @@ from .entity_authorizations_authorized_entity_identifier import EntityAuthorizat
 from .entity_authorizations_authorized_entity_identifier_type import EntityAuthorizationsAuthorizedEntityIdentifierType
 from .entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
 from .entity_authorizations_authorizing_entity_identifier_type import EntityAuthorizationsAuthorizingEntityIdentifierType
+from .entity_by_fingerprint_details import EntityByFingerprintDetails
+from .entity_details import EntityDetails
 from .entity_permission import EntityPermission
 from .entity_permission_type import EntityPermissionType
 from .entity_permissions_grant_request import EntityPermissionsGrantRequest
@@ -69,12 +71,18 @@ from .entity_role import EntityRole
 from .entity_role_type import EntityRoleType
 from .entity_roles_parent_entity_identifier import EntityRolesParentEntityIdentifier
 from .entity_roles_parent_entity_identifier_type import EntityRolesParentEntityIdentifierType
+from .entity_subject_by_fingerprint_details_type import EntitySubjectByFingerprintDetailsType
+from .entity_subject_by_identifier_details_type import EntitySubjectByIdentifierDetailsType
+from .entity_subject_details_type import EntitySubjectDetailsType
 from .eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
 from .eu_entity_administration_permissions_context_identifier_type import EuEntityAdministrationPermissionsContextIdentifierType
 from .eu_entity_administration_permissions_grant_request import EuEntityAdministrationPermissionsGrantRequest
 from .eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
 from .eu_entity_administration_permissions_subject_identifier_type import EuEntityAdministrationPermissionsSubjectIdentifierType
+from .eu_entity_details import EuEntityDetails
 from .eu_entity_permission import EuEntityPermission
+from .eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
+from .eu_entity_permission_subject_details_type import EuEntityPermissionSubjectDetailsType
 from .eu_entity_permission_type import EuEntityPermissionType
 from .eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
 from .eu_entity_permissions_author_identifier_type import EuEntityPermissionsAuthorIdentifierType
@@ -90,6 +98,7 @@ from .export_invoices_response import ExportInvoicesResponse
 from .form_code import FormCode
 from .generate_token_request import GenerateTokenRequest
 from .generate_token_response import GenerateTokenResponse
+from .id_document import IdDocument
 from .indirect_permission_type import IndirectPermissionType
 from .indirect_permissions_grant_request import IndirectPermissionsGrantRequest
 from .indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
@@ -116,6 +125,8 @@ from .invoice_query_date_type import InvoiceQueryDateType
 from .invoice_query_filters import InvoiceQueryFilters
 from .invoice_query_form_type import InvoiceQueryFormType
 from .invoice_query_subject_type import InvoiceQuerySubjectType
+from .invoice_status_info import InvoiceStatusInfo
+from .invoice_status_info_extensions_type_0 import InvoiceStatusInfoExtensionsType0
 from .invoice_type import InvoiceType
 from .invoicing_mode import InvoicingMode
 from .ksef_certificate_type import KsefCertificateType
@@ -129,11 +140,24 @@ from .part_upload_request import PartUploadRequest
 from .part_upload_request_headers import PartUploadRequestHeaders
 from .peppol_provider import PeppolProvider
 from .permission_state import PermissionState
+from .permissions_eu_entity_details import PermissionsEuEntityDetails
 from .permissions_operation_response import PermissionsOperationResponse
 from .permissions_operation_status_response import PermissionsOperationStatusResponse
+from .permissions_subject_entity_by_fingerprint_details import PermissionsSubjectEntityByFingerprintDetails
+from .permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
+from .permissions_subject_entity_details import PermissionsSubjectEntityDetails
+from .permissions_subject_person_by_fingerprint_details import PermissionsSubjectPersonByFingerprintDetails
+from .permissions_subject_person_details import PermissionsSubjectPersonDetails
+from .person_by_fingerprint_with_identifier_details import PersonByFingerprintWithIdentifierDetails
+from .person_by_fingerprint_without_identifier_details import PersonByFingerprintWithoutIdentifierDetails
 from .person_create_request import PersonCreateRequest
+from .person_details import PersonDetails
+from .person_identifier import PersonIdentifier
+from .person_identifier_type import PersonIdentifierType
 from .person_permission import PersonPermission
 from .person_permission_scope import PersonPermissionScope
+from .person_permission_subject_details import PersonPermissionSubjectDetails
+from .person_permission_subject_details_type import PersonPermissionSubjectDetailsType
 from .person_permission_type import PersonPermissionType
 from .person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
 from .person_permissions_author_identifier_type import PersonPermissionsAuthorIdentifierType
@@ -149,6 +173,8 @@ from .person_permissions_subject_identifier_type import PersonPermissionsSubject
 from .person_permissions_target_identifier import PersonPermissionsTargetIdentifier
 from .person_permissions_target_identifier_type import PersonPermissionsTargetIdentifierType
 from .person_remove_request import PersonRemoveRequest
+from .person_subject_by_fingerprint_details_type import PersonSubjectByFingerprintDetailsType
+from .person_subject_details_type import PersonSubjectDetailsType
 from .personal_permission import PersonalPermission
 from .personal_permission_scope import PersonalPermissionScope
 from .personal_permission_type import PersonalPermissionType
@@ -231,6 +257,8 @@ from .token_context_identifier_type_identifier import TokenContextIdentifierType
 from .token_info import TokenInfo
 from .token_permission_type import TokenPermissionType
 from .token_status_response import TokenStatusResponse
+from .too_many_requests_response import TooManyRequestsResponse
+from .too_many_requests_response_status import TooManyRequestsResponseStatus
 from .upo_page_response import UpoPageResponse
 from .upo_response import UpoResponse
 
@@ -293,6 +321,8 @@ __all__ = (
     "EntityAuthorizationsAuthorizedEntityIdentifierType",
     "EntityAuthorizationsAuthorizingEntityIdentifier",
     "EntityAuthorizationsAuthorizingEntityIdentifierType",
+    "EntityByFingerprintDetails",
+    "EntityDetails",
     "EntityPermission",
     "EntityPermissionsGrantRequest",
     "EntityPermissionsSubjectIdentifier",
@@ -304,11 +334,15 @@ __all__ = (
     "EntityRolesParentEntityIdentifier",
     "EntityRolesParentEntityIdentifierType",
     "EntityRoleType",
+    "EntitySubjectByFingerprintDetailsType",
+    "EntitySubjectByIdentifierDetailsType",
+    "EntitySubjectDetailsType",
     "EuEntityAdministrationPermissionsContextIdentifier",
     "EuEntityAdministrationPermissionsContextIdentifierType",
     "EuEntityAdministrationPermissionsGrantRequest",
     "EuEntityAdministrationPermissionsSubjectIdentifier",
     "EuEntityAdministrationPermissionsSubjectIdentifierType",
+    "EuEntityDetails",
     "EuEntityPermission",
     "EuEntityPermissionsAuthorIdentifier",
     "EuEntityPermissionsAuthorIdentifierType",
@@ -317,6 +351,8 @@ __all__ = (
     "EuEntityPermissionsQueryRequest",
     "EuEntityPermissionsSubjectIdentifier",
     "EuEntityPermissionsSubjectIdentifierType",
+    "EuEntityPermissionSubjectDetails",
+    "EuEntityPermissionSubjectDetailsType",
     "EuEntityPermissionType",
     "ExceptionDetails",
     "ExceptionInfo",
@@ -325,6 +361,7 @@ __all__ = (
     "FormCode",
     "GenerateTokenRequest",
     "GenerateTokenResponse",
+    "IdDocument",
     "IndirectPermissionsGrantRequest",
     "IndirectPermissionsSubjectIdentifier",
     "IndirectPermissionsSubjectIdentifierType",
@@ -351,6 +388,8 @@ __all__ = (
     "InvoiceQueryFilters",
     "InvoiceQueryFormType",
     "InvoiceQuerySubjectType",
+    "InvoiceStatusInfo",
+    "InvoiceStatusInfoExtensionsType0",
     "InvoiceType",
     "InvoicingMode",
     "KsefCertificateType",
@@ -363,8 +402,14 @@ __all__ = (
     "PartUploadRequest",
     "PartUploadRequestHeaders",
     "PeppolProvider",
+    "PermissionsEuEntityDetails",
     "PermissionsOperationResponse",
     "PermissionsOperationStatusResponse",
+    "PermissionsSubjectEntityByFingerprintDetails",
+    "PermissionsSubjectEntityByIdentifierDetails",
+    "PermissionsSubjectEntityDetails",
+    "PermissionsSubjectPersonByFingerprintDetails",
+    "PermissionsSubjectPersonDetails",
     "PermissionState",
     "PersonalPermission",
     "PersonalPermissionsAuthorizedIdentifier",
@@ -376,7 +421,12 @@ __all__ = (
     "PersonalPermissionsTargetIdentifier",
     "PersonalPermissionsTargetIdentifierType",
     "PersonalPermissionType",
+    "PersonByFingerprintWithIdentifierDetails",
+    "PersonByFingerprintWithoutIdentifierDetails",
     "PersonCreateRequest",
+    "PersonDetails",
+    "PersonIdentifier",
+    "PersonIdentifierType",
     "PersonPermission",
     "PersonPermissionsAuthorIdentifier",
     "PersonPermissionsAuthorIdentifierType",
@@ -392,8 +442,12 @@ __all__ = (
     "PersonPermissionsSubjectIdentifierType",
     "PersonPermissionsTargetIdentifier",
     "PersonPermissionsTargetIdentifierType",
+    "PersonPermissionSubjectDetails",
+    "PersonPermissionSubjectDetailsType",
     "PersonPermissionType",
     "PersonRemoveRequest",
+    "PersonSubjectByFingerprintDetailsType",
+    "PersonSubjectDetailsType",
     "PublicKeyCertificate",
     "PublicKeyCertificateUsage",
     "QueryCertificatesRequest",
@@ -466,6 +520,8 @@ __all__ = (
     "TokenInfo",
     "TokenPermissionType",
     "TokenStatusResponse",
+    "TooManyRequestsResponse",
+    "TooManyRequestsResponseStatus",
     "UpoPageResponse",
     "UpoResponse",
 )

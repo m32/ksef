@@ -6,7 +6,12 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
+from ..types import UNSET, Unset
+from dateutil.parser import isoparse
 from typing import cast
+from typing import cast, Union
+from typing import Union
+import datetime
 
 if TYPE_CHECKING:
   from ..models.invoice_metadata import InvoiceMetadata
@@ -26,11 +31,26 @@ class QueryInvoicesMetadataResponse:
             has_more (bool): Określa, czy istnieją kolejne wyniki zapytania.
             is_truncated (bool): Określa, czy osiągnięto maksymalny dopuszczalny zakres wyników zapytania (10 000).
             invoices (list['InvoiceMetadata']): Lista faktur spełniających kryteria.
+            permanent_storage_hwm_date (Union[None, Unset, datetime.datetime]): Dotyczy wyłącznie zapytań filtrowanych po
+                typie daty <b>PermanentStorage</b>.
+                Jeśli zapytanie dotyczyło najnowszego okresu, wartość ta może być wartością nieznacznie skorygowaną względem
+                górnej granicy podanej w warunkach zapytania.
+                Dla okresów starszych, będzie to zgodne z warunkami zapytania.
+
+                Wartość jest stała dla wszystkich stron tego samego zapytania
+                i nie zależy od paginacji ani sortowania.
+
+                System gwarantuje, że dane poniżej tej wartości są spójne i kompletne.
+                Ponowne zapytania obejmujące zakresem dane poniżej tego kroczącego znacznika czasu nie zwrócą w przyszłości
+                innych wyników (np.dodatkowych faktur).
+
+                Dla dateType = Issue lub Invoicing – null.
      """
 
     has_more: bool
     is_truncated: bool
     invoices: list['InvoiceMetadata']
+    permanent_storage_hwm_date: Union[None, Unset, datetime.datetime] = UNSET
 
 
 
@@ -49,6 +69,14 @@ class QueryInvoicesMetadataResponse:
 
 
 
+        permanent_storage_hwm_date: Union[None, Unset, str]
+        if isinstance(self.permanent_storage_hwm_date, Unset):
+            permanent_storage_hwm_date = UNSET
+        elif isinstance(self.permanent_storage_hwm_date, datetime.datetime):
+            permanent_storage_hwm_date = self.permanent_storage_hwm_date.isoformat()
+        else:
+            permanent_storage_hwm_date = self.permanent_storage_hwm_date
+
 
         field_dict: dict[str, Any] = {}
 
@@ -57,6 +85,8 @@ class QueryInvoicesMetadataResponse:
             "isTruncated": is_truncated,
             "invoices": invoices,
         })
+        if permanent_storage_hwm_date is not UNSET:
+            field_dict["permanentStorageHwmDate"] = permanent_storage_hwm_date
 
         return field_dict
 
@@ -80,10 +110,31 @@ class QueryInvoicesMetadataResponse:
             invoices.append(invoices_item)
 
 
+        def _parse_permanent_storage_hwm_date(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                permanent_storage_hwm_date_type_0 = isoparse(data)
+
+
+
+                return permanent_storage_hwm_date_type_0
+            except: # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        permanent_storage_hwm_date = _parse_permanent_storage_hwm_date(d.pop("permanentStorageHwmDate", UNSET))
+
+
         query_invoices_metadata_response = cls(
             has_more=has_more,
             is_truncated=is_truncated,
             invoices=invoices,
+            permanent_storage_hwm_date=permanent_storage_hwm_date,
         )
 
         return query_invoices_metadata_response

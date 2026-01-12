@@ -33,7 +33,7 @@ class EnrollCertificateRequest:
                 | Authentication | Certyfikat używany do uwierzytelnienia w systemie. |
                 | Offline | Certyfikat używany wyłącznie do potwierdzania autentyczności wystawcy i integralności faktury w
                 trybie offline |
-            csr (str): Wniosek certyfikacyjny PKCS#10 (CSR) w formacie DER zakodowany w Base64.
+            csr (str): Wniosek certyfikacyjny PKCS#10 (CSR) w formacie DER, zakodowany w formacie Base64.
             valid_from (Union[None, Unset, datetime.datetime]): Data rozpoczęcia ważności certyfikatu.
                 Jeśli nie zostanie podana, certyfikat będzie ważny od momentu jego wystawienia.
      """

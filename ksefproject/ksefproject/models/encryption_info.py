@@ -23,7 +23,7 @@ class EncryptionInfo:
             encrypted_symmetric_key (str): Klucz symetryczny o długości 32 bajtów, zaszyfrowany algorytmem RSA (Padding:
                 OAEP z SHA-256), zakodowany w formacie Base64.
 
-                [Klucz publiczny Ministersta Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)
+                [Klucz publiczny Ministerstwa Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)
             initialization_vector (str): Wektor inicjalizujący (IV) o długości 16 bajtów, używany do szyfrowania
                 symetrycznego, zakodowany w formacie Base64.
      """

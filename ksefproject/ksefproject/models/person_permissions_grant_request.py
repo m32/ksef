@@ -10,6 +10,7 @@ from ..models.person_permission_type import PersonPermissionType
 from typing import cast
 
 if TYPE_CHECKING:
+  from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
   from ..models.person_permissions_subject_identifier import PersonPermissionsSubjectIdentifier
 
 
@@ -32,17 +33,20 @@ class PersonPermissionsGrantRequest:
                 | Fingerprint | Odcisk palca certyfikatu |
             permissions (list[PersonPermissionType]): Lista nadawanych uprawnień. Każda wartość może wystąpić tylko raz.
             description (str): Opis uprawnienia
+            subject_details (PersonPermissionSubjectDetails):
      """
 
     subject_identifier: 'PersonPermissionsSubjectIdentifier'
     permissions: list[PersonPermissionType]
     description: str
+    subject_details: 'PersonPermissionSubjectDetails'
 
 
 
 
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
         from ..models.person_permissions_subject_identifier import PersonPermissionsSubjectIdentifier
         subject_identifier = self.subject_identifier.to_dict()
 
@@ -55,6 +59,8 @@ class PersonPermissionsGrantRequest:
 
         description = self.description
 
+        subject_details = self.subject_details.to_dict()
+
 
         field_dict: dict[str, Any] = {}
 
@@ -62,6 +68,7 @@ class PersonPermissionsGrantRequest:
             "subjectIdentifier": subject_identifier,
             "permissions": permissions,
             "description": description,
+            "subjectDetails": subject_details,
         })
 
         return field_dict
@@ -70,6 +77,7 @@ class PersonPermissionsGrantRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
         from ..models.person_permissions_subject_identifier import PersonPermissionsSubjectIdentifier
         d = dict(src_dict)
         subject_identifier = PersonPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
@@ -89,10 +97,16 @@ class PersonPermissionsGrantRequest:
 
         description = d.pop("description")
 
+        subject_details = PersonPermissionSubjectDetails.from_dict(d.pop("subjectDetails"))
+
+
+
+
         person_permissions_grant_request = cls(
             subject_identifier=subject_identifier,
             permissions=permissions,
             description=description,
+            subject_details=subject_details,
         )
 
         return person_permissions_grant_request

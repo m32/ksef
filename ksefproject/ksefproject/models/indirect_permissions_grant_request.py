@@ -15,6 +15,7 @@ from typing import Union
 if TYPE_CHECKING:
   from ..models.indirect_permissions_target_identifier import IndirectPermissionsTargetIdentifier
   from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
+  from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
 
 
 
@@ -36,6 +37,7 @@ class IndirectPermissionsGrantRequest:
                 | Fingerprint | Odcisk palca certyfikatu |
             permissions (list[IndirectPermissionType]): Lista nadawanych uprawnień. Każda wartość może wystąpić tylko raz.
             description (str): Opis uprawnienia
+            subject_details (PersonPermissionSubjectDetails):
             target_identifier (Union['IndirectPermissionsTargetIdentifier', None, Unset]): Identyfikator kontekstu klienta.
                 Nie przekazanie identyfikatora oznacza, że uprawnienie nadane w sposób pośredni jest typu generalnego.
                 | Type | Value |
@@ -48,6 +50,7 @@ class IndirectPermissionsGrantRequest:
     subject_identifier: 'IndirectPermissionsSubjectIdentifier'
     permissions: list[IndirectPermissionType]
     description: str
+    subject_details: 'PersonPermissionSubjectDetails'
     target_identifier: Union['IndirectPermissionsTargetIdentifier', None, Unset] = UNSET
 
 
@@ -57,6 +60,7 @@ class IndirectPermissionsGrantRequest:
     def to_dict(self) -> dict[str, Any]:
         from ..models.indirect_permissions_target_identifier import IndirectPermissionsTargetIdentifier
         from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
+        from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
         subject_identifier = self.subject_identifier.to_dict()
 
         permissions = []
@@ -67,6 +71,8 @@ class IndirectPermissionsGrantRequest:
 
 
         description = self.description
+
+        subject_details = self.subject_details.to_dict()
 
         target_identifier: Union[None, Unset, dict[str, Any]]
         if isinstance(self.target_identifier, Unset):
@@ -83,6 +89,7 @@ class IndirectPermissionsGrantRequest:
             "subjectIdentifier": subject_identifier,
             "permissions": permissions,
             "description": description,
+            "subjectDetails": subject_details,
         })
         if target_identifier is not UNSET:
             field_dict["targetIdentifier"] = target_identifier
@@ -95,6 +102,7 @@ class IndirectPermissionsGrantRequest:
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.indirect_permissions_target_identifier import IndirectPermissionsTargetIdentifier
         from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
+        from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
         d = dict(src_dict)
         subject_identifier = IndirectPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
 
@@ -112,6 +120,11 @@ class IndirectPermissionsGrantRequest:
 
 
         description = d.pop("description")
+
+        subject_details = PersonPermissionSubjectDetails.from_dict(d.pop("subjectDetails"))
+
+
+
 
         def _parse_target_identifier(data: object) -> Union['IndirectPermissionsTargetIdentifier', None, Unset]:
             if data is None:
@@ -137,6 +150,7 @@ class IndirectPermissionsGrantRequest:
             subject_identifier=subject_identifier,
             permissions=permissions,
             description=description,
+            subject_details=subject_details,
             target_identifier=target_identifier,
         )
 

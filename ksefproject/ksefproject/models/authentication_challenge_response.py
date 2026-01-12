@@ -25,12 +25,13 @@ class AuthenticationChallengeResponse:
         Attributes:
             challenge (str): Unikalny challenge.
             timestamp (datetime.datetime): Czas wygenerowania challenge-a.
-            timestampMs (int): Czas wygenerowania challenge-a w milisekundach od 1 stycznia 1970 roku (Unix timestamp).
+            timestamp_ms (int): Czas wygenerowania challenge-a w milisekundach od 1 stycznia 1970 roku (Unix timestamp).
      """
 
     challenge: str
     timestamp: datetime.datetime
-    timestampMs: int
+    timestamp_ms: int
+
 
 
 
@@ -40,7 +41,7 @@ class AuthenticationChallengeResponse:
 
         timestamp = self.timestamp.isoformat()
 
-        timestampMS = self.timestampMs
+        timestamp_ms = self.timestamp_ms
 
 
         field_dict: dict[str, Any] = {}
@@ -48,7 +49,7 @@ class AuthenticationChallengeResponse:
         field_dict.update({
             "challenge": challenge,
             "timestamp": timestamp,
-            "timestampMs": timestampMs,
+            "timestampMs": timestamp_ms,
         })
 
         return field_dict
@@ -62,13 +63,15 @@ class AuthenticationChallengeResponse:
 
         timestamp = isoparse(d.pop("timestamp"))
 
-        timestampMs = d.pop("timestampMs")
 
+
+
+        timestamp_ms = d.pop("timestampMs")
 
         authentication_challenge_response = cls(
             challenge=challenge,
             timestamp=timestamp,
-            timestampMs=timestampMs,
+            timestamp_ms=timestamp_ms,
         )
 
         return authentication_challenge_response

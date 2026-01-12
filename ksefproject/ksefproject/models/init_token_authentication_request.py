@@ -29,7 +29,8 @@ class InitTokenAuthenticationRequest:
         Attributes:
             challenge (str): Unikalny challenge.
             context_identifier (AuthenticationContextIdentifier):
-            encrypted_token (str): Zaszyfrowany token wraz z timestampem z challenge'a, w formacie `token|timestamp`.
+            encrypted_token (str): Zaszyfrowany token wraz z timestampem z challenge'a, w postaci `token|timestamp`,
+                zakodowany w formacie Base64.
             authorization_policy (Union['AuthorizationPolicy', None, Unset]): Polityka autoryzacji żądań przy każdym użyciu
                 tokena dostępu.
      """

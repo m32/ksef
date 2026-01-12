@@ -11,6 +11,7 @@ from typing import cast
 
 if TYPE_CHECKING:
   from ..models.eu_entity_permissions_subject_identifier import EuEntityPermissionsSubjectIdentifier
+  from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
 
 
 
@@ -30,11 +31,13 @@ class EuEntityPermissionsGrantRequest:
                 | Fingerprint | Odcisk palca certyfikatu |
             permissions (list[EuEntityPermissionType]): Lista nadawanych uprawnień. Każda wartość może wystąpić tylko raz.
             description (str): Opis uprawnienia
+            subject_details (EuEntityPermissionSubjectDetails):
      """
 
     subject_identifier: 'EuEntityPermissionsSubjectIdentifier'
     permissions: list[EuEntityPermissionType]
     description: str
+    subject_details: 'EuEntityPermissionSubjectDetails'
 
 
 
@@ -42,6 +45,7 @@ class EuEntityPermissionsGrantRequest:
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.eu_entity_permissions_subject_identifier import EuEntityPermissionsSubjectIdentifier
+        from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
         subject_identifier = self.subject_identifier.to_dict()
 
         permissions = []
@@ -53,6 +57,8 @@ class EuEntityPermissionsGrantRequest:
 
         description = self.description
 
+        subject_details = self.subject_details.to_dict()
+
 
         field_dict: dict[str, Any] = {}
 
@@ -60,6 +66,7 @@ class EuEntityPermissionsGrantRequest:
             "subjectIdentifier": subject_identifier,
             "permissions": permissions,
             "description": description,
+            "subjectDetails": subject_details,
         })
 
         return field_dict
@@ -69,6 +76,7 @@ class EuEntityPermissionsGrantRequest:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.eu_entity_permissions_subject_identifier import EuEntityPermissionsSubjectIdentifier
+        from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
         d = dict(src_dict)
         subject_identifier = EuEntityPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
 
@@ -87,10 +95,16 @@ class EuEntityPermissionsGrantRequest:
 
         description = d.pop("description")
 
+        subject_details = EuEntityPermissionSubjectDetails.from_dict(d.pop("subjectDetails"))
+
+
+
+
         eu_entity_permissions_grant_request = cls(
             subject_identifier=subject_identifier,
             permissions=permissions,
             description=description,
+            subject_details=subject_details,
         )
 
         return eu_entity_permissions_grant_request

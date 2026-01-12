@@ -26,9 +26,9 @@ class EuEntityPermissionsQueryRequest:
     """ 
         Attributes:
             vat_ue_identifier (Union[None, Unset, str]): Wartość identyfikatora (numeru identyfikacyjnego VAT) podmiotu
-                unijnego.
+                unijnego (exact match).
             authorized_fingerprint_identifier (Union[None, Unset, str]): Odcisk palca certyfikatu kwalifikowanego
-                uprawnionego.
+                uprawnionego (contains).
             permission_types (Union[None, Unset, list[EuEntityPermissionsQueryPermissionType]]): Lista rodzajów
                 wyszukiwanych uprawnień.
      """

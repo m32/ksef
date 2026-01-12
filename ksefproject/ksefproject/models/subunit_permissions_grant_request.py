@@ -13,6 +13,7 @@ from typing import Union
 
 if TYPE_CHECKING:
   from ..models.subunit_permissions_subject_identifier import SubunitPermissionsSubjectIdentifier
+  from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
   from ..models.subunit_permissions_context_identifier import SubunitPermissionsContextIdentifier
 
 
@@ -39,6 +40,7 @@ class SubunitPermissionsGrantRequest:
                 | Nip | 10 cyfrowy numer NIP |
                 | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
             description (str): Opis uprawnienia
+            subject_details (PersonPermissionSubjectDetails):
             subunit_name (Union[None, Unset, str]): Nazwa jednostki podrzędnej. W przypadku jednostki podrzędnej z
                 identyfikatorem wewnętrznym pole jest wymagane.
      """
@@ -46,6 +48,7 @@ class SubunitPermissionsGrantRequest:
     subject_identifier: 'SubunitPermissionsSubjectIdentifier'
     context_identifier: 'SubunitPermissionsContextIdentifier'
     description: str
+    subject_details: 'PersonPermissionSubjectDetails'
     subunit_name: Union[None, Unset, str] = UNSET
 
 
@@ -54,12 +57,15 @@ class SubunitPermissionsGrantRequest:
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.subunit_permissions_subject_identifier import SubunitPermissionsSubjectIdentifier
+        from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
         from ..models.subunit_permissions_context_identifier import SubunitPermissionsContextIdentifier
         subject_identifier = self.subject_identifier.to_dict()
 
         context_identifier = self.context_identifier.to_dict()
 
         description = self.description
+
+        subject_details = self.subject_details.to_dict()
 
         subunit_name: Union[None, Unset, str]
         if isinstance(self.subunit_name, Unset):
@@ -74,6 +80,7 @@ class SubunitPermissionsGrantRequest:
             "subjectIdentifier": subject_identifier,
             "contextIdentifier": context_identifier,
             "description": description,
+            "subjectDetails": subject_details,
         })
         if subunit_name is not UNSET:
             field_dict["subunitName"] = subunit_name
@@ -85,6 +92,7 @@ class SubunitPermissionsGrantRequest:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.subunit_permissions_subject_identifier import SubunitPermissionsSubjectIdentifier
+        from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
         from ..models.subunit_permissions_context_identifier import SubunitPermissionsContextIdentifier
         d = dict(src_dict)
         subject_identifier = SubunitPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
@@ -98,6 +106,11 @@ class SubunitPermissionsGrantRequest:
 
 
         description = d.pop("description")
+
+        subject_details = PersonPermissionSubjectDetails.from_dict(d.pop("subjectDetails"))
+
+
+
 
         def _parse_subunit_name(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -113,6 +126,7 @@ class SubunitPermissionsGrantRequest:
             subject_identifier=subject_identifier,
             context_identifier=context_identifier,
             description=description,
+            subject_details=subject_details,
             subunit_name=subunit_name,
         )
 

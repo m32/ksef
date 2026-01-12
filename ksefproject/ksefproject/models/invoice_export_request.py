@@ -9,8 +9,8 @@ from ..types import UNSET, Unset
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.encryption_info import EncryptionInfo
   from ..models.invoice_query_filters import InvoiceQueryFilters
+  from ..models.encryption_info import EncryptionInfo
 
 
 
@@ -36,8 +36,8 @@ class InvoiceExportRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.encryption_info import EncryptionInfo
         from ..models.invoice_query_filters import InvoiceQueryFilters
+        from ..models.encryption_info import EncryptionInfo
         encryption = self.encryption.to_dict()
 
         filters = self.filters.to_dict()
@@ -56,8 +56,8 @@ class InvoiceExportRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.encryption_info import EncryptionInfo
         from ..models.invoice_query_filters import InvoiceQueryFilters
+        from ..models.encryption_info import EncryptionInfo
         d = dict(src_dict)
         encryption = EncryptionInfo.from_dict(d.pop("encryption"))
 

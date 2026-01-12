@@ -18,8 +18,10 @@ import datetime
 if TYPE_CHECKING:
   from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
   from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
-  from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
   from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
+  from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
+  from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+  from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
 
 
 
@@ -65,6 +67,8 @@ class PersonPermission:
                 | Nip | 10 cyfrowy numer NIP |
                 | AllPartners | Identyfikator oznaczający, że uprawnienie nadane w sposób pośredni jest typu generalnego |
                 | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
+            subject_person_details (Union['PermissionsSubjectPersonDetails', None, Unset]): Dane osoby uprawnionej.
+            subject_entity_details (Union['PermissionsSubjectEntityDetails', None, Unset]): Dane podmiotu uprawnionego.
      """
 
     id: str
@@ -77,6 +81,8 @@ class PersonPermission:
     can_delegate: bool
     context_identifier: Union['PersonPermissionsContextIdentifier', None, Unset] = UNSET
     target_identifier: Union['PersonPermissionsTargetIdentifier', None, Unset] = UNSET
+    subject_person_details: Union['PermissionsSubjectPersonDetails', None, Unset] = UNSET
+    subject_entity_details: Union['PermissionsSubjectEntityDetails', None, Unset] = UNSET
 
 
 
@@ -85,8 +91,10 @@ class PersonPermission:
     def to_dict(self) -> dict[str, Any]:
         from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
-        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
         from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
+        from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
+        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
         id = self.id
 
         authorized_identifier = self.authorized_identifier.to_dict()
@@ -119,6 +127,22 @@ class PersonPermission:
         else:
             target_identifier = self.target_identifier
 
+        subject_person_details: Union[None, Unset, dict[str, Any]]
+        if isinstance(self.subject_person_details, Unset):
+            subject_person_details = UNSET
+        elif isinstance(self.subject_person_details, PermissionsSubjectPersonDetails):
+            subject_person_details = self.subject_person_details.to_dict()
+        else:
+            subject_person_details = self.subject_person_details
+
+        subject_entity_details: Union[None, Unset, dict[str, Any]]
+        if isinstance(self.subject_entity_details, Unset):
+            subject_entity_details = UNSET
+        elif isinstance(self.subject_entity_details, PermissionsSubjectEntityDetails):
+            subject_entity_details = self.subject_entity_details.to_dict()
+        else:
+            subject_entity_details = self.subject_entity_details
+
 
         field_dict: dict[str, Any] = {}
 
@@ -136,6 +160,10 @@ class PersonPermission:
             field_dict["contextIdentifier"] = context_identifier
         if target_identifier is not UNSET:
             field_dict["targetIdentifier"] = target_identifier
+        if subject_person_details is not UNSET:
+            field_dict["subjectPersonDetails"] = subject_person_details
+        if subject_entity_details is not UNSET:
+            field_dict["subjectEntityDetails"] = subject_entity_details
 
         return field_dict
 
@@ -145,8 +173,10 @@ class PersonPermission:
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
-        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
         from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
+        from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
+        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
         d = dict(src_dict)
         id = d.pop("id")
 
@@ -219,6 +249,46 @@ class PersonPermission:
         target_identifier = _parse_target_identifier(d.pop("targetIdentifier", UNSET))
 
 
+        def _parse_subject_person_details(data: object) -> Union['PermissionsSubjectPersonDetails', None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                subject_person_details_type_1 = PermissionsSubjectPersonDetails.from_dict(data)
+
+
+
+                return subject_person_details_type_1
+            except: # noqa: E722
+                pass
+            return cast(Union['PermissionsSubjectPersonDetails', None, Unset], data)
+
+        subject_person_details = _parse_subject_person_details(d.pop("subjectPersonDetails", UNSET))
+
+
+        def _parse_subject_entity_details(data: object) -> Union['PermissionsSubjectEntityDetails', None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                subject_entity_details_type_1 = PermissionsSubjectEntityDetails.from_dict(data)
+
+
+
+                return subject_entity_details_type_1
+            except: # noqa: E722
+                pass
+            return cast(Union['PermissionsSubjectEntityDetails', None, Unset], data)
+
+        subject_entity_details = _parse_subject_entity_details(d.pop("subjectEntityDetails", UNSET))
+
+
         person_permission = cls(
             id=id,
             authorized_identifier=authorized_identifier,
@@ -230,6 +300,8 @@ class PersonPermission:
             can_delegate=can_delegate,
             context_identifier=context_identifier,
             target_identifier=target_identifier,
+            subject_person_details=subject_person_details,
+            subject_entity_details=subject_entity_details,
         )
 
         return person_permission

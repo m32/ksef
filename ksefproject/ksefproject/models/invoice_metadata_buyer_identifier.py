@@ -26,11 +26,11 @@ class InvoiceMetadataBuyerIdentifier:
         Attributes:
             type_ (BuyerIdentifierType): | Wartość | Opis |
                 | --- | --- |
+                | Nip | 10 cyfrowy numer NIP |
+                | VatUe | Identyfikator VAT UE podmiotu unijnego |
+                | Other | Inny identyfikator |
                 | None | Brak identyfikatora nabywcy |
-                | Other | Inny |
-                | Nip | NIP |
-                | VatUe | VAT UE |
-            value (Union[None, Unset, str]): Wartośc identyfikatora nabywcy.
+            value (Union[None, Unset, str]): Wartość identyfikatora nabywcy.
      """
 
     type_: BuyerIdentifierType
