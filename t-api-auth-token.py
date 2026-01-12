@@ -6,6 +6,7 @@ import base64
 #import calendar
 import datetime
 import json
+import dateutil.parser
 
 from cryptography import x509
 from cryptography.hazmat.primitives.asymmetric import rsa, padding as apadding
@@ -43,10 +44,14 @@ def main():
     datachallenge = resp.to_dict()
 
     # 3. token
-    dt = dateutil.parser.isoparse(datachallenge['timestamp'])
-    t = int(dt.timestamp()*1000)
-    #dt = datetime.datetime.fromisoformat(datachallenge['timestamp'])
-    #t = int((calendar.timegm(dt.timetuple()) * 1000) + (dt.microsecond / 1000))
+    if 'timestampMs' in datachallenge:
+        t = int(datachallenge['timestampMs'])
+    else:
+        dt = dateutil.parser.isoparse(datachallenge['timestamp'])
+        t = int(dt.timestamp()*1000)
+        #dt = datetime.datetime.fromisoformat(datachallenge['timestamp'])
+        #t = int((calendar.timegm(dt.timetuple()) * 1000) + (dt.microsecond / 1000))
+
     token = f"{cfg.kseftoken}|{t}".encode('utf-8')
 
     encrypted_token = public_key.encrypt(
