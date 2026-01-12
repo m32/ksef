@@ -42,8 +42,11 @@ def main():
         return
     datachallenge = resp.json()
 
-    dt = dateutil.parser.isoparse(datachallenge['timestamp'])
-    t = int(dt.timestamp()*1000)
+    if 'timestampMs' in datachallenge:
+        t = int(datachallenge['timestampMs'])
+    else:
+        dt = dateutil.parser.isoparse(datachallenge['timestamp'])
+        t = int(dt.timestamp()*1000)
 
     token = f"{cfg.kseftoken}|{t}".encode('utf-8')
     encrypted_token = public_key.encrypt(
