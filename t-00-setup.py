@@ -76,7 +76,7 @@ def main():
 
     if not cfg.certificates:
         resp = requests.get(
-            f"{cfg.url}/api/v2/security/public-key-certificates",
+            f"{cfg.url}/security/public-key-certificates",
             timeout=10
         )
         if resp.status_code != 200:

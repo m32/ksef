@@ -44,7 +44,7 @@ def main():
         'description': f'firma: {cfg.nip}',
     }
     resp = requests.post(
-        cfg.url+'/api/v2/testdata/permissions',
+        cfg.url+'/testdata/permissions',
         json=data,
         timeout=5
     )

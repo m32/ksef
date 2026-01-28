@@ -12,7 +12,7 @@ def main():
         auth = json.loads(fp.read())
     ksefNumber = sys.argv[3]
     resp = requests.get(
-        cfg.url+f'/api/v2/invoices/ksef/{ksefNumber}',
+        cfg.url+f'/invoices/ksef/{ksefNumber}',
         headers={
             "Authorization": "Bearer "+auth['accessToken']['token'],
         },

@@ -12,7 +12,7 @@ def main():
     }
     print(data)
     resp = requests.post(
-        cfg.url+'/api/v2/testdata/person/remove',
+        cfg.url+'/testdata/person/remove',
         json=data,
         timeout=5
     )

@@ -7,7 +7,7 @@ from ksefconfig import Config
 def main():
     cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
     resp = requests.post(
-        cfg.url+'/api/v2/auth/challenge',
+        cfg.url+'/auth/challenge',
         timeout=5
     )
     print('post_api_v2_auth_challenge:', resp)

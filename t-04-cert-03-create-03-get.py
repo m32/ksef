@@ -18,7 +18,7 @@ def main():
         csr = json.loads(fp.read())
 
     resp = requests.post(
-        cfg.url+f'/api/v2/certificates/retrieve',
+        cfg.url+f'/certificates/retrieve',
         json={
             'certificateSerialNumbers': [csr['certificateSerialNumber']],
         },

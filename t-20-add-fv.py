@@ -68,7 +68,7 @@ class KSeFInvoiceSender:
 
             # Jeśli nie ma bezpośredniego pliku, spróbuj API z certyfikatami
             response = requests.get(
-                f"{self.cfg.url}/api/v2/security/public-key-certificates", timeout=10
+                f"{self.cfg.url}/security/public-key-certificates", timeout=10
             )
 
             if response.status_code == 200:
@@ -226,7 +226,7 @@ class KSeFInvoiceSender:
         }
 
         response = requests.post(
-            f"{self.cfg.url}/api/v2/sessions/online",
+            f"{self.cfg.url}/sessions/online",
             json=request_data,
             headers=self.get_headers(),
             timeout=30,
@@ -272,7 +272,7 @@ class KSeFInvoiceSender:
         }
 
         response = requests.post(
-            f"{self.cfg.url}/api/v2/sessions/online/{self.session_ref_number}/invoices",
+            f"{self.cfg.url}/sessions/online/{self.session_ref_number}/invoices",
             json=request_data,
             headers=self.get_headers(),
             timeout=30,
@@ -294,7 +294,7 @@ class KSeFInvoiceSender:
         print(f"🔍 Sprawdzanie statusu faktury {invoice_ref}...")
 
         for attempt in range(max_attempts):
-            url = f"{self.cfg.url}/api/v2/sessions/{self.session_ref_number}/invoices/{invoice_ref}"
+            url = f"{self.cfg.url}/sessions/{self.session_ref_number}/invoices/{invoice_ref}"
             print(f"Sprawdzanie statusu... (próba {attempt + 1}/{max_attempts})")
             print(f"URL: {url}")
             response = requests.get(
@@ -336,7 +336,7 @@ class KSeFInvoiceSender:
 
         print("🔒 Zamykanie sesji...")
         response = requests.post(
-            f"{self.cfg.url}/api/v2/sessions/online/{self.session_ref_number}/close",
+            f"{self.cfg.url}/sessions/online/{self.session_ref_number}/close",
             headers=self.get_headers(),
             timeout=15,
         )

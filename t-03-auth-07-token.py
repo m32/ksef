@@ -30,7 +30,7 @@ def main():
 
     certificate, public_key = cfg.getcertificte(True)
 
-    url = cfg.url+'/api/v2/auth/challenge'
+    url = cfg.url+'/auth/challenge'
     resp = requests.post(
         url,
         timeout=15
@@ -68,7 +68,7 @@ def main():
         #'authorizationPolicy': ?
     }
 
-    url = cfg.url+"/api/v2/auth/ksef-token"
+    url = cfg.url+"/auth/ksef-token"
     resp = requests.post(
         url,
         json=data

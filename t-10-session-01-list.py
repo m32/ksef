@@ -24,7 +24,7 @@ def main():
     }
     params = urllib.parse.urlencode(params)
     resp = requests.get(
-        cfg.url+f'/api/v2/sessions?'+params,
+        cfg.url+f'/sessions?'+params,
         headers={
             "Authorization": "Bearer "+auth['accessToken']['token'],
         },

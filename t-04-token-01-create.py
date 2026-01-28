@@ -13,7 +13,7 @@ def main():
         auth = json.loads(fp.read())
 
     resp = requests.post(
-        cfg.url+'/api/v2/tokens',
+        cfg.url+'/tokens',
         json={
             "permissions": ["InvoiceRead", "InvoiceWrite"],
             "description": "token",

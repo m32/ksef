@@ -90,7 +90,7 @@ class KSeFInvoiceSender:
         }
 
         response = requests.post(
-            f"{self.cfg.url}/api/v2/sessions/online",
+            f"{self.cfg.url}/sessions/online",
             json=request_data,
             headers={
                 "Authorization": f"Bearer {self.access_token}",
@@ -112,7 +112,7 @@ class KSeFInvoiceSender:
             return
 
         response = requests.post(
-            f'{self.cfg.url}/api/v2/sessions/online/{self.session["referenceNumber"]}/close',
+            f'{self.cfg.url}/sessions/online/{self.session["referenceNumber"]}/close',
             headers={
                 "Authorization": f"Bearer {self.access_token}",
             },
@@ -181,7 +181,7 @@ class KSeFInvoiceSender:
         }
 
         response = requests.post(
-            f'{self.cfg.url}/api/v2/sessions/online/{self.session["referenceNumber"]}/invoices',
+            f'{self.cfg.url}/sessions/online/{self.session["referenceNumber"]}/invoices',
             json=request_data,
             headers={
                 "Authorization": f"Bearer {self.access_token}",
@@ -201,7 +201,7 @@ class KSeFInvoiceSender:
     def check_invoice_status(self, invoice):
         invoice_ref = self.session['refs'][invoice]
         response = requests.get(
-            f'{self.cfg.url}/api/v2/sessions/{self.session["referenceNumber"]}/invoices/{invoice_ref}',
+            f'{self.cfg.url}/sessions/{self.session["referenceNumber"]}/invoices/{invoice_ref}',
             headers={
                 "Authorization": f"Bearer {self.access_token}",
             },
@@ -236,7 +236,7 @@ class KSeFInvoiceSender:
         if data['status']['code'] != 200:
             return
         response = requests.get(
-            f'{self.cfg.url}/api/v2/sessions/{self.session["referenceNumber"]}/invoices/{data["ksefNumber"]}/upo',
+            f'{self.cfg.url}/sessions/{self.session["referenceNumber"]}/invoices/{data["ksefNumber"]}/upo',
             headers={
                 "Authorization": f"Bearer {self.access_token}",
             },

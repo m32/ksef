@@ -24,7 +24,7 @@ def main():
             'subjectType': 'Subject2',
         }
         resp = requests.post(
-            cfg.url+f'/api/v2/invoices/query/metadata?pageOffset={pageOffset}&pageSize={pageSize}',
+            cfg.url+f'/invoices/query/metadata?pageOffset={pageOffset}&pageSize={pageSize}',
             json=data,
             headers={
                 "Authorization": "Bearer "+auth['accessToken']['token'],
