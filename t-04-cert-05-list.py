@@ -27,7 +27,7 @@ def main():
             #"certificateSerialNumber": "", # numer seryjny certyfikatu (opcjonalny)
         }
         resp = requests.post(
-            cfg.url+f'/api/v2/certificates/query?pageSize={pageSize}&pageOffset={pageOffset}',
+            cfg.url+f'/certificates/query?pageSize={pageSize}&pageOffset={pageOffset}',
             json=data,
             headers={
                 "Authorization": "Bearer "+auth['accessToken']['token'],

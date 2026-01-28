@@ -10,7 +10,7 @@ def main():
     with open(f'{cfg.prefix}-auth.xml.xades', 'rb') as fp:
         xml = fp.read()
     resp = requests.post(
-        cfg.url+'/api/v2/auth/xades-signature?verifyCertificateChain=false',
+        cfg.url+'/auth/xades-signature?verifyCertificateChain=false',
         data=xml,
         headers={
             "Content-Type": "application/xml",

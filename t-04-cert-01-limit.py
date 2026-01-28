@@ -12,7 +12,7 @@ def main():
         auth = json.loads(fp.read())
 
     resp = requests.get(
-        cfg.url+'/api/v2/certificates/limits',
+        cfg.url+'/certificates/limits',
         headers={
             "Authorization": "Bearer "+auth['accessToken']['token'],
         },

@@ -18,7 +18,7 @@ def main():
         csr = json.loads(fp.read())
 
     resp = requests.post(
-        cfg.url+f'/api/v2/certificates/{csr["certificateSerialNumber"]}/revoke',
+        cfg.url+f'/certificates/{csr["certificateSerialNumber"]}/revoke',
         json={
             "revocationReason": "Unspecified",
         },

@@ -23,7 +23,7 @@ def main():
         "queryType":"PermissionsInCurrentContext",
     }
     resp = requests.post(
-        cfg.url+'/api/v2/permissions/query/persons/grants?pageOffset=0&pageSize=10',
+        cfg.url+'/permissions/query/persons/grants?pageOffset=0&pageSize=10',
         json=data,
         headers={
             "Authorization": "Bearer "+auth['accessToken']['token'],

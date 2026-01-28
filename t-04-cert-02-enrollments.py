@@ -12,7 +12,7 @@ def main():
         auth = json.loads(fp.read())
 
     resp = requests.get(
-        cfg.url+'/api/v2/certificates/enrollments/data',
+        cfg.url+'/certificates/enrollments/data',
         headers={
             "Authorization": "Bearer "+auth['accessToken']['token'],
         },

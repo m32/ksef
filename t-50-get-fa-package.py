@@ -103,7 +103,7 @@ def main():
         },
         "filters": filters
     }
-    url=f"{cfg.url}/api/v2/invoices/exports"
+    url=f"{cfg.url}/invoices/exports"
     response = requests.post(url,
                              json=payload,
                              headers=headers)  #do sprawdzenia czy headers["x-ksef-feature"] = "include-metadata" coś zmienia
@@ -118,7 +118,7 @@ def main():
     delay_seconds = 5
     for attempt in range(max_attempts):
         resp = requests.get(
-            f"{cfg.url}/api/v2/invoices/exports/{ref_number}",
+            f"{cfg.url}/invoices/exports/{ref_number}",
             headers=headers,
         )
         resp.raise_for_status()

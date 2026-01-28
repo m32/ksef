@@ -18,7 +18,7 @@ def main():
     }
     print(data)
     resp = requests.post(
-        cfg.url+'/api/v2/testdata/person',
+        cfg.url+'/testdata/person',
         json=data,
         timeout=5
     )

@@ -31,7 +31,7 @@ def main():
     )
     csrb64 = base64.b64encode(csr.public_bytes(serialization.Encoding.DER)).decode()
     resp = requests.post(
-        cfg.url+'/api/v2/certificates/enrollments',
+        cfg.url+'/certificates/enrollments',
         json={
             "certificateName": "Joanna Kowalska - Authentication",
             "certificateType": "Authentication",

@@ -115,7 +115,7 @@ def build_invoice_verification_url(
     nip: str,
     issue_date: datetime,
     invoice_hash_base64url: str,
-    base_url: str = "https://ksef-test.mf.gov.pl"
+    base_url: str = "https://qr-test.ksef.mf.gov.pl"
 ) -> str:
     """
     Buduje URL do weryfikacji faktury (KOD I).
@@ -125,13 +125,13 @@ def build_invoice_verification_url(
     - Pobrania faktury w formacie XML
     
     Format URL:
-    {base_url}/client-app/invoice/{nip}/{data_DD-MM-RRRR}/{hash_base64url}
+    {base_url}/invoice/{nip}/{data_DD-MM-RRRR}/{hash_base64url}
     
     Args:
         nip: NIP sprzedawcy (10 cyfr)
         issue_date: Data wystawienia faktury (pole P_1)
         invoice_hash_base64: Hash SHA-256 faktury w formacie Base64 (standardowy)
-        base_url: Bazowy URL KSeF (domyślnie środowisko testowe)
+        base_url: Bazowy URL QR KSeF (domyślnie środowisko testowe)
         
     Returns:
         Pełny URL do weryfikacji faktury
@@ -142,7 +142,7 @@ def build_invoice_verification_url(
         ...     issue_date=datetime(2026, 2, 1),
         ...     invoice_hash_base64="UtQp9Gpc51y+u3xApZjIjgkpZ01js+J8KflSPW8WzIE="
         ... )
-        'https://ksef-test.mf.gov.pl/client-app/invoice/1111111111/01-02-2026/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE'
+        'https://qr-test.ksef.mf.gov.pl/invoice/1111111111/01-02-2026/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE'
     """
     # # Konwertuj hash z Base64 do Base64URL
     # hash_bytes = base64.b64decode(invoice_hash_base64)
@@ -151,7 +151,7 @@ def build_invoice_verification_url(
     # Format daty: DD-MM-RRRR
     date_str = issue_date.strftime("%d-%m-%Y")
     
-    return f"{base_url}/client-app/invoice/{nip}/{date_str}/{invoice_hash_base64url}"
+    return f"{base_url}/invoice/{nip}/{date_str}/{invoice_hash_base64url}"
 
 
 def get_offline_cert_path_sign_proc(private_key, ecdsa_sign_format: Literal['ieee_p1363','der'] = 'ieee_p1363'):
@@ -209,7 +209,7 @@ def build_certificate_verification_url(
     certificate_serial: str,
     invoice_hash_base64url: str,
     private_key,  # Union[rsa.RSAPrivateKey, ec.EllipticCurvePrivateKey]
-    base_url: str = "https://ksef-test.mf.gov.pl",
+    base_url: str = "https://qr-test.ksef.mf.gov.pl",
     ecdsa_signature_format: Literal['ieee_p1363', 'der'] = 'ieee_p1363'
 ) -> str:
     """
@@ -218,7 +218,7 @@ def build_certificate_verification_url(
     Ten kod QR służy do potwierdzenia autentyczności wystawcy faktury offline.
     
     Format URL:
-    {base_url}/client-app/certificate/{typ_id}/{wartość_id}/{nip_sprzedawcy}/{serial_cert}/{hash_base64url}/{podpis_base64url}
+    {base_url}/certificate/{typ_id}/{wartość_id}/{nip_sprzedawcy}/{serial_cert}/{hash_base64url}/{podpis_base64url}
     
     Args:
         seller_nip: NIP sprzedawcy (10 cyfr)
@@ -227,7 +227,7 @@ def build_certificate_verification_url(
         certificate_serial: Numer seryjny certyfikatu KSeF (hex uppercase, parzysta liczba znaków) - certyfikat offline (do podpisywania linku weryfikacyjnego wystawcę), nie ważne czy wystawiony na NIP czy PESEL, ważne aby był w ramach (w kontekście/ na koncie) firmy/NIPu context_identifier_value 
         invoice_hash_base64: Hash SHA-256 faktury w formacie Base64 (standardowy)
         private_key: Klucz prywatny RSA lub ECDSA związany z certyfikatem offline
-        base_url: Bazowy URL KSeF (domyślnie środowisko testowe)
+        base_url: Bazowy URL QR KSeF (domyślnie środowisko testowe)
         ecdsa_signature_format: Format podpisu ECDSA ('ieee_p1363' lub 'der')
         
     Returns:
@@ -273,7 +273,7 @@ def build_certificate_verification_url(
     
     # Buduj ścieżkę do podpisania (bez https:// i bez końcowego /)
     path_without_signature = (
-        f"{base_url}/client-app/certificate/"
+        f"{base_url}/certificate/"
         f"{context_identifier_type}/{context_identifier_value}/"
         f"{seller_nip}/{certificate_serial}/{invoice_hash_base64url}"
     )
@@ -334,11 +334,16 @@ if __name__ == "__main__":
     script_dir = Path(__file__).parent
     xml_file_path = Path(invoice_xml_path)
 
+    base_url = cfg.url.replace("api", "qr")
+    # Usuń ścieżkę z wersją (np. /v2, /v1)
+    if '/v' in base_url:
+        base_url = base_url.split('/v')[0]
+
     url = build_invoice_verification_url(
         nip=seller_nip,
         issue_date=issue_date,
         invoice_hash_base64url=invoice_hash_base64url,
-        base_url=cfg.url
+        base_url=base_url
     )
 
     generate_qr_image(
@@ -364,7 +369,7 @@ if __name__ == "__main__":
         certificate_serial=cert_serial_number,
         invoice_hash_base64url=invoice_hash_base64url,
         private_key=offline_private_key,  # Union[rsa.RSAPrivateKey, ec.EllipticCurvePrivateKey]
-        base_url=cfg.url,
+        base_url=base_url,
         ecdsa_signature_format= 'ieee_p1363'  #może być 'der' albo 'ieee_p1363'
         )
     

@@ -18,7 +18,7 @@ def main():
         csr = json.loads(fp.read())
 
     resp = requests.get(
-        cfg.url+f'/api/v2/certificates/enrollments/{csr["referenceNumber"]}',
+        cfg.url+f'/certificates/enrollments/{csr["referenceNumber"]}',
         headers={
             "Authorization": "Bearer "+auth['accessToken']['token'],
         },

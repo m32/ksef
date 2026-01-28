@@ -168,7 +168,7 @@ class KSeFInvoiceSender:
         }
 
         response = requests.post(
-            f"{self.cfg.url}/api/v2/sessions/batch",
+            f"{self.cfg.url}/sessions/batch",
             json=data,
             headers={
                 "Authorization": f"Bearer {self.access_token}",
@@ -225,7 +225,7 @@ class KSeFInvoiceSender:
             raise KSeFSessionError('session is closed', None)
 
         response = requests.post(
-            f'{self.cfg.url}/api/v2/sessions/batch/{self.session["referenceNumber"]}/close',
+            f'{self.cfg.url}/sessions/batch/{self.session["referenceNumber"]}/close',
             headers={
                 "Authorization": f"Bearer {self.access_token}",
             },
@@ -238,7 +238,7 @@ class KSeFInvoiceSender:
         if self.session["status"]:
             raise KSeFSessionError('session status already downloaded', None)
         response = requests.get(
-            self.cfg.url+f'/api/v2/sessions/{self.session["referenceNumber"]}',
+            self.cfg.url+f'/sessions/{self.session["referenceNumber"]}',
             headers={
                 "Authorization": f"Bearer {self.access_token}",
             },
@@ -273,7 +273,7 @@ class KSeFInvoiceSender:
         if not self.session["status"]:
             raise KSeFSessionError('session status not downloaded', None)
         response = requests.get(
-            self.cfg.url+f'/api/v2/sessions/{self.session["referenceNumber"]}/invoices/failed',
+            self.cfg.url+f'/sessions/{self.session["referenceNumber"]}/invoices/failed',
             headers={
                 "Authorization": f"Bearer {self.access_token}",
             },
@@ -291,7 +291,7 @@ class KSeFInvoiceSender:
         if not self.session["status"]:
             raise KSeFSessionError('session status not downloaded', None)
         response = requests.get(
-            self.cfg.url+f'/api/v2/sessions/{self.session["referenceNumber"]}/invoices',
+            self.cfg.url+f'/sessions/{self.session["referenceNumber"]}/invoices',
             headers={
                 "Authorization": f"Bearer {self.access_token}",
             },
@@ -307,7 +307,7 @@ class KSeFInvoiceSender:
 
         for inv in data["invoices"]:
             response = requests.get(
-                self.cfg.url+f'/api/v2/sessions/{self.session["referenceNumber"]}/invoices/{inv["referenceNumber"]}/upo',
+                self.cfg.url+f'/sessions/{self.session["referenceNumber"]}/invoices/{inv["referenceNumber"]}/upo',
                 headers={
                     "Authorization": f"Bearer {self.access_token}",
                 },

@@ -10,7 +10,7 @@ def main():
     with open(f'{cfg.prefix}-auth.temp.json', 'rt') as fp:
         auth = json.loads(fp.read())
     resp = requests.post(
-        cfg.url+f'/api/v2/auth/token/redeem',
+        cfg.url+f'/auth/token/redeem',
         headers={
             "Authorization": "Bearer "+auth['authenticationToken']['token'],
         },

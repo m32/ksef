@@ -10,7 +10,7 @@ def main():
     with open(f'{cfg.prefix}-auth.json', 'rt') as fp:
         auth = json.loads(fp.read())
     resp = requests.post(
-        cfg.url+f'/api/v2/auth/token/refresh',
+        cfg.url+f'/auth/token/refresh',
         headers={
             "Authorization": "Bearer "+auth['refreshToken']['token'],
         },
