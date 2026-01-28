@@ -335,12 +335,15 @@ if __name__ == "__main__":
     xml_file_path = Path(invoice_xml_path)
 
     base_url = cfg.url.replace("api", "qr")
+    # Usuń ścieżkę z wersją (np. /v2, /v1)
+    if '/v' in base_url:
+        base_url = base_url.split('/v')[0]
 
     url = build_invoice_verification_url(
         nip=seller_nip,
         issue_date=issue_date,
         invoice_hash_base64url=invoice_hash_base64url,
-        base_url=cfg.url
+        base_url=base_url
     )
 
     generate_qr_image(
@@ -366,7 +369,7 @@ if __name__ == "__main__":
         certificate_serial=cert_serial_number,
         invoice_hash_base64url=invoice_hash_base64url,
         private_key=offline_private_key,  # Union[rsa.RSAPrivateKey, ec.EllipticCurvePrivateKey]
-        base_url=cfg.url,
+        base_url=base_url,
         ecdsa_signature_format= 'ieee_p1363'  #może być 'der' albo 'ieee_p1363'
         )
     
