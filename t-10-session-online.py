@@ -236,7 +236,7 @@ class KSeFInvoiceSender:
         if data['status']['code'] != 200:
             return
         response = requests.get(
-            f'{self.cfg.url}/sessions/{self.session["referenceNumber"]}/invoices/{data["ksefNumber"]}/upo',
+            f'{self.cfg.url}/sessions/{self.session["referenceNumber"]}/invoices/ksef/{data["ksefNumber"]}/upo',
             headers={
                 "Authorization": f"Bearer {self.access_token}",
             },
