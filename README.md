@@ -2,6 +2,24 @@
 
 Zestaw skryptów Python umożliwiających konfigurację, autoryzację i komunikację z systemem Krajowego Systemu e-Faktur (KSeF) w wersji 2.0.
 
+firma = logowanie właścicielskie i zarządzanie dostępem innych osób
+
+osoba = logowanie pracownika
+
+W KSeF nie dasz rady pracować programem, który będzie logował się przy pomocy pieczęci (NIP) z tego powodu że w programie pracuje wielu ludzi na róźnych komputerach, a klucz sprzętowy jest podpinany tylko do jednego z nich. No chyba że dasz radę :).
+
+Jako posiadacz JDG też nie popracujesz z wykorzystaniem e-dowodu lub PUAP-u.
+
+OK. Możesz i dasz radę, ale będzie to upierdliwe.
+
+W jednym i drugim przypadku logujesz się jako właściciel (NIP/PUAP) i tworzysz token lub generujesz certyfikat+klucz i przekazujesz go innej osobie (biuro rachunkowe lub program komputerowy).
+Te rozwiązanie omija problem klucza sprzętowego - masz certyfikat i klucz lub token, który może (nie) przestanie być wspierany w końcem 2026 roku a jest prostszy w użyciu.
+
+Ja dla moich klientów proponuję utworzenie certyfikatu w KSeF z uprawnieniem logowanie+odczyt+zapis faktur oraz tokenu z tymi samymi uprawnieniami.
+
+Na potrzeby skryptów w tym repozytorium certyfikat+klucz musi być zamieniona na plik w formacie PKCS12 i zrobisz to programem cert/p12-ksef.py lub komendami z biblioteki OpenSSL.
+
+m32
 
 
 ## Struktura projektu
