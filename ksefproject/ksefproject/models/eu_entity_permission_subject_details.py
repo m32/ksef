@@ -13,9 +13,9 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.person_by_fingerprint_without_identifier_details import PersonByFingerprintWithoutIdentifierDetails
-  from ..models.entity_by_fingerprint_details import EntityByFingerprintDetails
   from ..models.person_by_fingerprint_with_identifier_details import PersonByFingerprintWithIdentifierDetails
+  from ..models.entity_by_fingerprint_details import EntityByFingerprintDetails
+  from ..models.person_by_fingerprint_without_identifier_details import PersonByFingerprintWithoutIdentifierDetails
 
 
 
@@ -54,9 +54,9 @@ class EuEntityPermissionSubjectDetails:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.person_by_fingerprint_without_identifier_details import PersonByFingerprintWithoutIdentifierDetails
-        from ..models.entity_by_fingerprint_details import EntityByFingerprintDetails
         from ..models.person_by_fingerprint_with_identifier_details import PersonByFingerprintWithIdentifierDetails
+        from ..models.entity_by_fingerprint_details import EntityByFingerprintDetails
+        from ..models.person_by_fingerprint_without_identifier_details import PersonByFingerprintWithoutIdentifierDetails
         subject_details_type = self.subject_details_type.value
 
         person_by_fp_with_id: Union[None, Unset, dict[str, Any]]
@@ -102,9 +102,9 @@ class EuEntityPermissionSubjectDetails:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.person_by_fingerprint_without_identifier_details import PersonByFingerprintWithoutIdentifierDetails
-        from ..models.entity_by_fingerprint_details import EntityByFingerprintDetails
         from ..models.person_by_fingerprint_with_identifier_details import PersonByFingerprintWithIdentifierDetails
+        from ..models.entity_by_fingerprint_details import EntityByFingerprintDetails
+        from ..models.person_by_fingerprint_without_identifier_details import PersonByFingerprintWithoutIdentifierDetails
         d = dict(src_dict)
         subject_details_type = EuEntityPermissionSubjectDetailsType(d.pop("subjectDetailsType"))
 

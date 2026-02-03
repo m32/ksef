@@ -14,8 +14,8 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.status_info import StatusInfo
   from ..models.invoice_package import InvoicePackage
+  from ..models.status_info import StatusInfo
 
 
 
@@ -47,8 +47,8 @@ class InvoiceExportStatusResponse:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.status_info import StatusInfo
         from ..models.invoice_package import InvoicePackage
+        from ..models.status_info import StatusInfo
         status = self.status.to_dict()
 
         completed_date: Union[None, Unset, str]
@@ -94,8 +94,8 @@ class InvoiceExportStatusResponse:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.status_info import StatusInfo
         from ..models.invoice_package import InvoicePackage
+        from ..models.status_info import StatusInfo
         d = dict(src_dict)
         status = StatusInfo.from_dict(d.pop("status"))
 

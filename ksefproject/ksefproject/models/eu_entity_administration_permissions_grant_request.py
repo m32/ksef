@@ -9,9 +9,9 @@ from ..types import UNSET, Unset
 from typing import cast
 
 if TYPE_CHECKING:
+  from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
   from ..models.eu_entity_details import EuEntityDetails
   from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
-  from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
   from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
 
 
@@ -53,9 +53,9 @@ class EuEntityAdministrationPermissionsGrantRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
         from ..models.eu_entity_details import EuEntityDetails
         from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
-        from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
         from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
         subject_identifier = self.subject_identifier.to_dict()
 
@@ -87,9 +87,9 @@ class EuEntityAdministrationPermissionsGrantRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
         from ..models.eu_entity_details import EuEntityDetails
         from ..models.eu_entity_administration_permissions_context_identifier import EuEntityAdministrationPermissionsContextIdentifier
-        from ..models.eu_entity_permission_subject_details import EuEntityPermissionSubjectDetails
         from ..models.eu_entity_administration_permissions_subject_identifier import EuEntityAdministrationPermissionsSubjectIdentifier
         d = dict(src_dict)
         subject_identifier = EuEntityAdministrationPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))

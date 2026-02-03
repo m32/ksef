@@ -16,9 +16,9 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.invoice_metadata_buyer import InvoiceMetadataBuyer
-  from ..models.form_code import FormCode
   from ..models.invoice_metadata_seller import InvoiceMetadataSeller
+  from ..models.form_code import FormCode
+  from ..models.invoice_metadata_buyer import InvoiceMetadataBuyer
   from ..models.invoice_metadata_authorized_subject import InvoiceMetadataAuthorizedSubject
   from ..models.invoice_metadata_third_subject import InvoiceMetadataThirdSubject
 
@@ -99,9 +99,9 @@ class InvoiceMetadata:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.invoice_metadata_buyer import InvoiceMetadataBuyer
-        from ..models.form_code import FormCode
         from ..models.invoice_metadata_seller import InvoiceMetadataSeller
+        from ..models.form_code import FormCode
+        from ..models.invoice_metadata_buyer import InvoiceMetadataBuyer
         from ..models.invoice_metadata_authorized_subject import InvoiceMetadataAuthorizedSubject
         from ..models.invoice_metadata_third_subject import InvoiceMetadataThirdSubject
         ksef_number = self.ksef_number
@@ -203,9 +203,9 @@ class InvoiceMetadata:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.invoice_metadata_buyer import InvoiceMetadataBuyer
-        from ..models.form_code import FormCode
         from ..models.invoice_metadata_seller import InvoiceMetadataSeller
+        from ..models.form_code import FormCode
+        from ..models.invoice_metadata_buyer import InvoiceMetadataBuyer
         from ..models.invoice_metadata_authorized_subject import InvoiceMetadataAuthorizedSubject
         from ..models.invoice_metadata_third_subject import InvoiceMetadataThirdSubject
         d = dict(src_dict)

@@ -16,11 +16,11 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
-  from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
-  from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
   from ..models.personal_permissions_authorized_identifier import PersonalPermissionsAuthorizedIdentifier
   from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
+  from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
+  from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
+  from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
 
 
 
@@ -45,6 +45,7 @@ class PersonalPermission:
                 | Type | Value |
                 | --- | --- |
                 | Nip | 10 cyfrowy numer NIP |
+                | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
             authorized_identifier (Union['PersonalPermissionsAuthorizedIdentifier', None, Unset]): Identyfikator podmiotu
                 uprawnionego, jeżeli jest inny niż identyfikator uwierzytelnionego klienta API.
                 | Type | Value |
@@ -79,11 +80,11 @@ class PersonalPermission:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
-        from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
-        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
         from ..models.personal_permissions_authorized_identifier import PersonalPermissionsAuthorizedIdentifier
         from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
+        from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
+        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
+        from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
         id = self.id
 
         permission_scope = self.permission_scope.value
@@ -164,11 +165,11 @@ class PersonalPermission:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
-        from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
-        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
         from ..models.personal_permissions_authorized_identifier import PersonalPermissionsAuthorizedIdentifier
         from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
+        from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
+        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
+        from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
         d = dict(src_dict)
         id = d.pop("id")
 

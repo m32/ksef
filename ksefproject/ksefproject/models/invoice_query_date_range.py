@@ -32,9 +32,9 @@ class InvoiceQueryDateRange:
                 | Issue | Data wystawienia faktury. |
                 | Invoicing | Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania). |
                 | PermanentStorage | Data trwałego zapisu faktury w repozytorium systemu KSeF. |
-            from_ (datetime.datetime): Data początkowa zakresu(UTC).
-            to (Union[None, Unset, datetime.datetime]): Data końcowa zakresu(UTC). Jeśli nie zostanie podana, przyjmowana
-                jest bieżąca data i czas w UTC.
+            from_ (datetime.datetime): Data początkowa zakresu w formacie ISO-8601 np. 2026-01-03T13:45:00+00:00.
+            to (Union[None, Unset, datetime.datetime]): Data końcowa zakresu w formacie ISO-8601. Jeśli nie zostanie podana,
+                przyjmowana jest bieżąca data i czas w UTC.
             restrict_to_permanent_storage_hwm_date (Union[None, Unset, bool]): Określa, czy system ma ograniczyć filtrowanie
                 (zakres dateRange.to) do wartości `PermanentStorageHwmDate`.
 

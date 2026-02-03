@@ -13,8 +13,8 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.enrollment_subject_limits_override import EnrollmentSubjectLimitsOverride
   from ..models.certificate_subject_limits_override import CertificateSubjectLimitsOverride
+  from ..models.enrollment_subject_limits_override import EnrollmentSubjectLimitsOverride
 
 
 
@@ -42,8 +42,8 @@ class SetSubjectLimitsRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.enrollment_subject_limits_override import EnrollmentSubjectLimitsOverride
         from ..models.certificate_subject_limits_override import CertificateSubjectLimitsOverride
+        from ..models.enrollment_subject_limits_override import EnrollmentSubjectLimitsOverride
         subject_identifier_type: Union[Unset, str] = UNSET
         if not isinstance(self.subject_identifier_type, Unset):
             subject_identifier_type = self.subject_identifier_type.value
@@ -83,8 +83,8 @@ class SetSubjectLimitsRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.enrollment_subject_limits_override import EnrollmentSubjectLimitsOverride
         from ..models.certificate_subject_limits_override import CertificateSubjectLimitsOverride
+        from ..models.enrollment_subject_limits_override import EnrollmentSubjectLimitsOverride
         d = dict(src_dict)
         _subject_identifier_type = d.pop("subjectIdentifierType", UNSET)
         subject_identifier_type: Union[Unset, SubjectIdentifierType]

@@ -23,6 +23,7 @@ class PersonalPermissionsContextIdentifier:
     | Type | Value |
     | --- | --- |
     | Nip | 10 cyfrowy numer NIP |
+    | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
 
         Attributes:
             type_ (PersonalPermissionsContextIdentifierType):

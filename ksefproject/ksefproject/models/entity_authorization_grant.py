@@ -15,10 +15,10 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
-  from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
-  from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
   from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
+  from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
+  from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
+  from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
 
 
 
@@ -72,10 +72,10 @@ class EntityAuthorizationGrant:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
-        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
-        from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
         from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
+        from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
+        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
+        from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
         id = self.id
 
         authorized_entity_identifier = self.authorized_entity_identifier.to_dict()
@@ -126,10 +126,10 @@ class EntityAuthorizationGrant:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
-        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
-        from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
         from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
+        from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
+        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
+        from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
         d = dict(src_dict)
         id = d.pop("id")
 

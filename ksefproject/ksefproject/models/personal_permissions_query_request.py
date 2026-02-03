@@ -14,8 +14,8 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
   from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
+  from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
 
 
 
@@ -34,6 +34,7 @@ class PersonalPermissionsQueryRequest:
                 | Type | Value |
                 | --- | --- |
                 | Nip | 10 cyfrowy numer NIP |
+                | InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |
             target_identifier (Union['PersonalPermissionsTargetIdentifier', None, Unset]): Identyfikator podmiotu docelowego
                 dla uprawnień selektywnych nadanych pośrednio.
                 | Type | Value |
@@ -60,8 +61,8 @@ class PersonalPermissionsQueryRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
         from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
+        from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
         context_identifier: Union[None, Unset, dict[str, Any]]
         if isinstance(self.context_identifier, Unset):
             context_identifier = UNSET
@@ -119,8 +120,8 @@ class PersonalPermissionsQueryRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
         from ..models.personal_permissions_target_identifier import PersonalPermissionsTargetIdentifier
+        from ..models.personal_permissions_context_identifier import PersonalPermissionsContextIdentifier
         d = dict(src_dict)
         def _parse_context_identifier(data: object) -> Union['PersonalPermissionsContextIdentifier', None, Unset]:
             if data is None:
