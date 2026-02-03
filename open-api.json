@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "KSeF API TE",
-    "description": "**Wersja API:** 2.0.0 (build 2.0.0-rc6.1-te-20251215)<br>\n**Klucze publiczne** Ministerstwa Finansów (dla danego środowiska): [Pobierz klucze](#tag/Certyfikaty-klucza-publicznego)<br>\n**Historia zmian:** [Changelog](https://github.com/CIRFMF/ksef-docs/blob/main/api-changelog.md)<br>\n**Rozszerzona dokumentacja API:** [ksef-docs](https://github.com/CIRFMF/ksef-docs/tree/main)\n",
+    "description": "**Wersja API:** 2.0.0 (build 2.0.1-te)<br>\n**Klucze publiczne** Ministerstwa Finansów (dla danego środowiska): [Pobierz klucze](#tag/Certyfikaty-klucza-publicznego)<br>\n**Historia zmian:** [Changelog](https://github.com/CIRFMF/ksef-docs/blob/main/api-changelog.md)<br>\n**Rozszerzona dokumentacja API:** [ksef-docs](https://github.com/CIRFMF/ksef-docs/tree/main)\n\n**Adres serwera API:**\n- Środowisko TEST: `https://api-test.ksef.mf.gov.pl/v2`\n- [deprecated] Środowisko TEST: `https://ksef-test.mf.gov.pl/api/v2`\n",
     "version": "v2"
   },
   "servers": [
@@ -2223,7 +2223,14 @@
                   "Introspection",
                   "CredentialsRead"
                 ],
-                "description": "Opis uprawnienia"
+                "description": "Opis uprawnienia",
+                "subjectDetails": {
+                  "subjectDetailsType": "PersonByIdentifier",
+                  "personById": {
+                    "firstName": "Adam",
+                    "lastName": "Abacki"
+                  }
+                }
               }
             }
           }
@@ -2331,7 +2338,10 @@
                     "canDelegate": true
                   }
                 ],
-                "description": "Opis uprawnienia"
+                "description": "Opis uprawnienia",
+                "subjectDetails": {
+                  "fullName": "Firma sp. z o.o."
+                }
               }
             }
           }
@@ -2430,7 +2440,10 @@
                   "value": "7762811692"
                 },
                 "permission": "SelfInvoicing",
-                "description": "działanie w imieniu 3393244202 w kontekście 7762811692, Firma sp. z o.o."
+                "description": "działanie w imieniu 3393244202 w kontekście 7762811692, Firma sp. z o.o.",
+                "subjectDetails": {
+                  "fullName": "Firma sp. z o.o."
+                }
               }
             }
           }
@@ -2536,7 +2549,14 @@
                   "InvoiceWrite",
                   "InvoiceRead"
                 ],
-                "description": "praca dla klienta 5687926712; uprawniony PESEL: 22271569167, Adam Abacki; pośrednik 3936518395"
+                "description": "praca dla klienta 5687926712; uprawniony PESEL: 22271569167, Adam Abacki; pośrednik 3936518395",
+                "subjectDetails": {
+                  "subjectDetailsType": "PersonByIdentifier",
+                  "personById": {
+                    "firstName": "Adam",
+                    "lastName": "Abacki"
+                  }
+                }
               }
             }
           }
@@ -2639,7 +2659,14 @@
                   "value": "7762811692-12345"
                 },
                 "description": "Opis uprawnienia",
-                "subunitName": "Jednostka 014"
+                "subunitName": "Jednostka 014",
+                "subjectDetails": {
+                  "subjectDetailsType": "PersonByIdentifier",
+                  "personById": {
+                    "firstName": "Adam",
+                    "lastName": "Abacki"
+                  }
+                }
               }
             }
           }
@@ -2744,7 +2771,22 @@
                   "value": "7762811692-DE123456789012"
                 },
                 "description": "Opis uprawnienia",
-                "euEntityName": "Firma G.m.b.H."
+                "euEntityName": "Firma G.m.b.H.",
+                "subjectDetails": {
+                  "subjectDetailsType": "PersonByFingerprintWithIdentifier",
+                  "personByFpWithId": {
+                    "firstName": "Adam",
+                    "lastName": "Abacki",
+                    "identifier": {
+                      "type": "Pesel",
+                      "value": "15062788702"
+                    }
+                  }
+                },
+                "euEntityDetails": {
+                  "fullName": "Firma G.m.b.H.",
+                  "address": "Warszawa ul. Świętokrzyska 4824 00-916 Warszawa"
+                }
               }
             }
           }
@@ -2846,7 +2888,18 @@
                   "InvoiceRead",
                   "InvoiceWrite"
                 ],
-                "description": "Opis uprawnienia"
+                "description": "Opis uprawnienia",
+                "subjectDetails": {
+                  "subjectDetailsType": "PersonByFingerprintWithIdentifier",
+                  "personByFpWithId": {
+                    "firstName": "Adam",
+                    "lastName": "Abacki",
+                    "identifier": {
+                      "type": "Pesel",
+                      "value": "15062788702"
+                    }
+                  }
+                }
               }
             }
           }
@@ -5833,7 +5886,7 @@
           "Wysyłka interaktywna"
         ],
         "summary": "Otwarcie sesji interaktywnej",
-        "description": "Otwiera sesję do wysyłki pojedynczych faktur. Należy przekazać schemat wysyłanych faktur oraz informacje o kluczu używanym do szyfrowania.\n\n> Więcej informacji:\n> - [Otwarcie sesji interaktywnej](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-interaktywna.md#1-otwarcie-sesji)\n> - [Klucz publiczny Ministerstwa Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)\n\nAby generować dokumenty UPO w wersji v4-3 w ramach sesji, należy przy jej otwarciu przesłać nagłówek <b>X-KSeF-Feature: upo-v4-3</b>.\nOd 22 grudnia 2025 wersja UPO v4-3 będzie generowana domyślnie.\n\n**Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`, `EnforcementOperations`.",
+        "description": "Otwiera sesję do wysyłki pojedynczych faktur. Należy przekazać schemat wysyłanych faktur oraz informacje o kluczu używanym do szyfrowania.\n\n> Więcej informacji:\n> - [Otwarcie sesji interaktywnej](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-interaktywna.md#1-otwarcie-sesji)\n> - [Klucz publiczny Ministerstwa Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)\n\n**Wymagane uprawnienia**: `InvoiceWrite`, `PefInvoiceWrite`, `EnforcementOperations`.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -6125,7 +6178,7 @@
           "Wysyłka wsadowa"
         ],
         "summary": "Otwarcie sesji wsadowej",
-        "description": "Otwiera sesję do wysyłki wsadowej faktur. Należy przekazać schemat wysyłanych faktur, informacje o paczce faktur oraz informacje o kluczu używanym do szyfrowania.\n\n> Więcej informacji:\n> - [Przygotowanie paczki faktur](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-wsadowa.md)\n> - [Klucz publiczny Ministerstwa Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)\n\nAby generować dokumenty UPO w wersji v4-3 w ramach sesji, należy przy jej otwarciu przesłać nagłówek <b>X-KSeF-Feature: upo-v4-3</b>.\nOd 22 grudnia 2025 wersja UPO v4-3 będzie generowana domyślnie.\n\n**Wymagane uprawnienia**: `InvoiceWrite`, `EnforcementOperations`.",
+        "description": "Otwiera sesję do wysyłki wsadowej faktur. Należy przekazać schemat wysyłanych faktur, informacje o paczce faktur oraz informacje o kluczu używanym do szyfrowania.\n\n> Więcej informacji:\n> - [Przygotowanie paczki faktur](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-wsadowa.md)\n> - [Klucz publiczny Ministerstwa Finansów](/docs/v2/index.html#tag/Certyfikaty-klucza-publicznego)\n\n**Wymagane uprawnienia**: `InvoiceWrite`, `EnforcementOperations`.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -11014,12 +11067,12 @@
           },
           "from": {
             "type": "string",
-            "description": "Data początkowa zakresu(UTC).",
+            "description": "Data początkowa zakresu w formacie ISO-8601 np. 2026-01-03T13:45:00+00:00.",
             "format": "date-time"
           },
           "to": {
             "type": "string",
-            "description": "Data końcowa zakresu(UTC). Jeśli nie zostanie podana, przyjmowana jest bieżąca data i czas w UTC.",
+            "description": "Data końcowa zakresu w formacie ISO-8601. Jeśli nie zostanie podana, przyjmowana jest bieżąca data i czas w UTC.",
             "format": "date-time",
             "nullable": true
           },
@@ -11065,7 +11118,7 @@
                 "$ref": "#/components/schemas/InvoiceQueryDateRange"
               }
             ],
-            "description": "Typ i zakres dat, według którego mają być filtrowane faktury. Dozwolony maksymalny okres wynosi 3 miesiące."
+            "description": "Typ i zakres dat, według którego mają być filtrowane faktury. Dozwolony maksymalny okres wynosi 3 miesiące. Zakres uznawany jest za poprawny, jeśli mieści się w trzech miesiącach w UTC lub w czasie polskim."
           },
           "ksefNumber": {
             "allOf": [
@@ -12565,7 +12618,7 @@
                 "$ref": "#/components/schemas/PersonalPermissionsContextIdentifier"
               }
             ],
-            "description": "Identyfikator kontekstu podmiotu, który nadał uprawnienia do obsługi faktur.\n| Type | Value |\n| --- | --- |\n| Nip | 10 cyfrowy numer NIP |",
+            "description": "Identyfikator kontekstu podmiotu, który nadał uprawnienia do obsługi faktur.\n| Type | Value |\n| --- | --- |\n| Nip | 10 cyfrowy numer NIP |\n| InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |",
             "nullable": true
           },
           "authorizedIdentifier": {
@@ -12729,14 +12782,14 @@
             "description": "Typ identyfikatora."
           },
           "value": {
-            "maxLength": 10,
+            "maxLength": 16,
             "minLength": 10,
             "type": "string",
             "description": "Wartość identyfikatora."
           }
         },
         "additionalProperties": false,
-        "description": "Identyfikator kontekstu podmiotu, który nadał uprawnienia do obsługi faktur.\n| Type | Value |\n| --- | --- |\n| Nip | 10 cyfrowy numer NIP |"
+        "description": "Identyfikator kontekstu podmiotu, który nadał uprawnienia do obsługi faktur.\n| Type | Value |\n| --- | --- |\n| Nip | 10 cyfrowy numer NIP |\n| InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |"
       },
       "PersonalPermissionsContextIdentifierType": {
         "enum": [
@@ -12758,7 +12811,7 @@
                 "$ref": "#/components/schemas/PersonalPermissionsContextIdentifier"
               }
             ],
-            "description": "Identyfikator kontekstu podmiotu, który nadał uprawnienia do obsługi faktur.\n| Type | Value |\n| --- | --- |\n| Nip | 10 cyfrowy numer NIP |",
+            "description": "Identyfikator kontekstu podmiotu, który nadał uprawnienia do obsługi faktur.\n| Type | Value |\n| --- | --- |\n| Nip | 10 cyfrowy numer NIP |\n| InternalId | Dwuczłonowy identyfikator składający się z numeru NIP i 5 cyfr: `{nip}-{5_cyfr}` |",
             "nullable": true
           },
           "targetIdentifier": {
