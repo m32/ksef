@@ -309,7 +309,7 @@ class KSeFInvoiceSender:
                 print("Response", status_data)
                 print(f"Status: {status}")
 
-                if "processed" in status.lower() or "accepted" in status.lower():
+                if "processed" in status.lower() or "accepted" in status.lower() or "sukces" in status.lower():
                     print(f"✅ Faktura przetworzona pomyślnie!")
                     if "ksefNumber" in status_data:
                         print(f"Numer KSeF: {status_data['ksefNumber']}")
