@@ -11,8 +11,9 @@ def main():
     with open(f'{cfg.prefix}-auth.json', 'rt') as fp:
         auth = json.loads(fp.read())
 
-    resp = requests.get(
-        cfg.url+'/tokens',
+    token = sys.argv[2]
+    resp = requests.delete(
+        cfg.url+f'/tokens/{token}',
         headers={
             "Authorization": "Bearer "+auth['accessToken']['token'],
         },
@@ -26,5 +27,13 @@ def main():
     else:
         data = resp.json()
         print(data)
+        with open(f'{cfg.prefix}-tokens.json', 'rt') as fp:
+            tokens = json.loads(fp.read())
+        try:
+            del tokens[token]
+        except KeyError as exc:
+            pass
+        with open(f'{cfg.prefix}-tokens.json', 'wt') as fp:
+            fp.write(json.dumps(tokens))
 
 main()

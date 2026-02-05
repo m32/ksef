@@ -8,7 +8,7 @@ import sys
 from ksefconfig import Config
 
 def main():
-    cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
+    cfg = Config(int(sys.argv[1]), False)
     with open(f'{cfg.prefix}-auth.json', 'rt') as fp:
         auth = json.loads(fp.read())
 
@@ -39,6 +39,6 @@ def main():
         tokens[data["referenceNumber"]] = data["token"]
 
         with open(f'{cfg.prefix}-tokens.json', 'wt') as fp:
-            fp.write(json.dumps(auth))
+            fp.write(json.dumps(tokens))
 
 main()
