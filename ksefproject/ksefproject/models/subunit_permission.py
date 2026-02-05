@@ -15,9 +15,9 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
+  from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
   from ..models.subunit_permissions_authorized_identifier import SubunitPermissionsAuthorizedIdentifier
   from ..models.subunit_permissions_subunit_identifier import SubunitPermissionsSubunitIdentifier
-  from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
   from ..models.subunit_permissions_author_identifier import SubunitPermissionsAuthorIdentifier
 
 
@@ -72,9 +72,9 @@ class SubunitPermission:
 
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
         from ..models.subunit_permissions_authorized_identifier import SubunitPermissionsAuthorizedIdentifier
         from ..models.subunit_permissions_subunit_identifier import SubunitPermissionsSubunitIdentifier
-        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
         from ..models.subunit_permissions_author_identifier import SubunitPermissionsAuthorIdentifier
         id = self.id
 
@@ -127,9 +127,9 @@ class SubunitPermission:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
         from ..models.subunit_permissions_authorized_identifier import SubunitPermissionsAuthorizedIdentifier
         from ..models.subunit_permissions_subunit_identifier import SubunitPermissionsSubunitIdentifier
-        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
         from ..models.subunit_permissions_author_identifier import SubunitPermissionsAuthorIdentifier
         d = dict(src_dict)
         id = d.pop("id")

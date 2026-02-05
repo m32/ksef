@@ -10,8 +10,8 @@ from typing import cast
 
 if TYPE_CHECKING:
   from ..models.entity_details import EntityDetails
-  from ..models.entity_permission import EntityPermission
   from ..models.entity_permissions_subject_identifier import EntityPermissionsSubjectIdentifier
+  from ..models.entity_permission import EntityPermission
 
 
 
@@ -45,8 +45,8 @@ class EntityPermissionsGrantRequest:
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.entity_details import EntityDetails
-        from ..models.entity_permission import EntityPermission
         from ..models.entity_permissions_subject_identifier import EntityPermissionsSubjectIdentifier
+        from ..models.entity_permission import EntityPermission
         subject_identifier = self.subject_identifier.to_dict()
 
         permissions = []
@@ -77,8 +77,8 @@ class EntityPermissionsGrantRequest:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.entity_details import EntityDetails
-        from ..models.entity_permission import EntityPermission
         from ..models.entity_permissions_subject_identifier import EntityPermissionsSubjectIdentifier
+        from ..models.entity_permission import EntityPermission
         d = dict(src_dict)
         subject_identifier = EntityPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
 

@@ -13,9 +13,9 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
   from ..models.indirect_permissions_target_identifier import IndirectPermissionsTargetIdentifier
   from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
+  from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
 
 
 
@@ -58,9 +58,9 @@ class IndirectPermissionsGrantRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
         from ..models.indirect_permissions_target_identifier import IndirectPermissionsTargetIdentifier
         from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
+        from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
         subject_identifier = self.subject_identifier.to_dict()
 
         permissions = []
@@ -100,9 +100,9 @@ class IndirectPermissionsGrantRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
         from ..models.indirect_permissions_target_identifier import IndirectPermissionsTargetIdentifier
         from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
+        from ..models.indirect_permissions_subject_identifier import IndirectPermissionsSubjectIdentifier
         d = dict(src_dict)
         subject_identifier = IndirectPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
 

@@ -16,12 +16,12 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
-  from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
-  from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
-  from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
-  from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
   from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
+  from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+  from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
+  from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
+  from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
+  from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
 
 
 
@@ -89,12 +89,12 @@ class PersonPermission:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
-        from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
-        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
-        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
-        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
+        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+        from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
+        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
+        from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
+        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         id = self.id
 
         authorized_identifier = self.authorized_identifier.to_dict()
@@ -171,12 +171,12 @@ class PersonPermission:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
-        from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
-        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
-        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
-        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
+        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+        from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
+        from ..models.permissions_subject_person_details import PermissionsSubjectPersonDetails
+        from ..models.permissions_subject_entity_details import PermissionsSubjectEntityDetails
+        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         d = dict(src_dict)
         id = d.pop("id")
 

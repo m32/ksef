@@ -15,9 +15,9 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
-  from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
   from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
+  from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+  from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
   from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
 
 
@@ -82,9 +82,9 @@ class PersonPermissionsQueryRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
-        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
         from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
+        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
         query_type = self.query_type.value
 
@@ -166,9 +166,9 @@ class PersonPermissionsQueryRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
-        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
         from ..models.person_permissions_target_identifier import PersonPermissionsTargetIdentifier
+        from ..models.person_permissions_context_identifier import PersonPermissionsContextIdentifier
+        from ..models.person_permissions_authorized_identifier import PersonPermissionsAuthorizedIdentifier
         from ..models.person_permissions_author_identifier import PersonPermissionsAuthorIdentifier
         d = dict(src_dict)
         query_type = PersonPermissionsQueryType(d.pop("queryType"))

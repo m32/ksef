@@ -17,9 +17,9 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
+  from ..models.invoice_query_amount import InvoiceQueryAmount
   from ..models.invoice_query_date_range import InvoiceQueryDateRange
   from ..models.invoice_query_buyer_identifier import InvoiceQueryBuyerIdentifier
-  from ..models.invoice_query_amount import InvoiceQueryAmount
 
 
 
@@ -97,9 +97,9 @@ class InvoiceQueryFilters:
 
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.invoice_query_amount import InvoiceQueryAmount
         from ..models.invoice_query_date_range import InvoiceQueryDateRange
         from ..models.invoice_query_buyer_identifier import InvoiceQueryBuyerIdentifier
-        from ..models.invoice_query_amount import InvoiceQueryAmount
         subject_type = self.subject_type.value
 
         date_range = self.date_range.to_dict()
@@ -228,9 +228,9 @@ class InvoiceQueryFilters:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.invoice_query_amount import InvoiceQueryAmount
         from ..models.invoice_query_date_range import InvoiceQueryDateRange
         from ..models.invoice_query_buyer_identifier import InvoiceQueryBuyerIdentifier
-        from ..models.invoice_query_amount import InvoiceQueryAmount
         d = dict(src_dict)
         subject_type = InvoiceQuerySubjectType(d.pop("subjectType"))
 

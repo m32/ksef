@@ -13,9 +13,9 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.person_by_fingerprint_with_identifier_details import PersonByFingerprintWithIdentifierDetails
   from ..models.person_details import PersonDetails
   from ..models.person_by_fingerprint_without_identifier_details import PersonByFingerprintWithoutIdentifierDetails
+  from ..models.person_by_fingerprint_with_identifier_details import PersonByFingerprintWithIdentifierDetails
 
 
 
@@ -55,9 +55,9 @@ class PersonPermissionSubjectDetails:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.person_by_fingerprint_with_identifier_details import PersonByFingerprintWithIdentifierDetails
         from ..models.person_details import PersonDetails
         from ..models.person_by_fingerprint_without_identifier_details import PersonByFingerprintWithoutIdentifierDetails
+        from ..models.person_by_fingerprint_with_identifier_details import PersonByFingerprintWithIdentifierDetails
         subject_details_type = self.subject_details_type.value
 
         person_by_id: Union[None, Unset, dict[str, Any]]
@@ -103,9 +103,9 @@ class PersonPermissionSubjectDetails:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.person_by_fingerprint_with_identifier_details import PersonByFingerprintWithIdentifierDetails
         from ..models.person_details import PersonDetails
         from ..models.person_by_fingerprint_without_identifier_details import PersonByFingerprintWithoutIdentifierDetails
+        from ..models.person_by_fingerprint_with_identifier_details import PersonByFingerprintWithIdentifierDetails
         d = dict(src_dict)
         subject_details_type = PersonPermissionSubjectDetailsType(d.pop("subjectDetailsType"))
 

@@ -12,8 +12,8 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.enrollment_effective_subject_limits import EnrollmentEffectiveSubjectLimits
   from ..models.certificate_effective_subject_limits import CertificateEffectiveSubjectLimits
+  from ..models.enrollment_effective_subject_limits import EnrollmentEffectiveSubjectLimits
 
 
 
@@ -39,8 +39,8 @@ class EffectiveSubjectLimits:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.enrollment_effective_subject_limits import EnrollmentEffectiveSubjectLimits
         from ..models.certificate_effective_subject_limits import CertificateEffectiveSubjectLimits
+        from ..models.enrollment_effective_subject_limits import EnrollmentEffectiveSubjectLimits
         enrollment: Union[None, Unset, dict[str, Any]]
         if isinstance(self.enrollment, Unset):
             enrollment = UNSET
@@ -73,8 +73,8 @@ class EffectiveSubjectLimits:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.enrollment_effective_subject_limits import EnrollmentEffectiveSubjectLimits
         from ..models.certificate_effective_subject_limits import CertificateEffectiveSubjectLimits
+        from ..models.enrollment_effective_subject_limits import EnrollmentEffectiveSubjectLimits
         d = dict(src_dict)
         def _parse_enrollment(data: object) -> Union['EnrollmentEffectiveSubjectLimits', None, Unset]:
             if data is None:
