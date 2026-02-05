@@ -9,8 +9,8 @@ from ..types import UNSET, Unset
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.form_code import FormCode
   from ..models.encryption_info import EncryptionInfo
+  from ..models.form_code import FormCode
 
 
 
@@ -36,8 +36,8 @@ class OpenOnlineSessionRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.form_code import FormCode
         from ..models.encryption_info import EncryptionInfo
+        from ..models.form_code import FormCode
         form_code = self.form_code.to_dict()
 
         encryption = self.encryption.to_dict()
@@ -56,8 +56,8 @@ class OpenOnlineSessionRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.form_code import FormCode
         from ..models.encryption_info import EncryptionInfo
+        from ..models.form_code import FormCode
         d = dict(src_dict)
         form_code = FormCode.from_dict(d.pop("formCode"))
 

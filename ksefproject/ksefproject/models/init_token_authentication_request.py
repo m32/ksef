@@ -12,8 +12,8 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.authentication_context_identifier import AuthenticationContextIdentifier
   from ..models.authorization_policy import AuthorizationPolicy
+  from ..models.authentication_context_identifier import AuthenticationContextIdentifier
 
 
 
@@ -45,8 +45,8 @@ class InitTokenAuthenticationRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.authentication_context_identifier import AuthenticationContextIdentifier
         from ..models.authorization_policy import AuthorizationPolicy
+        from ..models.authentication_context_identifier import AuthenticationContextIdentifier
         challenge = self.challenge
 
         context_identifier = self.context_identifier.to_dict()
@@ -78,8 +78,8 @@ class InitTokenAuthenticationRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.authentication_context_identifier import AuthenticationContextIdentifier
         from ..models.authorization_policy import AuthorizationPolicy
+        from ..models.authentication_context_identifier import AuthenticationContextIdentifier
         d = dict(src_dict)
         challenge = d.pop("challenge")
 

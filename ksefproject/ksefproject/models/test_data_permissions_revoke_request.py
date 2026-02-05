@@ -9,8 +9,8 @@ from ..types import UNSET, Unset
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.test_data_authorized_identifier import TestDataAuthorizedIdentifier
   from ..models.test_data_context_identifier import TestDataContextIdentifier
+  from ..models.test_data_authorized_identifier import TestDataAuthorizedIdentifier
 
 
 
@@ -36,8 +36,8 @@ class TestDataPermissionsRevokeRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.test_data_authorized_identifier import TestDataAuthorizedIdentifier
         from ..models.test_data_context_identifier import TestDataContextIdentifier
+        from ..models.test_data_authorized_identifier import TestDataAuthorizedIdentifier
         context_identifier = self.context_identifier.to_dict()
 
         authorized_identifier = self.authorized_identifier.to_dict()
@@ -56,8 +56,8 @@ class TestDataPermissionsRevokeRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.test_data_authorized_identifier import TestDataAuthorizedIdentifier
         from ..models.test_data_context_identifier import TestDataContextIdentifier
+        from ..models.test_data_authorized_identifier import TestDataAuthorizedIdentifier
         d = dict(src_dict)
         context_identifier = TestDataContextIdentifier.from_dict(d.pop("contextIdentifier"))
 
