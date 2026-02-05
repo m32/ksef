@@ -87,7 +87,7 @@ def main():
     )
     status = 100
     while status < 200:
-        resp = get_api_v_2_auth_reference_number.sync(client=clt,
+        resp = get_auth_reference_number.sync(client=clt,
             reference_number=data2['referenceNumber']
         )
         print('*'*20, 'get_api_v_2_auth_reference_number')
