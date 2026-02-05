@@ -3,7 +3,7 @@ import sys
 import json
 
 from ksef import AuthenticatedClient
-from ksef.api.auth import post_api_v2_auth_token_refresh
+from ksef.api.auth import post_auth_token_refresh
 
 import sys
 from ksefconfig import Config
@@ -14,7 +14,7 @@ def main():
         auth = json.loads(fp.read())
 
     clt = AuthenticatedClient(cfg.url, token=auth['refreshToken']['token'])
-    resp = post_api_v2_auth_token_refresh.sync(client=clt)
+    resp = post_auth_token_refresh.sync(client=clt)
 
     with open(f'{cfg.prefix}-auth.json', 'wt') as fp:
         auth.update(resp.to_dict())

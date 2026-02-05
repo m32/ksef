@@ -14,12 +14,12 @@ from cryptography.hazmat.primitives import hashes
 
 from ksef import Client, AuthenticatedClient
 from ksef.api.auth import (
-    post_api_v2_auth_challenge,
-    post_api_v2_auth_ksef_token,
-    get_api_v_2_auth_reference_number,
-    post_api_v2_auth_token_redeem
+    post_auth_challenge,
+    post_auth_ksef_token,
+    get_auth_reference_number,
+    post_auth_token_redeem
 )
-from ksef.api.publickey import get_api_v2_security_public_key_certificates
+from ksef.api.publickey import get_security_public_key_certificates
 from ksef.models import (
     init_token_authentication_request,
     authentication_context_identifier,
@@ -38,8 +38,8 @@ def main():
     certificate, public_key = cfg.getcertificte(True)
 
     # 2. challenge
-    resp = post_api_v2_auth_challenge.sync(client=clt)
-    print('*'*20, 'post_api_v2_auth_challenge')
+    resp = post_auth_challenge.sync(client=clt)
+    print('*'*20, 'post_auth_challenge')
     print(resp)
     datachallenge = resp.to_dict()
 
@@ -73,10 +73,10 @@ def main():
     )
     print('*'*20, 'body')
     print(body)
-    resp = post_api_v2_auth_ksef_token.sync(client=clt,
+    resp = post_auth_ksef_token.sync(client=clt,
         body=body
     )
-    print('*'*20, 'post_api_v2_auth_ksef_token')
+    print('*'*20, 'post_auth_ksef_token')
     print(resp)
     data2 = resp.to_dict()
 
@@ -99,8 +99,8 @@ def main():
         raise AssertionError(f'Authentication failed, status: {status} description: {data3["status"]["description"]}')
 
     # 4. Authenticated
-    resp = post_api_v2_auth_token_redeem.sync(client=clt)
-    print('*' * 20, 'post_api_v2_auth_token_redeem')
+    resp = post_auth_token_redeem.sync(client=clt)
+    print('*' * 20, 'post_auth_token_redeem')
     print(resp)
     data4 = resp.to_dict()
     with open(f'{cfg.prefix}-auth.json', 'wt') as fp:

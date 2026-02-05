@@ -1,6 +1,6 @@
 #!/usr/bin/env vpython3
 from ksef import Client
-from ksef.api.auth import post_api_v2_auth_challenge
+from ksef.api.auth import post_auth_challenge
 
 import sys
 from ksefconfig import Config
@@ -8,8 +8,8 @@ from ksefconfig import Config
 def main():
     cfg = Config(int(sys.argv[1]), sys.argv[2]=='o')
     clt = Client(cfg.url)
-    resp = post_api_v2_auth_challenge.sync(client=clt)
-    print('post_api_v2_auth_challenge:', resp)
+    resp = post_auth_challenge.sync(client=clt)
+    print('post_auth_challenge:', resp)
 
     data = resp.to_dict()
     print('challenge', data['challenge'])
