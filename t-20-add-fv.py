@@ -314,7 +314,7 @@ class KSeFInvoiceSender:
                     if "ksefNumber" in status_data:
                         print(f"Numer KSeF: {status_data['ksefNumber']}")
                     return True
-                elif "error" in status.lower() or "rejected" in status.lower():
+                elif "error" in status.lower() or "rejected" in status.lower() or "duplikat faktury" in status.lower():
                     print(f"❌ Faktura odrzucona: {status}")
                     return False
                 else:
