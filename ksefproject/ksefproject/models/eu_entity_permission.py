@@ -16,8 +16,8 @@ import datetime
 
 if TYPE_CHECKING:
   from ..models.permissions_subject_person_by_fingerprint_details import PermissionsSubjectPersonByFingerprintDetails
-  from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
   from ..models.permissions_eu_entity_details import PermissionsEuEntityDetails
+  from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
   from ..models.permissions_subject_entity_by_fingerprint_details import PermissionsSubjectEntityByFingerprintDetails
 
 
@@ -71,8 +71,8 @@ class EuEntityPermission:
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.permissions_subject_person_by_fingerprint_details import PermissionsSubjectPersonByFingerprintDetails
-        from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
         from ..models.permissions_eu_entity_details import PermissionsEuEntityDetails
+        from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
         from ..models.permissions_subject_entity_by_fingerprint_details import PermissionsSubjectEntityByFingerprintDetails
         id = self.id
 
@@ -141,8 +141,8 @@ class EuEntityPermission:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.permissions_subject_person_by_fingerprint_details import PermissionsSubjectPersonByFingerprintDetails
-        from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
         from ..models.permissions_eu_entity_details import PermissionsEuEntityDetails
+        from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
         from ..models.permissions_subject_entity_by_fingerprint_details import PermissionsSubjectEntityByFingerprintDetails
         d = dict(src_dict)
         id = d.pop("id")

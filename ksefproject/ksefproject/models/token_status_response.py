@@ -16,8 +16,8 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
-  from ..models.token_author_identifier_type_identifier import TokenAuthorIdentifierTypeIdentifier
   from ..models.token_context_identifier_type_identifier import TokenContextIdentifierTypeIdentifier
+  from ..models.token_author_identifier_type_identifier import TokenAuthorIdentifierTypeIdentifier
 
 
 
@@ -66,8 +66,8 @@ class TokenStatusResponse:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.token_author_identifier_type_identifier import TokenAuthorIdentifierTypeIdentifier
         from ..models.token_context_identifier_type_identifier import TokenContextIdentifierTypeIdentifier
+        from ..models.token_author_identifier_type_identifier import TokenAuthorIdentifierTypeIdentifier
         reference_number = self.reference_number
 
         author_identifier = self.author_identifier.to_dict()
@@ -128,8 +128,8 @@ class TokenStatusResponse:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.token_author_identifier_type_identifier import TokenAuthorIdentifierTypeIdentifier
         from ..models.token_context_identifier_type_identifier import TokenContextIdentifierTypeIdentifier
+        from ..models.token_author_identifier_type_identifier import TokenAuthorIdentifierTypeIdentifier
         d = dict(src_dict)
         reference_number = d.pop("referenceNumber")
 

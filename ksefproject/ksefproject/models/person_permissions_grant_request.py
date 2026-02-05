@@ -10,8 +10,8 @@ from ..models.person_permission_type import PersonPermissionType
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
   from ..models.person_permissions_subject_identifier import PersonPermissionsSubjectIdentifier
+  from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
 
 
 
@@ -46,8 +46,8 @@ class PersonPermissionsGrantRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
         from ..models.person_permissions_subject_identifier import PersonPermissionsSubjectIdentifier
+        from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
         subject_identifier = self.subject_identifier.to_dict()
 
         permissions = []
@@ -77,8 +77,8 @@ class PersonPermissionsGrantRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
         from ..models.person_permissions_subject_identifier import PersonPermissionsSubjectIdentifier
+        from ..models.person_permission_subject_details import PersonPermissionSubjectDetails
         d = dict(src_dict)
         subject_identifier = PersonPermissionsSubjectIdentifier.from_dict(d.pop("subjectIdentifier"))
 

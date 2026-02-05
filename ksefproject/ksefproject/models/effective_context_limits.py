@@ -9,8 +9,8 @@ from ..types import UNSET, Unset
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.batch_session_effective_context_limits import BatchSessionEffectiveContextLimits
   from ..models.online_session_effective_context_limits import OnlineSessionEffectiveContextLimits
+  from ..models.batch_session_effective_context_limits import BatchSessionEffectiveContextLimits
 
 
 
@@ -36,8 +36,8 @@ class EffectiveContextLimits:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.batch_session_effective_context_limits import BatchSessionEffectiveContextLimits
         from ..models.online_session_effective_context_limits import OnlineSessionEffectiveContextLimits
+        from ..models.batch_session_effective_context_limits import BatchSessionEffectiveContextLimits
         online_session = self.online_session.to_dict()
 
         batch_session = self.batch_session.to_dict()
@@ -56,8 +56,8 @@ class EffectiveContextLimits:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.batch_session_effective_context_limits import BatchSessionEffectiveContextLimits
         from ..models.online_session_effective_context_limits import OnlineSessionEffectiveContextLimits
+        from ..models.batch_session_effective_context_limits import BatchSessionEffectiveContextLimits
         d = dict(src_dict)
         online_session = OnlineSessionEffectiveContextLimits.from_dict(d.pop("onlineSession"))
 
