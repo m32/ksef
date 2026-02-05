@@ -90,7 +90,7 @@ def main():
         resp = get_auth_reference_number.sync(client=clt,
             reference_number=data2['referenceNumber']
         )
-        print('*'*20, 'get_api_v_2_auth_reference_number')
+        print('*'*20, 'get_auth_reference_number')
         print(resp)
         data3 = resp.to_dict()
         status = data3['status']['code']
