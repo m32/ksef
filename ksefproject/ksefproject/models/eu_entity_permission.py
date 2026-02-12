@@ -16,9 +16,9 @@ import datetime
 
 if TYPE_CHECKING:
   from ..models.permissions_subject_person_by_fingerprint_details import PermissionsSubjectPersonByFingerprintDetails
-  from ..models.permissions_eu_entity_details import PermissionsEuEntityDetails
-  from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
   from ..models.permissions_subject_entity_by_fingerprint_details import PermissionsSubjectEntityByFingerprintDetails
+  from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
+  from ..models.permissions_eu_entity_details import PermissionsEuEntityDetails
 
 
 
@@ -71,9 +71,9 @@ class EuEntityPermission:
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.permissions_subject_person_by_fingerprint_details import PermissionsSubjectPersonByFingerprintDetails
-        from ..models.permissions_eu_entity_details import PermissionsEuEntityDetails
-        from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
         from ..models.permissions_subject_entity_by_fingerprint_details import PermissionsSubjectEntityByFingerprintDetails
+        from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
+        from ..models.permissions_eu_entity_details import PermissionsEuEntityDetails
         id = self.id
 
         author_identifier = self.author_identifier.to_dict()
@@ -141,9 +141,9 @@ class EuEntityPermission:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.permissions_subject_person_by_fingerprint_details import PermissionsSubjectPersonByFingerprintDetails
-        from ..models.permissions_eu_entity_details import PermissionsEuEntityDetails
-        from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
         from ..models.permissions_subject_entity_by_fingerprint_details import PermissionsSubjectEntityByFingerprintDetails
+        from ..models.eu_entity_permissions_author_identifier import EuEntityPermissionsAuthorIdentifier
+        from ..models.permissions_eu_entity_details import PermissionsEuEntityDetails
         d = dict(src_dict)
         id = d.pop("id")
 

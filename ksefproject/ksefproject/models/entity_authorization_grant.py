@@ -16,8 +16,8 @@ import datetime
 
 if TYPE_CHECKING:
   from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
-  from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
   from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
+  from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
   from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
 
 
@@ -73,8 +73,8 @@ class EntityAuthorizationGrant:
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
-        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
         from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
+        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
         from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
         id = self.id
 
@@ -127,8 +127,8 @@ class EntityAuthorizationGrant:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.entity_authorizations_author_identifier import EntityAuthorizationsAuthorIdentifier
-        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
         from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
+        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
         from ..models.permissions_subject_entity_by_identifier_details import PermissionsSubjectEntityByIdentifierDetails
         d = dict(src_dict)
         id = d.pop("id")

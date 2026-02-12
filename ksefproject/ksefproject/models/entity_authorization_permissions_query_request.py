@@ -14,8 +14,8 @@ from typing import cast, Union
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
   from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
+  from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
 
 
 
@@ -54,8 +54,8 @@ class EntityAuthorizationPermissionsQueryRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
         from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
+        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
         query_type = self.query_type.value
 
         authorizing_identifier: Union[None, Unset, dict[str, Any]]
@@ -106,8 +106,8 @@ class EntityAuthorizationPermissionsQueryRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
         from ..models.entity_authorizations_authorized_entity_identifier import EntityAuthorizationsAuthorizedEntityIdentifier
+        from ..models.entity_authorizations_authorizing_entity_identifier import EntityAuthorizationsAuthorizingEntityIdentifier
         d = dict(src_dict)
         query_type = QueryType(d.pop("queryType"))
 

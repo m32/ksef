@@ -15,6 +15,7 @@ from typing import Union
 import datetime
 
 if TYPE_CHECKING:
+  from ..models.authentication_method_info import AuthenticationMethodInfo
   from ..models.status_info import StatusInfo
 
 
@@ -40,6 +41,7 @@ class AuthenticationOperationStatusResponse:
                 | QualifiedSeal | Pieczęć kwalifikowana. |
                 | PersonalSignature | Podpis osobisty. |
                 | PeppolSignature | Podpis dostawcy usług Peppol. |
+            authentication_method_info (AuthenticationMethodInfo):
             status (StatusInfo):
             is_token_redeemed (Union[None, Unset, bool]): Czy został już wydany refresh token powiązany z danym
                 uwierzytelnieniem.
@@ -50,6 +52,7 @@ class AuthenticationOperationStatusResponse:
 
     start_date: datetime.datetime
     authentication_method: AuthenticationMethod
+    authentication_method_info: 'AuthenticationMethodInfo'
     status: 'StatusInfo'
     is_token_redeemed: Union[None, Unset, bool] = UNSET
     last_token_refresh_date: Union[None, Unset, datetime.datetime] = UNSET
@@ -60,10 +63,13 @@ class AuthenticationOperationStatusResponse:
 
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.authentication_method_info import AuthenticationMethodInfo
         from ..models.status_info import StatusInfo
         start_date = self.start_date.isoformat()
 
         authentication_method = self.authentication_method.value
+
+        authentication_method_info = self.authentication_method_info.to_dict()
 
         status = self.status.to_dict()
 
@@ -95,6 +101,7 @@ class AuthenticationOperationStatusResponse:
         field_dict.update({
             "startDate": start_date,
             "authenticationMethod": authentication_method,
+            "authenticationMethodInfo": authentication_method_info,
             "status": status,
         })
         if is_token_redeemed is not UNSET:
@@ -110,6 +117,7 @@ class AuthenticationOperationStatusResponse:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.authentication_method_info import AuthenticationMethodInfo
         from ..models.status_info import StatusInfo
         d = dict(src_dict)
         start_date = isoparse(d.pop("startDate"))
@@ -118,6 +126,11 @@ class AuthenticationOperationStatusResponse:
 
 
         authentication_method = AuthenticationMethod(d.pop("authenticationMethod"))
+
+
+
+
+        authentication_method_info = AuthenticationMethodInfo.from_dict(d.pop("authenticationMethodInfo"))
 
 
 
@@ -180,6 +193,7 @@ class AuthenticationOperationStatusResponse:
         authentication_operation_status_response = cls(
             start_date=start_date,
             authentication_method=authentication_method,
+            authentication_method_info=authentication_method_info,
             status=status,
             is_token_redeemed=is_token_redeemed,
             last_token_refresh_date=last_token_refresh_date,

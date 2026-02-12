@@ -13,6 +13,8 @@ from .authentication_init_response import AuthenticationInitResponse
 from .authentication_list_item import AuthenticationListItem
 from .authentication_list_response import AuthenticationListResponse
 from .authentication_method import AuthenticationMethod
+from .authentication_method_category import AuthenticationMethodCategory
+from .authentication_method_info import AuthenticationMethodInfo
 from .authentication_operation_status_response import AuthenticationOperationStatusResponse
 from .authentication_token_refresh_response import AuthenticationTokenRefreshResponse
 from .authentication_token_status import AuthenticationTokenStatus
@@ -22,6 +24,7 @@ from .batch_file_info import BatchFileInfo
 from .batch_file_part_info import BatchFilePartInfo
 from .batch_session_context_limits_override import BatchSessionContextLimitsOverride
 from .batch_session_effective_context_limits import BatchSessionEffectiveContextLimits
+from .block_context_authentication_request import BlockContextAuthenticationRequest
 from .buyer_identifier_type import BuyerIdentifierType
 from .certificate_effective_subject_limits import CertificateEffectiveSubjectLimits
 from .certificate_enrollment_data_response import CertificateEnrollmentDataResponse
@@ -241,6 +244,8 @@ from .subunit_permissions_subject_identifier import SubunitPermissionsSubjectIde
 from .subunit_permissions_subject_identifier_type import SubunitPermissionsSubjectIdentifierType
 from .subunit_permissions_subunit_identifier import SubunitPermissionsSubunitIdentifier
 from .subunit_permissions_subunit_identifier_type import SubunitPermissionsSubunitIdentifierType
+from .test_data_authentication_context_identifier import TestDataAuthenticationContextIdentifier
+from .test_data_authentication_context_identifier_type import TestDataAuthenticationContextIdentifierType
 from .test_data_authorized_identifier import TestDataAuthorizedIdentifier
 from .test_data_authorized_identifier_type import TestDataAuthorizedIdentifierType
 from .test_data_context_identifier import TestDataContextIdentifier
@@ -259,6 +264,7 @@ from .token_permission_type import TokenPermissionType
 from .token_status_response import TokenStatusResponse
 from .too_many_requests_response import TooManyRequestsResponse
 from .too_many_requests_response_status import TooManyRequestsResponseStatus
+from .unblock_context_authentication_request import UnblockContextAuthenticationRequest
 from .upo_page_response import UpoPageResponse
 from .upo_response import UpoResponse
 
@@ -276,6 +282,8 @@ __all__ = (
     "AuthenticationListItem",
     "AuthenticationListResponse",
     "AuthenticationMethod",
+    "AuthenticationMethodCategory",
+    "AuthenticationMethodInfo",
     "AuthenticationOperationStatusResponse",
     "AuthenticationTokenRefreshResponse",
     "AuthenticationTokensResponse",
@@ -285,6 +293,7 @@ __all__ = (
     "BatchFilePartInfo",
     "BatchSessionContextLimitsOverride",
     "BatchSessionEffectiveContextLimits",
+    "BlockContextAuthenticationRequest",
     "BuyerIdentifierType",
     "CertificateEffectiveSubjectLimits",
     "CertificateEnrollmentDataResponse",
@@ -504,6 +513,8 @@ __all__ = (
     "SubunitPermissionsSubjectIdentifierType",
     "SubunitPermissionsSubunitIdentifier",
     "SubunitPermissionsSubunitIdentifierType",
+    "TestDataAuthenticationContextIdentifier",
+    "TestDataAuthenticationContextIdentifierType",
     "TestDataAuthorizedIdentifier",
     "TestDataAuthorizedIdentifierType",
     "TestDataContextIdentifier",
@@ -522,6 +533,7 @@ __all__ = (
     "TokenStatusResponse",
     "TooManyRequestsResponse",
     "TooManyRequestsResponseStatus",
+    "UnblockContextAuthenticationRequest",
     "UpoPageResponse",
     "UpoResponse",
 )

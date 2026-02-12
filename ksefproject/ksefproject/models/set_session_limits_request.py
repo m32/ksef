@@ -9,8 +9,8 @@ from ..types import UNSET, Unset
 from typing import cast
 
 if TYPE_CHECKING:
-  from ..models.batch_session_context_limits_override import BatchSessionContextLimitsOverride
   from ..models.online_session_context_limits_override import OnlineSessionContextLimitsOverride
+  from ..models.batch_session_context_limits_override import BatchSessionContextLimitsOverride
 
 
 
@@ -36,8 +36,8 @@ class SetSessionLimitsRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.batch_session_context_limits_override import BatchSessionContextLimitsOverride
         from ..models.online_session_context_limits_override import OnlineSessionContextLimitsOverride
+        from ..models.batch_session_context_limits_override import BatchSessionContextLimitsOverride
         online_session = self.online_session.to_dict()
 
         batch_session = self.batch_session.to_dict()
@@ -56,8 +56,8 @@ class SetSessionLimitsRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.batch_session_context_limits_override import BatchSessionContextLimitsOverride
         from ..models.online_session_context_limits_override import OnlineSessionContextLimitsOverride
+        from ..models.batch_session_context_limits_override import BatchSessionContextLimitsOverride
         d = dict(src_dict)
         online_session = OnlineSessionContextLimitsOverride.from_dict(d.pop("onlineSession"))
 

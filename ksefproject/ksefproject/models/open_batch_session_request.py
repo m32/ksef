@@ -11,9 +11,9 @@ from typing import cast
 from typing import Union
 
 if TYPE_CHECKING:
-  from ..models.form_code import FormCode
-  from ..models.batch_file_info import BatchFileInfo
   from ..models.encryption_info import EncryptionInfo
+  from ..models.batch_file_info import BatchFileInfo
+  from ..models.form_code import FormCode
 
 
 
@@ -44,9 +44,9 @@ class OpenBatchSessionRequest:
 
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.form_code import FormCode
-        from ..models.batch_file_info import BatchFileInfo
         from ..models.encryption_info import EncryptionInfo
+        from ..models.batch_file_info import BatchFileInfo
+        from ..models.form_code import FormCode
         form_code = self.form_code.to_dict()
 
         batch_file = self.batch_file.to_dict()
@@ -72,9 +72,9 @@ class OpenBatchSessionRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.form_code import FormCode
-        from ..models.batch_file_info import BatchFileInfo
         from ..models.encryption_info import EncryptionInfo
+        from ..models.batch_file_info import BatchFileInfo
+        from ..models.form_code import FormCode
         d = dict(src_dict)
         form_code = FormCode.from_dict(d.pop("formCode"))
 
