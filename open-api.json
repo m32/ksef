@@ -2,17 +2,13 @@
   "openapi": "3.0.4",
   "info": {
     "title": "KSeF API TE",
-    "description": "**Wersja API:** 2.0.0 (build 2.0.1-te)<br>\n**Klucze publiczne** Ministerstwa Finansów (dla danego środowiska): [Pobierz klucze](#tag/Certyfikaty-klucza-publicznego)<br>\n**Historia zmian:** [Changelog](https://github.com/CIRFMF/ksef-docs/blob/main/api-changelog.md)<br>\n**Rozszerzona dokumentacja API:** [ksef-docs](https://github.com/CIRFMF/ksef-docs/tree/main)\n\n**Adres serwera API:**\n- Środowisko TEST: `https://api-test.ksef.mf.gov.pl/v2`\n- [deprecated] Środowisko TEST: `https://ksef-test.mf.gov.pl/api/v2`\n",
+    "description": "**Wersja API:** 2.1.1 (build 2.1.1-te)<br>\n**Klucze publiczne** Ministerstwa Finansów (dla danego środowiska): [Pobierz klucze](#tag/Certyfikaty-klucza-publicznego)<br>\n**Historia zmian:** [Changelog](https://github.com/CIRFMF/ksef-docs/blob/main/api-changelog.md)<br>\n**Rozszerzona dokumentacja API:** [ksef-docs](https://github.com/CIRFMF/ksef-docs/tree/main)\n\n**Adres serwera API:**\n- Środowisko TEST: `https://api-test.ksef.mf.gov.pl/v2`\n- [deprecated] Środowisko TEST: `https://ksef-test.mf.gov.pl/api/v2`\n",
     "version": "v2"
   },
   "servers": [
     {
       "url": "https://api-test.ksef.mf.gov.pl/v2",
       "description": "Środowisko TEST"
-    },
-    {
-      "url": "https://ksef-test.mf.gov.pl/api/v2",
-      "description": "[deprecated] Środowisko TEST"
     }
   ],
   "paths": {
@@ -61,6 +57,11 @@
                       "isCurrent": false,
                       "startDate": "2025-10-11T12:23:56.0154302+00:00",
                       "authenticationMethod": "QualifiedSeal",
+                      "authenticationMethodInfo": {
+                        "category": "XadesSignature",
+                        "code": "xades.qualified-seal",
+                        "displayName": "Pieczęć kwalifikowana"
+                      },
                       "status": {
                         "code": 200,
                         "description": "Uwierzytelnianie zakończone sukcesem"
@@ -1483,6 +1484,128 @@
         },
         "x-rate-limits": {
           "perSecond": 60
+        }
+      }
+    },
+    "/testdata/context/block": {
+      "post": {
+        "tags": [
+          "Dane testowe"
+        ],
+        "summary": "Zablokowanie kontekstu",
+        "description": "Blokuje możliwość uwierzytelniania dla wskazanego kontekstu. Uwierzytelnianie zakończy się błędem 480.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/BlockContextAuthenticationRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "| ExceptionCode | ExceptionDescription | Details |\n|-|-|-|\n| 21405 | Błąd walidacji danych wejściowych. | {treść błędu z walidatora} |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            },
+            "x-summary": "Bad Request"
+          },
+          "429": {
+            "description": "| | req / s | req / min | req / h | grupa\n| --- | --- | --- | --- | --- |\n| **Limity liczby żądań** | 100 | 300 | 1200 | other\n",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetryAfter"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequestsResponse"
+                }
+              }
+            },
+            "x-summary": "Too Many Requests"
+          }
+        },
+        "x-rate-limits": {
+          "perSecond": 100,
+          "perMinute": 300,
+          "perHour": 1200
+        }
+      }
+    },
+    "/testdata/context/unblock": {
+      "post": {
+        "tags": [
+          "Dane testowe"
+        ],
+        "summary": "Odblokowanie kontekstu",
+        "description": "Odblokowuje możliwość uwierzytelniania dla wskazanego kontekstu.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UnblockContextAuthenticationRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "| ExceptionCode | ExceptionDescription | Details |\n|-|-|-|\n| 21405 | Błąd walidacji danych wejściowych. | {treść błędu z walidatora} |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            },
+            "x-summary": "Bad Request"
+          },
+          "429": {
+            "description": "| | req / s | req / min | req / h | grupa\n| --- | --- | --- | --- | --- |\n| **Limity liczby żądań** | 100 | 300 | 1200 | other\n",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetryAfter"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequestsResponse"
+                }
+              }
+            },
+            "x-summary": "Too Many Requests"
+          }
+        },
+        "x-rate-limits": {
+          "perSecond": 100,
+          "perMinute": 300,
+          "perHour": 1200
         }
       }
     },
@@ -3479,9 +3602,9 @@
                       "ksefNumber": "5555555555-20250828-010080615740-E4",
                       "invoiceNumber": "FA/KUDYO1a7dddfe-610e-4843-84ba-6b887e35266e",
                       "issueDate": "2025-08-27",
-                      "invoicingDate": "2025-08-28T09:22:13.388+00:00",
-                      "acquisitionDate": "2025-08-28T09:22:56.388+00:00",
-                      "permanentStorageDate": "2025-08-28T09:23:01.388+00:00",
+                      "invoicingDate": "2025-08-28T09:22:13.3881234+00:00",
+                      "acquisitionDate": "2025-08-28T09:22:56.3881234+00:00",
+                      "permanentStorageDate": "2025-08-28T09:23:01.388123+00:00",
                       "seller": {
                         "nip": "5555555555",
                         "name": "Test Company 1"
@@ -3513,9 +3636,9 @@
                       "ksefNumber": "5555555555-20250828-010080615740-E4",
                       "invoiceNumber": "5265877635-20250925-010020A0A242-0A",
                       "issueDate": "2025-08-28",
-                      "invoicingDate": "2025-08-28T10:23:13.388+00:00",
-                      "acquisitionDate": "2025-08-28T10:23:56.388+00:00",
-                      "permanentStorageDate": "2025-08-28T10:24:01.388+00:00",
+                      "invoicingDate": "2025-08-28T10:23:13.3881234+00:00",
+                      "acquisitionDate": "2025-08-28T10:23:56.3881234+00:00",
+                      "permanentStorageDate": "2025-08-28T10:24:01.388123+00:00",
                       "seller": {
                         "nip": "5555555555",
                         "name": "Test Company 1"
@@ -4229,7 +4352,7 @@
                       "invoiceHash": "mkht+3m5trnfxlTYhq3QFn74LkEO69MFNlsMAkCDSPA=",
                       "acquisitionDate": "2025-09-18T12:24:16.0154302+00:00",
                       "invoicingDate": "2025-09-18T12:23:56.0154302+00:00",
-                      "permanentStorageDate": "2025-09-18T12:24:01.0154302+00:00",
+                      "permanentStorageDate": "2025-09-18T12:24:01.015432+00:00",
                       "upoDownloadUrl": "https://api-test.ksef.mf.gov.pl/storage/01/20250918-SB-3789A40000-20373E1269-A3/invoice-upo/upo_5265877635-20250626-010080DD2B5E-26.xml?sv=2025-01-05&st=2025-09-18T14%3A49%3A20Z&se=2025-09-21T14%3A54%3A20Z&sr=b&sp=r&sig=%2BUWFPA10gS580VhngGKW%2FZiOOtiHPOiTyMlxhG6ZvWs%3D",
                       "upoDownloadUrlExpirationDate": "2025-09-21T14:54:20+00:00",
                       "status": {
@@ -7739,6 +7862,7 @@
       "AuthenticationListItem": {
         "required": [
           "authenticationMethod",
+          "authenticationMethodInfo",
           "referenceNumber",
           "startDate",
           "status"
@@ -7756,7 +7880,22 @@
                 "$ref": "#/components/schemas/AuthenticationMethod"
               }
             ],
-            "description": "Metoda uwierzytelnienia.\n| Wartość | Opis |\n| --- | --- |\n| Token | Token KSeF. |\n| TrustedProfile | Profil Zaufany. |\n| InternalCertificate | Certyfikat KSeF. |\n| QualifiedSignature | Podpis kwalifikowany. |\n| QualifiedSeal | Pieczęć kwalifikowana. |\n| PersonalSignature | Podpis osobisty. |\n| PeppolSignature | Podpis dostawcy usług Peppol. |\n"
+            "description": "Metoda uwierzytelnienia.\n| Wartość | Opis |\n| --- | --- |\n| Token | Token KSeF. |\n| TrustedProfile | Profil Zaufany. |\n| InternalCertificate | Certyfikat KSeF. |\n| QualifiedSignature | Podpis kwalifikowany. |\n| QualifiedSeal | Pieczęć kwalifikowana. |\n| PersonalSignature | Podpis osobisty. |\n| PeppolSignature | Podpis dostawcy usług Peppol. |\n",
+            "deprecated": true,
+            "x-removal-date": "2026-11-16"
+          },
+          "authenticationMethodInfo": {
+            "required": [
+              "category",
+              "code",
+              "displayName"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuthenticationMethodInfo"
+              }
+            ],
+            "description": "Użyta metoda uwierzytelnienia."
           },
           "status": {
             "allOf": [
@@ -7764,7 +7903,7 @@
                 "$ref": "#/components/schemas/StatusInfo"
               }
             ],
-            "description": "Informacje o aktualnym statusie.\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Uwierzytelnianie w toku | - |\n| 200 | Uwierzytelnianie zakończone sukcesem | - |\n| 415 | Uwierzytelnianie zakończone niepowodzeniem | Brak przypisanych uprawnień |\n| 425 | Uwierzytelnienie unieważnione  | Uwierzytelnienie i powiązane refresh tokeny zostały unieważnione przez użytkownika |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowe wyzwanie autoryzacyjne |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowy token |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowy czas tokena |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Token unieważniony |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Token nieaktywny |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Nieważny certyfikat |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Błąd weryfikacji łańcucha certyfikatów |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Niezaufany łańcuch certyfikatów |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Certyfikat odwołany |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Niepoprawny certyfikat |\n| 470 | Uwierzytelnianie zakończone niepowodzeniem | Próba wykorzystania metod autoryzacyjnych osoby zmarłej |\n| 480 | Uwierzytelnienie zablokowane | Podejrzenie incydentu bezpieczeństwa. Skontaktuj się z Ministerstwem Finansów przez formularz zgłoszeniowy. |\n| 500 | Nieznany błąd | - |\n| 550 | Operacja została anulowana przez system | Przetwarzanie zostało przerwane z przyczyn wewnętrznych systemu. Spróbuj ponownie |"
+            "description": "Informacje o aktualnym statusie.\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Uwierzytelnianie w toku | - |\n| 200 | Uwierzytelnianie zakończone sukcesem | - |\n| 415 | Uwierzytelnianie zakończone niepowodzeniem | Brak przypisanych uprawnień |\n| 425 | Uwierzytelnienie unieważnione  | Uwierzytelnienie i powiązane refresh tokeny zostały unieważnione przez użytkownika |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowe wyzwanie autoryzacyjne |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowy token |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowy czas tokena |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Token unieważniony |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Token nieaktywny |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Nieważny certyfikat |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Błąd weryfikacji łańcucha certyfikatów |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Niezaufany łańcuch certyfikatów |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Certyfikat odwołany |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Certyfikat zawieszony |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Niepoprawny certyfikat |\n| 470 | Uwierzytelnianie zakończone niepowodzeniem | Próba wykorzystania metod autoryzacyjnych osoby zmarłej |\n| 480 | Uwierzytelnienie zablokowane | Podejrzenie incydentu bezpieczeństwa. Skontaktuj się z Ministerstwem Finansów przez formularz zgłoszeniowy. |\n| 500 | Nieznany błąd | - |\n| 550 | Operacja została anulowana przez system | Przetwarzanie zostało przerwane z przyczyn wewnętrznych systemu. Spróbuj ponownie |"
           },
           "isTokenRedeemed": {
             "type": "boolean",
@@ -7833,9 +7972,48 @@
         "type": "string",
         "description": "Metoda uwierzytelnienia.\n| Wartość | Opis |\n| --- | --- |\n| Token | Token KSeF. |\n| TrustedProfile | Profil Zaufany. |\n| InternalCertificate | Certyfikat KSeF. |\n| QualifiedSignature | Podpis kwalifikowany. |\n| QualifiedSeal | Pieczęć kwalifikowana. |\n| PersonalSignature | Podpis osobisty. |\n| PeppolSignature | Podpis dostawcy usług Peppol. |\n"
       },
+      "AuthenticationMethodCategory": {
+        "enum": [
+          "XadesSignature",
+          "NationalNode",
+          "Token",
+          "Other"
+        ],
+        "type": "string",
+        "description": "| Wartość | Opis |\n| --- | --- |\n| XadesSignature | Uwierzytelnienie podpisem Xades. |\n| NationalNode | Uwierzytelnienie za pomocą Węzła Krajowego (login.gov.pl). |\n| Token | Uwierzytelnienie tokenem. |\n| Other | Uwierzytelnienie inną metodą. |\n"
+      },
+      "AuthenticationMethodInfo": {
+        "required": [
+          "category",
+          "code",
+          "displayName"
+        ],
+        "type": "object",
+        "properties": {
+          "category": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuthenticationMethodCategory"
+              }
+            ],
+            "description": "Kategoria metody uwierzytelnienia.\n| Wartość | Opis |\n| --- | --- |\n| XadesSignature | Uwierzytelnienie podpisem Xades. |\n| NationalNode | Uwierzytelnienie za pomocą Węzła Krajowego (login.gov.pl). |\n| Token | Uwierzytelnienie tokenem. |\n| Other | Uwierzytelnienie inną metodą. |\n"
+          },
+          "code": {
+            "type": "string",
+            "description": "Kod metody uwierzytelnienia."
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Nazwa metody uwierzytelnienia do wyświetlenia użytkownikowi.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AuthenticationOperationStatusResponse": {
         "required": [
           "authenticationMethod",
+          "authenticationMethodInfo",
           "startDate",
           "status"
         ],
@@ -7852,7 +8030,22 @@
                 "$ref": "#/components/schemas/AuthenticationMethod"
               }
             ],
-            "description": "Metoda uwierzytelnienia.\n| Wartość | Opis |\n| --- | --- |\n| Token | Token KSeF. |\n| TrustedProfile | Profil Zaufany. |\n| InternalCertificate | Certyfikat KSeF. |\n| QualifiedSignature | Podpis kwalifikowany. |\n| QualifiedSeal | Pieczęć kwalifikowana. |\n| PersonalSignature | Podpis osobisty. |\n| PeppolSignature | Podpis dostawcy usług Peppol. |\n"
+            "description": "Metoda uwierzytelnienia.\n| Wartość | Opis |\n| --- | --- |\n| Token | Token KSeF. |\n| TrustedProfile | Profil Zaufany. |\n| InternalCertificate | Certyfikat KSeF. |\n| QualifiedSignature | Podpis kwalifikowany. |\n| QualifiedSeal | Pieczęć kwalifikowana. |\n| PersonalSignature | Podpis osobisty. |\n| PeppolSignature | Podpis dostawcy usług Peppol. |\n",
+            "deprecated": true,
+            "x-removal-date": "2026-11-16"
+          },
+          "authenticationMethodInfo": {
+            "required": [
+              "category",
+              "code",
+              "displayName"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuthenticationMethodInfo"
+              }
+            ],
+            "description": "Użyta metoda uwierzytelnienia."
           },
           "status": {
             "allOf": [
@@ -7860,7 +8053,7 @@
                 "$ref": "#/components/schemas/StatusInfo"
               }
             ],
-            "description": "Informacje o aktualnym statusie.\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Uwierzytelnianie w toku | - |\n| 200 | Uwierzytelnianie zakończone sukcesem | - |\n| 415 | Uwierzytelnianie zakończone niepowodzeniem | Brak przypisanych uprawnień |\n| 425 | Uwierzytelnienie unieważnione  | Uwierzytelnienie i powiązane refresh tokeny zostały unieważnione przez użytkownika |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowe wyzwanie autoryzacyjne |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowy token |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowy czas tokena |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Token unieważniony |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Token nieaktywny |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Nieważny certyfikat |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Błąd weryfikacji łańcucha certyfikatów |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Niezaufany łańcuch certyfikatów |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Certyfikat odwołany |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Niepoprawny certyfikat |\n| 470 | Uwierzytelnianie zakończone niepowodzeniem | Próba wykorzystania metod autoryzacyjnych osoby zmarłej |\n| 480 | Uwierzytelnienie zablokowane | Podejrzenie incydentu bezpieczeństwa. Skontaktuj się z Ministerstwem Finansów przez formularz zgłoszeniowy. |\n| 500 | Nieznany błąd | - |\n| 550 | Operacja została anulowana przez system | Przetwarzanie zostało przerwane z przyczyn wewnętrznych systemu. Spróbuj ponownie |"
+            "description": "Informacje o aktualnym statusie.\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Uwierzytelnianie w toku | - |\n| 200 | Uwierzytelnianie zakończone sukcesem | - |\n| 415 | Uwierzytelnianie zakończone niepowodzeniem | Brak przypisanych uprawnień |\n| 425 | Uwierzytelnienie unieważnione  | Uwierzytelnienie i powiązane refresh tokeny zostały unieważnione przez użytkownika |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowe wyzwanie autoryzacyjne |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowy token |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Nieprawidłowy czas tokena |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Token unieważniony |\n| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu | Token nieaktywny |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Nieważny certyfikat |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Błąd weryfikacji łańcucha certyfikatów |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Niezaufany łańcuch certyfikatów |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Certyfikat odwołany |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Certyfikat zawieszony |\n| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu | Niepoprawny certyfikat |\n| 470 | Uwierzytelnianie zakończone niepowodzeniem | Próba wykorzystania metod autoryzacyjnych osoby zmarłej |\n| 480 | Uwierzytelnienie zablokowane | Podejrzenie incydentu bezpieczeństwa. Skontaktuj się z Ministerstwem Finansów przez formularz zgłoszeniowy. |\n| 500 | Nieznany błąd | - |\n| 550 | Operacja została anulowana przez system | Przetwarzanie zostało przerwane z przyczyn wewnętrznych systemu. Spróbuj ponownie |"
           },
           "isTokenRedeemed": {
             "type": "boolean",
@@ -8086,6 +8279,24 @@
             "type": "integer",
             "description": "Maksymalna ilość faktur które można przesłać w pojedynczej sesji.",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BlockContextAuthenticationRequest": {
+        "type": "object",
+        "properties": {
+          "contextIdentifier": {
+            "required": [
+              "value",
+              "type"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TestDataAuthenticationContextIdentifier"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -11118,7 +11329,7 @@
                 "$ref": "#/components/schemas/InvoiceQueryDateRange"
               }
             ],
-            "description": "Typ i zakres dat, według którego mają być filtrowane faktury. Dozwolony maksymalny okres wynosi 3 miesiące. Zakres uznawany jest za poprawny, jeśli mieści się w trzech miesiącach w UTC lub w czasie polskim."
+            "description": "Typ i zakres dat, według którego filtrowane są faktury.\nMaksymalny dozwolony okres wynosi 3 miesiące w strefie UTC lub w strefie Europe/Warsaw (WAW).\n            \nFormat daty:\n * Daty muszą być przekazane w formacie ISO 8601, np. `yyyy-MM-ddTHH:mm:ss`.\n * Dopuszczalne są następujące warianty:\n   - z sufiksem `Z` (czas UTC),\n   - z jawnym offsetem, np. `+01:00`, `+03:00`,\n   - bez offsetu (interpretowane jako czas lokalny strefy Europe/Warsaw)."
           },
           "ksefNumber": {
             "allOf": [
@@ -14424,6 +14635,35 @@
         ],
         "type": "string"
       },
+      "TestDataAuthenticationContextIdentifier": {
+        "required": [
+          "type",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TestDataAuthenticationContextIdentifierType"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "TestDataAuthenticationContextIdentifierType": {
+        "enum": [
+          "Nip",
+          "InternalId",
+          "NipVatUe",
+          "PeppolId"
+        ],
+        "type": "string"
+      },
       "TestDataAuthorizedIdentifier": {
         "required": [
           "type",
@@ -14820,6 +15060,24 @@
             ]
           }
         }
+      },
+      "UnblockContextAuthenticationRequest": {
+        "type": "object",
+        "properties": {
+          "contextIdentifier": {
+            "required": [
+              "value",
+              "type"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TestDataAuthenticationContextIdentifier"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "UpoPageResponse": {
         "required": [
