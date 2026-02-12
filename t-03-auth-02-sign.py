@@ -29,7 +29,7 @@ def main():
         data = fp.read()
 
     p12pk, p12pc, p12oc = load_pfx(cfg.prefix+'.p12', '1234')
-    useenveloped = False
+    useenveloped = True
     useendesive = True
     if useendesive:
         assert isinstance(p12pk, rsa.RSAPrivateKey) or isinstance(p12pk, ec.EllipticCurvePrivateKey)
