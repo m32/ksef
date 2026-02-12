@@ -14,6 +14,7 @@ def main():
         data=xml,
         headers={
             "Content-Type": "application/xml",
+            "X-KSeF-Feature": "enforce-xades-compliance",
         },
         timeout=5
     )
