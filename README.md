@@ -1,4 +1,4 @@
-# KSeF 2.0 – narzędzia integracyjne
+# KSeF 2.X – narzędzia integracyjne
 
 Zestaw skryptów Python umożliwiających konfigurację, autoryzację i komunikację z systemem Krajowego Systemu e-Faktur (KSeF) w wersji 2.0.
 
