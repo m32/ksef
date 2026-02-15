@@ -29,7 +29,8 @@ def main():
         data = fp.read()
 
     p12pk, p12pc, p12oc = load_pfx(cfg.prefix+'.p12', '1234')
-    useenveloped = True
+    #useenveloped = True
+    useenveloped = False
     useendesive = True
     if useendesive:
         assert isinstance(p12pk, rsa.RSAPrivateKey) or isinstance(p12pk, ec.EllipticCurvePrivateKey)
@@ -77,7 +78,7 @@ def main():
             doc = cls.enveloping(
                 "dokument.xml",
                 data,
-                "application/xml",
+                "text/xml",
                 cert,
                 certcontent,
                 signproc,
