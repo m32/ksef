@@ -39,7 +39,7 @@ def main():
         for inv in data['invoices']:
             print(data)
         if data['hasMore']:
-            pageOffset += pageSize
+            pageOffset += 1
         else:
             break
 
