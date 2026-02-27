@@ -37,7 +37,7 @@ def main():
             break
         data = resp.json()
         for inv in data['invoices']:
-            print(data)
+            print(inv)
         if data['hasMore']:
             pageOffset += 1
         else:
