@@ -80,7 +80,7 @@ def main():
             timeout=10
         )
         if resp.status_code != 200:
-            print(f'unhandled response: {response}')
+            print(f'unhandled response: {resp}')
             return
 
         with open(f'certificates-{cfg.version}.json', 'wt') as fp:
