@@ -1,0 +1,12 @@
+Zestaw skryptów do generowania wizualizacji faktury z XMLa (FA3).
+Główny skrypt to invoice_xml_to_html_jinja_FA3_with_qr.py który spina pozostałe dla ścieżki od XML do HTML.
+Zawarte są też funkcje pozwalające zorganizować flow bez plików.
+
+Generowanie jest oparte o szablony Jinja2. Łatwo jest więc modyfikować samą wizualizację, dodawać inne elementy typu loga itp.
+XML jest parsowany na JSONa który jest przekazywany do szablonu Jinja2. 
+JSON jest uzupełniany o dodatkowe informacje, czyli nie jest 1:1 przełożonym XMLem:
+- Dodawany jest nr KSeF, którego w samym XMLu nie ma (tutaj nazwa pliku XML jest traktowana jako numer KSeF). 
+- Wyliczane są dodatkowe pola np. jeśli KSeF jest "netto" to w XMLu nie ma wartości brutto w pozycjach, więc są wyliczane bo użytkownicy lubią mieć wszystko: netto, vat, brutto. 
+- Do JSONa dodawany jest też base64 obrazka z wygenerowanym QR kodem faktury (żadem problem dodać też QR kod weryfikacji certyfikatu dla OFFLINE).
+
+Mając HTML można w kolejnym kroku wygenerować PDFa z wykorzystaniem gotowych bibliotek.

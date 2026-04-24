@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faktura {{ numer }}</title>
+    <style>
+        /* Tło strony */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 20px 0;
+            font-size: 10pt;
+            color: #333;
+        }
+        
+        /* Kontener A4 - zawsze stała szerokość */
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20mm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+        }
+        
+        .header-left h1 {
+            margin: 0;
+            font-size: 24pt;
+        }
+        
+        .header-left .invoice-type {
+            font-size: 12pt;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .header-right {
+            text-align: right;
+        }
+        
+        .header-right .invoice-number {
+            font-size: 16pt;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .header-right .dates {
+            font-size: 10pt;
+            color: #666;
+        }
+        
+        .header-right .dates p {
+            margin: 3px 0;
+        }
+        
+        .header-right .ksef-number {
+            font-size: 7pt;
+            color: #999;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .parties {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+        
+        .party {
+            width: 48%;
+            border: 1px solid #ccc;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        
+        .party h2 {
+            margin-top: 0;
+            font-size: 14pt;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        
+        .party p {
+            margin: 5px 0;
+        }
+        
+        .contact-info {
+            margin-top: 10px;
+            font-size: 10pt;
+            color: #666;
+        }
+        
+        .third-party {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+        }
+        
+        .third-party h3 {
+            margin-top: 0;
+            font-size: 11pt;
+            border-bottom: 1px solid #999;
+            padding-bottom: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        th, td {
+            border: 1px solid #ccc;
+            padding: 4px;
+            text-align: left;
+            font-size: 8pt;
+        }
+        
+        th {
+            background-color: #e8e8e8;
+            font-weight: bold;
+            font-size: 8pt;
+        }
+        
+        /* Szerokości kolumn w tabeli pozycji (Lp/Ilość/J.m. −25%; kwoty +oszczędność głównie 5 i 8) */
+        .items-table th:nth-child(1), .items-table td:nth-child(1) { width: 17px; }
+        .items-table th:nth-child(2) { width: auto; }
+        .items-table td:nth-child(2) { width: auto; }
+        .items-table th:nth-child(3), .items-table td:nth-child(3) { width: 26px; }
+        .items-table th:nth-child(4), .items-table td:nth-child(4) { width: 21px; }
+        .items-table th:nth-child(5), .items-table td:nth-child(5) { width: 52px; }
+        .items-table th:nth-child(6), .items-table td:nth-child(6) { width: 57px; }
+        .items-table th:nth-child(7), .items-table td:nth-child(7) { width: 23px; }
+        .items-table th:nth-child(8), .items-table td:nth-child(8) { width: 52px; }
+        .items-table th:nth-child(9), .items-table td:nth-child(9) { width: 57px; }
+        
+        /* Szerokości kolumn w tabeli zamówienia */
+        .order-table th:nth-child(1), .order-table td:nth-child(1) { width: 17px; }  /* Lp */
+        .order-table th:nth-child(2), .order-table td:nth-child(2) { width: auto; }  /* Nazwa */
+        .order-table th:nth-child(3), .order-table td:nth-child(3) { width: 26px; }  /* Ilość */
+        .order-table th:nth-child(4), .order-table td:nth-child(4) { width: 21px; }  /* J.m. */
+        .order-table th:nth-child(5), .order-table td:nth-child(5) { width: 52px; }  /* Cena netto */
+        .order-table th:nth-child(6), .order-table td:nth-child(6) { width: 57px; }  /* Wartość netto */
+        .order-table th:nth-child(7), .order-table td:nth-child(7) { width: 23px; }  /* VAT % */
+        .order-table th:nth-child(8), .order-table td:nth-child(8) { width: 52px; }  /* Kwota VAT */
+        .order-table th:nth-child(9), .order-table td:nth-child(9) { width: 57px; }  /* Wartość brutto */
+        
+        /* nowrap tylko w komórkach wartości — nagłówki mogą się łamać */
+        .items-table td.number,
+        .order-table td.number {
+            white-space: nowrap;
+        }
+        
+        .number {
+            text-align: right;
+        }
+        
+        .center {
+            text-align: center;
+        }
+        
+        .annotations {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        
+        .annotations h3 {
+            margin-top: 0;
+            font-size: 11pt;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+        
+        .annotations table {
+            margin-top: 10px;
+        }
+        
+        .annotations td {
+            text-align: center;
+            font-size: 8pt;
+        }
+        
+        .split-payment-yes {
+            background-color: #ddd;
+            font-weight: bold;
+        }
+        
+        .vat-breakdown {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        
+        .vat-breakdown h3 {
+            margin: 0 0 10px 0;
+            font-size: 11pt;
+            text-align: left;
+            width: 400px;
+            margin-left: auto;
+        }
+        
+        .vat-breakdown table {
+            width: 400px;
+            margin-left: auto;
+        }
+        
+        .vat-breakdown .total-row {
+            font-size: 7pt;
+        }
+        
+        .summary {
+            margin-top: 20px;
+            text-align: right;
+        }
+        
+        .summary table {
+            width: 400px;
+            margin-left: auto;
+        }
+        
+        .summary th {
+            text-align: left;
+            background-color: #f5f5f5;
+        }
+        
+        .total {
+            font-weight: bold;
+            font-size: 11pt;
+            background-color: #e0e0e0;
+        }
+        
+        .payment-info, .additional-info, .corrected-invoices, .advance-invoices, .partial-advances, .attachment {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        
+        .payment-info h3, .additional-info h3, .corrected-invoices h3, .advance-invoices h3, .partial-advances h3, .attachment h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+        
+        .attachment-block {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+        .attachment-block h4 {
+            margin: 0 0 10px 0;
+            font-size: 10pt;
+            color: #333;
+        }
+        .attachment-meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 9pt;
+        }
+        .attachment-meta-table th {
+            background-color: #e0e0e0;
+            padding: 6px 8px;
+            text-align: left;
+            border: 1px solid #ccc;
+            font-weight: bold;
+        }
+        .attachment-meta-table td {
+            padding: 6px 8px;
+            border: 1px solid #ccc;
+        }
+        .attachment-data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 8pt;
+        }
+        .attachment-data-table th {
+            background-color: #d0d0d0;
+            padding: 5px 6px;
+            text-align: left;
+            border: 1px solid #999;
+            font-weight: bold;
+        }
+        .attachment-data-table td {
+            padding: 4px 6px;
+            border: 1px solid #ccc;
+        }
+        .attachment-data-table tr.sum-row {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        .attachment-table-title {
+            font-weight: bold;
+            margin: 10px 0 5px 0;
+            font-size: 9pt;
+        }
+        .attachment-text {
+            margin: 10px 0;
+            font-size: 9pt;
+            font-style: italic;
+        }
+        
+        .footer-section {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 2px solid #333;
+            font-size: 10pt;
+            color: #666;
+        }
+        
+        .info-item {
+            margin: 5px 0;
+        }
+        
+        .label {
+            font-weight: bold;
+        }
+        
+        .correction-reason {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #e8e8e8;
+            border-left: 4px solid #666;
+            font-weight: bold;
+        }
+        
+        .ksef-qr-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            text-align: center;
+            font-size: 9pt;
+            color: #333;
+        }
+        .ksef-qr-section .ksef-qr-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 10pt;
+        }
+        .ksef-qr-section .ksef-qr-image {
+            display: block;
+            margin: 8px auto;
+            max-width: 200px;
+            height: auto;
+        }
+        .ksef-qr-section .ksef-qr-caption {
+            margin-top: 6px;
+            color: #555;
+            font-size: 8pt;
+            word-break: break-all;
+        }
+        
+        /* Style drukowania */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            .page-container {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Nagłówek -->
+        <div class="header">
+            <div class="header-left">
+                <h1>FAKTURA</h1>
+                <div class="invoice-type">{% if rodzaj_faktury %}{{ rodzaj_faktury }}{% else %}VAT{% endif %}{% if typ_cen %} ({{ typ_cen }}){% endif %}</div>
+            </div>
+            <div class="header-right">
+                <div class="invoice-number">Nr {{ numer }}</div>
+                <div class="dates">
+                    <p><strong>Data wystawienia:</strong> {{ data_wystawienia }}</p>
+                    {% if data_sprzedazy %}
+                    <p><strong>Data sprzedaży:</strong> {{ data_sprzedazy }}</p>
+                    {% elif okres_sprzedazy %}
+                    <p><strong>Okres sprzedaży:</strong> {{ okres_sprzedazy.od }} - {{ okres_sprzedazy.do }}</p>
+                    {% endif %}
+                    {% if miejsce_wystawienia %}
+                    <p><strong>Miejsce wystawienia:</strong> {{ miejsce_wystawienia }}</p>
+                    {% endif %}
+                    <p><strong>Waluta:</strong> {{ waluta }}</p>
+                {% if numery_wz and numery_wz|length > 0 %}
+                <p><strong>Numery WZ:</strong> {{ numery_wz|join(', ') }}</p>
+                {% endif %}
+            </div>
+                {% if ksefNumber %}
+                <div class="ksef-number">KSeF: {{ ksefNumber }}</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Podmioty -->
+        <div class="parties">
+            <div class="party">
+                <h2>Sprzedawca</h2>
+                <p class="label">{{ sprzedawca.dane_identyfikacyjne.nazwa }}</p>
+                {% if sprzedawca.dane_identyfikacyjne.pelna_nazwa %}
+                <p>{{ sprzedawca.dane_identyfikacyjne.pelna_nazwa }}</p>
+                {% endif %}
+                <p><strong>NIP:</strong> {{ sprzedawca.dane_identyfikacyjne.nip }}</p>
+                {% if sprzedawca.adres %}
+                <p>{{ sprzedawca.adres.adres_l1 }}<br>{{ sprzedawca.adres.adres_l2 }}</p>
+                {% endif %}
+                {% if sprzedawca.dane_kontaktowe %}
+                <div class="contact-info">
+                    {% for contact in sprzedawca.dane_kontaktowe %}
+                    {% if contact.email %}<p>✉ {{ contact.email }}</p>{% endif %}
+                    {% if contact.telefon %}<p>☎ {{ contact.telefon }}</p>{% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="party">
+                <h2>Nabywca</h2>
+                {% if nabywca.dane_identyfikacyjne.nazwa %}
+                <p class="label">{{ nabywca.dane_identyfikacyjne.nazwa }}</p>
+                {% elif nabywca.dane_identyfikacyjne.imie and nabywca.dane_identyfikacyjne.nazwisko %}
+                <p class="label">{{ nabywca.dane_identyfikacyjne.imie }} {{ nabywca.dane_identyfikacyjne.nazwisko }}</p>
+                {% endif %}
+                {% if nabywca.dane_identyfikacyjne.pelna_nazwa %}
+                <p>{{ nabywca.dane_identyfikacyjne.pelna_nazwa }}</p>
+                {% endif %}
+                {% if nabywca.dane_identyfikacyjne.nip %}
+                <p><strong>NIP:</strong> {{ nabywca.dane_identyfikacyjne.nip }}</p>
+                {% endif %}
+                {% if nabywca.dane_identyfikacyjne.nip_ue %}
+                <p><strong>NIP UE:</strong> {{ nabywca.dane_identyfikacyjne.nip_ue }}</p>
+                {% endif %}
+                {% if nabywca.adres %}
+                <p>{{ nabywca.adres.adres_l1 }}<br>{{ nabywca.adres.adres_l2 }}</p>
+                {% endif %}
+                {% if nabywca.nr_klienta %}
+                <p><strong>Nr klienta:</strong> {{ nabywca.nr_klienta }}</p>
+                {% endif %}
+                {% if nabywca.dane_kontaktowe %}
+                <div class="contact-info">
+                    {% for contact in nabywca.dane_kontaktowe %}
+                    {% if contact.email %}<p>✉ {{ contact.email }}</p>{% endif %}
+                    {% if contact.telefon %}<p>☎ {{ contact.telefon }}</p>{% endif %}
+                    {% endfor %}
+                </div>            {% endif %}
+            <div style="margin-top: 10px;">
+                {% if nabywca.dotyczy_jst == '1' %}
+                <label style="font-size: 9pt;"><input type="checkbox" checked disabled> Faktura dotyczy jednostki podrzędnej JST</label><br>
+                {% endif %}
+                {% if nabywca.dotyczy_grupa_vat == '1' %}
+                <label style="font-size: 9pt;"><input type="checkbox" checked disabled> Faktura dotyczy członka grupy VAT</label>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Podmiot trzeci (jeśli występuje) -->
+        {% if podmiot3 and podmiot3|length > 0 %}
+        {% for podmiot in podmiot3 %}
+        <div class="third-party">
+            <h3>Podmiot trzeci {% if podmiot3|length > 1 %}({{ loop.index }}){% endif %}</h3>
+            
+            <!-- Dane identyfikacyjne -->
+            {% if podmiot.dane_identyfikacyjne %}
+            {% set dane_id = podmiot.dane_identyfikacyjne %}
+            {% if dane_id.nazwa %}
+            <p><strong>Nazwa:</strong> {{ dane_id.nazwa }}</p>
+            {% endif %}
+            {% if dane_id.nip %}
+            <p><strong>NIP:</strong> {{ dane_id.nip }}</p>
+            {% endif %}
+            {% if dane_id.nr_vat_ue %}
+            <p><strong>VAT UE:</strong> {{ dane_id.kod_ue }}{{ dane_id.nr_vat_ue }}</p>
+            {% endif %}
+            {% if dane_id.nr_id %}
+            <p><strong>Nr ID ({{ dane_id.kod_kraju }}):</strong> {{ dane_id.nr_id }}</p>
+            {% endif %}
+            {% if dane_id.id_wew %}
+            <p><strong>ID wewnętrzny:</strong> {{ dane_id.id_wew }}</p>
+            {% endif %}
+            {% if dane_id.brak_id == '1' %}
+            <p><strong>Brak identyfikatora</strong></p>
+            {% endif %}
+            {% endif %}
+            
+            <!-- Adres -->
+            {% if podmiot.adres %}
+            <p><strong>Adres:</strong><br>
+            {{ podmiot.adres.adres_l1 }}{% if podmiot.adres.adres_l2 %}<br>{{ podmiot.adres.adres_l2 }}{% endif %}<br>
+            {{ podmiot.adres.kod_kraju }}</p>
+            {% endif %}
+            
+            <!-- Adres korespondencyjny -->
+            {% if podmiot.adres_koresp %}
+            <p><strong>Adres koresp.:</strong><br>
+            {{ podmiot.adres_koresp.adres_l1 }}{% if podmiot.adres_koresp.adres_l2 %}<br>{{ podmiot.adres_koresp.adres_l2 }}{% endif %}<br>
+            {{ podmiot.adres_koresp.kod_kraju }}</p>
+            {% endif %}
+            
+            <!-- Dane kontaktowe -->
+            {% if podmiot.dane_kontaktowe and podmiot.dane_kontaktowe|length > 0 %}
+            {% for kontakt in podmiot.dane_kontaktowe %}
+            {% if kontakt.email %}<p><strong>Email:</strong> {{ kontakt.email }}</p>{% endif %}
+            {% if kontakt.telefon %}<p><strong>Telefon:</strong> {{ kontakt.telefon }}</p>{% endif %}
+            {% endfor %}
+            {% endif %}
+            
+            <!-- Rola -->
+            {% if podmiot.rola or podmiot.rola_opis %}
+            <p><strong>Rola:</strong> {% if podmiot.rola_opis %}{{ podmiot.rola_opis }}{% if podmiot.rola %} ({{ podmiot.rola }}){% endif %}{% elif podmiot.rola %}{{ podmiot.rola }}{% endif %}</p>
+            {% endif %}
+            
+            <!-- Pozostałe -->
+            {% if podmiot.udzial %}
+            <p><strong>Udział:</strong> {{ podmiot.udzial }}%</p>
+            {% endif %}
+            {% if podmiot.nr_klienta %}
+            <p><strong>Nr klienta:</strong> {{ podmiot.nr_klienta }}</p>
+            {% endif %}
+            {% if podmiot.id_nabywcy %}
+            <p><strong>ID nabywcy:</strong> {{ podmiot.id_nabywcy }}</p>
+            {% endif %}
+            {% if podmiot.nr_eori %}
+            <p><strong>Nr EORI:</strong> {{ podmiot.nr_eori }}</p>
+            {% endif %}
+        </div>    {% endfor %}
+    <div style="margin-bottom: 30px;"></div>
+    {% endif %}
+    
+    <!-- Korekta -->
+    {% if korekta %}
+    <div class="additional-info" style="margin-bottom: 15px;">
+        <h3>Korekta</h3>
+        
+        {% if korekta.dane_fa_korygowanej and korekta.dane_fa_korygowanej|length > 0 %}
+        <p class="info-item"><span class="label">Dane faktury korygowanej:</span></p>
+        {% for f in korekta.dane_fa_korygowanej %}
+            {% if f.numer %}
+            <p class="info-item" style="margin-left: 20px;"><strong>Numer:</strong> {{ f.numer }}</p>
+            {% endif %}
+            {% if f.data_wystawienia %}
+            <p class="info-item" style="margin-left: 20px;"><strong>Data wystawienia:</strong> {{ f.data_wystawienia }}</p>
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+        
+        {% if korekta.przyczyna_korekty %}
+        <p class="info-item"><span class="label">Przyczyna korekty:</span> {{ korekta.przyczyna_korekty }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <!-- Pozycje faktury - STAN PRZED -->
+    {% if pozycje and pozycje|length > 0 %}
+        {% set pozycje_stan_przed = pozycje | selectattr('stan_przed', 'equalto', '1') | list %}
+        
+        {% if pozycje_stan_przed and pozycje_stan_przed|length > 0 %}
+        <h3 style="margin-top: 10px; margin-bottom: 5px;">Pozycje - stan przed</h3>
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th class="center">Lp</th>
+                    <th>Nazwa towaru/usługi</th>
+                    <th class="number">Ilość</th>
+                    <th>J.m.</th>
+                    <th class="number">Cena netto</th>
+                    <th class="number">Wartość netto</th>
+                    <th class="number">VAT %</th>
+                    <th class="number">Kwota VAT</th>
+                    <th class="number">Wartość brutto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in pozycje_stan_przed %}
+                    <tr>
+                        <td class="center">{{ item.nr_wiersza }}</td>
+                        <td>
+                            {{ item.nazwa }}
+                            {% if item.pkwiu %}<br><small>PKWiU: {{ item.pkwiu }}</small>{% endif %}
+                            {% if item.indeks %}<br><small>Indeks: {{ item.indeks }}</small>{% endif %}
+                            {% if item.gtin %}<br><small>GTIN: {{ item.gtin }}</small>{% endif %}
+                        </td>
+                        <td class="number">{{ item.ilosc }}</td>
+                        <td>{{ item.jednostka }}</td>
+                        <td class="number">{{ item.cena_netto }}</td>
+                        <td class="number">{{ item.wartosc_netto }}</td>
+                        <td class="number">{{ item.stawka_vat }}</td>
+                        <td class="number">{{ item.kwota_vat }}</td>
+                        <td class="number">{{ item.wartosc_brutto }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    {% endif %}
+    
+    <!-- Pozycje faktury - aktualne -->
+    {% if pozycje and pozycje|length > 0 %}
+    {% set pozycje_stan_przed = pozycje | selectattr('stan_przed', 'equalto', '1') | list %}
+    {% set pozycje_aktualne = pozycje | rejectattr('stan_przed', 'equalto', '1') | list %}
+    {% if pozycje_stan_przed and pozycje_stan_przed|length > 0 and pozycje_aktualne and pozycje_aktualne|length > 0 %}
+    <h3 style="margin-top: 15px; margin-bottom: 5px;">Pozycje - stan po</h3>
+    {% endif %}
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th class="center">Lp</th>
+                <th>Nazwa towaru/usługi</th>
+                <th class="number">Ilość</th>
+                <th>J.m.</th>
+                <th class="number">Cena netto</th>
+                <th class="number">Wartość netto</th>
+                <th class="number">VAT %</th>
+                <th class="number">Kwota VAT</th>
+                <th class="number">Wartość brutto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in pozycje_aktualne %}
+                <tr>
+                    <td class="center">{{ item.nr_wiersza }}</td>
+                    <td>
+                        {{ item.nazwa }}
+                        {% if item.pkwiu %}<br><small>PKWiU: {{ item.pkwiu }}</small>{% endif %}
+                        {% if item.indeks %}<br><small>Indeks: {{ item.indeks }}</small>{% endif %}
+                        {% if item.gtin %}<br><small>GTIN: {{ item.gtin }}</small>{% endif %}
+                    </td>
+                    <td class="number">{{ item.ilosc }}</td>
+                    <td>{{ item.jednostka }}</td>
+                    <td class="number">{{ item.cena_netto }}</td>
+                    <td class="number">{{ item.wartosc_netto }}</td>
+                    <td class="number">{{ item.stawka_vat }}</td>
+                    <td class="number">{{ item.kwota_vat }}</td>
+                    <td class="number">{{ item.wartosc_brutto }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    
+    <!-- Zamówienie -->
+    {% if zamowienie %}
+    <div style="margin-top: 30px;">
+        <h3 style="margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 5px;">Zamówienie</h3>
+        {% if zamowienie.wiersze and zamowienie.wiersze|length > 0 %}
+        <table class="order-table" style="width: 100%;">
+            <tr>
+                <th>Lp</th>
+                <th>Nazwa</th>
+                <th>Ilość</th>
+                <th>J.m.</th>
+                <th class="number">Cena netto</th>
+                <th class="number">Wartość netto</th>
+                <th>VAT %</th>
+                <th class="number">Kwota VAT</th>
+                <th class="number">Wartość brutto</th>
+            </tr>
+            {% for wiersz in zamowienie.wiersze %}
+            <tr>
+                <td class="center">{{ wiersz.nr_wiersza }}</td>
+                <td>
+                    {{ wiersz.nazwa }}
+                    {% if wiersz.indeks %}<br><small>Indeks: {{ wiersz.indeks }}</small>{% endif %}
+                    {% if wiersz.pkwiu %}<br><small>PKWiU: {{ wiersz.pkwiu }}</small>{% endif %}
+                </td>
+                <td class="number">{{ wiersz.ilosc }}</td>
+                <td>{{ wiersz.jednostka }}</td>
+                <td class="number">{{ wiersz.cena_netto }}</td>
+                <td class="number">{{ wiersz.wartosc_netto }}</td>
+                <td class="number">{{ wiersz.stawka_vat }}</td>
+                <td class="number">{{ wiersz.kwota_vat }}</td>
+                <td class="number">{{ wiersz.wartosc_brutto }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        {% if zamowienie.wartosc_zamowienia %}
+        <p style="margin-top: 10px; font-weight: bold; text-align: right;">
+            Wartość zamówienia: {{ zamowienie.wartosc_zamowienia }} {{ waluta }}
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <!-- Adnotacje -->
+        {% if adnotacje %}
+        <div class="annotations">
+            <h3>Adnotacje</h3>
+            <table>
+                <tr>
+                    <th>Metoda kasowa</th>
+                    <th>Samofakturowanie</th>
+                    <th>Odwrotne obciążenie</th>
+                    <th class="{% if adnotacje.mechanizm_podzielonej_platnosci == '1' %}split-payment-yes{% endif %}">
+                        Mechanizm podzielonej płatności (MPP)
+                    </th>
+                </tr>
+                <tr>
+                    <td>{% if adnotacje.metoda_kasowa == '1' %}☑ Tak{% else %}☐ Nie{% endif %}</td>
+                    <td>{% if adnotacje.samofakturowanie == '1' %}☑ Tak{% else %}☐ Nie{% endif %}</td>
+                    <td>{% if adnotacje.odwrotne_obciazenie == '1' %}☑ Tak{% else %}☐ Nie{% endif %}</td>
+                    <td class="{% if adnotacje.mechanizm_podzielonej_platnosci == '1' %}split-payment-yes{% endif %}">
+                        {% if adnotacje.mechanizm_podzielonej_platnosci == '1' %}☑ TAK{% else %}☐ Nie{% endif %}
+                    </td>
+                </tr>
+            </table>
+            
+            <!-- Zwolnienie -->
+            {% if adnotacje.zwolnienie and (adnotacje.zwolnienie.p_19 == '1' or adnotacje.zwolnienie.p_19a or adnotacje.zwolnienie.p_19b or adnotacje.zwolnienie.p_19c) %}
+            <p style="margin-top: 10px;"><strong>Zwolnienie od podatku:</strong>
+            {% if adnotacje.zwolnienie.p_19 == '1' %}☑ Tak{% endif %}
+            {% if adnotacje.zwolnienie.p_19a %} | Podstawa krajowa: {{ adnotacje.zwolnienie.p_19a }}{% endif %}
+            {% if adnotacje.zwolnienie.p_19b %} | Dyrektywa: {{ adnotacje.zwolnienie.p_19b }}{% endif %}
+            {% if adnotacje.zwolnienie.p_19c %} | Inna podstawa: {{ adnotacje.zwolnienie.p_19c }}{% endif %}
+            </p>
+            {% endif %}
+            
+            <!-- Nowe środki transportu -->
+            {% if adnotacje.nowe_srodki_transportu %}
+            {% set nst = adnotacje.nowe_srodki_transportu %}
+            {% if nst.p_22 == '1' %}
+            <p style="margin-top: 10px;"><strong>Wewnątrzwspólnotowa dostawa nowych środków transportu:</strong> ☑ Tak
+            {% if nst.p_42_5 == '1' %} | Obowiązek art. 42 ust. 5: Tak{% endif %}
+            </p>
+            {% if nst.pojazdy and nst.pojazdy|length > 0 %}
+            <div style="margin-left: 20px;">
+            {% for pojazd in nst.pojazdy %}
+            <p style="font-size: 9pt;">
+            <strong>Pojazd {{ loop.index }}:</strong>
+            {% if pojazd.p_22bmk %}{{ pojazd.p_22bmk }}{% endif %}
+            {% if pojazd.p_22bmd %} {{ pojazd.p_22bmd }}{% endif %}
+            {% if pojazd.p_22bk %} ({{ pojazd.p_22bk }}){% endif %}
+            {% if pojazd.p_22bnr %} | Nr rej.: {{ pojazd.p_22bnr }}{% endif %}
+            {% if pojazd.p_22brp %} | Rok: {{ pojazd.p_22brp }}{% endif %}
+            {% if pojazd.p_22b %} | Przebieg: {{ pojazd.p_22b }}{% endif %}
+            {% if pojazd.p_22b1 %} | VIN: {{ pojazd.p_22b1 }}{% endif %}
+            {% if pojazd.p_22a %} | Data dopuszczenia: {{ pojazd.p_22a }}{% endif %}
+            </p>
+            {% endfor %}
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            
+            <!-- Procedura marży -->
+            {% if adnotacje.procedura_marzy %}
+            {% set pmarzy = adnotacje.procedura_marzy %}
+            {% if pmarzy.p_pmarzy == '1' %}
+            <p style="margin-top: 10px;"><strong>Procedura marży:</strong> ☑ Tak
+            {% if pmarzy.p_pmarzy_2 == '1' %} | Biura podróży{% endif %}
+            {% if pmarzy.p_pmarzy_3_1 == '1' %} | Towary używane{% endif %}
+            {% if pmarzy.p_pmarzy_3_2 == '1' %} | Dzieła sztuki{% endif %}
+            {% if pmarzy.p_pmarzy_3_3 == '1' %} | Przedmioty kolekcjonerskie i antyki{% endif %}
+            </p>
+            {% endif %}
+            {% endif %}
+            
+            <!-- Procedura trójstronna uproszczona -->
+            {% if adnotacje.p_23 == '1' %}
+            <p style="margin-top: 10px;"><strong>Procedura trójstronna uproszczona:</strong> ☑ Tak</p>
+            {% endif %}
+    </div>
+    {% endif %}
+    
+    <!-- Podsumowanie szczegółowe VAT (wg stawek) -->
+        {% if podsumowanie_szczegolowe %}
+        {% set _zero_vals = ['', '0', '0,00', '0.00', '0.0', '0,0'] %}
+        <div class="vat-breakdown">
+            <h3>Podsumowanie VAT wg stawek:</h3>
+            <table>
+                <tr>
+                    <th style="text-align: left;">Stawka VAT</th>
+                    <th class="number">Suma netto</th>
+                    <th class="number">Kwota VAT</th>
+                    <th class="number">Suma brutto</th>
+                </tr>
+                {% set s = podsumowanie_szczegolowe.stawka_podstawowa %}
+                {% if s and (s.netto not in _zero_vals or s.vat not in _zero_vals or s.brutto not in _zero_vals) %}
+                <tr>
+                    <td>23%</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">{{ s.vat }}</td>
+                    <td class="number">{{ s.brutto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.stawka_8_proc %}
+                {% if s and (s.netto not in _zero_vals or s.vat not in _zero_vals or s.brutto not in _zero_vals) %}
+                <tr>
+                    <td>8%</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">{{ s.vat }}</td>
+                    <td class="number">{{ s.brutto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.stawka_5_proc %}
+                {% if s and (s.netto not in _zero_vals or s.vat not in _zero_vals or s.brutto not in _zero_vals) %}
+                <tr>
+                    <td>5%</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">{{ s.vat }}</td>
+                    <td class="number">{{ s.brutto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.stawka_obnizona_trzecia %}
+                {% if s and (s.netto not in _zero_vals or s.vat not in _zero_vals or s.brutto not in _zero_vals) %}
+                <tr>
+                    <td>Obniżona trzecia / ryczałt</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">{{ s.vat }}</td>
+                    <td class="number">{{ s.brutto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.stawka_proc_szczeg_ue %}
+                {% if s and (s.netto not in _zero_vals or s.vat not in _zero_vals or s.brutto not in _zero_vals) %}
+                <tr>
+                    <td>Procedura szczególna (UE)</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">{{ s.vat if s.vat else '-' }}</td>
+                    <td class="number">{{ s.brutto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.stawka_0_proc_krajowa %}
+                {% if s and s.netto not in _zero_vals %}
+                <tr>
+                    <td>0% krajowa</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">-</td>
+                    <td class="number">{{ s.netto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.stawka_0_proc_wdt %}
+                {% if s and s.netto not in _zero_vals %}
+                <tr>
+                    <td>0% WDT</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">-</td>
+                    <td class="number">{{ s.netto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.stawka_0_proc_exp %}
+                {% if s and s.netto not in _zero_vals %}
+                <tr>
+                    <td>0% eksport</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">-</td>
+                    <td class="number">{{ s.netto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.zwolnione %}
+                {% if s and s.netto not in _zero_vals %}
+                <tr>
+                    <td>Zwolnione</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">-</td>
+                    <td class="number">{{ s.netto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.nie_podlega_I %}
+                {% if s and s.netto not in _zero_vals %}
+                <tr>
+                    <td>Nie podlega (poza terytorium kraju)</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">-</td>
+                    <td class="number">{{ s.netto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.nie_podlega_II %}
+                {% if s and s.netto not in _zero_vals %}
+                <tr>
+                    <td>Nie podlega (art. 100 ust. 1 pkt 4)</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">-</td>
+                    <td class="number">{{ s.netto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.odwrotne_obciazenie %}
+                {% if s and s.netto not in _zero_vals %}
+                <tr>
+                    <td>Odwrotne obciążenie</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">-</td>
+                    <td class="number">{{ s.netto }}</td>
+                </tr>
+                {% endif %}
+                {% set s = podsumowanie_szczegolowe.marza %}
+                {% if s and s.netto not in _zero_vals %}
+                <tr>
+                    <td>Marża</td>
+                    <td class="number">{{ s.netto }}</td>
+                    <td class="number">-</td>
+                    <td class="number">{{ s.netto }}</td>
+                </tr>
+                {% endif %}
+                <tr class="total total-row">
+                    <td><strong>RAZEM</strong></td>
+                    <td class="number"><strong>{{ podsumowanie.netto }}</strong></td>
+                    <td class="number"><strong>{{ podsumowanie.vat }}</strong></td>
+                    <td class="number"><strong>{{ podsumowanie.brutto }}</strong></td>
+                </tr>
+            </table>
+        </div>
+        {% endif %}
+        
+        <!-- Podsumowanie -->
+        <div class="summary">
+            <table>
+                <tr>
+                    <th>Razem netto:</th>
+                    <td class="number">{{ podsumowanie.netto }} {{ waluta }}</td>
+                </tr>
+                <tr>
+                    <th>VAT:</th>
+                    <td class="number">{{ podsumowanie.vat }} {{ waluta }}</td>
+                </tr>
+                <tr class="total">
+                    <th>Razem brutto:</th>
+                    <td class="number">{{ podsumowanie.brutto }} {{ waluta }}</td>
+                </tr>
+                {% if rozliczenie %}
+                {% if rozliczenie.suma_obciazen and rozliczenie.suma_obciazen != '0' and rozliczenie.suma_obciazen != '0.00' %}
+                <tr>
+                    <th>Obciążenia:</th>
+                    <td class="number">+{{ rozliczenie.suma_obciazen }} {{ waluta }}</td>
+                </tr>
+                {% endif %}
+                {% if rozliczenie.suma_odliczen and rozliczenie.suma_odliczen != '0' and rozliczenie.suma_odliczen != '0.00' %}
+                <tr>
+                    <th>Odliczenia:</th>
+                    <td class="number">-{{ rozliczenie.suma_odliczen }} {{ waluta }}</td>
+                </tr>
+                {% endif %}
+                {% if rozliczenie.do_zaplaty and rozliczenie.do_zaplaty != '0' and rozliczenie.do_zaplaty != '0.00' %}
+                <tr class="total">
+                    <th>DO ZAPŁATY:</th>
+                    <td class="number">{{ rozliczenie.do_zaplaty }} {{ waluta }}</td>
+                </tr>
+                {% endif %}
+                {% if rozliczenie.do_rozliczenia and rozliczenie.do_rozliczenia != '0' and rozliczenie.do_rozliczenia != '0.00' %}
+                <tr class="total" style="background-color: #d4edda;">
+                    <th>DO ROZLICZENIA / ZWROTU:</th>
+                    <td class="number">{{ rozliczenie.do_rozliczenia }} {{ waluta }}</td>
+                </tr>
+                {% endif %}
+                {% endif %}
+            </table>
+        </div>
+        
+        <!-- Informacje o płatności -->
+        {% if platnosc %}
+        <div class="payment-info">
+            <h3>Informacje o płatności</h3>
+            
+            <!-- Status zapłaty -->
+            {% if platnosc.zaplacono == '1' %}
+            <p class="info-item" style="background-color: #d4edda; padding: 8px; border-left: 4px solid #28a745; font-weight: bold;">
+                ✓ ZAPŁACONO
+                {% if platnosc.data_zaplaty %} w dniu {{ platnosc.data_zaplaty }}{% endif %}
+            </p>
+            {% endif %}
+            
+            <!-- Zapłata częściowa -->
+            {% if platnosc.znacznik_zaplaty_czesciowej %}
+            <p class="info-item" style="background-color: #fff3cd; padding: 8px; border-left: 4px solid #ffc107;">
+                {% if platnosc.znacznik_zaplaty_czesciowej == '1' %}⚠ Zapłacono w części
+                {% elif platnosc.znacznik_zaplaty_czesciowej == '2' %}✓ Zapłacono w całości (w kilku płatnościach){% endif %}
+            </p>
+            {% if platnosc.zaplata_czesciowa and platnosc.zaplata_czesciowa|length > 0 %}
+            <table style="margin: 10px 0; font-size: 9pt;">
+                <tr>
+                    <th>Data</th>
+                    <th>Kwota</th>
+                    <th>Forma płatności</th>
+                </tr>
+                {% for zaplata in platnosc.zaplata_czesciowa %}
+                <tr>
+                    <td>{{ zaplata.data }}</td>
+                    <td class="number">{{ zaplata.kwota }} {{ waluta }}</td>
+                    <td>
+                        {% if zaplata.forma_platnosci == '1' %}Gotówka
+                        {% elif zaplata.forma_platnosci == '2' %}Karta
+                        {% elif zaplata.forma_platnosci == '3' %}Bon
+                        {% elif zaplata.forma_platnosci == '4' %}Czek
+                        {% elif zaplata.forma_platnosci == '5' %}Kredyt
+                        {% elif zaplata.forma_platnosci == '6' %}Przelew
+                        {% elif zaplata.forma_platnosci == '7' %}Mobilna
+                        {% elif zaplata.platnosc_inna == '1' %}{{ zaplata.opis_platnosci }}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+            {% endif %}
+            
+            <!-- Termin płatności -->
+            {% if platnosc.termin_platnosci %}
+            {% if platnosc.termin_platnosci is mapping %}
+            <p class="info-item"><span class="label">Termin płatności:</span> 
+                {% if platnosc.termin_platnosci.termin %}
+                {{ platnosc.termin_platnosci.termin }}
+                {% elif platnosc.termin_platnosci.termin_opis %}
+                {{ platnosc.termin_platnosci.termin_opis.ilosc }} {{ platnosc.termin_platnosci.termin_opis.jednostka }}
+                {% if platnosc.termin_platnosci.termin_opis.zdarzenie_poczatkowe %} od {{ platnosc.termin_platnosci.termin_opis.zdarzenie_poczatkowe }}{% endif %}
+                {% endif %}
+            </p>
+            {% else %}
+            <p class="label">Terminy płatności:</p>
+            {% for termin in platnosc.termin_platnosci %}
+            <p class="info-item" style="margin-left: 20px;">
+                {% if termin.termin %}{{ termin.termin }}
+                {% elif termin.termin_opis %}{{ termin.termin_opis.ilosc }} {{ termin.termin_opis.jednostka }}
+                {% if termin.termin_opis.zdarzenie_poczatkowe %} od {{ termin.termin_opis.zdarzenie_poczatkowe }}{% endif %}
+                {% endif %}
+            </p>
+            {% endfor %}
+            {% endif %}
+            {% endif %}
+            
+            <!-- Forma płatności -->
+            {% if platnosc.forma_platnosci %}
+            <p class="info-item"><span class="label">Forma płatności:</span> {{ platnosc.forma_platnosci.nazwa }}</p>
+            {% elif platnosc.platnosc_inna == '1' %}
+            <p class="info-item"><span class="label">Forma płatności:</span> {{ platnosc.opis_platnosci }} (inna)</p>
+            {% endif %}
+            
+            <!-- Rachunki bankowe -->
+            {% if platnosc.rachunki_bankowe and platnosc.rachunki_bankowe|length > 0 %}
+            <p class="label">Rachunki bankowe:</p>
+            {% for account in platnosc.rachunki_bankowe %}
+            <div style="margin-left: 20px; margin-top: 5px;">
+                <p><strong>Rachunek {{ loop.index }}:</strong> {{ account.nr_rb }}</p>
+                {% if account.nazwa_banku %}<p><em>{{ account.nazwa_banku }}</em></p>{% endif %}
+                {% if account.swift %}<p>SWIFT: {{ account.swift }}</p>{% endif %}
+                {% if account.opis_rachunku %}<p>{{ account.opis_rachunku }}</p>{% endif %}
+            </div>
+            {% endfor %}
+            {% endif %}
+            
+            <!-- Rachunki faktora -->
+            {% if platnosc.rachunki_bankowe_faktora and platnosc.rachunki_bankowe_faktora|length > 0 %}
+            <p class="label" style="margin-top: 10px;">Rachunki bankowe faktora:</p>
+            {% for account in platnosc.rachunki_bankowe_faktora %}
+            <div style="margin-left: 20px; margin-top: 5px;">
+                <p><strong>Rachunek faktora {{ loop.index }}:</strong> {{ account.nr_rb }}</p>
+                {% if account.nazwa_banku %}<p><em>{{ account.nazwa_banku }}</em></p>{% endif %}
+                {% if account.swift %}<p>SWIFT: {{ account.swift }}</p>{% endif %}
+            </div>
+            {% endfor %}
+            {% endif %}
+            
+            <!-- Skonto -->
+            {% if platnosc.skonto %}
+            <div style="margin-top: 15px; padding: 10px; background-color: #e7f3ff; border-left: 4px solid #2196F3;">
+                <p class="label">💰 Skonto:</p>
+                <p><strong>Wysokość:</strong> {{ platnosc.skonto.wysokosc }}</p>
+                <p><strong>Warunki:</strong> {{ platnosc.skonto.warunki }}</p>
+            </div>
+            {% endif %}
+            
+            <!-- Link do płatności i IPKSeF -->
+            {% if platnosc.link_do_platnosci %}
+            <p class="info-item" style="margin-top: 10px;">
+                <span class="label">Link do płatności:</span> 
+                <a href="{{ platnosc.link_do_platnosci }}" target="_blank">{{ platnosc.link_do_platnosci }}</a>
+            </p>
+            {% endif %}
+            {% if platnosc.ipksef %}
+            <p class="info-item"><span class="label">IPKSeF:</span> {{ platnosc.ipksef }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Dodatkowe informacje -->
+        {% if dodatkowe_opisy or numery_wz %}
+        <div class="additional-info">
+            <h3>Dodatkowe informacje</h3>
+            {% if dodatkowe_opisy %}
+            {% for opis in dodatkowe_opisy %}
+            <p class="info-item"><span class="label">{{ opis.klucz }}:</span> {{ opis.wartosc }}</p>
+            {% endfor %}
+            {% endif %}        </div>
+        {% endif %}
+    
+    <!-- Warunki transakcji -->
+    {% if warunki_transakcji %}
+    <div class="additional-info">
+        <h3>Warunki transakcji</h3>
+        
+        <!-- Umowy -->
+        {% if warunki_transakcji.umowy and warunki_transakcji.umowy|length > 0 %}
+        <p><strong>Umowy:</strong></p>
+        {% for umowa in warunki_transakcji.umowy %}
+        <p class="info-item">
+            {% if umowa.data_umowy %}Data: {{ umowa.data_umowy }}{% endif %}
+            {% if umowa.nr_umowy %}{% if umowa.data_umowy %}, {% endif %}Nr: {{ umowa.nr_umowy }}{% endif %}
+        </p>
+        {% endfor %}
+        {% endif %}
+        
+        <!-- Zamówienia (z WarunkiTransakcji) -->
+        {% if warunki_transakcji.zamowienia and warunki_transakcji.zamowienia|length > 0 %}
+        <p><strong>Zamówienia:</strong></p>
+        {% for zam in warunki_transakcji.zamowienia %}
+        <p class="info-item">
+            {% if zam.data_zamowienia %}Data: {{ zam.data_zamowienia }}{% endif %}
+            {% if zam.nr_zamowienia %}{% if zam.data_zamowienia %}, {% endif %}Nr: {{ zam.nr_zamowienia }}{% endif %}
+        </p>
+        {% endfor %}
+        {% endif %}
+        
+        <!-- Numery partii towaru -->
+        {% if warunki_transakcji.numery_partii_towaru and warunki_transakcji.numery_partii_towaru|length > 0 %}
+        <p class="info-item"><span class="label">Numery partii towaru:</span> {{ warunki_transakcji.numery_partii_towaru|join(', ') }}</p>
+        {% endif %}
+        
+        <!-- Warunki dostawy -->
+        {% if warunki_transakcji.warunki_dostawy %}
+        <p class="info-item"><span class="label">Warunki dostawy:</span> {{ warunki_transakcji.warunki_dostawy }}</p>
+        {% endif %}
+        
+        <!-- Kurs i waluta umowna -->
+        {% if warunki_transakcji.kurs_umowny or warunki_transakcji.waluta_umowna %}
+        <p class="info-item">
+            <span class="label">Kurs umowny:</span> 
+            {% if warunki_transakcji.kurs_umowny %}{{ warunki_transakcji.kurs_umowny }}{% endif %}
+            {% if warunki_transakcji.waluta_umowna %} {{ warunki_transakcji.waluta_umowna }}{% endif %}
+        </p>
+        {% endif %}
+        
+        <!-- Transport -->
+        {% if warunki_transakcji.transport and warunki_transakcji.transport|length > 0 %}
+        <p><strong>Transport:</strong></p>
+        {% for transport in warunki_transakcji.transport %}
+        <div style="margin-left: 20px; margin-bottom: 10px;">
+            {% if transport.rodzaj_transportu %}
+            <p class="info-item"><span class="label">Rodzaj:</span> {{ transport.rodzaj_transportu }}</p>
+            {% endif %}
+            {% if transport.transport_inny == '1' and transport.opis_innego_transportu %}
+            <p class="info-item"><span class="label">Transport inny:</span> {{ transport.opis_innego_transportu }}</p>
+            {% endif %}
+            {% if transport.nr_zlecenia_transportu %}
+            <p class="info-item"><span class="label">Nr zlecenia:</span> {{ transport.nr_zlecenia_transportu }}</p>
+            {% endif %}
+            {% if transport.opis_ladunku %}
+            <p class="info-item"><span class="label">Ładunek:</span> {{ transport.opis_ladunku }}</p>
+            {% endif %}
+            {% if transport.ladunek_inny == '1' and transport.opis_innego_ladunku %}
+            <p class="info-item"><span class="label">Ładunek inny:</span> {{ transport.opis_innego_ladunku }}</p>
+            {% endif %}
+            {% if transport.jednostka_opakowania %}
+            <p class="info-item"><span class="label">Jednostka opakowania:</span> {{ transport.jednostka_opakowania }}</p>
+            {% endif %}
+            {% if transport.data_godz_rozp_transportu %}
+            <p class="info-item"><span class="label">Początek:</span> {{ transport.data_godz_rozp_transportu }}</p>
+            {% endif %}
+            {% if transport.data_godz_zak_transportu %}
+            <p class="info-item"><span class="label">Koniec:</span> {{ transport.data_godz_zak_transportu }}</p>
+            {% endif %}
+            {% if transport.wysylka_z %}
+            <p class="info-item"><span class="label">Wysyłka z:</span> {{ transport.wysylka_z.adres_l1 }}{% if transport.wysylka_z.adres_l2 %}, {{ transport.wysylka_z.adres_l2 }}{% endif %}</p>
+            {% endif %}
+            {% if transport.wysylka_do %}
+            <p class="info-item"><span class="label">Wysyłka do:</span> {{ transport.wysylka_do.adres_l1 }}{% if transport.wysylka_do.adres_l2 %}, {{ transport.wysylka_do.adres_l2 }}{% endif %}</p>
+            {% endif %}
+            {% if transport.przewoznik %}
+            <p class="info-item"><span class="label">Przewoźnik:</span> {{ transport.przewoznik.dane_identyfikacyjne.nazwa }}{% if transport.przewoznik.dane_identyfikacyjne.nip %} (NIP: {{ transport.przewoznik.dane_identyfikacyjne.nip }}){% endif %}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% endif %}
+        
+        <!-- Podmiot pośredniczący -->
+        {% if warunki_transakcji.podmiot_posredniczacy == '1' %}
+        <p class="info-item"><span class="label">Podmiot pośredniczący:</span> Tak</p>
+        {% endif %}
+    </div>
+    {% endif %}
+        
+        <!-- Faktury korygowane -->
+        {% if faktury_korygowane and faktury_korygowane|length > 0 %}
+        <div class="corrected-invoices">
+            <h3>📋 Faktury korygowane</h3>
+            {% for faktura in faktury_korygowane %}
+            <div style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; background-color: white;">
+                <p><strong>Numer:</strong> {{ faktura.numer }}</p>
+                {% if faktura.data_wystawienia %}
+                <p><strong>Data wystawienia:</strong> {{ faktura.data_wystawienia }}</p>
+                {% endif %}
+                {% if faktura.nr_ksef %}
+                <p><strong>Nr KSeF:</strong> {{ faktura.nr_ksef }}</p>
+                {% endif %}
+                {% if faktura.przyczyna_korekty %}
+                <div class="correction-reason">
+                    <strong>Przyczyna korekty:</strong> {{ faktura.przyczyna_korekty }}
+                </div>
+                {% endif %}
+                {% if faktura.okr_od and faktura.okr_do %}
+                <p><strong>Okres:</strong> {{ faktura.okr_od }} - {{ faktura.okr_do }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <!-- Faktury zaliczkowe -->
+    {% if faktury_zaliczkowe and faktury_zaliczkowe|length > 0 %}
+    <div class="advance-invoices">
+        <h3>💰 Faktury zaliczkowe</h3>
+        <table>
+            <tr>
+                <th>Nr faktury zaliczkowej</th>
+                <th>Nr KSeF</th>
+                <th>Nr KSeF ZN</th>
+            </tr>
+            {% for faktura in faktury_zaliczkowe %}
+            <tr>
+                <td>{{ faktura.nr_fa_zaliczkowej }}</td>
+                <td>{{ faktura.nr_ksef_fa_zaliczkowej }}</td>
+                <td>{{ faktura.nr_ksef_zn }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+        
+        <!-- Zaliczki częściowe (dla faktur korygujących) -->
+        {% if zaliczki_czesciowe and zaliczki_czesciowe|length > 0 %}
+        <div class="partial-advances">
+            <h3>Zaliczki częściowe</h3>
+            <table>
+                <tr>
+                    <th>Data płatności</th>
+                    <th class="number">Kwota płatności</th>
+                    <th class="number">Kurs waluty</th>
+                </tr>
+                {% for zaliczka in zaliczki_czesciowe %}
+                <tr>
+                    <td>{{ zaliczka.data_platnosci }}</td>
+                    <td class="number">{{ zaliczka.kwota_platnosci }}</td>
+                    <td class="number">{{ zaliczka.kurs_waluty }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+        
+        <!-- Szczegółowe rozliczenie (obciążenia i odliczenia) -->
+        {% if rozliczenie and (rozliczenie.obciazenia or rozliczenie.odliczenia) %}
+        <div class="additional-info">
+            <h3>Szczegółowe rozliczenie</h3>
+            {% if rozliczenie.obciazenia and rozliczenie.obciazenia|length > 0 %}
+            <p class="label">Obciążenia:</p>
+            {% for obciazenie in rozliczenie.obciazenia %}
+            <p class="info-item" style="margin-left: 20px;">
+                {{ obciazenie.powod }}: <strong>{{ obciazenie.kwota }} {{ waluta }}</strong>
+            </p>
+            {% endfor %}
+            {% endif %}
+            {% if rozliczenie.odliczenia and rozliczenie.odliczenia|length > 0 %}
+            <p class="label" style="margin-top: 10px;">Odliczenia:</p>
+            {% for odliczenie in rozliczenie.odliczenia %}
+            <p class="info-item" style="margin-left: 20px;">
+                {{ odliczenie.powod }}: <strong>{{ odliczenie.kwota }} {{ waluta }}</strong>
+            </p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Załącznik -->
+        {% if zalacznik and zalacznik.bloki_danych %}
+        <div class="attachment">
+            <h3>📎 Załącznik do faktury VAT</h3>
+            
+            {% for blok in zalacznik.bloki_danych %}
+            <div class="attachment-block">
+                <h4>Szczegółowe dane załącznika ({{ loop.index }})</h4>
+                
+                {# Nagłówek bloku danych #}
+                {% if blok.naglowek %}
+                <p><strong>Nagłówek bloku danych:</strong> {{ blok.naglowek }}</p>
+                {% endif %}
+                
+                {# MetaDane - tabela klucz/wartość #}
+                {% if blok.meta_dane %}
+                <table class="attachment-meta-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">Klucz</th>
+                            <th style="width: 60%;">Wartość</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for meta in blok.meta_dane %}
+                        <tr>
+                            <td>{{ meta.klucz }}</td>
+                            <td>{{ meta.wartosc }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+                
+                {# Tekst z akapitami #}
+                {% if blok.tekst and blok.tekst.akapity %}
+                <div class="attachment-text">
+                    {% for akapit in blok.tekst.akapity %}
+                    <p>Opis ({{ loop.index }}): {{ akapit }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                {# Tabele #}
+                {% if blok.tabele %}
+                {% for tabela in blok.tabele %}
+                <div style="margin-top: 15px;">
+                    {# Opis tabeli #}
+                    {% if tabela.opis %}
+                    <div class="attachment-table-title">{{ tabela.opis }}</div>
+                    {% endif %}
+                    
+                    {# Metadane tabeli #}
+                    {% if tabela.meta_dane %}
+                    <table class="attachment-meta-table" style="margin-bottom: 5px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 40%;">Klucz</th>
+                                <th style="width: 60%;">Wartość</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tmeta in tabela.meta_dane %}
+                            <tr>
+                                <td>{{ tmeta.klucz }}</td>
+                                <td>{{ tmeta.wartosc }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                    
+                    {# Nagłówek i dane tabeli #}
+                    {% if tabela.naglowek or tabela.wiersze %}
+                    <table class="attachment-data-table">
+                        {% if tabela.naglowek %}
+                        <thead>
+                            <tr>
+                                {% for kol in tabela.naglowek %}
+                                <th>{{ kol.nazwa }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        {% endif %}
+                        <tbody>
+                            {% if tabela.wiersze %}
+                            {% for wiersz in tabela.wiersze %}
+                            <tr>
+                                {% for komorka in wiersz %}
+                                <td>{{ komorka if komorka else '' }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                            
+                            {# Wiersz sumy #}
+                            {% if tabela.suma %}
+                            <tr class="sum-row">
+                                {% for komorka in tabela.suma %}
+                                <td>{{ komorka if komorka else '' }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <!-- Stopka -->
+        <div class="footer-section">
+            {% if stopka and stopka.informacje and stopka.informacje.stopka_faktury %}
+            <p>{{ stopka.informacje.stopka_faktury }}</p>
+            {% endif %}
+        {% if stopka and stopka.informacje and stopka.informacje.warunki_dodatkowe and stopka.informacje.warunki_dodatkowe|length > 0 %}
+        <p style="margin-top: 10px;"><strong>Warunki dodatkowe:</strong></p>
+        <ul style="margin: 5px 0; padding-left: 20px;">
+        {% for warunek in stopka.informacje.warunki_dodatkowe %}
+            <li>{{ warunek }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+            {% if stopka and stopka.rejestry %}
+            <p>
+            {% if stopka.rejestry.krs %}KRS: {{ stopka.rejestry.krs }} | {% endif %}
+            {% if stopka.rejestry.regon %}REGON: {{ stopka.rejestry.regon }} | {% endif %}
+            {% if stopka.rejestry.bdo %}BDO: {{ stopka.rejestry.bdo }} | {% endif %}
+            {% if stopka.rejestry.ceidg %}CEIDG: {{ stopka.rejestry.ceidg }}{% endif %}
+            </p>
+            {% endif %}
+            <p style="font-size: 9pt; color: #999; margin-top: 10px;">
+                Faktura wygenerowana: {{ naglowek.system_info }} | FA(3) {{ naglowek.wersja_schemy }}
+            </p>
+        </div>
+        
+        {% if ksef_qr_data_uri %}
+        <div class="ksef-qr-section">
+            <p class="ksef-qr-title">Kod QR — weryfikacja w KSeF (online)</p>
+            <img class="ksef-qr-image" src="{{ ksef_qr_data_uri }}" alt="Kod QR weryfikacji faktury KSeF" />
+            {% if ksefNumber %}
+            <p class="ksef-qr-caption">KSeF: {{ ksefNumber }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
