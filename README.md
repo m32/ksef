@@ -20,7 +20,8 @@ Ja dla moich klientów proponuję utworzenie certyfikatu w KSeF z uprawnieniem l
 Na potrzeby skryptów w tym repozytorium certyfikat+klucz musi być zamieniona na plik w formacie PKCS12 i zrobisz to programem cert/p12-ksef.py lub komendami z biblioteki OpenSSL.
 
 Wizualizacja faktury/upo - można przekształcić dokument xml w html i to pokazać użytkownikowi, użytkownicy jednak naciskają by to był pdf z numerem KSeF i kodem QR.
-Tego już tak łatwo się nie zrobi, ale jest [https://github.com/Dzyszla/ksef-pdf-generator-win64](https://github.com/Dzyszla/ksef-pdf-generator-win64)
+Tego już tak łatwo się nie zrobi, ale jest [https://github.com/m32/ksef-pdf](https://github.com/m32/ksef-pdf) w gałęzi exe.
+Możesz utworzyć plik wykonywalny dla swojego systemu lub postawić serwer REST (docker) i generować wizualizacje w PDF lub HTML.
 
 m32
 
