@@ -5,3 +5,4 @@ signxml
 asn1crypto
 endesive
 python-dateutil
+attrs
